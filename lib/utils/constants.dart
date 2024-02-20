@@ -1,5 +1,5 @@
 /// DO NOT CHANGE THIS PACKAGE NAME
-var appPackageName = 'com.frezka.customer';
+var appPackageName = 'com.growtokyo.app';
 
 const PER_PAGE_ITEM = 25;
 const LABEL_TEXT_SIZE = 14;

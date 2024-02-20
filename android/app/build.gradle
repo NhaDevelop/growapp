@@ -43,7 +43,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.frezka.customer"
+        applicationId "com.growtokyo.app"
         minSdkVersion 24
         targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
