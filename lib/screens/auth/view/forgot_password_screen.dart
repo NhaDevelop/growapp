@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:frezka/main.dart';
-import 'package:frezka/screens/auth/auth_repository.dart';
-import 'package:frezka/utils/colors.dart';
-import 'package:frezka/utils/common_base.dart';
-import 'package:frezka/utils/model_keys.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/screens/auth/auth_repository.dart';
+import 'package:grow_tokyo_app/utils/colors.dart';
+import 'package:grow_tokyo_app/utils/common_base.dart';
+import 'package:grow_tokyo_app/utils/model_keys.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -70,12 +70,14 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               width: context.width(),
               decoration: boxDecorationDefault(
                 color: context.primaryColor,
-                borderRadius: radiusOnly(topRight: defaultRadius, topLeft: defaultRadius),
+                borderRadius:
+                    radiusOnly(topRight: defaultRadius, topLeft: defaultRadius),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(locale.forgotPassword, style: boldTextStyle(color: Colors.white)),
+                  Text(locale.forgotPassword,
+                      style: boldTextStyle(color: Colors.white)),
                   IconButton(
                     onPressed: () {
                       finish(context);

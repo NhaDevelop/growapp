@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/screens/product/view/product_list_screen.dart';
+import 'package:grow_tokyo_app/screens/product/view/product_list_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/empty_error_state_widget.dart';
@@ -19,7 +19,8 @@ class ProductCategoryComponent extends StatelessWidget {
     if (productCategoryList.isEmpty)
       return Container(
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 32),
-        child: NoDataWidget(title: locale.noCategoryFound, imageWidget: EmptyStateWidget()),
+        child: NoDataWidget(
+            title: locale.noCategoryFound, imageWidget: EmptyStateWidget()),
       );
 
     return Column(
@@ -40,14 +41,18 @@ class ProductCategoryComponent extends StatelessWidget {
           columnCount: 2,
           itemCount: productCategoryList.take(6).length,
           listAnimationType: ListAnimationType.FadeIn,
-          scaleConfiguration: ScaleConfiguration(duration: 300.milliseconds, delay: 50.milliseconds),
+          scaleConfiguration: ScaleConfiguration(
+              duration: 300.milliseconds, delay: 50.milliseconds),
           itemBuilder: (_, index) {
             CategoryData? data = productCategoryList[index];
             return GestureDetector(
               onTap: () {
-                ProductListScreen(productCategoryID: data.id, appBarTitleText: data.name).launch(context);
+                ProductListScreen(
+                        productCategoryID: data.id, appBarTitleText: data.name)
+                    .launch(context);
               },
-              child: CategoryItemWidget(categoryData: data, width: context.width() / 3 - 22),
+              child: CategoryItemWidget(
+                  categoryData: data, width: context.width() / 3 - 22),
             );
           },
         ).paddingOnly(top: 10, left: 16, right: 16, bottom: 32)

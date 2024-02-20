@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/view_all_label_component.dart';
-import 'package:frezka/screens/category/component/category_item_component.dart';
-import 'package:frezka/screens/category/view/category_screen.dart';
-import 'package:frezka/screens/services/view/view_all_service_screen.dart';
+import 'package:grow_tokyo_app/components/view_all_label_component.dart';
+import 'package:grow_tokyo_app/screens/category/component/category_item_component.dart';
+import 'package:grow_tokyo_app/screens/category/view/category_screen.dart';
+import 'package:grow_tokyo_app/screens/services/view/view_all_service_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../main.dart';
@@ -56,18 +56,23 @@ class _CategoryComponentState extends State<CategoryComponent> {
           columnCount: 2,
           itemCount: widget.categoryList.validate().take(6).length,
           listAnimationType: ListAnimationType.FadeIn,
-          scaleConfiguration: ScaleConfiguration(duration: 300.milliseconds, delay: 50.milliseconds),
+          scaleConfiguration: ScaleConfiguration(
+              duration: 300.milliseconds, delay: 50.milliseconds),
           itemBuilder: (_, index) {
             CategoryData? data = widget.categoryList.validate()[index];
             return GestureDetector(
               onTap: () {
                 onQuickBookingDataUpdate?.call();
-                ViewAllServiceScreen(serviceTitle: data.name.validate(), categoryId: data.id.validate()).launch(context);
+                ViewAllServiceScreen(
+                        serviceTitle: data.name.validate(),
+                        categoryId: data.id.validate())
+                    .launch(context);
               },
-              child: CategoryItemWidget(categoryData: data, width: context.width() / 3 - 22),
+              child: CategoryItemWidget(
+                  categoryData: data, width: context.width() / 3 - 22),
             );
           },
-        ).paddingOnly(top: 16, left: 16,right: 16,bottom: 32)
+        ).paddingOnly(top: 16, left: 16, right: 16, bottom: 32)
       ],
     );
   }

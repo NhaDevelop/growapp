@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/app_scaffold.dart';
-import 'package:frezka/screens/order/view/order_list_screen.dart';
+import 'package:grow_tokyo_app/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/screens/order/view/order_list_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/cached_image_widget.dart';
@@ -52,7 +52,10 @@ class _ProductPaymentScreenState extends State<ProductPaymentScreen> {
     if (mounted) super.setState(fn);
   }
 
-  void placeOrder({required String txnId, required String paymentType, required String paymentStatus}) {
+  void placeOrder(
+      {required String txnId,
+      required String paymentType,
+      required String paymentStatus}) {
     appStore.setLoading(true);
 
     Map request = {
@@ -60,7 +63,9 @@ class _ProductPaymentScreenState extends State<ProductPaymentScreen> {
       "shipping_address_id": productStore.addressData.id,
       "billing_address_id": productStore.addressData.id,
       "phone": productStore.contactNumber,
-      "alternative_phone": productStore.alternateContactNumber.isNotEmpty ? productStore.alternateContactNumber : '',
+      "alternative_phone": productStore.alternateContactNumber.isNotEmpty
+          ? productStore.alternateContactNumber
+          : '',
       "chosen_logistic_zone_id": productStore.logisticZoneData.logisticId,
       "shipping_delivery_type": SHIPPING_DELIVERY_TYPE_REGULAR,
       "payment_method": paymentType,
@@ -182,7 +187,8 @@ class _ProductPaymentScreenState extends State<ProductPaymentScreen> {
       appStore.setLoading(false);
 
       payPalServices.paypalCheckOut();
-    } else if (selectedPayment.id == PaymentMethods.PAYMENT_METHOD_FLUTTER_WAVE) {
+    } else if (selectedPayment.id ==
+        PaymentMethods.PAYMENT_METHOD_FLUTTER_WAVE) {
       appStore.setLoading(true);
 
       flutterWaveServices.checkout(
@@ -243,7 +249,8 @@ class _ProductPaymentScreenState extends State<ProductPaymentScreen> {
                 8.height,
                 Text(locale.choosePaymentMethod, style: boldTextStyle()),
                 8.height,
-                Text(locale.chooseYourConvenientPayment, style: secondaryTextStyle()),
+                Text(locale.chooseYourConvenientPayment,
+                    style: secondaryTextStyle()),
                 32.height,
                 AnimatedListView(
                   shrinkWrap: true,
@@ -252,13 +259,20 @@ class _ProductPaymentScreenState extends State<ProductPaymentScreen> {
                   padding: EdgeInsets.zero,
                   itemBuilder: (context, index) {
                     return Container(
-                      decoration: boxDecorationWithRoundedCorners(borderRadius: radius(), backgroundColor: context.cardColor),
+                      decoration: boxDecorationWithRoundedCorners(
+                          borderRadius: radius(),
+                          backgroundColor: context.cardColor),
                       margin: EdgeInsets.only(bottom: 16),
                       child: SettingItemWidget(
                         title: payments[index].paymentMethod.validate(),
                         titleTextStyle: boldTextStyle(size: 14),
-                        padding: EdgeInsets.only(left: 16, bottom: 10, top: 10, right: 10),
-                        leading: CachedImageWidget(url: payments[index].icon.validate(), height: 22, width: 22, fit: BoxFit.contain),
+                        padding: EdgeInsets.only(
+                            left: 16, bottom: 10, top: 10, right: 10),
+                        leading: CachedImageWidget(
+                            url: payments[index].icon.validate(),
+                            height: 22,
+                            width: 22,
+                            fit: BoxFit.contain),
                         radius: radius(),
                         trailing: Radio<PaymentData>(
                           value: payments[index],
@@ -286,7 +300,8 @@ class _ProductPaymentScreenState extends State<ProductPaymentScreen> {
             right: 16,
             child: AppButton(
               width: context.width(),
-              child: Text(locale.placeOrder, style: boldTextStyle(color: Colors.white)),
+              child: Text(locale.placeOrder,
+                  style: boldTextStyle(color: Colors.white)),
               color: secondaryColor,
               onTap: () {
                 doIfLoggedIn(context, () async {

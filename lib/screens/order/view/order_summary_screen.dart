@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/app_scaffold.dart';
-import 'package:frezka/components/view_all_label_component.dart';
-import 'package:frezka/main.dart';
+import 'package:grow_tokyo_app/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/components/view_all_label_component.dart';
+import 'package:grow_tokyo_app/main.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/cached_image_widget.dart';
@@ -16,7 +16,11 @@ class OrderSummaryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      appBarWidget: commonAppBarWidget(context, title: locale.orderSummary, appBarHeight: 70, showLeadingIcon: true, roundCornerShape: true),
+      appBarWidget: commonAppBarWidget(context,
+          title: locale.orderSummary,
+          appBarHeight: 70,
+          showLeadingIcon: true,
+          roundCornerShape: true),
       body: Stack(
         children: [
           AnimatedScrollView(
@@ -29,17 +33,25 @@ class OrderSummaryScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(locale.shippingAddress, style: secondaryTextStyle(size: 14)),
+                    Text(locale.shippingAddress,
+                        style: secondaryTextStyle(size: 14)),
                     8.height,
-                    Text(productStore.fullName.validate(), style: boldTextStyle()),
+                    Text(productStore.fullName.validate(),
+                        style: boldTextStyle()),
                     Text(
                       '${productStore.addressData.addressLine1.validate()} ${productStore.addressData.addressLine2.validate()} ${productStore.addressData.cityName.validate()} - ${productStore.addressData.postalCode.validate()}',
                       style: primaryTextStyle(size: 12),
                     ),
-                    Text(productStore.addressData.stateName.validate(), style: primaryTextStyle(size: 12)),
-                    Text(productStore.addressData.countryName.validate(), style: primaryTextStyle(size: 12)),
-                    Text(productStore.contactNumber.validate().trim(), style: primaryTextStyle()),
-                    if (productStore.alternateContactNumber.trim().isNotEmpty) Text(productStore.alternateContactNumber.validate().trim(), style: primaryTextStyle()),
+                    Text(productStore.addressData.stateName.validate(),
+                        style: primaryTextStyle(size: 12)),
+                    Text(productStore.addressData.countryName.validate(),
+                        style: primaryTextStyle(size: 12)),
+                    Text(productStore.contactNumber.validate().trim(),
+                        style: primaryTextStyle()),
+                    if (productStore.alternateContactNumber.trim().isNotEmpty)
+                      Text(
+                          productStore.alternateContactNumber.validate().trim(),
+                          style: primaryTextStyle()),
                   ],
                 ),
               ),
@@ -49,7 +61,8 @@ class OrderSummaryScreen extends StatelessWidget {
                 itemCount: productStore.productCartListData.length,
                 listAnimationType: ListAnimationType.None,
                 itemBuilder: (context, index) {
-                  CartListData productData = productStore.productCartListData.validate()[index];
+                  CartListData productData =
+                      productStore.productCartListData.validate()[index];
 
                   return Container(
                     decoration: boxDecorationDefault(color: context.cardColor),
@@ -72,19 +85,31 @@ class OrderSummaryScreen extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(productData.productName.validate(), style: boldTextStyle(), maxLines: 1, overflow: TextOverflow.ellipsis),
+                                Text(productData.productName.validate(),
+                                    style: boldTextStyle(),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis),
                                 4.height,
                                 Row(
                                   children: [
-                                    Text('${locale.qty}: ', style: primaryTextStyle(size: 13)),
-                                    Text(productData.qty.validate().toString(), style: primaryTextStyle()),
+                                    Text('${locale.qty}: ',
+                                        style: primaryTextStyle(size: 13)),
+                                    Text(productData.qty.validate().toString(),
+                                        style: primaryTextStyle()),
                                   ],
                                 ),
-                                if (productData.productVariationType.validate().isNotEmpty)
+                                if (productData.productVariationType
+                                    .validate()
+                                    .isNotEmpty)
                                   Row(
                                     children: [
-                                      Text('${productData.productVariationType.validate()}: ', style: primaryTextStyle(size: 13)),
-                                      Text(productData.productVariationValue.validate(), style: primaryTextStyle()),
+                                      Text(
+                                          '${productData.productVariationType.validate()}: ',
+                                          style: primaryTextStyle(size: 13)),
+                                      Text(
+                                          productData.productVariationValue
+                                              .validate(),
+                                          style: primaryTextStyle()),
                                     ],
                                   ),
                                 if (productData.productVariation != null)
@@ -92,15 +117,32 @@ class OrderSummaryScreen extends StatelessWidget {
                                     child: Row(
                                       children: [
                                         PriceWidget(
-                                          price: productData.productVariation!.taxIncludeProductPrice.validate(),
-                                          isLineThroughEnabled: productData.isDiscount ? true : false,
-                                          size: productData.isDiscount ? 12 : 16,
-                                          color: productData.isDiscount ? textSecondaryColorGlobal : null,
+                                          price: productData.productVariation!
+                                              .taxIncludeProductPrice
+                                              .validate(),
+                                          isLineThroughEnabled:
+                                              productData.isDiscount
+                                                  ? true
+                                                  : false,
+                                          size:
+                                              productData.isDiscount ? 12 : 16,
+                                          color: productData.isDiscount
+                                              ? textSecondaryColorGlobal
+                                              : null,
                                         ),
                                         4.width,
-                                        if (productData.isDiscount) PriceWidget(price: productData.productVariation!.discountedProductPrice.validate()),
+                                        if (productData.isDiscount)
+                                          PriceWidget(
+                                              price: productData
+                                                  .productVariation!
+                                                  .discountedProductPrice
+                                                  .validate()),
                                         if (productData.isDiscount) 8.width,
-                                        if (productData.isDiscount) Text('${productData.discountValue}% ${locale.off}', style: primaryTextStyle(color: greenColor)),
+                                        if (productData.isDiscount)
+                                          Text(
+                                              '${productData.discountValue}% ${locale.off}',
+                                              style: primaryTextStyle(
+                                                  color: greenColor)),
                                       ],
                                     ),
                                   ),
@@ -120,7 +162,10 @@ class OrderSummaryScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ViewAllLabel(label: locale.priceDetails, isShowAll: false, labelSize: 14),
+                    ViewAllLabel(
+                        label: locale.priceDetails,
+                        isShowAll: false,
+                        labelSize: 14),
 
                     /// Subtotal
                     SettingItemWidget(
@@ -129,7 +174,8 @@ class OrderSummaryScreen extends StatelessWidget {
                       padding: EdgeInsets.zero,
                       trailing: Marquee(
                         child: PriceWidget(
-                          price: productStore.cartPriceData.taxIncludedAmount.validate(),
+                          price: productStore.cartPriceData.taxIncludedAmount
+                              .validate(),
                           color: textPrimaryColorGlobal,
                           size: 14,
                         ),
@@ -145,7 +191,8 @@ class OrderSummaryScreen extends StatelessWidget {
                         padding: EdgeInsets.zero,
                         trailing: Marquee(
                           child: PriceWidget(
-                            price: productStore.cartPriceData.discountAmount.validate(),
+                            price: productStore.cartPriceData.discountAmount
+                                .validate(),
                             color: Colors.green,
                             size: 14,
                             isBoldText: true,
@@ -155,14 +202,16 @@ class OrderSummaryScreen extends StatelessWidget {
                       ).paddingBottom(10),
 
                     /// Discount Amount
-                    if (productStore.cartPriceData.taxIncludedAmount != productStore.cartPriceData.totalAmount)
+                    if (productStore.cartPriceData.taxIncludedAmount !=
+                        productStore.cartPriceData.totalAmount)
                       SettingItemWidget(
                         title: locale.discountedAmount,
                         titleTextStyle: secondaryTextStyle(),
                         padding: EdgeInsets.zero,
                         trailing: Marquee(
                           child: PriceWidget(
-                            price: productStore.cartPriceData.totalAmount.validate(),
+                            price: productStore.cartPriceData.totalAmount
+                                .validate(),
                             color: textPrimaryColorGlobal,
                             size: 14,
                             isBoldText: true,
@@ -178,7 +227,8 @@ class OrderSummaryScreen extends StatelessWidget {
                         padding: EdgeInsets.zero,
                         trailing: Marquee(
                           child: PriceWidget(
-                            price: productStore.cartPriceData.taxAmount.validate(),
+                            price:
+                                productStore.cartPriceData.taxAmount.validate(),
                             size: 14,
                             color: textPrimaryColorGlobal,
                             isBoldText: true,
@@ -188,24 +238,32 @@ class OrderSummaryScreen extends StatelessWidget {
                     if (productStore.cartPriceData.taxAmount != 0) 10.height,
 
                     /// Delivery Charge
-                    if (productStore.logisticZoneData.standardDeliveryCharge != 0)
+                    if (productStore.logisticZoneData.standardDeliveryCharge !=
+                        0)
                       SettingItemWidget(
                         title: locale.deliveryCharge,
                         titleTextStyle: secondaryTextStyle(),
                         padding: EdgeInsets.zero,
                         trailing: Marquee(
                           child: PriceWidget(
-                            price: productStore.logisticZoneData.standardDeliveryCharge.validate(),
+                            price: productStore
+                                .logisticZoneData.standardDeliveryCharge
+                                .validate(),
                             size: 14,
                             color: textPrimaryColorGlobal,
                             isBoldText: true,
                           ),
                         ),
                       ),
-                    if (productStore.logisticZoneData.standardDeliveryCharge != 0) 10.height,
+                    if (productStore.logisticZoneData.standardDeliveryCharge !=
+                        0)
+                      10.height,
                     8.height,
 
-                    DottedLine(lineThickness: 1, dashLength: 4, dashColor: context.dividerColor),
+                    DottedLine(
+                        lineThickness: 1,
+                        dashLength: 4,
+                        dashColor: context.dividerColor),
                     10.height,
 
                     /// Total Amount
@@ -214,7 +272,10 @@ class OrderSummaryScreen extends StatelessWidget {
                       titleTextStyle: secondaryTextStyle(),
                       padding: EdgeInsets.zero,
                       trailing: Marquee(
-                        child: PriceWidget(price: productStore.totalAmount, color: primaryColor, size: 14),
+                        child: PriceWidget(
+                            price: productStore.totalAmount,
+                            color: primaryColor,
+                            size: 14),
                       ),
                     ),
                     16.height,
@@ -229,10 +290,12 @@ class OrderSummaryScreen extends StatelessWidget {
             right: 16,
             child: AppButton(
               width: context.width(),
-              child: Text(locale.proceed, style: boldTextStyle(color: Colors.white)),
+              child: Text(locale.proceed,
+                  style: boldTextStyle(color: Colors.white)),
               color: secondaryColor,
               onTap: () {
-                ProductPaymentScreen().launch(context, pageRouteAnimation: PageRouteAnimation.Fade);
+                ProductPaymentScreen().launch(context,
+                    pageRouteAnimation: PageRouteAnimation.Fade);
               },
             ),
           ),

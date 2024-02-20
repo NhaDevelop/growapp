@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/app_scaffold.dart';
-import 'package:frezka/screens/product/component/product_item_component.dart';
+import 'package:grow_tokyo_app/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/screens/product/component/product_item_component.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/back_widget.dart';
@@ -21,7 +21,12 @@ class ProductListScreen extends StatefulWidget {
   final String isBestSeller;
   final String isBestDiscounts;
 
-  ProductListScreen({this.productCategoryID, this.appBarTitleText, this.isFeatured = '', this.isBestSeller = '', this.isBestDiscounts = ''});
+  ProductListScreen(
+      {this.productCategoryID,
+      this.appBarTitleText,
+      this.isFeatured = '',
+      this.isBestSeller = '',
+      this.isBestDiscounts = ''});
 
   @override
   _ProductListScreenState createState() => _ProductListScreenState();
@@ -52,7 +57,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
 
   void init({bool flag = false, String search = ''}) async {
     future = getProductList(
-      categoryId: widget.productCategoryID != null ? widget.productCategoryID.toString() : '',
+      categoryId: widget.productCategoryID != null
+          ? widget.productCategoryID.toString()
+          : '',
       isFeatured: widget.isFeatured,
       bestSeller: widget.isBestSeller,
       bestDiscount: widget.isBestDiscounts,
@@ -83,7 +90,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
             Container(
               width: context.width(),
               height: 150,
-              decoration: boxDecorationWithRoundedCorners(borderRadius: radiusOnly(bottomLeft: 20, bottomRight: 20), backgroundColor: context.primaryColor),
+              decoration: boxDecorationWithRoundedCorners(
+                  borderRadius: radiusOnly(bottomLeft: 20, bottomRight: 20),
+                  backgroundColor: context.primaryColor),
               child: appBarWidget(
                 widget.appBarTitleText.validate(),
                 textColor: white,
@@ -117,7 +126,10 @@ class _ProductListScreenState extends State<ProductListScreen> {
 
                   init(flag: true);
                 },
-                decoration: inputDecoration(context, hint: locale.searchForProduct, prefixIcon: Icon(Icons.search, color: textSecondaryColorGlobal)),
+                decoration: inputDecoration(context,
+                    hint: locale.searchForProduct,
+                    prefixIcon:
+                        Icon(Icons.search, color: textSecondaryColorGlobal)),
               ),
             ),
           ],
@@ -176,7 +188,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
                 spacing: 16,
                 runSpacing: 16,
                 itemBuilder: (context, index) {
-                  return ProductItemComponent(productListData: productList[index]);
+                  return ProductItemComponent(
+                      productListData: productList[index]);
                 },
               ),
             ],

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:frezka/screens/auth/view/sign_in_screen.dart';
-import 'package:frezka/utils/colors.dart';
-import 'package:frezka/utils/extensions/string_extensions.dart';
-import 'package:frezka/utils/images.dart';
+import 'package:grow_tokyo_app/screens/auth/view/sign_in_screen.dart';
+import 'package:grow_tokyo_app/utils/colors.dart';
+import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
+import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/cached_image_widget.dart';
@@ -26,12 +26,16 @@ class DashboardScreen extends StatefulWidget {
   _DashboardScreenState createState() => _DashboardScreenState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingObserver {
+class _DashboardScreenState extends State<DashboardScreen>
+    with WidgetsBindingObserver {
   int currentPosition = 0;
 
   List<Widget> fragmentList = [
     HomeFragment(),
-    Observer(builder: (context) => appStore.isLoggedIn ? BookingFragment() : SignInScreen(isFromDashboard: true)),
+    Observer(
+        builder: (context) => appStore.isLoggedIn
+            ? BookingFragment()
+            : SignInScreen(isFromDashboard: true)),
     ProductScreen(),
     ProfileFragment(),
   ];
@@ -79,7 +83,8 @@ class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingOb
   @override
   void didChangePlatformBrightness() {
     if (getIntAsync(THEME_MODE_INDEX) == ThemeConst.THEME_MODE_SYSTEM) {
-      appStore.setDarkMode(MediaQuery.of(context).platformBrightness == Brightness.light);
+      appStore.setDarkMode(
+          MediaQuery.of(context).platformBrightness == Brightness.light);
     }
     super.didChangePlatformBrightness();
   }
@@ -103,7 +108,8 @@ class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingOb
             data: NavigationBarThemeData(
               backgroundColor: context.primaryColor.withOpacity(0.02),
               indicatorColor: context.primaryColor.withOpacity(0.1),
-              labelTextStyle: MaterialStateProperty.all(primaryTextStyle(size: 12)),
+              labelTextStyle:
+                  MaterialStateProperty.all(primaryTextStyle(size: 12)),
               surfaceTintColor: Colors.transparent,
               shadowColor: Colors.transparent,
             ),
@@ -115,43 +121,55 @@ class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingOb
               },
               destinations: [
                 bottomTab(
-                  iconData: ic_unselected_home.iconImage(color: appTextSecondaryColor, size: 18),
-                  activeIconData: ic_selected_home.iconImage(color: context.primaryColor, size: 18),
+                  iconData: ic_unselected_home.iconImage(
+                      color: appTextSecondaryColor, size: 18),
+                  activeIconData: ic_selected_home.iconImage(
+                      color: context.primaryColor, size: 18),
                   tabName: locale.home,
                 ),
                 bottomTab(
-                  iconData: ic_unselected_booking.iconImage(color: appTextSecondaryColor, size: 18),
-                  activeIconData: ic_selected_booking.iconImage(color: context.primaryColor, size: 18),
+                  iconData: ic_unselected_booking.iconImage(
+                      color: appTextSecondaryColor, size: 18),
+                  activeIconData: ic_selected_booking.iconImage(
+                      color: context.primaryColor, size: 18),
                   tabName: locale.booking,
                 ),
                 bottomTab(
-                  iconData: ic_unselected_shop.iconImage(color: appTextSecondaryColor, size: 20),
-                  activeIconData: ic_selected_shop.iconImage(color: context.primaryColor, size: 20),
+                  iconData: ic_unselected_shop.iconImage(
+                      color: appTextSecondaryColor, size: 20),
+                  activeIconData: ic_selected_shop.iconImage(
+                      color: context.primaryColor, size: 20),
                   tabName: locale.shop,
                 ),
-                Observer(
-                  builder: (context) {
-                    return bottomTab(
-                      iconData: appStore.isLoggedIn ? CachedImageWidget(
-                        url: userStore.userProfileImage.validate(),
-                        height: 26,
-                        fit: BoxFit.cover,
-                        width: 26,
-                        radius: 30,
-                        child: ic_unselected_profile.iconImage(color: appTextSecondaryColor, size: 18),
-                      ) : ic_unselected_profile.iconImage(color: appTextSecondaryColor, size: 18),
-                      activeIconData: appStore.isLoggedIn ? CachedImageWidget(
-                        url: userStore.userProfileImage.validate(),
-                        height: 26,
-                        fit: BoxFit.cover,
-                        width: 26,
-                        radius: 30,
-                        child: ic_selected_profile.iconImage(color: context.primaryColor, size: 18),
-                      ) : ic_selected_profile.iconImage(color: context.primaryColor, size: 18),
-                      tabName: locale.user,
-                    );
-                  }
-                ),
+                Observer(builder: (context) {
+                  return bottomTab(
+                    iconData: appStore.isLoggedIn
+                        ? CachedImageWidget(
+                            url: userStore.userProfileImage.validate(),
+                            height: 26,
+                            fit: BoxFit.cover,
+                            width: 26,
+                            radius: 30,
+                            child: ic_unselected_profile.iconImage(
+                                color: appTextSecondaryColor, size: 18),
+                          )
+                        : ic_unselected_profile.iconImage(
+                            color: appTextSecondaryColor, size: 18),
+                    activeIconData: appStore.isLoggedIn
+                        ? CachedImageWidget(
+                            url: userStore.userProfileImage.validate(),
+                            height: 26,
+                            fit: BoxFit.cover,
+                            width: 26,
+                            radius: 30,
+                            child: ic_selected_profile.iconImage(
+                                color: context.primaryColor, size: 18),
+                          )
+                        : ic_selected_profile.iconImage(
+                            color: context.primaryColor, size: 18),
+                    tabName: locale.user,
+                  );
+                }),
               ],
             ),
           ),

@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:frezka/components/body_widget.dart';
-import 'package:frezka/main.dart';
-import 'package:frezka/screens/auth/view/change_password_screen.dart';
-import 'package:frezka/utils/app_common.dart';
-import 'package:frezka/utils/colors.dart';
+import 'package:grow_tokyo_app/components/body_widget.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/screens/auth/view/change_password_screen.dart';
+import 'package:grow_tokyo_app/utils/app_common.dart';
+import 'package:grow_tokyo_app/utils/colors.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
@@ -109,7 +109,11 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBarWidget(context, title: locale.otpVerification, appBarHeight: 70, roundCornerShape: true, showLeadingIcon: true),
+      appBar: commonAppBarWidget(context,
+          title: locale.otpVerification,
+          appBarHeight: 70,
+          roundCornerShape: true,
+          showLeadingIcon: true),
       body: Body(
         child: SingleChildScrollView(
           padding: EdgeInsets.all(16),
@@ -117,7 +121,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               16.height,
-              Text(locale.checkYourMailAnd, style: secondaryTextStyle(), textAlign: TextAlign.center).center(),
+              Text(locale.checkYourMailAnd,
+                      style: secondaryTextStyle(), textAlign: TextAlign.center)
+                  .center(),
               16.height,
               _formWidget(),
               16.height,
@@ -134,7 +140,10 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     onPressed: () {
                       //
                     },
-                    child: Text(locale.resendOtp, style: boldTextStyle(color: primaryColor, decoration: TextDecoration.underline)),
+                    child: Text(locale.resendOtp,
+                        style: boldTextStyle(
+                            color: primaryColor,
+                            decoration: TextDecoration.underline)),
                   ),
                 ],
               ).visible(currentSeconds == timerMaxSeconds),

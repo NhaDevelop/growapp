@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/cached_image_widget.dart';
-import 'package:frezka/components/status_widget.dart';
-import 'package:frezka/utils/extensions/string_extensions.dart';
-import 'package:frezka/utils/images.dart';
+import 'package:grow_tokyo_app/components/cached_image_widget.dart';
+import 'package:grow_tokyo_app/components/status_widget.dart';
+import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
+import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -46,7 +46,8 @@ class _BranchItemComponentState extends State<BranchItemComponent> {
 
   double get getDistance {
     if (widget.position == null) return 0;
-    if (widget.branchData.latitude == null || widget.branchData.longitude == null) return 0;
+    if (widget.branchData.latitude == null ||
+        widget.branchData.longitude == null) return 0;
 
     return calculateDistance(
       widget.branchData.latitude!.toDouble(),
@@ -67,25 +68,40 @@ class _BranchItemComponentState extends State<BranchItemComponent> {
           },
           child: Container(
             margin: EdgeInsets.only(bottom: 16),
-            decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor, borderRadius: radius()),
+            decoration: boxDecorationWithRoundedCorners(
+                backgroundColor: context.cardColor, borderRadius: radius()),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ClipRRect(
-                  borderRadius: radiusOnly(topRight: defaultRadius, topLeft: defaultRadius),
-                  child: CachedImageWidget(url: widget.branchData.branchImg.validate(), height: 150, width: context.width(), fit: BoxFit.cover),
+                  borderRadius: radiusOnly(
+                      topRight: defaultRadius, topLeft: defaultRadius),
+                  child: CachedImageWidget(
+                      url: widget.branchData.branchImg.validate(),
+                      height: 150,
+                      width: context.width(),
+                      fit: BoxFit.cover),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        Text(widget.branchData.name.validate(), style: boldTextStyle(), maxLines: 1, overflow: TextOverflow.ellipsis),
+                        Text(widget.branchData.name.validate(),
+                            style: boldTextStyle(),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis),
                         6.width,
                         Container(
                           padding: EdgeInsets.symmetric(horizontal: 8),
-                          decoration: boxDecorationWithRoundedCorners(backgroundColor: quaternaryButtonColor),
-                          child: Text(widget.branchData.branchFor.validate().capitalizeFirstLetter(), style: primaryTextStyle(color: secondaryColor, size: 11)),
+                          decoration: boxDecorationWithRoundedCorners(
+                              backgroundColor: quaternaryButtonColor),
+                          child: Text(
+                              widget.branchData.branchFor
+                                  .validate()
+                                  .capitalizeFirstLetter(),
+                              style: primaryTextStyle(
+                                  color: secondaryColor, size: 11)),
                         ),
                       ],
                     ),
@@ -97,20 +113,28 @@ class _BranchItemComponentState extends State<BranchItemComponent> {
                       maxLine: 2,
                       expandedText: true,
                       onTap: () {
-                        launchMap('${widget.branchData.addressLine1.validate()}');
+                        launchMap(
+                            '${widget.branchData.addressLine1.validate()}');
                       },
                       edgeInsets: EdgeInsets.only(left: 0),
-                      prefix: ic_location.iconImage(color: textSecondaryColorGlobal, size: 16),
+                      prefix: ic_location.iconImage(
+                          color: textSecondaryColorGlobal, size: 16),
                     ),
                     6.height,
                     Row(
                       children: [
-                        ic_direction.iconImage(color: textSecondaryColorGlobal, size: 16),
+                        ic_direction.iconImage(
+                            color: textSecondaryColorGlobal, size: 16),
                         12.width,
                         RichTextWidget(
                           list: [
-                            if (widget.position != null) TextSpan(text: '$getDistance ${locale.kms} ', style: boldTextStyle(size: 14)),
-                            TextSpan(text: locale.fromYourLocation, style: secondaryTextStyle()),
+                            if (widget.position != null)
+                              TextSpan(
+                                  text: '$getDistance ${locale.kms} ',
+                                  style: boldTextStyle(size: 14)),
+                            TextSpan(
+                                text: locale.fromYourLocation,
+                                style: secondaryTextStyle()),
                           ],
                         ).expand(),
                       ],
@@ -121,10 +145,17 @@ class _BranchItemComponentState extends State<BranchItemComponent> {
                         Row(
                           children: [
                             TextIcon(
-                              text: widget.branchData.ratingStar.validate().toString(),
+                              text: widget.branchData.ratingStar
+                                  .validate()
+                                  .toString(),
                               spacing: 10,
                               edgeInsets: EdgeInsets.only(left: 0),
-                              prefix: Icon(Icons.star, size: 18, color: getRatingBarColor(widget.branchData.ratingStar.validate().toInt())),
+                              prefix: Icon(Icons.star,
+                                  size: 18,
+                                  color: getRatingBarColor(widget
+                                      .branchData.ratingStar
+                                      .validate()
+                                      .toInt())),
                             ),
                             if (widget.branchData.totalReview.validate() >= 1)
                               Text(
@@ -135,10 +166,31 @@ class _BranchItemComponentState extends State<BranchItemComponent> {
                         ).expand(),
                         if (widget.branchData.todayTime != null)
                           StatusWidget(
-                            text: getBranchIsOpen(startTime: widget.branchData.todayTime!.startTime.validate(), endTime: widget.branchData.todayTime!.endTime.validate(), isHoliday: widget.branchData.todayTime!.isHoliday.validate().getBoolInt())
+                            text: getBranchIsOpen(
+                                    startTime: widget
+                                        .branchData.todayTime!.startTime
+                                        .validate(),
+                                    endTime: widget
+                                        .branchData.todayTime!.endTime
+                                        .validate(),
+                                    isHoliday: widget
+                                        .branchData.todayTime!.isHoliday
+                                        .validate()
+                                        .getBoolInt())
                                 .$1
                                 .validate(),
-                            color: getBranchIsOpen(startTime: widget.branchData.todayTime!.startTime.validate(), endTime: widget.branchData.todayTime!.endTime.validate(), isHoliday: widget.branchData.todayTime!.isHoliday.validate().getBoolInt()).$2,
+                            color: getBranchIsOpen(
+                                    startTime: widget
+                                        .branchData.todayTime!.startTime
+                                        .validate(),
+                                    endTime: widget
+                                        .branchData.todayTime!.endTime
+                                        .validate(),
+                                    isHoliday: widget
+                                        .branchData.todayTime!.isHoliday
+                                        .validate()
+                                        .getBoolInt())
+                                .$2,
                           )
                         else
                           StatusWidget(text: locale.closed, color: Colors.red),
@@ -150,13 +202,17 @@ class _BranchItemComponentState extends State<BranchItemComponent> {
             ),
           ),
         ),
-        if (((widget.currentBranchIndex == widget.selectedBranchId) && widget.isFormSignIn))
+        if (((widget.currentBranchIndex == widget.selectedBranchId) &&
+            widget.isFormSignIn))
           Container(
             height: cardSize,
             width: context.width(),
             margin: EdgeInsets.only(bottom: 16),
-            decoration: boxDecorationWithRoundedCorners(backgroundColor: context.primaryColor.withOpacity(0.4), borderRadius: radius()),
-            child: Icon(Icons.check_circle_outline_outlined, size: 40, color: white),
+            decoration: boxDecorationWithRoundedCorners(
+                backgroundColor: context.primaryColor.withOpacity(0.4),
+                borderRadius: radius()),
+            child: Icon(Icons.check_circle_outline_outlined,
+                size: 40, color: white),
           ),
       ],
     );

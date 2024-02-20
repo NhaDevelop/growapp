@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/app_scaffold.dart';
-import 'package:frezka/components/loader_widget.dart';
-import 'package:frezka/utils/extensions/string_extensions.dart';
+import 'package:grow_tokyo_app/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/components/loader_widget.dart';
+import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/cached_image_widget.dart';
@@ -23,7 +23,8 @@ class AllReviewProductComponent extends StatefulWidget {
   AllReviewProductComponent({this.productId});
 
   @override
-  _AllReviewProductComponentState createState() => _AllReviewProductComponentState();
+  _AllReviewProductComponentState createState() =>
+      _AllReviewProductComponentState();
 }
 
 class _AllReviewProductComponentState extends State<AllReviewProductComponent> {
@@ -88,7 +89,8 @@ class _AllReviewProductComponentState extends State<AllReviewProductComponent> {
         },
         onSuccess: (reviewListData) {
           return AnimatedListView(
-            slideConfiguration: SlideConfiguration(duration: 400.milliseconds, delay: 50.milliseconds),
+            slideConfiguration: SlideConfiguration(
+                duration: 400.milliseconds, delay: 50.milliseconds),
             shrinkWrap: true,
             listAnimationType: ListAnimationType.FadeIn,
             fadeInConfiguration: FadeInConfiguration(duration: 2.seconds),
@@ -106,7 +108,8 @@ class _AllReviewProductComponentState extends State<AllReviewProductComponent> {
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 margin: EdgeInsets.symmetric(vertical: 8),
                 width: context.width(),
-                decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor),
+                decoration: boxDecorationWithRoundedCorners(
+                    backgroundColor: context.cardColor),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -118,26 +121,42 @@ class _AllReviewProductComponentState extends State<AllReviewProductComponent> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Container(
-                              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 4),
                               alignment: Alignment.center,
-                              decoration: boxDecorationWithRoundedCorners(backgroundColor: context.scaffoldBackgroundColor),
+                              decoration: boxDecorationWithRoundedCorners(
+                                  backgroundColor:
+                                      context.scaffoldBackgroundColor),
                               child: TextIcon(
                                 text: reviewData.rating.validate().toString(),
                                 edgeInsets: EdgeInsets.only(left: 0),
-                                textStyle: boldTextStyle(size: 14, color: primaryColor),
-                                prefix: Icon(Icons.star, size: 10, color: getRatingBarColor(reviewData.rating.validate().toInt())),
+                                textStyle: boldTextStyle(
+                                    size: 14, color: primaryColor),
+                                prefix: Icon(Icons.star,
+                                    size: 10,
+                                    color: getRatingBarColor(
+                                        reviewData.rating.validate().toInt())),
                               ),
                             ),
                             8.width,
-                            Marquee(child: Text(reviewData.userName.validate(), style: primaryTextStyle(size: 14))).flexible(),
+                            Marquee(
+                                    child: Text(reviewData.userName.validate(),
+                                        style: primaryTextStyle(size: 14)))
+                                .flexible(),
                           ],
                         ).expand(),
                         8.width,
-                        reviewData.createdAt.validate().isNotEmpty ? Text(formatDate(reviewData.createdAt.validate(), format: DateFormatConst.DATE_FORMAT_4), style: secondaryTextStyle()) : SizedBox(),
+                        reviewData.createdAt.validate().isNotEmpty
+                            ? Text(
+                                formatDate(reviewData.createdAt.validate(),
+                                    format: DateFormatConst.DATE_FORMAT_4),
+                                style: secondaryTextStyle())
+                            : SizedBox(),
                       ],
                     ),
                     14.height,
-                    ReadMoreText(reviewData.reviewMsg.validate(), style: boldTextStyle(size: 12)),
+                    ReadMoreText(reviewData.reviewMsg.validate(),
+                        style: boldTextStyle(size: 12)),
                     16.height,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -145,9 +164,13 @@ class _AllReviewProductComponentState extends State<AllReviewProductComponent> {
                         AnimatedWrap(
                           spacing: 10,
                           runSpacing: 10,
-                          itemCount: reviewData.reviewGallary.validate().take(3).length,
+                          itemCount: reviewData.reviewGallary
+                              .validate()
+                              .take(3)
+                              .length,
                           itemBuilder: (ctx, index) {
-                            ReviewGallaryData galleryData = reviewData.reviewGallary.validate()[index];
+                            ReviewGallaryData galleryData =
+                                reviewData.reviewGallary.validate()[index];
 
                             return CachedImageWidget(
                               url: '${galleryData.fullUrl.validate()}',
@@ -158,7 +181,10 @@ class _AllReviewProductComponentState extends State<AllReviewProductComponent> {
                             ).onTap(() {
                               if (galleryData.fullUrl.validate().isNotEmpty)
                                 ZoomImageScreen(
-                                  galleryImages: reviewData.reviewGallary.validate().map((e) => e.fullUrl.validate()).toList(),
+                                  galleryImages: reviewData.reviewGallary
+                                      .validate()
+                                      .map((e) => e.fullUrl.validate())
+                                      .toList(),
                                   index: index,
                                 ).launch(context);
                             });
@@ -172,18 +198,23 @@ class _AllReviewProductComponentState extends State<AllReviewProductComponent> {
                                 IconButton(
                                   padding: EdgeInsets.zero,
                                   visualDensity: VisualDensity.compact,
-                                  icon: reviewData.isUserLike == 1 ? ic_fill_like.iconImage(size: 16, color: primaryColor) : ic_like.iconImage(size: 16),
+                                  icon: reviewData.isUserLike == 1
+                                      ? ic_fill_like.iconImage(
+                                          size: 16, color: primaryColor)
+                                      : ic_like.iconImage(size: 16),
                                   onPressed: () async {
                                     /// Review Like Api
 
                                     doIfLoggedIn(context, () async {
                                       if (reviewData.isUserLike != 1) {
                                         Map req = {
-                                          ProductModelKey.reviewId: reviewData.id,
+                                          ProductModelKey.reviewId:
+                                              reviewData.id,
                                           ProductModelKey.isLike: 1,
                                         };
 
-                                        await addReviewLikeOrDislike(req).then((value) {
+                                        await addReviewLikeOrDislike(req)
+                                            .then((value) {
                                           toast('${locale.thanksForVoting}!');
                                         }).catchError((error) {
                                           toast(error.toString());
@@ -195,7 +226,8 @@ class _AllReviewProductComponentState extends State<AllReviewProductComponent> {
                                     });
                                   },
                                 ),
-                                Text('${reviewData.reviewLikes}', style: secondaryTextStyle()),
+                                Text('${reviewData.reviewLikes}',
+                                    style: secondaryTextStyle()),
                               ],
                             ),
                             4.width,
@@ -203,18 +235,23 @@ class _AllReviewProductComponentState extends State<AllReviewProductComponent> {
                               children: [
                                 IconButton(
                                   padding: EdgeInsets.zero,
-                                  icon: reviewData.isUserDislike == 1 ? ic_fill_dislike.iconImage(size: 16, color: secondaryColor) : ic_dislike.iconImage(size: 16),
+                                  icon: reviewData.isUserDislike == 1
+                                      ? ic_fill_dislike.iconImage(
+                                          size: 16, color: secondaryColor)
+                                      : ic_dislike.iconImage(size: 16),
                                   onPressed: () async {
                                     /// Review DisLike Api
 
                                     doIfLoggedIn(context, () async {
                                       if (reviewData.isUserDislike != 1) {
                                         Map req = {
-                                          ProductModelKey.reviewId: reviewData.id,
+                                          ProductModelKey.reviewId:
+                                              reviewData.id,
                                           ProductModelKey.isDislike: 1,
                                         };
 
-                                        await addReviewLikeOrDislike(req).then((value) {
+                                        await addReviewLikeOrDislike(req)
+                                            .then((value) {
                                           toast('${locale.thanksForVoting}!');
                                         }).catchError((error) {
                                           toast(error.toString());
@@ -226,7 +263,8 @@ class _AllReviewProductComponentState extends State<AllReviewProductComponent> {
                                     });
                                   },
                                 ),
-                                Text('${reviewData.reviewDislikes}', style: secondaryTextStyle()),
+                                Text('${reviewData.reviewDislikes}',
+                                    style: secondaryTextStyle()),
                               ],
                             ),
                           ],

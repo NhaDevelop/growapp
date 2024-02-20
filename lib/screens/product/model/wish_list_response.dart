@@ -1,4 +1,4 @@
-import 'package:frezka/screens/product/model/product_list_response.dart';
+import 'package:grow_tokyo_app/screens/product/model/product_list_response.dart';
 
 class WishListResponse {
   String? message;
@@ -11,7 +11,9 @@ class WishListResponse {
     return WishListResponse(
       message: json['message'],
       status: json['status'],
-      wishlist: json['wishlist'] != null ? ProductData.fromJson(json['wishlist']) : null,
+      wishlist: json['wishlist'] != null
+          ? ProductData.fromJson(json['wishlist'])
+          : null,
     );
   }
 

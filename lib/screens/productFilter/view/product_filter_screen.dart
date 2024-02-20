@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/app_scaffold.dart';
-import 'package:frezka/main.dart';
-import 'package:frezka/utils/app_common.dart';
+import 'package:grow_tokyo_app/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/utils/app_common.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../utils/colors.dart';
@@ -70,7 +70,9 @@ class _ProductFilterScreenState extends State<ProductFilterScreen> {
                 AppButton(
                   text: locale.clearFilter,
                   textColor: context.primaryColor,
-                  shapeBorder: RoundedRectangleBorder(side: BorderSide(color: context.primaryColor), borderRadius: radius()),
+                  shapeBorder: RoundedRectangleBorder(
+                      side: BorderSide(color: context.primaryColor),
+                      borderRadius: radius()),
                   onTap: () {
                     //
                   },

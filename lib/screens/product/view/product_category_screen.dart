@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/app_scaffold.dart';
-import 'package:frezka/components/loader_widget.dart';
+import 'package:grow_tokyo_app/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/components/loader_widget.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/empty_error_state_widget.dart';
@@ -117,14 +117,19 @@ class _ProductCategoryScreenState extends State<ProductCategoryScreen> {
                 spacing: 16,
                 itemCount: list.length,
                 listAnimationType: ListAnimationType.Scale,
-                scaleConfiguration: ScaleConfiguration(duration: 300.milliseconds, delay: 50.milliseconds),
+                scaleConfiguration: ScaleConfiguration(
+                    duration: 300.milliseconds, delay: 50.milliseconds),
                 itemBuilder: (_, index) {
                   CategoryData? data = list[index];
                   return GestureDetector(
                     onTap: () {
-                      ProductListScreen(productCategoryID: data.id, appBarTitleText: data.name).launch(context);
+                      ProductListScreen(
+                              productCategoryID: data.id,
+                              appBarTitleText: data.name)
+                          .launch(context);
                     },
-                    child: CategoryItemWidget(categoryData: data, width: context.width() / 3 - 22),
+                    child: CategoryItemWidget(
+                        categoryData: data, width: context.width() / 3 - 22),
                   );
                 },
               ),

@@ -1,5 +1,4 @@
-
-import 'package:frezka/screens/auth/model/user_data_model.dart';
+import 'package:grow_tokyo_app/screens/auth/model/user_data_model.dart';
 
 class UserUpdateResponse {
   UserData? data;

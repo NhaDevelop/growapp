@@ -1,4 +1,4 @@
-import 'package:frezka/models/review_data.dart';
+import 'package:grow_tokyo_app/models/review_data.dart';
 
 class EmployeeReviewResponse {
   List<ReviewData>? reviewData;
@@ -9,7 +9,9 @@ class EmployeeReviewResponse {
 
   factory EmployeeReviewResponse.fromJson(Map<String, dynamic> json) {
     return EmployeeReviewResponse(
-      reviewData: json['data'] != null ? (json['data'] as List).map((i) => ReviewData.fromJson(i)).toList() : null,
+      reviewData: json['data'] != null
+          ? (json['data'] as List).map((i) => ReviewData.fromJson(i)).toList()
+          : null,
       message: json['message'],
       status: json['status'],
     );

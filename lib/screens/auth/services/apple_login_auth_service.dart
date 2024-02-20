@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:frezka/main.dart';
-import 'package:frezka/screens/auth/auth_repository.dart';
-import 'package:frezka/utils/constants.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/screens/auth/auth_repository.dart';
+import 'package:grow_tokyo_app/utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:the_apple_sign_in/the_apple_sign_in.dart';
@@ -20,7 +20,8 @@ class AppleLoginAuthService {
           final oAuthProvider = OAuthProvider('apple.com');
           final credential = oAuthProvider.credential(
             idToken: String.fromCharCodes(appleIdCredential.identityToken!),
-            accessToken: String.fromCharCodes(appleIdCredential.authorizationCode!),
+            accessToken:
+                String.fromCharCodes(appleIdCredential.authorizationCode!),
           );
 
           final authResult = await auth.signInWithCredential(credential);
@@ -59,10 +60,11 @@ class AppleLoginAuthService {
   }
 
   Future<void> saveAppleData(AuthorizationResult result) async {
-
     await setValue(SharedPreferenceConst.APPLE_EMAIL, result.credential!.email);
-    await setValue(SharedPreferenceConst.APPLE_GIVE_NAME, result.credential!.fullName!.givenName);
-    await setValue(SharedPreferenceConst.APPLE_FAMILY_NAME, result.credential!.fullName!.familyName);
+    await setValue(SharedPreferenceConst.APPLE_GIVE_NAME,
+        result.credential!.fullName!.givenName);
+    await setValue(SharedPreferenceConst.APPLE_FAMILY_NAME,
+        result.credential!.fullName!.familyName);
   }
 
   Future<void> saveAppleDataWithoutEmail(User user) async {
@@ -72,10 +74,20 @@ class AppleLoginAuthService {
     log('appleFamilyName:- ${getStringAsync(SharedPreferenceConst.APPLE_FAMILY_NAME)}');
 
     var req = {
-      'email': getStringAsync(SharedPreferenceConst.APPLE_EMAIL).isNotEmpty ? getStringAsync(SharedPreferenceConst.APPLE_EMAIL) : getStringAsync(SharedPreferenceConst.APPLE_UID) + '@gmail.com',
-      'first_name':getStringAsync(SharedPreferenceConst.APPLE_GIVE_NAME).isNotEmpty ? getStringAsync(SharedPreferenceConst.APPLE_GIVE_NAME) : '',
-      'last_name':  getStringAsync(SharedPreferenceConst.APPLE_FAMILY_NAME).isNotEmpty ? getStringAsync(SharedPreferenceConst.APPLE_FAMILY_NAME) : '',
-      "username": getStringAsync(SharedPreferenceConst.APPLE_EMAIL).isNotEmpty ? getStringAsync(SharedPreferenceConst.APPLE_EMAIL) : getStringAsync(SharedPreferenceConst.APPLE_UID) + '@gmail.com',
+      'email': getStringAsync(SharedPreferenceConst.APPLE_EMAIL).isNotEmpty
+          ? getStringAsync(SharedPreferenceConst.APPLE_EMAIL)
+          : getStringAsync(SharedPreferenceConst.APPLE_UID) + '@gmail.com',
+      'first_name':
+          getStringAsync(SharedPreferenceConst.APPLE_GIVE_NAME).isNotEmpty
+              ? getStringAsync(SharedPreferenceConst.APPLE_GIVE_NAME)
+              : '',
+      'last_name':
+          getStringAsync(SharedPreferenceConst.APPLE_FAMILY_NAME).isNotEmpty
+              ? getStringAsync(SharedPreferenceConst.APPLE_FAMILY_NAME)
+              : '',
+      "username": getStringAsync(SharedPreferenceConst.APPLE_EMAIL).isNotEmpty
+          ? getStringAsync(SharedPreferenceConst.APPLE_EMAIL)
+          : getStringAsync(SharedPreferenceConst.APPLE_UID) + '@gmail.com',
       "profile_image": '',
       "social_image": '',
       'accessToken': '12345678',

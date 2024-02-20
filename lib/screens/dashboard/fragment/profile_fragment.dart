@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:frezka/components/loader_widget.dart';
-import 'package:frezka/components/logout_confirmation_dialog.dart';
-import 'package:frezka/main.dart';
-import 'package:frezka/screens/auth/auth_repository.dart';
-import 'package:frezka/screens/dashboard/component/common_app_component.dart';
-import 'package:frezka/screens/dashboard/view/dashboard_screen.dart';
-import 'package:frezka/screens/profile/view/about_detail_screen.dart';
-import 'package:frezka/screens/profile/view/setting_screen.dart';
-import 'package:frezka/utils/common_base.dart';
-import 'package:frezka/utils/constants.dart';
-import 'package:frezka/utils/extensions/string_extensions.dart';
+import 'package:grow_tokyo_app/components/loader_widget.dart';
+import 'package:grow_tokyo_app/components/logout_confirmation_dialog.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/screens/auth/auth_repository.dart';
+import 'package:grow_tokyo_app/screens/dashboard/component/common_app_component.dart';
+import 'package:grow_tokyo_app/screens/dashboard/view/dashboard_screen.dart';
+import 'package:grow_tokyo_app/screens/profile/view/about_detail_screen.dart';
+import 'package:grow_tokyo_app/screens/profile/view/setting_screen.dart';
+import 'package:grow_tokyo_app/utils/common_base.dart';
+import 'package:grow_tokyo_app/utils/constants.dart';
+import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/cached_image_widget.dart';
@@ -98,12 +98,14 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                             decoration: boxDecorationDefault(
                               shape: BoxShape.circle,
                               color: primaryColor,
-                              border: Border.all(color: context.cardColor, width: 2),
+                              border: Border.all(
+                                  color: context.cardColor, width: 2),
                             ),
                             child: Icon(Icons.edit, color: white, size: 18),
                           ).onTap(
                             () {
-                              EditProfileScreen().launch(context, pageRouteAnimation: PageRouteAnimation.Fade);
+                              EditProfileScreen().launch(context,
+                                  pageRouteAnimation: PageRouteAnimation.Fade);
                             },
                             highlightColor: Colors.transparent,
                             splashColor: Colors.transparent,
@@ -121,11 +123,15 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                     children: [
                       24.height,
                       Observer(builder: (context) {
-                        return Text(userStore.userFullName.validate(), style: boldTextStyle(size: 18)).center();
+                        return Text(userStore.userFullName.validate(),
+                                style: boldTextStyle(size: 18))
+                            .center();
                       }),
                       4.height,
                       Observer(builder: (context) {
-                        return Text(userStore.userEmail.validate(), style: secondaryTextStyle()).center();
+                        return Text(userStore.userEmail.validate(),
+                                style: secondaryTextStyle())
+                            .center();
                       }),
                       16.height,
                     ],
@@ -137,10 +143,13 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                       titleTextStyle: boldTextStyle(size: LABEL_TEXT_SIZE),
                       subTitle: locale.seeYourOrders,
                       leading: ic_order.iconImage(fit: BoxFit.cover, size: 16),
-                      decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor),
-                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      decoration: boxDecorationWithRoundedCorners(
+                          backgroundColor: context.cardColor),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                       onTap: () {
-                        OrderListScreen().launch(context, pageRouteAnimation: PageRouteAnimation.Fade);
+                        OrderListScreen().launch(context,
+                            pageRouteAnimation: PageRouteAnimation.Fade);
                       },
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
@@ -151,11 +160,15 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                       title: locale.myAddresses,
                       titleTextStyle: boldTextStyle(size: LABEL_TEXT_SIZE),
                       subTitle: locale.manageYourAddresses,
-                      leading: ic_location.iconImage(fit: BoxFit.cover, size: 16),
-                      decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor),
-                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      leading:
+                          ic_location.iconImage(fit: BoxFit.cover, size: 16),
+                      decoration: boxDecorationWithRoundedCorners(
+                          backgroundColor: context.cardColor),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                       onTap: () {
-                        SelectAddressScreen(isFromProfile: true).launch(context, pageRouteAnimation: PageRouteAnimation.Fade);
+                        SelectAddressScreen(isFromProfile: true).launch(context,
+                            pageRouteAnimation: PageRouteAnimation.Fade);
                       },
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
@@ -165,10 +178,15 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                     SettingItemWidget(
                       title: locale.setting,
                       titleTextStyle: boldTextStyle(size: LABEL_TEXT_SIZE),
-                      subTitle: !isSocialLoginType ? '${locale.changePassword}, ${locale.appLanguage}, ${locale.theme}, ${locale.deleteAccount}' : '${locale.appLanguage}, ${locale.theme}, ${locale.deleteAccount}',
-                      leading: ic_setting.iconImage(fit: BoxFit.cover, size: 16),
-                      decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor),
-                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      subTitle: !isSocialLoginType
+                          ? '${locale.changePassword}, ${locale.appLanguage}, ${locale.theme}, ${locale.deleteAccount}'
+                          : '${locale.appLanguage}, ${locale.theme}, ${locale.deleteAccount}',
+                      leading:
+                          ic_setting.iconImage(fit: BoxFit.cover, size: 16),
+                      decoration: boxDecorationWithRoundedCorners(
+                          backgroundColor: context.cardColor),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                       onTap: () {
                         SettingScreen().launch(context);
                       },
@@ -180,12 +198,18 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                     SettingItemWidget(
                       title: locale.aboutApp,
                       titleTextStyle: boldTextStyle(size: LABEL_TEXT_SIZE),
-                      subTitle: '${locale.rateUs}, ${locale.share}, ${locale.about}',
+                      subTitle:
+                          '${locale.rateUs}, ${locale.share}, ${locale.about}',
                       leading: ic_about.iconImage(fit: BoxFit.cover, size: 18),
-                      decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor),
-                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      decoration: boxDecorationWithRoundedCorners(
+                          backgroundColor: context.cardColor),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                       onTap: () {
-                        AboutDetailScreen(aboutModel: aboutAppList, title: locale.aboutApp).launch(context);
+                        AboutDetailScreen(
+                                aboutModel: aboutAppList,
+                                title: locale.aboutApp)
+                            .launch(context);
                       },
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
@@ -195,12 +219,17 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                     SettingItemWidget(
                       title: locale.help,
                       titleTextStyle: boldTextStyle(size: LABEL_TEXT_SIZE),
-                      subTitle: '${locale.helpCenter}, ${locale.privacyPolicy}, ${locale.tC}',
+                      subTitle:
+                          '${locale.helpCenter}, ${locale.privacyPolicy}, ${locale.tC}',
                       leading: ic_help.iconImage(fit: BoxFit.cover, size: 16),
-                      decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor),
-                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      decoration: boxDecorationWithRoundedCorners(
+                          backgroundColor: context.cardColor),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                       onTap: () {
-                        AboutDetailScreen(aboutModel: helpList, title: locale.help).launch(context);
+                        AboutDetailScreen(
+                                aboutModel: helpList, title: locale.help)
+                            .launch(context);
                       },
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
@@ -212,11 +241,14 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                       titleTextStyle: boldTextStyle(size: LABEL_TEXT_SIZE),
                       subTitle: locale.signInYourAccount,
                       leading: ic_logout.iconImage(fit: BoxFit.cover, size: 14),
-                      decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor),
-                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      decoration: boxDecorationWithRoundedCorners(
+                          backgroundColor: context.cardColor),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                       onTap: () {
                         doIfLoggedIn(context, () {
-                          DashboardScreen(pageIndex: 3).launch(context, isNewTask: true);
+                          DashboardScreen(pageIndex: 3)
+                              .launch(context, isNewTask: true);
                         });
                       },
                       hoverColor: Colors.transparent,
@@ -228,8 +260,10 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                       titleTextStyle: boldTextStyle(size: LABEL_TEXT_SIZE),
                       subTitle: locale.logoutYourAccount,
                       leading: ic_logout.iconImage(fit: BoxFit.cover, size: 14),
-                      decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor),
-                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      decoration: boxDecorationWithRoundedCorners(
+                          backgroundColor: context.cardColor),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                       onTap: () async {
                         bool? res = await showInDialog(
                           context,
@@ -247,7 +281,8 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                           String branchAddress = appStore.branchAddress;
                           String branchName = appStore.branchName;
                           int branchId = appStore.branchId;
-                          String branchContactNumber = appStore.branchContactNumber;
+                          String branchContactNumber =
+                              appStore.branchContactNumber;
 
                           await logoutApi().then((value) async {
                             //
@@ -260,9 +295,12 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                           await appStore.setBranchAddress(branchAddress);
                           await appStore.setBranchId(branchId);
                           await appStore.setBranchName(branchName);
-                          await appStore.setBranchContactNumber(branchContactNumber);
+                          await appStore
+                              .setBranchContactNumber(branchContactNumber);
 
-                          DashboardScreen().launch(context, isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
+                          DashboardScreen().launch(context,
+                              isNewTask: true,
+                              pageRouteAnimation: PageRouteAnimation.Fade);
                         }
                       },
                       hoverColor: Colors.transparent,
@@ -273,7 +311,9 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                     SnapHelperWidget<PackageInfoData>(
                       future: getPackageInfo(),
                       onSuccess: (data) {
-                        return VersionInfoWidget(prefixText: 'v', textStyle: primaryTextStyle()).center();
+                        return VersionInfoWidget(
+                                prefixText: 'v', textStyle: primaryTextStyle())
+                            .center();
                       },
                     ),
                   ],
@@ -281,7 +321,8 @@ class _ProfileFragmentState extends State<ProfileFragment> {
               ],
             ),
           ),
-          Observer(builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+          Observer(
+              builder: (context) => LoaderWidget().visible(appStore.isLoading)),
         ],
       ),
     );

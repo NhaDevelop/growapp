@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:frezka/screens/zoom_image_screen.dart';
+import 'package:grow_tokyo_app/screens/zoom_image_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/cached_image_widget.dart';
@@ -80,7 +80,13 @@ class _BranchGalleryComponentState extends State<BranchGalleryComponent> {
 
                 return GestureDetector(
                   onTap: () {
-                    if (galleryData.fullUrl.validate().isNotEmpty) ZoomImageScreen(galleryImages: list.map((e) => e.fullUrl.validate()).toList(), index: index).launch(context);
+                    if (galleryData.fullUrl.validate().isNotEmpty)
+                      ZoomImageScreen(
+                              galleryImages: list
+                                  .map((e) => e.fullUrl.validate())
+                                  .toList(),
+                              index: index)
+                          .launch(context);
                   },
                   child: CachedImageWidget(
                     url: galleryData.fullUrl.validate(),
@@ -107,7 +113,8 @@ class _BranchGalleryComponentState extends State<BranchGalleryComponent> {
             ).center();
           },
         ),
-        Observer(builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+        Observer(
+            builder: (context) => LoaderWidget().visible(appStore.isLoading)),
       ],
     );
   }

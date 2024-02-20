@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:frezka/components/app_scaffold.dart';
-import 'package:frezka/components/loader_widget.dart';
-import 'package:frezka/main.dart';
-import 'package:frezka/screens/branch/model/branch_response.dart';
+import 'package:grow_tokyo_app/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/components/loader_widget.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/screens/branch/model/branch_response.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -59,21 +59,27 @@ class _SelectBranchScreenState extends State<SelectBranchScreen> {
     );
   }
 
-  Future<void> redirectToDashboard({required List<BranchData> branchList}) async {
+  Future<void> redirectToDashboard(
+      {required List<BranchData> branchList}) async {
     if (branchList.length == 1) {
-      await appStore.setBranchId(branchList.first.id.validate(value: UNSELECTED_BRANCH_ID));
+      await appStore.setBranchId(
+          branchList.first.id.validate(value: UNSELECTED_BRANCH_ID));
       await appStore.setBranchAddress(branchList.first.addressLine1.validate());
       await appStore.setBranchName(branchList.first.name.validate());
-      await appStore.setBranchContactNumber(branchList.first.contactNumber.validate());
+      await appStore
+          .setBranchContactNumber(branchList.first.contactNumber.validate());
 
-      DashboardScreen().launch(context, isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
+      DashboardScreen().launch(context,
+          isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
     }
   }
 
   void getLocation() {
     Geolocator.requestPermission().then((value) {
-      if (value == LocationPermission.whileInUse || value == LocationPermission.always) {
-        Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high).then((value) {
+      if (value == LocationPermission.whileInUse ||
+          value == LocationPermission.always) {
+        Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+            .then((value) {
           currentLocation = value;
           setState(() {});
         }).catchError(onError);
@@ -98,7 +104,8 @@ class _SelectBranchScreenState extends State<SelectBranchScreen> {
           title: locale.chooseBranch,
           appBarHeight: 70,
           roundCornerShape: true,
-          showLeadingIcon: widget.isFromDashboard ? Navigator.canPop(context) : false,
+          showLeadingIcon:
+              widget.isFromDashboard ? Navigator.canPop(context) : false,
         ),
         body: Stack(
           children: [
@@ -125,7 +132,12 @@ class _SelectBranchScreenState extends State<SelectBranchScreen> {
                 redirectToDashboard(branchList: list);
 
                 return AnimatedListView(
-                  padding: EdgeInsets.only(bottom: selectedBranchId != UNSELECTED_BRANCH_ID ? 80 : 16, left: 16, right: 16, top: 16),
+                  padding: EdgeInsets.only(
+                      bottom:
+                          selectedBranchId != UNSELECTED_BRANCH_ID ? 80 : 16,
+                      left: 16,
+                      right: 16,
+                      top: 16),
                   physics: AlwaysScrollableScrollPhysics(),
                   itemCount: list.length,
                   shrinkWrap: true,
@@ -160,7 +172,10 @@ class _SelectBranchScreenState extends State<SelectBranchScreen> {
                         selectedBranchId = branchData.id!;
                       }
                       setState(() {});
-                    }, highlightColor: Colors.transparent, hoverColor: Colors.transparent, splashColor: Colors.transparent);
+                    },
+                        highlightColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        splashColor: Colors.transparent);
                   },
                   onNextPage: () {
                     if (!isLastPage) {
@@ -182,7 +197,9 @@ class _SelectBranchScreenState extends State<SelectBranchScreen> {
                 );
               },
             ),
-            Observer(builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+            Observer(
+                builder: (context) =>
+                    LoaderWidget().visible(appStore.isLoading)),
           ],
         ),
         floatingActionButton: FloatingActionButton(
@@ -198,21 +215,28 @@ class _SelectBranchScreenState extends State<SelectBranchScreen> {
                   dashboardResponseCached = null;
                   bookingDetailCached = [];
 
-                  await appStore.setBranchId(selectedBranch!.id.validate(value: UNSELECTED_BRANCH_ID));
-                  await appStore.setBranchAddress(selectedBranch!.addressLine1.validate());
+                  await appStore.setBranchId(
+                      selectedBranch!.id.validate(value: UNSELECTED_BRANCH_ID));
+                  await appStore.setBranchAddress(
+                      selectedBranch!.addressLine1.validate());
                   await appStore.setBranchName(selectedBranch!.name.validate());
-                  await appStore.setBranchContactNumber(selectedBranch!.contactNumber.validate());
+                  await appStore.setBranchContactNumber(
+                      selectedBranch!.contactNumber.validate());
 
-                  DashboardScreen().launch(context, isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
+                  DashboardScreen().launch(context,
+                      isNewTask: true,
+                      pageRouteAnimation: PageRouteAnimation.Fade);
                 },
                 title: '${locale.doYouWantExplore} ${selectedBranch!.name}?',
                 primaryColor: context.primaryColor,
               );
             } else {
-              DashboardScreen().launch(context, isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
+              DashboardScreen().launch(context,
+                  isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
             }
           },
-        ).visible(branchList.isNotEmpty && selectedBranchId != UNSELECTED_BRANCH_ID),
+        ).visible(
+            branchList.isNotEmpty && selectedBranchId != UNSELECTED_BRANCH_ID),
       ),
     );
   }

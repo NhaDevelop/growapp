@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:frezka/main.dart';
+import 'package:grow_tokyo_app/main.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../../utils/colors.dart';
@@ -11,19 +11,24 @@ class CartIconBtnComponent extends StatelessWidget {
   final bool showBGCardColor;
   final Color? cartIconColor;
 
-  const CartIconBtnComponent({super.key, this.showBGCardColor = false, this.cartIconColor});
+  const CartIconBtnComponent(
+      {super.key, this.showBGCardColor = false, this.cartIconColor});
 
   @override
   Widget build(BuildContext context) {
     return Observer(builder: (context) {
       return Container(
         height: showBGCardColor ? 40 : null,
-        decoration: showBGCardColor ? boxDecorationWithShadow(boxShape: BoxShape.circle, backgroundColor: cardColor) : null,
+        decoration: showBGCardColor
+            ? boxDecorationWithShadow(
+                boxShape: BoxShape.circle, backgroundColor: cardColor)
+            : null,
         child: Stack(
           clipBehavior: Clip.none,
           children: [
             IconButton(
-              icon: Icon(Icons.shopping_cart_outlined, color: cartIconColor ?? Colors.white, size: 25),
+              icon: Icon(Icons.shopping_cart_outlined,
+                  color: cartIconColor ?? Colors.white, size: 25),
               onPressed: () {
                 doIfLoggedIn(context, () {
                   CartScreen().launch(context);
@@ -35,8 +40,10 @@ class CartIconBtnComponent extends StatelessWidget {
               right: showBGCardColor ? 2 : 4,
               child: Observer(builder: (context) {
                 return Container(
-                  padding: EdgeInsets.all(productStore.cartItemCount < 10 ? 5 : 4),
-                  decoration: boxDecorationDefault(color: secondaryColor, shape: BoxShape.circle),
+                  padding:
+                      EdgeInsets.all(productStore.cartItemCount < 10 ? 5 : 4),
+                  decoration: boxDecorationDefault(
+                      color: secondaryColor, shape: BoxShape.circle),
                   child: FittedBox(
                     child: Text(
                       '${productStore.cartItemCount}',

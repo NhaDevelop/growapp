@@ -1,4 +1,4 @@
-import 'package:frezka/main.dart';
+import 'package:grow_tokyo_app/main.dart';
 
 class ServiceResponse {
   List<ServiceListData>? data;
@@ -9,7 +9,11 @@ class ServiceResponse {
 
   factory ServiceResponse.fromJson(Map<String, dynamic> json) {
     return ServiceResponse(
-      data: json['data'] != null ? (json['data'] as List).map((i) => ServiceListData.fromJson(i)).toList() : null,
+      data: json['data'] != null
+          ? (json['data'] as List)
+              .map((i) => ServiceListData.fromJson(i))
+              .toList()
+          : null,
       message: json['message'],
       status: json['status'],
     );
@@ -92,10 +96,12 @@ class ServiceListData {
       name: json['name'],
       serviceId: json['service_id'],
       serviceName: json['service_name'],
-      serviceImage: json['service_image'] != null ? json['service_image'] : null,
+      serviceImage:
+          json['service_image'] != null ? json['service_image'] : null,
       slug: json['slug'],
       status: json['status'],
-      subCategoryId: json['sub_category_id'] != null ? json['sub_category_id'] : null,
+      subCategoryId:
+          json['sub_category_id'] != null ? json['sub_category_id'] : null,
       updatedAt: json['updated_at'],
       updatedBy: json['updated_by'] != null ? json['updated_by'] : null,
     );
@@ -140,11 +146,16 @@ class ServiceListData {
   }
 
   /// For Save Booking
-  Map<String, dynamic> toBookingServiceJson({bool isUpdate = false, bool isRescheduleBooking = false}) {
+  Map<String, dynamic> toBookingServiceJson(
+      {bool isUpdate = false, bool isRescheduleBooking = false}) {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['service_id'] = (isUpdate || isRescheduleBooking) ? this.serviceId : this.id;
-    data['service_price'] = (isUpdate || isRescheduleBooking) ? this.servicePrice : this.defaultPrice;
-    if (bookingRequestStore.employeeId != -1) data['employee_id'] = bookingRequestStore.employeeId;
+    data['service_id'] =
+        (isUpdate || isRescheduleBooking) ? this.serviceId : this.id;
+    data['service_price'] = (isUpdate || isRescheduleBooking)
+        ? this.servicePrice
+        : this.defaultPrice;
+    if (bookingRequestStore.employeeId != -1)
+      data['employee_id'] = bookingRequestStore.employeeId;
     data['duration_min'] = this.durationMin;
     data['start_date_time'] = this.startDateTime;
     return data;

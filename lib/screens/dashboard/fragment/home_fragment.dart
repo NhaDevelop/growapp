@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:frezka/components/app_scaffold.dart';
-import 'package:frezka/components/loader_widget.dart';
-import 'package:frezka/network/rest_apis.dart';
-import 'package:frezka/screens/booking/component/quick_book_component.dart';
-import 'package:frezka/screens/dashboard/component/category_component.dart';
-import 'package:frezka/screens/dashboard/component/common_app_component.dart';
-import 'package:frezka/screens/dashboard/component/dashboard_appbar_component.dart';
-import 'package:frezka/screens/dashboard/component/horizontal_slider_component.dart';
-import 'package:frezka/screens/dashboard/component/near_you_component.dart';
-import 'package:frezka/screens/dashboard/component/top_experts_component.dart';
+import 'package:grow_tokyo_app/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/components/loader_widget.dart';
+import 'package:grow_tokyo_app/network/rest_apis.dart';
+import 'package:grow_tokyo_app/screens/booking/component/quick_book_component.dart';
+import 'package:grow_tokyo_app/screens/dashboard/component/category_component.dart';
+import 'package:grow_tokyo_app/screens/dashboard/component/common_app_component.dart';
+import 'package:grow_tokyo_app/screens/dashboard/component/dashboard_appbar_component.dart';
+import 'package:grow_tokyo_app/screens/dashboard/component/horizontal_slider_component.dart';
+import 'package:grow_tokyo_app/screens/dashboard/component/near_you_component.dart';
+import 'package:grow_tokyo_app/screens/dashboard/component/top_experts_component.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/empty_error_state_widget.dart';
@@ -90,7 +90,8 @@ class _HomeFragmentState extends State<HomeFragment> {
                   hintText: locale.searchForServices,
                   onTapSearch: () {
                     hideKeyboard(context);
-                    ViewAllServiceScreen(serviceTitle: locale.searchServices).launch(context);
+                    ViewAllServiceScreen(serviceTitle: locale.searchServices)
+                        .launch(context);
                   },
                 ),
                 mainWidgetHeight: 190,
@@ -106,25 +107,30 @@ class _HomeFragmentState extends State<HomeFragment> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     /// Quick Book Appointment
-                    QuickBookingComponent(serviceListData: snap.data!.service.validate()),
+                    QuickBookingComponent(
+                        serviceListData: snap.data!.service.validate()),
 
                     ///Category List
                     CategoryComponent(categoryList: snap.data!.category),
 
                     /// Horizontal
-                    HorizontalSliderComponent(sliderList: snap.data!.sliderData.validate()),
+                    HorizontalSliderComponent(
+                        sliderList: snap.data!.sliderData.validate()),
 
                     /// Experts
-                    TopExpertsComponent(topExpertList: snap.data!.topExperts.validate()),
+                    TopExpertsComponent(
+                        topExpertList: snap.data!.topExperts.validate()),
 
                     /// Near You
-                    NearYouComponent(title: locale.nearbyBranches, key: keyForBranchList),
+                    NearYouComponent(
+                        title: locale.nearbyBranches, key: keyForBranchList),
                   ],
                 ).paddingOnly(top: context.statusBarHeight + 24),
               );
             },
           ),
-          Observer(builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+          Observer(
+              builder: (context) => LoaderWidget().visible(appStore.isLoading)),
         ],
       ),
     );

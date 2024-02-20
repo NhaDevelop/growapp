@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:frezka/components/cached_image_widget.dart';
-import 'package:frezka/components/common_bottom_price_widget.dart';
-import 'package:frezka/components/view_all_label_component.dart';
-import 'package:frezka/paymentGateways/payment_repo.dart';
-import 'package:frezka/paymentGateways/services/paypal_service.dart';
-import 'package:frezka/paymentGateways/services/stripe_service.dart';
-import 'package:frezka/screens/booking/component/confirm_booking_dialog.dart';
+import 'package:grow_tokyo_app/components/cached_image_widget.dart';
+import 'package:grow_tokyo_app/components/common_bottom_price_widget.dart';
+import 'package:grow_tokyo_app/components/view_all_label_component.dart';
+import 'package:grow_tokyo_app/paymentGateways/payment_repo.dart';
+import 'package:grow_tokyo_app/paymentGateways/services/paypal_service.dart';
+import 'package:grow_tokyo_app/paymentGateways/services/stripe_service.dart';
+import 'package:grow_tokyo_app/screens/booking/component/confirm_booking_dialog.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/common_app_dialog.dart';
@@ -79,14 +79,23 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
       try {
         initialDateTime = DateTime.parse(dateString);
 
-        bookingRequestStore.selectedServiceList.validate().forEachIndexed((element, index) {
+        bookingRequestStore.selectedServiceList
+            .validate()
+            .forEachIndexed((element, index) {
           if (index == 0) {
-            element.startDateTime = formatDate(initialDateTime.toString(), format: DateFormatConst.NEW_FORMAT);
+            element.startDateTime = formatDate(initialDateTime.toString(),
+                format: DateFormatConst.NEW_FORMAT);
             element.previousTime = initialDateTime;
           } else {
-            ServiceListData previousData = bookingRequestStore.selectedServiceList.validate()[index - 1];
-            element.startDateTime = formatDate(previousData.previousTime!.add(previousData.durationMin.minutes).toString(), format: DateFormatConst.NEW_FORMAT);
-            element.previousTime = previousData.previousTime!.add(previousData.durationMin.minutes);
+            ServiceListData previousData =
+                bookingRequestStore.selectedServiceList.validate()[index - 1];
+            element.startDateTime = formatDate(
+                previousData.previousTime!
+                    .add(previousData.durationMin.minutes)
+                    .toString(),
+                format: DateFormatConst.NEW_FORMAT);
+            element.previousTime = previousData.previousTime!
+                .add(previousData.durationMin.minutes);
           }
         });
 
@@ -97,12 +106,17 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
       }
 
       /// Save Booking API
-      saveBookingAPI(bookingRequestStore.toJson(dateTime: formatDate(initialDateTime.toString(), format: DateFormatConst.NEW_FORMAT), isRescheduleBooking: widget.isReschedule)).then((value) async {
+      saveBookingAPI(bookingRequestStore.toJson(
+              dateTime: formatDate(initialDateTime.toString(),
+                  format: DateFormatConst.NEW_FORMAT),
+              isRescheduleBooking: widget.isReschedule))
+          .then((value) async {
         appStore.setLoading(false);
         bookingRequestStore.setBookingIdInRequest(value[CommonKey.bookingId]);
 
         if (selectedPayment.id == PaymentMethods.PAYMENT_METHOD_CASH) {
-          savePayment(bookingId: bookingRequestStore.bookingId.validate()).then((value) {
+          savePayment(bookingId: bookingRequestStore.bookingId.validate())
+              .then((value) {
             finish(context);
             finish(context);
             showBookingCompleteDialog();
@@ -236,7 +250,8 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
       appStore.setLoading(false);
 
       payPalServices.paypalCheckOut();
-    } else if (selectedPayment.id == PaymentMethods.PAYMENT_METHOD_FLUTTER_WAVE) {
+    } else if (selectedPayment.id ==
+        PaymentMethods.PAYMENT_METHOD_FLUTTER_WAVE) {
       appStore.setLoading(true);
 
       flutterWaveServices.checkout(
@@ -266,7 +281,8 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
       useSafeArea: false,
       builder: (BuildContext context) => CommonAppDialog(
         title: '${locale.bookingSuccessful}',
-        subTitle: '${locale.yourBookingFor} ${bookingRequestStore.selectedServiceList.validate().map((e) => e.name.validate()).toList().join(', ')} has been successfully booked',
+        subTitle:
+            '${locale.yourBookingFor} ${bookingRequestStore.selectedServiceList.validate().map((e) => e.name.validate()).toList().join(', ')} has been successfully booked',
         buttonText: locale.goToBookings,
         onTap: () {
           finish(context);
@@ -301,13 +317,20 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
                   padding: EdgeInsets.zero,
                   itemBuilder: (context, index) {
                     return Container(
-                      decoration: boxDecorationWithRoundedCorners(borderRadius: radius(), backgroundColor: context.cardColor),
+                      decoration: boxDecorationWithRoundedCorners(
+                          borderRadius: radius(),
+                          backgroundColor: context.cardColor),
                       margin: EdgeInsets.only(bottom: 16),
                       child: SettingItemWidget(
                         title: payments[index].paymentMethod.validate(),
                         titleTextStyle: boldTextStyle(size: 14),
-                        padding: EdgeInsets.only(left: 16, bottom: 10, top: 10, right: 10),
-                        leading: CachedImageWidget(url: payments[index].icon.validate(), height: 22, width: 22, fit: BoxFit.contain),
+                        padding: EdgeInsets.only(
+                            left: 16, bottom: 10, top: 10, right: 10),
+                        leading: CachedImageWidget(
+                            url: payments[index].icon.validate(),
+                            height: 22,
+                            width: 22,
+                            fit: BoxFit.contain),
                         radius: radius(),
                         trailing: Radio<PaymentData>(
                           value: payments[index],
@@ -378,7 +401,13 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
             right: 0,
             child: Observer(
               builder: (_) => CommonBottomPriceWidget(
-                title: bookingRequestStore.selectedServiceList.validate().map((e) => widget.isReschedule ? e.serviceName.validate() : e.name.validate()).toList().join(', '),
+                title: bookingRequestStore.selectedServiceList
+                    .validate()
+                    .map((e) => widget.isReschedule
+                        ? e.serviceName.validate()
+                        : e.name.validate())
+                    .toList()
+                    .join(', '),
                 price: bookingRequestStore.totalAmount,
                 buttonText: locale.confirm,
                 onTap: () {
@@ -396,7 +425,8 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
               ),
             ),
           ),
-          Observer(builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+          Observer(
+              builder: (context) => LoaderWidget().visible(appStore.isLoading)),
         ],
       ),
     );

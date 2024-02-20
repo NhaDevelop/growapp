@@ -1,16 +1,16 @@
-import 'package:frezka/main.dart';
-import 'package:frezka/screens/auth/auth_repository.dart';
-import 'package:frezka/screens/auth/view/otp_verification_screen.dart';
-import 'package:frezka/screens/auth/view/sign_up_screen.dart';
-import 'package:frezka/screens/dashboard/view/dashboard_screen.dart';
-import 'package:frezka/utils/constants.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/screens/auth/auth_repository.dart';
+import 'package:grow_tokyo_app/screens/auth/view/otp_verification_screen.dart';
+import 'package:grow_tokyo_app/screens/auth/view/sign_up_screen.dart';
+import 'package:grow_tokyo_app/screens/dashboard/view/dashboard_screen.dart';
+import 'package:grow_tokyo_app/utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class OtpLoginAuthService {
-
-  Future loginWithOTP(BuildContext context, {String phoneNumber = "", String? countryCode}) async {
+  Future loginWithOTP(BuildContext context,
+      {String phoneNumber = "", String? countryCode}) async {
     log("PHONE NUMBER VERIFIED $countryCode$phoneNumber");
     return await auth.verifyPhoneNumber(
       phoneNumber: "$countryCode$phoneNumber",
@@ -34,32 +34,45 @@ class OtpLoginAuthService {
         await OtpVerificationScreen(
           onTap: (otpCode) async {
             if (otpCode != null) {
-              AuthCredential credential = PhoneAuthProvider.credential(verificationId: verificationId, smsCode: otpCode);
+              AuthCredential credential = PhoneAuthProvider.credential(
+                  verificationId: verificationId, smsCode: otpCode);
 
-              await auth.signInWithCredential(credential).then((credentials) async {
+              await auth
+                  .signInWithCredential(credential)
+                  .then((credentials) async {
                 Map<String, dynamic> request = {
                   'username': phoneNumber,
                   'password': phoneNumber,
-                  'player_id': getStringAsync(SharedPreferenceConst.PLAYER_ID, defaultValue: ""),
+                  'player_id': getStringAsync(SharedPreferenceConst.PLAYER_ID,
+                      defaultValue: ""),
                   'login_type': LoginTypeConst.LOGIN_TYPE_OTP,
                 };
-                await loginUser(request, isSocialLogin: true).then((loginResponse) async {
+                await loginUser(request, isSocialLogin: true)
+                    .then((loginResponse) async {
                   if (loginResponse.isUserExist == null) {
                     toast(locale.loginSuccessfully);
 
                     /// Register
 
-                    if (loginResponse.userData != null) await saveUserData(loginResponse.userData!);
+                    if (loginResponse.userData != null)
+                      await saveUserData(loginResponse.userData!);
 
                     if (loginResponse.userData!.status == 0) {
                       toast(locale.pleaseContactWithAdmin);
                     } else {
                       /// Saving Player ID to Firebase
-                      userService.updatePlayerIdInFirebase(email: loginResponse.userData!.email.validate(), playerId: getStringAsync(SharedPreferenceConst.PLAYER_ID)).catchError((e) {
+                      userService
+                          .updatePlayerIdInFirebase(
+                              email: loginResponse.userData!.email.validate(),
+                              playerId: getStringAsync(
+                                  SharedPreferenceConst.PLAYER_ID))
+                          .catchError((e) {
                         toast(e.toString());
                       });
 
-                      DashboardScreen().launch(context, isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
+                      DashboardScreen().launch(context,
+                          isNewTask: true,
+                          pageRouteAnimation: PageRouteAnimation.Fade);
                     }
                   } else {
                     ///Not Register
@@ -67,7 +80,12 @@ class OtpLoginAuthService {
                     appStore.setLoading(false);
                     finish(context);
 
-                    SignUpScreen(isOTPLogin: true, phoneNumber: phoneNumber, countryCode: countryCode, uid: credentials.user!.uid.validate()).launch(context);
+                    SignUpScreen(
+                            isOTPLogin: true,
+                            phoneNumber: phoneNumber,
+                            countryCode: countryCode,
+                            uid: credentials.user!.uid.validate())
+                        .launch(context);
                   }
                 }).catchError((e) {
                   appStore.setLoading(false);

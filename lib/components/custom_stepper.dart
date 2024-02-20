@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/dotted_line.dart';
-import 'package:frezka/utils/colors.dart';
+import 'package:grow_tokyo_app/components/dotted_line.dart';
+import 'package:grow_tokyo_app/utils/colors.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../main.dart';
@@ -74,10 +74,15 @@ class _CustomStepperState extends State<CustomStepper> {
                     : index <= currentPage
                         ? secondaryColor
                         : Colors.grey,
-                border: Border.all(color: index <= currentPage ? Colors.transparent : context.dividerColor),
+                border: Border.all(
+                    color: index <= currentPage
+                        ? Colors.transparent
+                        : context.dividerColor),
               ),
             ),
-            Icon(Icons.done, color: index < currentPage ? Colors.white : Colors.transparent, size: 14),
+            Icon(Icons.done,
+                color: index < currentPage ? Colors.white : Colors.transparent,
+                size: 14),
           ],
         ),
         4.height,
@@ -88,7 +93,11 @@ class _CustomStepperState extends State<CustomStepper> {
             child: Text(
               widget.stepsList[index].title.validate(),
               textAlign: TextAlign.center,
-              style: boldTextStyle(size: 12, color: index <= currentPage ? textPrimaryColorGlobal : Colors.grey),
+              style: boldTextStyle(
+                  size: 12,
+                  color: index <= currentPage
+                      ? textPrimaryColorGlobal
+                      : Colors.grey),
             ),
           ),
         ),
@@ -153,7 +162,12 @@ class _CustomStepperState extends State<CustomStepper> {
               Container(
                 width: context.width(),
                 height: 130,
-                child: appBarWidget(locale.booking, center: true, color: context.primaryColor, textColor: white).cornerRadiusWithClipRRectOnly(bottomLeft: 20, bottomRight: 20),
+                child: appBarWidget(locale.booking,
+                        center: true,
+                        color: context.primaryColor,
+                        textColor: white)
+                    .cornerRadiusWithClipRRectOnly(
+                        bottomLeft: 20, bottomRight: 20),
               ),
               Positioned(
                 bottom: -40,
@@ -163,7 +177,8 @@ class _CustomStepperState extends State<CustomStepper> {
                   height: 65,
                   alignment: Alignment.center,
                   // padding: EdgeInsets.symmetric(horizontal: 20),
-                  decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor),
+                  decoration: boxDecorationWithRoundedCorners(
+                      backgroundColor: context.cardColor),
                   child: _buildStepper(currentPage),
                 ),
               ),

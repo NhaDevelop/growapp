@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/screens/order/component/product_review_dialog.dart';
-import 'package:frezka/utils/colors.dart';
-import 'package:frezka/utils/extensions/string_extensions.dart';
+import 'package:grow_tokyo_app/screens/order/component/product_review_dialog.dart';
+import 'package:grow_tokyo_app/utils/colors.dart';
+import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/cached_image_widget.dart';
@@ -21,7 +21,11 @@ class OrderReviewComponent extends StatelessWidget {
   final int? productVariationId;
   final ProductReviewDataModel? productReview;
 
-  OrderReviewComponent({this.deliveryStatus, this.productId, this.productVariationId, this.productReview});
+  OrderReviewComponent(
+      {this.deliveryStatus,
+      this.productId,
+      this.productVariationId,
+      this.productReview});
 
   @override
   Widget build(BuildContext context) {
@@ -37,17 +41,30 @@ class OrderReviewComponent extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     16.height,
-                    DottedLine(lineThickness: 1, dashLength: 4, dashColor: context.dividerColor),
+                    DottedLine(
+                        lineThickness: 1,
+                        dashLength: 4,
+                        dashColor: context.dividerColor),
                     10.height,
-                    Text(locale.yourReview, style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+                    Text(locale.yourReview,
+                        style: boldTextStyle(size: LABEL_TEXT_SIZE)),
                     Row(
                       children: [
                         ...[
-                          Icon(Icons.star, size: 14, color: getRatingBarColor(productReview!.rating.validate().toInt())),
+                          Icon(Icons.star,
+                              size: 14,
+                              color: getRatingBarColor(
+                                  productReview!.rating.validate().toInt())),
                           4.width,
                           Text(
-                            productReview!.rating.validate().toStringAsFixed(1).toString(),
-                            style: boldTextStyle(color: getRatingBarColor(productReview!.rating.validate().toInt()), size: 14),
+                            productReview!.rating
+                                .validate()
+                                .toStringAsFixed(1)
+                                .toString(),
+                            style: boldTextStyle(
+                                color: getRatingBarColor(
+                                    productReview!.rating.validate().toInt()),
+                                size: 14),
                           ),
                           Spacer(),
                           TextButton(
@@ -59,7 +76,8 @@ class OrderReviewComponent extends StatelessWidget {
                                   return ProductReviewDialog(
                                     productReview: productReview,
                                     productId: productId.validate(),
-                                    productVariationId: productVariationId.validate(),
+                                    productVariationId:
+                                        productVariationId.validate(),
                                   );
                                 },
                               );
@@ -83,7 +101,9 @@ class OrderReviewComponent extends StatelessWidget {
                                 onAccept: (p0) async {
                                   appStore.setLoading(true);
 
-                                  await deleteOrderReview(id: productReview!.id.validate()).then((value) {
+                                  await deleteOrderReview(
+                                          id: productReview!.id.validate())
+                                      .then((value) {
                                     toast(value.message);
                                   }).catchError((e) {
                                     toast(e.toString(), print: true);
@@ -95,8 +115,10 @@ class OrderReviewComponent extends StatelessWidget {
                             },
                             child: TextIcon(
                               text: locale.delete,
-                              textStyle: secondaryTextStyle(color: wishListColor),
-                              prefix: ic_delete.iconImage(size: 16, color: wishListColor),
+                              textStyle:
+                                  secondaryTextStyle(color: wishListColor),
+                              prefix: ic_delete.iconImage(
+                                  size: 16, color: wishListColor),
                               edgeInsets: EdgeInsets.zero,
                             ),
                           ),
@@ -111,9 +133,11 @@ class OrderReviewComponent extends StatelessWidget {
                     AnimatedWrap(
                       spacing: 10,
                       runSpacing: 10,
-                      itemCount: productReview!.gallery.validate().take(3).length,
+                      itemCount:
+                          productReview!.gallery.validate().take(3).length,
                       itemBuilder: (ctx, index) {
-                        ReviewGallaryData galleryData = productReview!.gallery.validate()[index];
+                        ReviewGallaryData galleryData =
+                            productReview!.gallery.validate()[index];
 
                         return CachedImageWidget(
                           url: '${galleryData.fullUrl.validate()}',
@@ -124,7 +148,10 @@ class OrderReviewComponent extends StatelessWidget {
                         ).onTap(() {
                           if (galleryData.fullUrl.validate().isNotEmpty)
                             ZoomImageScreen(
-                              galleryImages: productReview!.gallery.validate().map((e) => e.fullUrl.validate()).toList(),
+                              galleryImages: productReview!.gallery
+                                  .validate()
+                                  .map((e) => e.fullUrl.validate())
+                                  .toList(),
                               index: index,
                             ).launch(context);
                         });
@@ -134,7 +161,8 @@ class OrderReviewComponent extends StatelessWidget {
                 )
               else
                 AppButton(
-                  child: Text(locale.addReview, style: boldTextStyle(color: Colors.white)),
+                  child: Text(locale.addReview,
+                      style: boldTextStyle(color: Colors.white)),
                   color: context.primaryColor,
                   width: context.width(),
                   elevation: 0,
@@ -144,7 +172,9 @@ class OrderReviewComponent extends StatelessWidget {
                       context,
                       contentPadding: EdgeInsets.zero,
                       builder: (p0) {
-                        return ProductReviewDialog(productId: productId.validate(), productVariationId: productVariationId.validate());
+                        return ProductReviewDialog(
+                            productId: productId.validate(),
+                            productVariationId: productVariationId.validate());
                       },
                     );
                   },

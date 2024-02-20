@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/screens/branch/model/branch_response.dart';
-import 'package:frezka/utils/common_base.dart';
-import 'package:frezka/utils/extensions/string_extensions.dart';
+import 'package:grow_tokyo_app/screens/branch/model/branch_response.dart';
+import 'package:grow_tokyo_app/utils/common_base.dart';
+import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../booking/model/booking_detail_response.dart';
@@ -14,7 +14,9 @@ class BranchConfigurationResponse {
 
   factory BranchConfigurationResponse.fromJson(Map<String, dynamic> json) {
     return BranchConfigurationResponse(
-      data: json['data'] != null ? BranchConfigurationData.fromJson(json['data']) : null,
+      data: json['data'] != null
+          ? BranchConfigurationData.fromJson(json['data'])
+          : null,
       status: json['status'],
     );
   }
@@ -38,9 +40,13 @@ class BranchConfigurationData {
 
   factory BranchConfigurationData.fromJson(Map<String, dynamic> json) {
     return BranchConfigurationData(
-      slot: json['slot'] != null ? (json['slot'] as List).map((i) => SlotData.fromJson(i)).toList() : null,
+      slot: json['slot'] != null
+          ? (json['slot'] as List).map((i) => SlotData.fromJson(i)).toList()
+          : null,
       slotDuration: json['slot_duration'],
-      tax: json['tax'] != null ? (json['tax'] as List).map((i) => TaxPercentage.fromJson(i)).toList() : null,
+      tax: json['tax'] != null
+          ? (json['tax'] as List).map((i) => TaxPercentage.fromJson(i)).toList()
+          : null,
     );
   }
 
@@ -79,7 +85,9 @@ class SlotData {
   bool isAvailable;
 
   // local
-  bool slotAvailability(DateTime date) => date.isToday ? isTimeBefore(TimeOfDay.now(), startTime!.getTimeOfDay()) : true;
+  bool slotAvailability(DateTime date) => date.isToday
+      ? isTimeBefore(TimeOfDay.now(), startTime!.getTimeOfDay())
+      : true;
 
   SlotData({
     this.branchId,
@@ -104,7 +112,11 @@ class SlotData {
   factory SlotData.fromJson(Map<String, dynamic> json) {
     return SlotData(
       branchId: json['branch_id'],
-      breaks: json['breaks'] != null ? (json['breaks'] as List).map((i) => BranchBreaks.fromJson(i)).toList() : null,
+      breaks: json['breaks'] != null
+          ? (json['breaks'] as List)
+              .map((i) => BranchBreaks.fromJson(i))
+              .toList()
+          : null,
       createdAt: json['created_at'],
       createdBy: json['created_by'] != null ? json['created_by'] : null,
       createdGuard: json['created_guard'],
@@ -138,7 +150,8 @@ class SlotData {
     data['updated_guard'] = this.updatedGuard;
     data['is_available'] = this.isAvailable;
     if (this.breaks != null) {
-      data['breaks'] = data['breaks'] = this.breaks!.map((v) => v.toJson()).toList();
+      data['breaks'] =
+          data['breaks'] = this.breaks!.map((v) => v.toJson()).toList();
     }
     if (this.createdBy != null) {
       data['created_by'] = this.createdBy;
@@ -172,7 +185,21 @@ class TaxData {
   String? updatedGuard;
   int? value;
 
-  TaxData({this.createdAt, this.createdBy, this.createdGuard, this.deletedAt, this.deletedBy, this.deletedGuard, this.id, this.status, this.title, this.type, this.updatedAt, this.updatedBy, this.updatedGuard, this.value});
+  TaxData(
+      {this.createdAt,
+      this.createdBy,
+      this.createdGuard,
+      this.deletedAt,
+      this.deletedBy,
+      this.deletedGuard,
+      this.id,
+      this.status,
+      this.title,
+      this.type,
+      this.updatedAt,
+      this.updatedBy,
+      this.updatedGuard,
+      this.value});
 
   factory TaxData.fromJson(Map<String, dynamic> json) {
     return TaxData(

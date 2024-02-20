@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/main.dart';
-import 'package:frezka/screens/product/component/product_item_component.dart';
-import 'package:frezka/screens/product/model/product_list_response.dart';
-import 'package:frezka/screens/product/view/product_list_screen.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/screens/product/component/product_item_component.dart';
+import 'package:grow_tokyo_app/screens/product/model/product_list_response.dart';
+import 'package:grow_tokyo_app/screens/product/view/product_list_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/view_all_label_component.dart';
@@ -23,7 +23,9 @@ class DiscountProductComponent extends StatelessWidget {
           label: locale.dealsForYou,
           list: discountProductList,
           onTap: () {
-            ProductListScreen(appBarTitleText: locale.dealsForYou, isBestDiscounts: '1').launch(context);
+            ProductListScreen(
+                    appBarTitleText: locale.dealsForYou, isBestDiscounts: '1')
+                .launch(context);
           },
         ).paddingOnly(left: 16, right: 8),
         HorizontalList(
@@ -31,7 +33,8 @@ class DiscountProductComponent extends StatelessWidget {
           padding: EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 30),
           crossAxisAlignment: WrapCrossAlignment.start,
           itemBuilder: (context, i) {
-            return ProductItemComponent(productListData: discountProductList[i]).paddingRight(8);
+            return ProductItemComponent(productListData: discountProductList[i])
+                .paddingRight(8);
           },
         )
       ],

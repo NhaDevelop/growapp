@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:frezka/main.dart';
-import 'package:frezka/models/base_response_model.dart';
-import 'package:frezka/network/network_utils.dart';
-import 'package:frezka/screens/auth/model/login_response.dart';
-import 'package:frezka/utils/constants.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/models/base_response_model.dart';
+import 'package:grow_tokyo_app/network/network_utils.dart';
+import 'package:grow_tokyo_app/screens/auth/model/login_response.dart';
+import 'package:grow_tokyo_app/utils/constants.dart';
 import 'package:http/http.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
@@ -18,13 +18,17 @@ import 'model/user_update_response.dart';
 
 // region Register User
 Future<BaseResponseModel> createUser(Map request) async {
-  return BaseResponseModel.fromJson(await handleResponse(await buildHttpResponse(APIEndPoints.register, request: request, method: HttpMethodType.POST)));
+  return BaseResponseModel.fromJson(await handleResponse(
+      await buildHttpResponse(APIEndPoints.register,
+          request: request, method: HttpMethodType.POST)));
 }
 // endregion
 
 // region Login User
-Future<LoginResponse> loginUser(Map request, {bool isSocialLogin = false, bool isRegenerateToken = false}) async {
-  LoginResponse res = LoginResponse.fromJson(await handleResponse(await buildHttpResponse(
+Future<LoginResponse> loginUser(Map request,
+    {bool isSocialLogin = false, bool isRegenerateToken = false}) async {
+  LoginResponse res =
+      LoginResponse.fromJson(await handleResponse(await buildHttpResponse(
     isSocialLogin ? APIEndPoints.socialLogin : APIEndPoints.login,
     request: request,
     method: HttpMethodType.POST,
@@ -33,7 +37,8 @@ Future<LoginResponse> loginUser(Map request, {bool isSocialLogin = false, bool i
   if (isRegenerateToken) {
     await userStore.setToken(res.userData!.apiToken.validate());
   } else {
-    if (!isSocialLogin) await userStore.setLoginType(LoginTypeConst.LOGIN_TYPE_USER);
+    if (!isSocialLogin)
+      await userStore.setLoginType(LoginTypeConst.LOGIN_TYPE_USER);
 
     if (res.userData != null) {
       appStore.setLoading(false);
@@ -51,7 +56,8 @@ Future<LoginResponse> loginUser(Map request, {bool isSocialLogin = false, bool i
 Future<void> saveUserData(UserData data) async {
   appStore.setLoggedIn(true);
 
-  if (data.apiToken.validate().isNotEmpty) await userStore.setToken(data.apiToken.validate());
+  if (data.apiToken.validate().isNotEmpty)
+    await userStore.setToken(data.apiToken.validate());
 
   await userStore.setUserId(data.id.validate());
   await userStore.setFirstName(data.firstName.validate());
@@ -60,7 +66,8 @@ Future<void> saveUserData(UserData data) async {
   await userStore.setUserName(data.username.validate());
   await userStore.setContactNumber(data.mobile.validate());
   await userStore.setGenderValue(data.gender.validate());
-  await userStore.setLoginType(data.loginType.validate(value: userStore.loginType));
+  await userStore
+      .setLoginType(data.loginType.validate(value: userStore.loginType));
 
   if (data.loginType == LoginTypeConst.LOGIN_TYPE_GOOGLE) {
     await userStore.setUserProfile(data.profileImage.validate());
@@ -72,13 +79,17 @@ Future<void> saveUserData(UserData data) async {
 
 // region Change Password
 Future<UserUpdateResponse> changePasswordAPI(Map request) async {
-  return UserUpdateResponse.fromJson(await handleResponse(await buildHttpResponse(APIEndPoints.changePassword, request: request, method: HttpMethodType.POST)));
+  return UserUpdateResponse.fromJson(await handleResponse(
+      await buildHttpResponse(APIEndPoints.changePassword,
+          request: request, method: HttpMethodType.POST)));
 }
 // endregion
 
 // region Forgot password
 Future<BaseResponseModel> forgotPasswordAPI(Map request) async {
-  return BaseResponseModel.fromJson(await handleResponse(await buildHttpResponse(APIEndPoints.forgotPassword, request: request, method: HttpMethodType.POST)));
+  return BaseResponseModel.fromJson(await handleResponse(
+      await buildHttpResponse(APIEndPoints.forgotPassword,
+          request: request, method: HttpMethodType.POST)));
 }
 // endregion
 
@@ -109,22 +120,34 @@ Future<void> clearData({bool clearBranchData = true}) async {
 Future<void> logoutApi({bool clearBranchData = true}) async {
   await clearData(clearBranchData: clearBranchData);
 
-  return await handleResponse(await buildHttpResponse(APIEndPoints.logout, method: HttpMethodType.GET));
+  return await handleResponse(
+      await buildHttpResponse(APIEndPoints.logout, method: HttpMethodType.GET));
 }
 // endregion
 
-Future<dynamic> updateProfile({File? imageFile, String firstName = '', String lastName = '', String mobile = '', String gender = '', Function(dynamic)? onSuccess}) async {
+Future<dynamic> updateProfile(
+    {File? imageFile,
+    String firstName = '',
+    String lastName = '',
+    String mobile = '',
+    String gender = '',
+    Function(dynamic)? onSuccess}) async {
   if (appStore.isLoggedIn) {
-    MultipartRequest multiPartRequest = await getMultiPartRequest('${APIEndPoints.updateProfile}');
+    MultipartRequest multiPartRequest =
+        await getMultiPartRequest('${APIEndPoints.updateProfile}');
 
-    if (firstName.isNotEmpty) multiPartRequest.fields[UserKeys.firstName] = firstName;
-    if (lastName.isNotEmpty) multiPartRequest.fields[UserKeys.lastName] = lastName;
+    if (firstName.isNotEmpty)
+      multiPartRequest.fields[UserKeys.firstName] = firstName;
+    if (lastName.isNotEmpty)
+      multiPartRequest.fields[UserKeys.lastName] = lastName;
     if (mobile.isNotEmpty) multiPartRequest.fields[UserKeys.mobile] = mobile;
     if (gender.isNotEmpty) multiPartRequest.fields[UserKeys.gender] = gender;
-    if (appStore.playerId.isNotEmpty) multiPartRequest.fields[UserKeys.playerId] = appStore.playerId;
+    if (appStore.playerId.isNotEmpty)
+      multiPartRequest.fields[UserKeys.playerId] = appStore.playerId;
 
     if (imageFile != null) {
-      multiPartRequest.files.add(await MultipartFile.fromPath(UserKeys.profileImage, imageFile.path));
+      multiPartRequest.files.add(
+          await MultipartFile.fromPath(UserKeys.profileImage, imageFile.path));
     }
 
     multiPartRequest.headers.addAll(buildHeaderTokens());
@@ -144,7 +167,10 @@ Future<dynamic> updateProfile({File? imageFile, String firstName = '', String la
 }
 
 Future<UserUpdateResponse> viewProfile({int? id}) async {
-  var res = UserUpdateResponse.fromJson(await handleResponse(await buildHttpResponse('${APIEndPoints.userDetail}?id=${id ?? userStore.userId}', method: HttpMethodType.GET)));
+  var res = UserUpdateResponse.fromJson(await handleResponse(
+      await buildHttpResponse(
+          '${APIEndPoints.userDetail}?id=${id ?? userStore.userId}',
+          method: HttpMethodType.GET)));
 
   if (res.data != null) saveUserData(res.data!);
 
@@ -152,5 +178,7 @@ Future<UserUpdateResponse> viewProfile({int? id}) async {
 }
 
 Future<BaseResponseModel> deleteAccountCompletely() async {
-  return BaseResponseModel.fromJson(await handleResponse(await buildHttpResponse(APIEndPoints.deleteUserAccount, request: {}, method: HttpMethodType.POST)));
+  return BaseResponseModel.fromJson(await handleResponse(
+      await buildHttpResponse(APIEndPoints.deleteUserAccount,
+          request: {}, method: HttpMethodType.POST)));
 }

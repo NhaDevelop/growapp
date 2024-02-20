@@ -1,4 +1,4 @@
-import 'package:frezka/screens/cart/model/logistic_zone_response.dart';
+import 'package:grow_tokyo_app/screens/cart/model/logistic_zone_response.dart';
 
 class CityListResponse {
   List<CityData>? data;
@@ -9,7 +9,9 @@ class CityListResponse {
 
   factory CityListResponse.fromJson(Map<String, dynamic> json) {
     return CityListResponse(
-      data: json['data'] != null ? (json['data'] as List).map((i) => CityData.fromJson(i)).toList() : null,
+      data: json['data'] != null
+          ? (json['data'] as List).map((i) => CityData.fromJson(i)).toList()
+          : null,
       message: json['message'],
       status: json['status'],
     );

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/main.dart';
-import 'package:frezka/utils/colors.dart';
-import 'package:frezka/utils/constants.dart';
-import 'package:frezka/utils/images.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/utils/colors.dart';
+import 'package:grow_tokyo_app/utils/constants.dart';
+import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 extension strEtx on String {
@@ -12,7 +12,8 @@ extension strEtx on String {
       height: size ?? 24,
       width: size ?? 24,
       fit: fit ?? BoxFit.cover,
-      color: color ?? (appStore.isDarkMode ? Colors.white : appTextSecondaryColor),
+      color:
+          color ?? (appStore.isDarkMode ? Colors.white : appTextSecondaryColor),
       errorBuilder: (context, error, stackTrace) {
         return Image.asset(ic_no_photo, height: size ?? 24, width: size ?? 24);
       },
@@ -20,7 +21,10 @@ extension strEtx on String {
   }
 
   String getTimeInAmPM() {
-    return TimeOfDay(hour: this.split(":").first.toInt(), minute: this.split(":").last.toInt()).format(getContext);
+    return TimeOfDay(
+            hour: this.split(":").first.toInt(),
+            minute: this.split(":").last.toInt())
+        .format(getContext);
   }
 
   String get getBookingStatusLabel {
@@ -65,7 +69,9 @@ extension strEtx on String {
     return day;
   }
 
-  TimeOfDay getTimeOfDay(){
-    return TimeOfDay(hour: this.split(":").first.toInt(), minute:  this.split(":")[1].toInt());
+  TimeOfDay getTimeOfDay() {
+    return TimeOfDay(
+        hour: this.split(":").first.toInt(),
+        minute: this.split(":")[1].toInt());
   }
 }

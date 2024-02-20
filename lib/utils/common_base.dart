@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/app_theme.dart';
+import 'package:grow_tokyo_app/app_theme.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -14,26 +14,38 @@ import 'constants.dart';
 import 'images.dart';
 import 'model_keys.dart';
 
-ThemeMode get appThemeMode => appStore.isDarkMode ? ThemeMode.dark : ThemeMode.light;
+ThemeMode get appThemeMode =>
+    appStore.isDarkMode ? ThemeMode.dark : ThemeMode.light;
 
 bool get isRTL => RTL_LanguageS.contains(appStore.selectedLanguageCode);
 
-bool get isLoginTypeUser => userStore.loginType == LoginTypeConst.LOGIN_TYPE_USER;
+bool get isLoginTypeUser =>
+    userStore.loginType == LoginTypeConst.LOGIN_TYPE_USER;
 
-bool get isLoginTypeGoogle => userStore.loginType == LoginTypeConst.LOGIN_TYPE_GOOGLE;
+bool get isLoginTypeGoogle =>
+    userStore.loginType == LoginTypeConst.LOGIN_TYPE_GOOGLE;
 
-bool get isLoginTypeApple => userStore.loginType == LoginTypeConst.LOGIN_TYPE_APPLE;
+bool get isLoginTypeApple =>
+    userStore.loginType == LoginTypeConst.LOGIN_TYPE_APPLE;
 
-bool get isSocialLoginType => userStore.loginType == LoginTypeConst.LOGIN_TYPE_APPLE || userStore.loginType == LoginTypeConst.LOGIN_TYPE_GOOGLE;
+bool get isSocialLoginType =>
+    userStore.loginType == LoginTypeConst.LOGIN_TYPE_APPLE ||
+    userStore.loginType == LoginTypeConst.LOGIN_TYPE_GOOGLE;
 
-String formatDate(String? dateTime, {String format = DateFormatConst.DATE_FORMAT_1, bool isFromMicrosecondsSinceEpoch = false, bool isLanguageNeeded = true}) {
+String formatDate(String? dateTime,
+    {String format = DateFormatConst.DATE_FORMAT_1,
+    bool isFromMicrosecondsSinceEpoch = false,
+    bool isLanguageNeeded = true}) {
   final languageCode = isLanguageNeeded ? appStore.selectedLanguageCode : null;
-  final parsedDateTime = isFromMicrosecondsSinceEpoch ? DateTime.fromMicrosecondsSinceEpoch(dateTime.validate().toInt() * 1000) : DateTime.parse(dateTime.validate());
+  final parsedDateTime = isFromMicrosecondsSinceEpoch
+      ? DateTime.fromMicrosecondsSinceEpoch(dateTime.validate().toInt() * 1000)
+      : DateTime.parse(dateTime.validate());
 
   return DateFormat(format, languageCode).format(parsedDateTime);
 }
 
-String formatOnlyTime(BuildContext context, {String? startTime, String? endTime}) {
+String formatOnlyTime(BuildContext context,
+    {String? startTime, String? endTime}) {
   if (startTime != null && endTime == null) {
     return '${TimeOfDay(hour: startTime.validate().split(':')[0].toInt(), minute: startTime.validate().split(':')[1].toInt()).format(context)}';
   } else if (endTime != null && startTime == null) {
@@ -45,11 +57,36 @@ String formatOnlyTime(BuildContext context, {String? startTime, String? endTime}
 
 List<LanguageDataModel> languageList() {
   return [
-    LanguageDataModel(id: 1, name: 'English', languageCode: 'en', fullLanguageCode: 'en-US', flag: ic_us),
-    LanguageDataModel(id: 2, name: 'Hindi', languageCode: 'hi', fullLanguageCode: 'hi-IN', flag: ic_india),
-    LanguageDataModel(id: 3, name: 'Arabic', languageCode: 'ar', fullLanguageCode: 'ar-AR', flag: ic_ar),
-    LanguageDataModel(id: 4, name: 'French', languageCode: 'fr', fullLanguageCode: 'fr-FR', flag: ic_fr),
-    LanguageDataModel(id: 5, name: 'German', languageCode: 'de', fullLanguageCode: 'de-DE', flag: ic_de),
+    LanguageDataModel(
+        id: 1,
+        name: 'English',
+        languageCode: 'en',
+        fullLanguageCode: 'en-US',
+        flag: ic_us),
+    LanguageDataModel(
+        id: 2,
+        name: 'Hindi',
+        languageCode: 'hi',
+        fullLanguageCode: 'hi-IN',
+        flag: ic_india),
+    LanguageDataModel(
+        id: 3,
+        name: 'Arabic',
+        languageCode: 'ar',
+        fullLanguageCode: 'ar-AR',
+        flag: ic_ar),
+    LanguageDataModel(
+        id: 4,
+        name: 'French',
+        languageCode: 'fr',
+        fullLanguageCode: 'fr-FR',
+        flag: ic_fr),
+    LanguageDataModel(
+        id: 5,
+        name: 'German',
+        languageCode: 'de',
+        fullLanguageCode: 'de-DE',
+        flag: ic_de),
   ];
 }
 
@@ -173,7 +210,10 @@ InputDecoration inputDecoration(
   );
 }
 
-NavigationDestination bottomTab({required Widget iconData, required Widget activeIconData, required String tabName}) {
+NavigationDestination bottomTab(
+    {required Widget iconData,
+    required Widget activeIconData,
+    required String tabName}) {
   return NavigationDestination(
     icon: iconData,
     selectedIcon: activeIconData,
@@ -201,7 +241,9 @@ Future<DateTime?> datePicker(BuildContext context) async {
     lastDate: DateTime(2100),
     builder: (_, child) {
       return Theme(
-        data: appStore.isDarkMode ? ThemeData.dark(useMaterial3: true) : AppTheme.lightTheme,
+        data: appStore.isDarkMode
+            ? ThemeData.dark(useMaterial3: true)
+            : AppTheme.lightTheme,
         child: child!,
       );
     },
@@ -220,14 +262,17 @@ Future<String?> timePicker(BuildContext context) async {
     initialTime: TimeOfDay.now(),
     builder: (_, child) {
       return Theme(
-        data: appStore.isDarkMode ? ThemeData.dark(useMaterial3: true) : AppTheme.lightTheme,
+        data: appStore.isDarkMode
+            ? ThemeData.dark(useMaterial3: true)
+            : AppTheme.lightTheme,
         child: child!,
       );
     },
   );
 
   if (newTime != null) {
-    DateTime pickerTime = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, newTime.hour, newTime.minute);
+    DateTime pickerTime = DateTime(DateTime.now().year, DateTime.now().month,
+        DateTime.now().day, newTime.hour, newTime.minute);
     return DateFormat(DateFormatConst.HOUR_12_FORMAT).format(pickerTime);
   } else {
     return null;
@@ -269,16 +314,20 @@ void doIfLoggedIn(BuildContext context, VoidCallback callback) async {
 
 bool isTimeBefore(TimeOfDay currentTime, TimeOfDay specifiedTime) {
   final now = DateTime.now();
-  final currentTimeDateTime = DateTime(now.year, now.month, now.day, currentTime.hour, currentTime.minute);
-  final specifiedTimeDateTime = DateTime(now.year, now.month, now.day, specifiedTime.hour, specifiedTime.minute);
+  final currentTimeDateTime = DateTime(
+      now.year, now.month, now.day, currentTime.hour, currentTime.minute);
+  final specifiedTimeDateTime = DateTime(
+      now.year, now.month, now.day, specifiedTime.hour, specifiedTime.minute);
 
   return currentTimeDateTime.isBefore(specifiedTimeDateTime);
 }
 
 bool isTimeAfter(TimeOfDay currentTime, TimeOfDay specifiedTime) {
   final now = DateTime.now();
-  final currentTimeDateTime = DateTime(now.year, now.month, now.day, currentTime.hour, currentTime.minute);
-  final specifiedTimeDateTime = DateTime(now.year, now.month, now.day, specifiedTime.hour, specifiedTime.minute);
+  final currentTimeDateTime = DateTime(
+      now.year, now.month, now.day, currentTime.hour, currentTime.minute);
+  final specifiedTimeDateTime = DateTime(
+      now.year, now.month, now.day, specifiedTime.hour, specifiedTime.minute);
 
   return currentTimeDateTime.isAfter(specifiedTimeDateTime);
 }
@@ -295,7 +344,10 @@ void showNewUpdateDialog(BuildContext context) async {
   showInDialog(
     context,
     contentPadding: EdgeInsets.zero,
-    barrierDismissible: !(getIntAsync(ConfigurationKeyConst.IS_FORCE_UPDATE) == 1 ? true : false),
+    barrierDismissible:
+        !(getIntAsync(ConfigurationKeyConst.IS_FORCE_UPDATE) == 1
+            ? true
+            : false),
     builder: (_) {
       return NewUpdateDialog();
     },
@@ -305,7 +357,9 @@ void showNewUpdateDialog(BuildContext context) async {
 Future<void> showForceUpdateDialog(BuildContext context) async {
   if (getIntAsync(ConfigurationKeyConst.IS_FORCE_UPDATE) == 1) {
     getPackageInfo().then((value) {
-      if (isAndroid && getIntAsync(ConfigurationKeyConst.VERSION_CODE) > value.versionCode.validate().toInt()) {
+      if (isAndroid &&
+          getIntAsync(ConfigurationKeyConst.VERSION_CODE) >
+              value.versionCode.validate().toInt()) {
         showNewUpdateDialog(context);
       }
       /*else if (isIOS && remoteConfigDataModel.iOS != null && remoteConfigDataModel.iOS!.versionCode.validate() != value.versionCode.validate()) {
@@ -326,8 +380,10 @@ Future<bool> addToWishList({required int productId}) async {
   });
 }
 
-Future<bool> removeFromWishList({int? wishListId, int? productId, bool isFromProductDetail = false}) async {
-  return await removeWishList(wishListId: wishListId, productId: productId).then((res) {
+Future<bool> removeFromWishList(
+    {int? wishListId, int? productId, bool isFromProductDetail = false}) async {
+  return await removeWishList(wishListId: wishListId, productId: productId)
+      .then((res) {
     if (isFromProductDetail) {
       onProductDetailUpdate.call();
       onWishListUpdate.call();

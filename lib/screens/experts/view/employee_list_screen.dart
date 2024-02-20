@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:frezka/components/app_scaffold.dart';
-import 'package:frezka/screens/experts/component/employee_list_component.dart';
-import 'package:frezka/screens/experts/view/employee_detail_screen.dart';
-import 'package:frezka/utils/app_common.dart';
+import 'package:grow_tokyo_app/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/screens/experts/component/employee_list_component.dart';
+import 'package:grow_tokyo_app/screens/experts/view/employee_detail_screen.dart';
+import 'package:grow_tokyo_app/utils/app_common.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/empty_error_state_widget.dart';
@@ -92,7 +92,8 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
                 },
                 physics: AlwaysScrollableScrollPhysics(),
                 listAnimationType: ListAnimationType.Scale,
-                padding: EdgeInsets.only(top: 50, left: 16, right: 16, bottom: 16),
+                padding:
+                    EdgeInsets.only(top: 50, left: 16, right: 16, bottom: 16),
                 onNextPage: () {
                   if (!isLastPage) {
                     page++;
@@ -109,12 +110,15 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
                     columnCount: 2,
                     itemCount: list.length,
                     listAnimationType: ListAnimationType.Scale,
-                    scaleConfiguration: ScaleConfiguration(duration: 300.milliseconds, delay: 50.milliseconds),
+                    scaleConfiguration: ScaleConfiguration(
+                        duration: 300.milliseconds, delay: 50.milliseconds),
                     itemBuilder: (_, i) {
                       EmployeeData data = list[i];
 
                       return GestureDetector(
-                        onTap: () => EmployeeDetailScreen(employeeId: data.id.validate()).launch(context),
+                        onTap: () =>
+                            EmployeeDetailScreen(employeeId: data.id.validate())
+                                .launch(context),
                         child: EmployeeListComponent(expertData: data),
                       );
                     },
@@ -137,7 +141,8 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
               );
             },
           ),
-          Observer(builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+          Observer(
+              builder: (context) => LoaderWidget().visible(appStore.isLoading)),
         ],
       ),
     );

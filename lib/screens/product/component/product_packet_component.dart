@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:frezka/components/view_all_label_component.dart';
-import 'package:frezka/main.dart';
+import 'package:grow_tokyo_app/components/view_all_label_component.dart';
+import 'package:grow_tokyo_app/main.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../utils/colors.dart';
@@ -39,7 +39,8 @@ class _ProductPacketComponentState extends State<ProductPacketComponent> {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ViewAllLabel(label: locale.productSize, isShowAll: false).paddingSymmetric(horizontal: 16),
+          ViewAllLabel(label: locale.productSize, isShowAll: false)
+              .paddingSymmetric(horizontal: 16),
           HorizontalList(
             wrapAlignment: WrapAlignment.start,
             crossAxisAlignment: WrapCrossAlignment.start,
@@ -47,7 +48,8 @@ class _ProductPacketComponentState extends State<ProductPacketComponent> {
             itemCount: widget.productData.variationData.validate().length,
             padding: EdgeInsets.symmetric(horizontal: 16),
             itemBuilder: (context, index) {
-              VariationData variationData = widget.productData.variationData.validate()[index];
+              VariationData variationData =
+                  widget.productData.variationData.validate()[index];
 
               return Observer(builder: (context) {
                 return InkWell(
@@ -55,20 +57,31 @@ class _ProductPacketComponentState extends State<ProductPacketComponent> {
                   onTap: () {
                     productStore.setSelectedVariationData(variationData);
                     productStore.setProductQuantity(DEFAULT_QUANTITY);
-                    variationData.taxIncludeProductPrice = productStore.selectedVariationData.taxIncludeProductPrice;
+                    variationData.taxIncludeProductPrice = productStore
+                        .selectedVariationData.taxIncludeProductPrice;
 
                     setState(() {});
                   },
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                    decoration: boxDecorationDefault(color: productStore.selectedVariationData.id == variationData.id ? indicatorColor : context.cardColor),
+                    decoration: boxDecorationDefault(
+                        color: productStore.selectedVariationData.id ==
+                                variationData.id
+                            ? indicatorColor
+                            : context.cardColor),
                     child: AnimatedWrap(
                       itemCount: variationData.combination.validate().length,
                       itemBuilder: (context, index) {
-                        ProductCombinationData combinationData = variationData.combination.validate()[index];
+                        ProductCombinationData combinationData =
+                            variationData.combination.validate()[index];
                         return Text(
                           combinationData.productVariationName.validate(),
-                          style: boldTextStyle(color: productStore.selectedVariationData.id == variationData.id ? Colors.black : textSecondaryColorGlobal, size: 12),
+                          style: boldTextStyle(
+                              color: productStore.selectedVariationData.id ==
+                                      variationData.id
+                                  ? Colors.black
+                                  : textSecondaryColorGlobal,
+                              size: 12),
                         );
                       },
                     ),

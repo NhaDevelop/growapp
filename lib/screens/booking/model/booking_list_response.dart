@@ -1,7 +1,7 @@
-import 'package:frezka/main.dart';
-import 'package:frezka/screens/services/models/service_response.dart';
-import 'package:frezka/utils/constants.dart';
-import 'package:frezka/utils/extensions/string_extensions.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/screens/services/models/service_response.dart';
+import 'package:grow_tokyo_app/utils/constants.dart';
+import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../models/review_data.dart';
@@ -18,7 +18,11 @@ class BookingListResponse {
 
   factory BookingListResponse.fromJson(Map<String, dynamic> json) {
     return BookingListResponse(
-      data: json['data'] != null ? (json['data'] as List).map((i) => BookingListData.fromJson(i)).toList() : null,
+      data: json['data'] != null
+          ? (json['data'] as List)
+              .map((i) => BookingListData.fromJson(i))
+              .toList()
+          : null,
       message: json['message'],
       status: json['status'],
     );
@@ -74,9 +78,11 @@ class BookingListData {
   // local
   DateTime get bookingDateTime => DateTime.parse(startDateTime.validate());
 
-  String get bookingDate => formatDate(bookingDateTime.toString(), format: DateFormatConst.BOOK_DATE_FORMAT);
+  String get bookingDate => formatDate(bookingDateTime.toString(),
+      format: DateFormatConst.BOOK_DATE_FORMAT);
 
-  String get bookingTime => formatDate(bookingDateTime.toString(), format: DateFormatConst.HOUR_12_FORMAT);
+  String get bookingTime => formatDate(bookingDateTime.toString(),
+      format: DateFormatConst.HOUR_12_FORMAT);
 
   String get statusLabel => status.validate().getBookingStatusLabel;
 
@@ -142,18 +148,33 @@ class BookingListData {
       employeeId: json['employee_id'],
       phone: json['phone'],
       userId: json['user_id'],
-      customerReview: json['customer_review'] != null ? ReviewData.fromJson(json['customer_review']) : null,
+      customerReview: json['customer_review'] != null
+          ? ReviewData.fromJson(json['customer_review'])
+          : null,
       discount: json['discount'],
       tip: json['tip'],
-      payment: json['payment'] != null ? Payment.fromJson(json['payment']) : null,
-      serviceList: json['services'] != null ? (json['services'] as List).map((i) => ServiceListData.fromJson(i)).toList() : null,
-      productsInfo: json['products'] != null ? (json['products'] as List).map((i) => ProductsInfo.fromJson(i)).toList() : null,
+      payment:
+          json['payment'] != null ? Payment.fromJson(json['payment']) : null,
+      serviceList: json['services'] != null
+          ? (json['services'] as List)
+              .map((i) => ServiceListData.fromJson(i))
+              .toList()
+          : null,
+      productsInfo: json['products'] != null
+          ? (json['products'] as List)
+              .map((i) => ProductsInfo.fromJson(i))
+              .toList()
+          : null,
       sumOfServicePrices: json['sumOfServicePrices'],
       sumOfProductPrices: json['sumOfProductPrices'],
       discoutAmount: json['discout_amount'],
       taxAmount: json['tax_amount'],
       totalAmount: json['total_amount'],
-      taxDetails: json['tax_details'] != null ? (json['tax_details'] as List).map((i) => TaxDetail.fromJson(i)).toList() : null,
+      taxDetails: json['tax_details'] != null
+          ? (json['tax_details'] as List)
+              .map((i) => TaxDetail.fromJson(i))
+              .toList()
+          : null,
     );
   }
 
@@ -214,7 +235,11 @@ class BookingListData {
     data['branch_id'] = appStore.branchId;
 
     if (this.selectedServiceList != null) {
-      data['services'] = this.selectedServiceList.validate().map((e) => e.toBookingServiceJson()).toList();
+      data['services'] = this
+          .selectedServiceList
+          .validate()
+          .map((e) => e.toBookingServiceJson())
+          .toList();
     }
 
     return data;

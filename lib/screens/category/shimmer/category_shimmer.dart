@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/shimmer_widget.dart';
+import 'package:grow_tokyo_app/components/shimmer_widget.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class CategoryShimmer extends StatelessWidget {
@@ -15,11 +15,13 @@ class CategoryShimmer extends StatelessWidget {
           return Container(
             width: context.width() / 3 - 22,
             padding: EdgeInsets.zero,
-            decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor),
+            decoration: boxDecorationWithRoundedCorners(
+                backgroundColor: context.cardColor),
             child: Column(
               children: [
                 ShimmerWidget(height: 85, width: context.width() / 3 - 22),
-                ShimmerWidget(height: 10, width: context.width() * 0.15).paddingSymmetric(vertical: 8, horizontal: 8),
+                ShimmerWidget(height: 10, width: context.width() * 0.15)
+                    .paddingSymmetric(vertical: 8, horizontal: 8),
               ],
             ),
           );

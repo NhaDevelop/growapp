@@ -1,6 +1,6 @@
-import 'package:frezka/screens/experts/model/employee_detail_response.dart';
-import 'package:frezka/screens/experts/model/employee_response.dart';
-import 'package:frezka/utils/api_end_points.dart';
+import 'package:grow_tokyo_app/screens/experts/model/employee_detail_response.dart';
+import 'package:grow_tokyo_app/screens/experts/model/employee_response.dart';
+import 'package:grow_tokyo_app/utils/api_end_points.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../main.dart';
@@ -20,7 +20,8 @@ Future<List<EmployeeData>> getEmployeeList({
     String order = orderBy.isNotEmpty ? '&order_by=$orderBy' : '';
     String services = serviceIds.isNotEmpty ? '&service_ids=$serviceIds' : '';
 
-    EmployeeResponse res = EmployeeResponse.fromJson(await handleResponse(await buildHttpResponse(
+    EmployeeResponse res =
+        EmployeeResponse.fromJson(await handleResponse(await buildHttpResponse(
       '${APIEndPoints.employeeList}?branch_id=$branchId$order$services&per_page=$perPage&page=$page',
       method: HttpMethodType.GET,
     )));
@@ -40,14 +41,19 @@ Future<List<EmployeeData>> getEmployeeList({
   return list;
 }
 
-Future<EmployeeDetailResponse> getEmployeeDetail({required int branchId, required int employeeId}) async {
+Future<EmployeeDetailResponse> getEmployeeDetail(
+    {required int branchId, required int employeeId}) async {
   try {
-    var res = EmployeeDetailResponse.fromJson(await handleResponse(await buildHttpResponse('${APIEndPoints.employeeDetail}?branch_id=$branchId&employee_id=$employeeId', method: HttpMethodType.GET)));
+    var res = EmployeeDetailResponse.fromJson(await handleResponse(
+        await buildHttpResponse(
+            '${APIEndPoints.employeeDetail}?branch_id=$branchId&employee_id=$employeeId',
+            method: HttpMethodType.GET)));
 
     if (!employeeDetailCachedData.any((element) => element?.$1 == employeeId)) {
       employeeDetailCachedData.add((employeeId, res));
     } else {
-      int index = employeeDetailCachedData.indexWhere((element) => element?.$1 == employeeId);
+      int index = employeeDetailCachedData
+          .indexWhere((element) => element?.$1 == employeeId);
       employeeDetailCachedData[index] = (employeeId, res);
     }
 

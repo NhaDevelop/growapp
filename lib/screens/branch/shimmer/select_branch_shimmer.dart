@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/shimmer_widget.dart';
+import 'package:grow_tokyo_app/components/shimmer_widget.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class SelectBranchShimmer extends StatelessWidget {
@@ -11,7 +11,8 @@ class SelectBranchShimmer extends StatelessWidget {
       itemBuilder: (ctx, index) {
         return Container(
           margin: EdgeInsets.only(bottom: 16),
-          decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor, borderRadius: radius()),
+          decoration: boxDecorationWithRoundedCorners(
+              backgroundColor: context.cardColor, borderRadius: radius()),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -45,14 +46,16 @@ class SelectBranchShimmer extends StatelessWidget {
                         children: [
                           ShimmerWidget(height: 16, width: 16),
                           10.width,
-                          ShimmerWidget(height: 10, width: context.width() * 0.30),
+                          ShimmerWidget(
+                              height: 10, width: context.width() * 0.30),
                         ],
                       ).expand(),
                       ShimmerWidget(
                         child: Container(
                           height: 30,
                           width: 50,
-                          decoration: boxDecorationDefault(color: context.cardColor),
+                          decoration:
+                              boxDecorationDefault(color: context.cardColor),
                         ),
                       ),
                     ],

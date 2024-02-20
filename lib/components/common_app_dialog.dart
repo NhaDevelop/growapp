@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/utils/colors.dart';
-import 'package:frezka/utils/constants.dart';
-import 'package:frezka/utils/images.dart';
+import 'package:grow_tokyo_app/utils/colors.dart';
+import 'package:grow_tokyo_app/utils/constants.dart';
+import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../main.dart';
@@ -14,7 +14,13 @@ class CommonAppDialog extends StatefulWidget {
   final Function? onTap;
   final bool isQuickBooking;
 
-  CommonAppDialog({this.icon, this.title, this.subTitle, this.buttonText, this.onTap, this.isQuickBooking = false});
+  CommonAppDialog(
+      {this.icon,
+      this.title,
+      this.subTitle,
+      this.buttonText,
+      this.onTap,
+      this.isQuickBooking = false});
 
   @override
   _CommonAppDialogState createState() => _CommonAppDialogState();
@@ -44,15 +50,27 @@ class _CommonAppDialogState extends State<CommonAppDialog> {
       backgroundColor: Colors.transparent,
       child: Container(
         padding: EdgeInsets.all(25),
-        decoration: BoxDecoration(shape: BoxShape.rectangle, color: context.cardColor, borderRadius: BorderRadius.circular(16)),
+        decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            color: context.cardColor,
+            borderRadius: BorderRadius.circular(16)),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            CircleAvatar(child: Image.asset(widget.icon ?? ic_confetti_ball, fit: BoxFit.cover, height: 50), backgroundColor: indicatorColor, radius: 50),
+            CircleAvatar(
+                child: Image.asset(widget.icon ?? ic_confetti_ball,
+                    fit: BoxFit.cover, height: 50),
+                backgroundColor: indicatorColor,
+                radius: 50),
             16.height,
-            Text(widget.title.validate(), style: boldTextStyle(size: LABEL_TEXT_SIZE), textAlign: TextAlign.center),
+            Text(widget.title.validate(),
+                style: boldTextStyle(size: LABEL_TEXT_SIZE),
+                textAlign: TextAlign.center),
             16.height,
-            Text(widget.subTitle.validate(), style: secondaryTextStyle(size: 14), textAlign: TextAlign.center).center(),
+            Text(widget.subTitle.validate(),
+                    style: secondaryTextStyle(size: 14),
+                    textAlign: TextAlign.center)
+                .center(),
             24.height,
             if (widget.isQuickBooking)
               Row(
@@ -67,7 +85,8 @@ class _CommonAppDialogState extends State<CommonAppDialog> {
                   ).expand(),
                   16.width,
                   AppButton(
-                    child: Text(widget.buttonText.validate(), style: boldTextStyle(color: white)),
+                    child: Text(widget.buttonText.validate(),
+                        style: boldTextStyle(color: white)),
                     color: secondaryColor,
                     width: context.width(),
                     onTap: widget.onTap,
@@ -76,7 +95,8 @@ class _CommonAppDialogState extends State<CommonAppDialog> {
               )
             else
               AppButton(
-                child: Text(widget.buttonText.validate(), style: boldTextStyle(color: white)),
+                child: Text(widget.buttonText.validate(),
+                    style: boldTextStyle(color: white)),
                 color: secondaryColor,
                 width: context.width(),
                 onTap: widget.onTap,

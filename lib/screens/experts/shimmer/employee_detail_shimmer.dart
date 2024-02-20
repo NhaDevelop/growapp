@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/shimmer_widget.dart';
+import 'package:grow_tokyo_app/components/shimmer_widget.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class EmployeeDetailShimmer extends StatelessWidget {
@@ -18,12 +18,14 @@ class EmployeeDetailShimmer extends StatelessWidget {
                     backgroundColor: context.cardColor,
                     elevation: 0,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
+                      borderRadius:
+                          BorderRadius.vertical(bottom: Radius.circular(20)),
                     ),
                   ),
                 ),
                 16.height,
-                ShimmerWidget(height: 98, width: 98).cornerRadiusWithClipRRect(150),
+                ShimmerWidget(height: 98, width: 98)
+                    .cornerRadiusWithClipRRect(150),
                 Column(
                   children: [
                     14.height,
@@ -77,7 +79,8 @@ class EmployeeDetailShimmer extends StatelessWidget {
                       children: [
                         ShimmerWidget(height: 35, width: 35),
                         16.width,
-                        ShimmerWidget(height: 14, width: context.width() * 0.25),
+                        ShimmerWidget(
+                            height: 14, width: context.width() * 0.25),
                       ],
                     ),
                     16.height,
@@ -89,7 +92,8 @@ class EmployeeDetailShimmer extends StatelessWidget {
                       children: [
                         ShimmerWidget(height: 35, width: 35),
                         16.width,
-                        ShimmerWidget(height: 14, width: context.width() * 0.25),
+                        ShimmerWidget(
+                            height: 14, width: context.width() * 0.25),
                       ],
                     ),
                     16.height,
@@ -101,7 +105,8 @@ class EmployeeDetailShimmer extends StatelessWidget {
                       children: [
                         ShimmerWidget(height: 35, width: 35),
                         16.width,
-                        ShimmerWidget(height: 14, width: context.width() * 0.25),
+                        ShimmerWidget(
+                            height: 14, width: context.width() * 0.25),
                       ],
                     ),
                     16.height,
@@ -115,9 +120,11 @@ class EmployeeDetailShimmer extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        ShimmerWidget(height: 20, width: context.width() * 0.25),
+                        ShimmerWidget(
+                            height: 20, width: context.width() * 0.25),
                         4.width,
-                        ShimmerWidget(height: 20, width: context.width() * 0.15),
+                        ShimmerWidget(
+                            height: 20, width: context.width() * 0.15),
                       ],
                     ),
                     ShimmerWidget(height: 20, width: context.width() * 0.15),
@@ -135,7 +142,8 @@ class EmployeeDetailShimmer extends StatelessWidget {
                       padding: EdgeInsets.all(16),
                       margin: EdgeInsets.symmetric(vertical: 8),
                       width: context.width(),
-                      decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor),
+                      decoration: boxDecorationWithRoundedCorners(
+                          backgroundColor: context.cardColor),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -146,14 +154,18 @@ class EmployeeDetailShimmer extends StatelessWidget {
                                 children: [
                                   ShimmerWidget(height: 22, width: 35),
                                   8.width,
-                                  ShimmerWidget(height: 16, width: context.width() * 0.25),
+                                  ShimmerWidget(
+                                      height: 16,
+                                      width: context.width() * 0.25),
                                 ],
                               ).expand(),
-                              ShimmerWidget(height: 12, width: context.width() * 0.15),
+                              ShimmerWidget(
+                                  height: 12, width: context.width() * 0.15),
                             ],
                           ),
                           10.height,
-                          ShimmerWidget(height: 12, width: context.width() * 0.50),
+                          ShimmerWidget(
+                              height: 12, width: context.width() * 0.50),
                         ],
                       ),
                     );

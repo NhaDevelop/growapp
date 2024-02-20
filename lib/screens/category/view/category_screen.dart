@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:frezka/components/app_scaffold.dart';
-import 'package:frezka/screens/category/component/category_item_component.dart';
-import 'package:frezka/utils/app_common.dart';
+import 'package:grow_tokyo_app/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/screens/category/component/category_item_component.dart';
+import 'package:grow_tokyo_app/utils/app_common.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/empty_error_state_widget.dart';
@@ -115,14 +115,20 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     spacing: 16,
                     itemCount: list.length,
                     listAnimationType: ListAnimationType.Scale,
-                    scaleConfiguration: ScaleConfiguration(duration: 300.milliseconds, delay: 50.milliseconds),
+                    scaleConfiguration: ScaleConfiguration(
+                        duration: 300.milliseconds, delay: 50.milliseconds),
                     itemBuilder: (_, index) {
                       CategoryData? data = list[index];
                       return GestureDetector(
                         onTap: () {
-                          ViewAllServiceScreen(serviceTitle: data.name.validate(), categoryId: data.id.validate()).launch(context);
+                          ViewAllServiceScreen(
+                                  serviceTitle: data.name.validate(),
+                                  categoryId: data.id.validate())
+                              .launch(context);
                         },
-                        child: CategoryItemWidget(categoryData: data, width: context.width() / 3 - 22),
+                        child: CategoryItemWidget(
+                            categoryData: data,
+                            width: context.width() / 3 - 22),
                       );
                     },
                   ),
@@ -144,7 +150,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
               );
             },
           ),
-          Observer(builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+          Observer(
+              builder: (context) => LoaderWidget().visible(appStore.isLoading)),
         ],
       ),
     );

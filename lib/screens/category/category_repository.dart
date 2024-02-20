@@ -1,20 +1,30 @@
-import 'package:frezka/network/network_utils.dart';
-import 'package:frezka/screens/category/model/category_response.dart';
-import 'package:frezka/utils/api_end_points.dart';
+import 'package:grow_tokyo_app/network/network_utils.dart';
+import 'package:grow_tokyo_app/screens/category/model/category_response.dart';
+import 'package:grow_tokyo_app/utils/api_end_points.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../main.dart';
 import '../../utils/constants.dart';
 
-Future<List<CategoryData>> getCategoryList({int? categoryId, bool isStoreCached = false, int? page = 1, var perPage = PER_PAGE_ITEM, required List<CategoryData> list, Function(bool)? lastPageCallBack}) async {
+Future<List<CategoryData>> getCategoryList(
+    {int? categoryId,
+    bool isStoreCached = false,
+    int? page = 1,
+    var perPage = PER_PAGE_ITEM,
+    required List<CategoryData> list,
+    Function(bool)? lastPageCallBack}) async {
   try {
     CategoryResponse res;
 
     if (categoryId != null) {
-      res = CategoryResponse.fromJson(
-          await handleResponse(await buildHttpResponse('${APIEndPoints.categoryList}?category_id=$categoryId&per_page=$perPage&page=$page', method: HttpMethodType.GET)));
+      res = CategoryResponse.fromJson(await handleResponse(await buildHttpResponse(
+          '${APIEndPoints.categoryList}?category_id=$categoryId&per_page=$perPage&page=$page',
+          method: HttpMethodType.GET)));
     } else {
-      res = CategoryResponse.fromJson(await handleResponse(await buildHttpResponse('${APIEndPoints.categoryList}?per_page=$perPage&page=$page', method: HttpMethodType.GET)));
+      res = CategoryResponse.fromJson(await handleResponse(
+          await buildHttpResponse(
+              '${APIEndPoints.categoryList}?per_page=$perPage&page=$page',
+              method: HttpMethodType.GET)));
     }
 
     if (page == 1) list.clear();

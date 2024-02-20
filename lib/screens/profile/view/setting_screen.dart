@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/screens/auth/view/change_password_screen.dart';
-import 'package:frezka/utils/common_base.dart';
-import 'package:frezka/utils/extensions/string_extensions.dart';
-import 'package:frezka/utils/images.dart';
+import 'package:grow_tokyo_app/screens/auth/view/change_password_screen.dart';
+import 'package:grow_tokyo_app/utils/common_base.dart';
+import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
+import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/app_scaffold.dart';
@@ -91,7 +91,9 @@ class _SettingScreenState extends State<SettingScreen> {
 
                         toast(value.message);
 
-                        push(DashboardScreen(), isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
+                        push(DashboardScreen(),
+                            isNewTask: true,
+                            pageRouteAnimation: PageRouteAnimation.Fade);
                       }).catchError((e) {
                         appStore.setLoading(false);
                         toast(e.toString());

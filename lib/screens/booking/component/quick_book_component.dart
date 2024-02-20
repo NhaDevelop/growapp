@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/cached_image_widget.dart';
-import 'package:frezka/utils/constants.dart';
-import 'package:frezka/utils/extensions/date_extensions.dart';
-import 'package:frezka/utils/extensions/int_extension.dart';
-import 'package:frezka/utils/extensions/num_extensions.dart';
+import 'package:grow_tokyo_app/components/cached_image_widget.dart';
+import 'package:grow_tokyo_app/utils/constants.dart';
+import 'package:grow_tokyo_app/utils/extensions/date_extensions.dart';
+import 'package:grow_tokyo_app/utils/extensions/int_extension.dart';
+import 'package:grow_tokyo_app/utils/extensions/num_extensions.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -96,7 +96,10 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
   }
 
   void init() async {
-    futureEmployeeList = getEmployeeList(branchId: appStore.branchId, serviceIds: selectedServiceIdList.join(', '), list: employeeList);
+    futureEmployeeList = getEmployeeList(
+        branchId: appStore.branchId,
+        serviceIds: selectedServiceIdList.join(', '),
+        list: employeeList);
   }
 
   Future<BranchConfigurationResponse>? fetchBranchConfigurationApi() {
@@ -108,10 +111,15 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
   Widget serviceListWidget({required ServiceListData services}) {
     return CheckboxListTile(
       value: services.isServiceChecked,
-      title: Text('${services.name.validate()}', style: boldTextStyle(color: appStore.isDarkMode ? textPrimaryColorGlobal : secondaryColor, size: 14)),
+      title: Text('${services.name.validate()}',
+          style: boldTextStyle(
+              color:
+                  appStore.isDarkMode ? textPrimaryColorGlobal : secondaryColor,
+              size: 14)),
       contentPadding: EdgeInsets.zero,
       controlAffinity: ListTileControlAffinity.leading,
-      secondary: PriceWidget(price: services.defaultPrice.validate(), color: context.primaryColor),
+      secondary: PriceWidget(
+          price: services.defaultPrice.validate(), color: context.primaryColor),
       checkboxShape: RoundedRectangleBorder(borderRadius: radius(5)),
       side: BorderSide(color: textSecondaryColorGlobal),
       dense: true,
@@ -127,7 +135,8 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
           taxRequest.taxPercentage = bookingRequestStore.taxPercentage;
           selectedServiceIdList.add(services.id.validate());
         } else {
-          selectedService.removeWhere((element) => element.id.validate() == services.id.validate());
+          selectedService.removeWhere(
+              (element) => element.id.validate() == services.id.validate());
           taxRequest.selectedServiceList = selectedService;
           selectedServiceIdList.remove(services.id.validate());
         }
@@ -146,26 +155,36 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       decoration: boxDecorationWithRoundedCorners(
         borderRadius: radius(),
-        backgroundColor: appStore.isDarkMode ? indicatorColor.withOpacity(0.5) : indicatorColor.withOpacity(0.2),
+        backgroundColor: appStore.isDarkMode
+            ? indicatorColor.withOpacity(0.5)
+            : indicatorColor.withOpacity(0.2),
       ),
       child: Row(
         children: [
           Marquee(
             child: Text(
               '${selectedServiceText!.name}',
-              style: secondaryTextStyle(color: appStore.isDarkMode ? textPrimaryColorGlobal : textSecondaryColorGlobal),
+              style: secondaryTextStyle(
+                  color: appStore.isDarkMode
+                      ? textPrimaryColorGlobal
+                      : textSecondaryColorGlobal),
             ),
           ).expand(),
           4.width,
           Container(
             height: 16,
             width: 16,
-            decoration: boxDecorationWithRoundedCorners(borderRadius: radius(5), backgroundColor: scaffoldSecondaryDark),
+            decoration: boxDecorationWithRoundedCorners(
+                borderRadius: radius(5),
+                backgroundColor: scaffoldSecondaryDark),
             child: IconButton(
               padding: EdgeInsets.zero,
               onPressed: () {
                 try {
-                  widget.serviceListData.firstWhere((element) => element.name == selectedServiceText.name).isServiceChecked = false;
+                  widget.serviceListData
+                      .firstWhere(
+                          (element) => element.name == selectedServiceText.name)
+                      .isServiceChecked = false;
                 } catch (e) {
                   print(e);
                 }
@@ -187,7 +206,9 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
 
     if (branchConfigurationCached != null) {
       BookingRequestModel req = BookingRequestModel();
-      req.selectedServiceList = widget.serviceListData.where((element) => element.isServiceChecked.validate()).toList();
+      req.selectedServiceList = widget.serviceListData
+          .where((element) => element.isServiceChecked.validate())
+          .toList();
 
       String dateString = selectDateCont.text + " " + selectTimeCont.text;
 
@@ -202,16 +223,24 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
 
       req.selectedServiceList.validate().forEachIndexed((element, index) {
         if (index == 0) {
-          element.startDateTime = formatDate(initialDateTime.toString(), format: DateFormatConst.NEW_FORMAT);
+          element.startDateTime = formatDate(initialDateTime.toString(),
+              format: DateFormatConst.NEW_FORMAT);
           element.previousTime = initialDateTime;
         } else {
-          ServiceListData previousData = req.selectedServiceList.validate()[index - 1];
-          element.startDateTime = formatDate(previousData.previousTime!.add(previousData.durationMin.minutes).toString(), format: DateFormatConst.NEW_FORMAT);
-          element.previousTime = previousData.previousTime!.add(previousData.durationMin.minutes);
+          ServiceListData previousData =
+              req.selectedServiceList.validate()[index - 1];
+          element.startDateTime = formatDate(
+              previousData.previousTime!
+                  .add(previousData.durationMin.minutes)
+                  .toString(),
+              format: DateFormatConst.NEW_FORMAT);
+          element.previousTime =
+              previousData.previousTime!.add(previousData.durationMin.minutes);
         }
       });
 
-      String selectDateTime = formatDate(initialDateTime.toString(), format: DateFormatConst.NEW_FORMAT);
+      String selectDateTime = formatDate(initialDateTime.toString(),
+          format: DateFormatConst.NEW_FORMAT);
       req.taxPercentage = branchConfigurationCached!.tax;
       bookingRequestStore.employeeId = selectedEmployee!.id.validate();
 
@@ -220,8 +249,11 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
       appStore.setLoading(true);
 
       doIfLoggedIn(context, () async {
-        await verifySlot(selectedEmployee!.id.validate(), initialDateTime.toString()).then((value) async {
-          saveBookingAPI(req.toJson(dateTime: selectDateTime)).then((value) async {
+        await verifySlot(
+                selectedEmployee!.id.validate(), initialDateTime.toString())
+            .then((value) async {
+          saveBookingAPI(req.toJson(dateTime: selectDateTime))
+              .then((value) async {
             appStore.setLoading(true);
 
             await savePay(
@@ -245,7 +277,9 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
                 buttonText: locale.goToBookings,
                 onTap: () {
                   finish(context);
-                  DashboardScreen(pageIndex: 1).launch(context, isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
+                  DashboardScreen(pageIndex: 1).launch(context,
+                      isNewTask: true,
+                      pageRouteAnimation: PageRouteAnimation.Fade);
                 },
               ),
             );
@@ -269,7 +303,9 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
   }
 
   void calculateTotalAmount() {
-    totalAmount = widget.serviceListData.where((element) => element.isServiceChecked).sumByDouble((p0) => p0.defaultPrice.validate());
+    totalAmount = widget.serviceListData
+        .where((element) => element.isServiceChecked)
+        .sumByDouble((p0) => p0.defaultPrice.validate());
   }
 
   Widget totalAmountWidget() {
@@ -281,7 +317,10 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              PriceWidget(price: taxRequest.calculateTotalAmount, color: textPrimaryColorGlobal, size: 16),
+              PriceWidget(
+                  price: taxRequest.calculateTotalAmount,
+                  color: textPrimaryColorGlobal,
+                  size: 16),
               8.width,
               taxRequest.totalTax != 0
                   ? Marquee(
@@ -311,7 +350,8 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
       backgroundColor: context.cardColor,
       isDismissible: false,
       enableDrag: false,
-      shape: RoundedRectangleBorder(borderRadius: radiusOnly(topLeft: 16, topRight: 16)),
+      shape: RoundedRectangleBorder(
+          borderRadius: radiusOnly(topLeft: 16, topRight: 16)),
       builder: (context) {
         return SnapHelperWidget(
           future: fetchBranchConfigurationApi(),
@@ -343,9 +383,22 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
               );
             }
 
-            if (snap.data!.slot.validate().any((element) => element.day == selectedHorizontalDate.weekday.getWeekDayName)) {
-              startTime = snap.data!.slot.validate().firstWhere((element) => element.day == selectedHorizontalDate.weekday.getWeekDayName).startTime.validate();
-              endTime = snap.data!.slot.validate().firstWhere((element) => element.day == selectedHorizontalDate.weekday.getWeekDayName).endTime.validate();
+            if (snap.data!.slot.validate().any((element) =>
+                element.day == selectedHorizontalDate.weekday.getWeekDayName)) {
+              startTime = snap.data!.slot
+                  .validate()
+                  .firstWhere((element) =>
+                      element.day ==
+                      selectedHorizontalDate.weekday.getWeekDayName)
+                  .startTime
+                  .validate();
+              endTime = snap.data!.slot
+                  .validate()
+                  .firstWhere((element) =>
+                      element.day ==
+                      selectedHorizontalDate.weekday.getWeekDayName)
+                  .endTime
+                  .validate();
             }
 
             return Container(
@@ -356,7 +409,7 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
                     title: locale.availableSlots,
                     padding: EdgeInsets.zero,
                     trailing: CloseButton(onPressed: () {
-                     finish(context);
+                      finish(context);
                     }),
                   ),
                   4.height,
@@ -375,7 +428,8 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
                         startTime: startTime,
                         endTime: endTime,
                         isFromQuickBooking: true,
-                        slotDuration: snap.data!.slotDuration.validate(value: DEFAULT_SLOT_INTERVAL_DURATION),
+                        slotDuration: snap.data!.slotDuration
+                            .validate(value: DEFAULT_SLOT_INTERVAL_DURATION),
                       ),
                     ],
                   ).expand(),
@@ -405,7 +459,8 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             20.height,
-            Text(locale.quickBookAppointment, style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+            Text(locale.quickBookAppointment,
+                style: boldTextStyle(size: LABEL_TEXT_SIZE)),
             16.height,
             Row(
               children: [
@@ -420,12 +475,29 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
                     DateTime? date = await datePicker(context);
 
                     if (date != null) {
-                      selectDateCont.text = date.setFormattedDate(DateFormatConst.BOOK_DATE_FORMAT).toString();
+                      selectDateCont.text = date
+                          .setFormattedDate(DateFormatConst.BOOK_DATE_FORMAT)
+                          .toString();
                       selectedHorizontalDate = date;
 
-                      if (branchConfigurationCached!.slot.validate().any((element) => element.day == selectedHorizontalDate.weekday.getWeekDayName)) {
-                        startTime = branchConfigurationCached!.slot.validate().firstWhere((element) => element.day == selectedHorizontalDate.weekday.getWeekDayName).startTime.validate();
-                        endTime = branchConfigurationCached!.slot.validate().firstWhere((element) => element.day == selectedHorizontalDate.weekday.getWeekDayName).endTime.validate();
+                      if (branchConfigurationCached!.slot.validate().any(
+                          (element) =>
+                              element.day ==
+                              selectedHorizontalDate.weekday.getWeekDayName)) {
+                        startTime = branchConfigurationCached!.slot
+                            .validate()
+                            .firstWhere((element) =>
+                                element.day ==
+                                selectedHorizontalDate.weekday.getWeekDayName)
+                            .startTime
+                            .validate();
+                        endTime = branchConfigurationCached!.slot
+                            .validate()
+                            .firstWhere((element) =>
+                                element.day ==
+                                selectedHorizontalDate.weekday.getWeekDayName)
+                            .endTime
+                            .validate();
                       }
 
                       keyForSlotWidget = UniqueKey();
@@ -435,7 +507,8 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
                         String? time = await _showTimeSlotBottomSheet(context);
 
                         if (time != null) {
-                          selectTimeCont.text = formatOnlyTime(context, startTime: time);
+                          selectTimeCont.text =
+                              formatOnlyTime(context, startTime: time);
                           timeFocus.nextFocus();
                         }
                       }
@@ -446,7 +519,9 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
                   decoration: inputDecoration(
                     context,
                     label: locale.date,
-                    suffixIcon: Icon(Icons.keyboard_arrow_down, color: context.iconColor, size: 20).paddingAll(14),
+                    suffixIcon: Icon(Icons.keyboard_arrow_down,
+                            color: context.iconColor, size: 20)
+                        .paddingAll(14),
                   ),
                 ).expand(),
                 16.width,
@@ -461,18 +536,20 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
                       String? time = await _showTimeSlotBottomSheet(context);
 
                       if (time != null) {
-                        selectTimeCont.text = formatOnlyTime(context, startTime: time);
+                        selectTimeCont.text =
+                            formatOnlyTime(context, startTime: time);
                         setState(() {});
                       }
                     } else {
                       toast(locale.pleaseSelectTheDateFirst);
                     }
-
                   },
                   decoration: inputDecoration(
                     context,
                     label: locale.time,
-                    suffixIcon: Icon(Icons.keyboard_arrow_down, color: context.iconColor, size: 20).paddingAll(14),
+                    suffixIcon: Icon(Icons.keyboard_arrow_down,
+                            color: context.iconColor, size: 20)
+                        .paddingAll(14),
                   ),
                 ).expand(),
               ],
@@ -480,7 +557,8 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
             16.height,
             AnimatedCrossFade(
               firstChild: AnimatedContainer(
-                decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor, borderRadius: radius()),
+                decoration: boxDecorationWithRoundedCorners(
+                    backgroundColor: context.cardColor, borderRadius: radius()),
                 duration: 300.milliseconds,
                 child: Theme(
                   data: ThemeData(
@@ -495,7 +573,8 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
                     expandedCrossAxisAlignment: CrossAxisAlignment.start,
                     iconColor: context.iconColor,
                     collapsedIconColor: context.iconColor,
-                    childrenPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                    childrenPadding:
+                        EdgeInsets.symmetric(horizontal: 16, vertical: 0),
                     children: [
                       SizedBox(
                         height: containerHeight,
@@ -508,10 +587,14 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
                             shrinkWrap: true,
                             padding: EdgeInsets.zero,
                             separatorBuilder: (_, i) {
-                              return DottedLine(lineThickness: 1, dashLength: 4, dashColor: context.dividerColor);
+                              return DottedLine(
+                                  lineThickness: 1,
+                                  dashLength: 4,
+                                  dashColor: context.dividerColor);
                             },
                             itemBuilder: (context, index) {
-                              return serviceListWidget(services: widget.serviceListData[index]);
+                              return serviceListWidget(
+                                  services: widget.serviceListData[index]);
                             },
                           ),
                         ),
@@ -523,7 +606,8 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
                           runSpacing: 12,
                           itemCount: selectedService.length,
                           itemBuilder: (_, index) {
-                            return selectedServiceWidget(selectedServiceText: selectedService[index]);
+                            return selectedServiceWidget(
+                                selectedServiceText: selectedService[index]);
                           },
                         ),
                       totalAmountWidget(),
@@ -531,12 +615,15 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
                   ),
                 ),
               ),
-              crossFadeState: showEmployeeList ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+              crossFadeState: showEmployeeList
+                  ? CrossFadeState.showSecond
+                  : CrossFadeState.showFirst,
               secondCurve: Curves.linearToEaseOut,
               duration: 200.milliseconds,
               secondChild: AnimatedContainer(
                 duration: 300.milliseconds,
-                decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor, borderRadius: radius()),
+                decoration: boxDecorationWithRoundedCorners(
+                    backgroundColor: context.cardColor, borderRadius: radius()),
                 child: Theme(
                   data: ThemeData(
                     splashColor: Colors.transparent,
@@ -551,24 +638,33 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
                     loadingWidget: LoaderWidget(),
                     useConnectionStateForLoader: true,
                     onSuccess: (employeeList) {
-                      if (employeeList.isEmpty) return Text(locale.noStaffFound, style: primaryTextStyle()).center().paddingSymmetric(vertical: 50);
+                      if (employeeList.isEmpty)
+                        return Text(locale.noStaffFound,
+                                style: primaryTextStyle())
+                            .center()
+                            .paddingSymmetric(vertical: 50);
 
                       return ExpansionTile(
-                        title: Text(locale.specialist, style: secondaryTextStyle()),
+                        title: Text(locale.specialist,
+                            style: secondaryTextStyle()),
                         expandedCrossAxisAlignment: CrossAxisAlignment.start,
                         iconColor: context.iconColor,
                         collapsedIconColor: context.iconColor,
                         initiallyExpanded: true,
-                        childrenPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                        childrenPadding:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 0),
                         children: [
                           SizedBox(
-                            height: employeeList.length >= 6  ? 300 : null,
+                            height: employeeList.length >= 6 ? 300 : null,
                             child: ListView.separated(
                               itemCount: employeeList.length,
                               shrinkWrap: true,
                               padding: EdgeInsets.zero,
                               separatorBuilder: (_, i) {
-                                return DottedLine(lineThickness: 1, dashLength: 4, dashColor: context.dividerColor);
+                                return DottedLine(
+                                    lineThickness: 1,
+                                    dashLength: 4,
+                                    dashColor: context.dividerColor);
                               },
                               itemBuilder: (context, index) {
                                 EmployeeData employeeData = employeeList[index];
@@ -578,12 +674,24 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
                                   groupValue: selectedEmployee,
                                   contentPadding: EdgeInsets.zero,
                                   dense: true,
-                                  activeColor: appStore.isDarkMode ? primaryColor : secondaryColor,
+                                  activeColor: appStore.isDarkMode
+                                      ? primaryColor
+                                      : secondaryColor,
                                   title: Row(
                                     children: [
-                                      CachedImageWidget(url: employeeData.profileImage.validate(), height: 24, width: 24, circle: true),
+                                      CachedImageWidget(
+                                          url: employeeData.profileImage
+                                              .validate(),
+                                          height: 24,
+                                          width: 24,
+                                          circle: true),
                                       16.width,
-                                      Text(employeeData.fullName.validate(), style: boldTextStyle(color: appStore.isDarkMode ? textPrimaryColorGlobal : secondaryColor, size: 14)),
+                                      Text(employeeData.fullName.validate(),
+                                          style: boldTextStyle(
+                                              color: appStore.isDarkMode
+                                                  ? textPrimaryColorGlobal
+                                                  : secondaryColor,
+                                              size: 14)),
                                     ],
                                   ),
                                   onChanged: (value) {
@@ -619,7 +727,8 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
               children: [
                 AppButton(
                   width: context.width(),
-                  child: Text(locale.back, style: boldTextStyle(color: Colors.black)),
+                  child: Text(locale.back,
+                      style: boldTextStyle(color: Colors.black)),
                   color: context.cardColor,
                   shapeBorder: RoundedRectangleBorder(borderRadius: radius()),
                   onTap: () {
@@ -630,7 +739,8 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
                 ).flexible(flex: 3).visible(showEmployeeList),
                 AppButton(
                   width: context.width(),
-                  child: Text(locale.bookNow, style: boldTextStyle(color: Colors.white)),
+                  child: Text(locale.bookNow,
+                      style: boldTextStyle(color: Colors.white)),
                   color: secondaryColor,
                   shapeBorder: RoundedRectangleBorder(borderRadius: radius()),
                   margin: EdgeInsets.only(left: showEmployeeList ? 16 : 0),
@@ -643,7 +753,8 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
                       toast(locale.pleaseSelectService);
                     }
 
-                    if (formKey.currentState!.validate() && selectedServiceIdList.isNotEmpty) {
+                    if (formKey.currentState!.validate() &&
+                        selectedServiceIdList.isNotEmpty) {
                       formKey.currentState!.save();
 
                       if (showEmployeeList) {

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:frezka/components/dotted_line.dart';
-import 'package:frezka/utils/colors.dart';
-import 'package:frezka/utils/common_base.dart';
-import 'package:frezka/utils/extensions/string_extensions.dart';
-import 'package:frezka/utils/images.dart';
+import 'package:grow_tokyo_app/components/dotted_line.dart';
+import 'package:grow_tokyo_app/utils/colors.dart';
+import 'package:grow_tokyo_app/utils/common_base.dart';
+import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
+import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:speech_to_text/speech_recognition_error.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
@@ -22,10 +22,16 @@ class DashboardAppBarComponent extends StatefulWidget {
   final double? positionWidgetHeight;
   final VoidCallback? onTapSearch;
 
-  DashboardAppBarComponent({this.innerChild, this.hintText, this.positionWidget, this.positionWidgetHeight, this.onTapSearch});
+  DashboardAppBarComponent(
+      {this.innerChild,
+      this.hintText,
+      this.positionWidget,
+      this.positionWidgetHeight,
+      this.onTapSearch});
 
   @override
-  _DashboardAppBarComponentState createState() => _DashboardAppBarComponentState();
+  _DashboardAppBarComponentState createState() =>
+      _DashboardAppBarComponentState();
 }
 
 class _DashboardAppBarComponentState extends State<DashboardAppBarComponent> {
@@ -45,7 +51,8 @@ class _DashboardAppBarComponentState extends State<DashboardAppBarComponent> {
   }
 
   void startListening() async {
-    bool available = await speech.initialize(onStatus: statusListener, onError: errorListener);
+    bool available = await speech.initialize(
+        onStatus: statusListener, onError: errorListener);
 
     if (available) {
       speech.listen(onResult: resultListener);
@@ -82,7 +89,9 @@ class _DashboardAppBarComponentState extends State<DashboardAppBarComponent> {
     appStore.setSpeechStatus(false);
     if (result.finalResult) {
       lastWords = result.recognizedWords;
-      ViewAllServiceScreen(search: lastWords, serviceTitle: locale.searchServices).launch(context);
+      ViewAllServiceScreen(
+              search: lastWords, serviceTitle: locale.searchServices)
+          .launch(context);
     }
     log("LastWords: $lastWords");
   }
@@ -129,8 +138,11 @@ class _DashboardAppBarComponentState extends State<DashboardAppBarComponent> {
           Container(
             width: context.width(),
             height: 190,
-            padding: EdgeInsets.only(left: 21, right: 6, top: context.statusBarHeight),
-            decoration: boxDecorationWithRoundedCorners(borderRadius: radiusOnly(bottomLeft: 20, bottomRight: 20), backgroundColor: primaryColor),
+            padding: EdgeInsets.only(
+                left: 21, right: 6, top: context.statusBarHeight),
+            decoration: boxDecorationWithRoundedCorners(
+                borderRadius: radiusOnly(bottomLeft: 20, bottomRight: 20),
+                backgroundColor: primaryColor),
             child: Column(
               children: [
                 16.height,
@@ -140,7 +152,9 @@ class _DashboardAppBarComponentState extends State<DashboardAppBarComponent> {
                   children: [
                     Observer(builder: (context) {
                       return Text(
-                        appStore.isLoggedIn ? '${locale.hey}, ${userStore.userFullName}' : locale.helloGuest,
+                        appStore.isLoggedIn
+                            ? '${locale.hey}, ${userStore.userFullName}'
+                            : locale.helloGuest,
                         style: boldTextStyle(size: 18, color: Colors.white),
                       );
                     }),
@@ -152,7 +166,8 @@ class _DashboardAppBarComponentState extends State<DashboardAppBarComponent> {
                           NotificationFragment().launch(context);
                         });
                       },
-                      icon: ic_unselected_bell.iconImage(color: Colors.white, size: 20),
+                      icon: ic_unselected_bell.iconImage(
+                          color: Colors.white, size: 20),
                     ),
                   ],
                 ),
@@ -160,9 +175,14 @@ class _DashboardAppBarComponentState extends State<DashboardAppBarComponent> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Image.asset(ic_location, height: 16, fit: BoxFit.cover, color: Colors.white),
+                    Image.asset(ic_location,
+                        height: 16, fit: BoxFit.cover, color: Colors.white),
                     8.width,
-                    Marquee(child: Text('${appStore.branchName}, ${appStore.branchAddress}', style: primaryTextStyle(color: Colors.white))).expand(),
+                    Marquee(
+                            child: Text(
+                                '${appStore.branchName}, ${appStore.branchAddress}',
+                                style: primaryTextStyle(color: Colors.white)))
+                        .expand(),
                     8.width,
                     Icon(Icons.keyboard_arrow_down, color: Colors.white),
                   ],
@@ -170,7 +190,8 @@ class _DashboardAppBarComponentState extends State<DashboardAppBarComponent> {
                   SelectBranchScreen(isFromDashboard: true).launch(context);
                 }),
                 16.height,
-                DottedLine(dashColor: lightPrimaryColor, dashGapLength: 0).paddingOnly(right: 10),
+                DottedLine(dashColor: lightPrimaryColor, dashGapLength: 0)
+                    .paddingOnly(right: 10),
               ],
             ),
           ),
@@ -181,7 +202,8 @@ class _DashboardAppBarComponentState extends State<DashboardAppBarComponent> {
           child: Container(
             height: widget.positionWidgetHeight ?? 50,
             width: context.width(),
-            decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor),
+            decoration: boxDecorationWithRoundedCorners(
+                backgroundColor: context.cardColor),
             child: widget.positionWidget != null
                 ? widget.positionWidget
                 : Stack(
@@ -193,7 +215,8 @@ class _DashboardAppBarComponentState extends State<DashboardAppBarComponent> {
                         decoration: inputDecoration(
                           context,
                           label: widget.hintText ?? '',
-                          prefixIcon: Icon(Icons.search, color: textSecondaryColorGlobal),
+                          prefixIcon: Icon(Icons.search,
+                              color: textSecondaryColorGlobal),
                         ),
                       ),
                       Positioned(

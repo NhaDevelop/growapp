@@ -1,7 +1,7 @@
-import 'package:frezka/configs.dart';
-import 'package:frezka/utils/colors.dart';
-import 'package:frezka/utils/constants.dart';
-import 'package:frezka/utils/images.dart';
+import 'package:grow_tokyo_app/configs.dart';
+import 'package:grow_tokyo_app/utils/colors.dart';
+import 'package:grow_tokyo_app/utils/constants.dart';
+import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -28,9 +28,18 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
 
   void init() async {
     setStatusBarColor(primaryColor);
-    pages.add(WalkThroughModel(title: locale.findYourNearestSalon, subTitle: locale.walkThrough1subTitle, img: walk_img1));
-    pages.add(WalkThroughModel(title: locale.pickAService, subTitle: locale.walkThrough2subTitle, img: walk_img2));
-    pages.add(WalkThroughModel(title: locale.quickBooking, subTitle: '${locale.walkThrough3subTitle} $APP_NAME', img: walk_img3));
+    pages.add(WalkThroughModel(
+        title: locale.findYourNearestSalon,
+        subTitle: locale.walkThrough1subTitle,
+        img: walk_img1));
+    pages.add(WalkThroughModel(
+        title: locale.pickAService,
+        subTitle: locale.walkThrough2subTitle,
+        img: walk_img2));
+    pages.add(WalkThroughModel(
+        title: locale.quickBooking,
+        subTitle: '${locale.walkThrough3subTitle} $APP_NAME',
+        img: walk_img3));
   }
 
   @override
@@ -51,7 +60,8 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
               decoration: boxDecorationWithRoundedCorners(
                 backgroundColor: primaryColor,
                 borderRadius: radiusOnly(bottomLeft: 20, bottomRight: 20),
-                decorationImage: DecorationImage(image: AssetImage(bg_pattern), fit: BoxFit.cover),
+                decorationImage: DecorationImage(
+                    image: AssetImage(bg_pattern), fit: BoxFit.cover),
               ),
             ),
             Column(
@@ -61,15 +71,20 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Spacer(),
-                    Text(APP_NAME, style: boldTextStyle(size: 20, color: white)).expand(),
+                    Text(APP_NAME, style: boldTextStyle(size: 20, color: white))
+                        .expand(),
                     Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(
                         onPressed: () async {
-                          await setValue(SharedPreferenceConst.IS_FIRST_TIME, false);
-                          SelectBranchScreen().launch(context, isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
+                          await setValue(
+                              SharedPreferenceConst.IS_FIRST_TIME, false);
+                          SelectBranchScreen().launch(context,
+                              isNewTask: true,
+                              pageRouteAnimation: PageRouteAnimation.Fade);
                         },
-                        child: Text(locale.skip, style: boldTextStyle(color: white)),
+                        child: Text(locale.skip,
+                            style: boldTextStyle(color: white)),
                       ),
                     )
                   ],
@@ -81,7 +96,10 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
                   child: PageView(
                     controller: pageController,
                     children: pages.map((e) {
-                      return Image.asset(pages[currentPosition].img.validate(), height: context.height() * 0.5, fit: BoxFit.cover).cornerRadiusWithClipRRect(defaultRadius).paddingSymmetric(horizontal: 16);
+                      return Image.asset(pages[currentPosition].img.validate(),
+                              height: context.height() * 0.5, fit: BoxFit.cover)
+                          .cornerRadiusWithClipRRect(defaultRadius)
+                          .paddingSymmetric(horizontal: 16);
                     }).toList(),
                     onPageChanged: (i) {
                       currentPosition = i;
@@ -90,21 +108,33 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
                   ),
                 ),
                 38.height,
-                Text(pages[currentPosition].title.validate(), style: boldTextStyle(size: LABEL_TEXT_SIZE)).paddingSymmetric(horizontal: 16),
+                Text(pages[currentPosition].title.validate(),
+                        style: boldTextStyle(size: LABEL_TEXT_SIZE))
+                    .paddingSymmetric(horizontal: 16),
                 16.height,
-                Text(pages[currentPosition].subTitle.validate(), style: secondaryTextStyle(), textAlign: TextAlign.center).paddingSymmetric(horizontal: 16),
+                Text(pages[currentPosition].subTitle.validate(),
+                        style: secondaryTextStyle(),
+                        textAlign: TextAlign.center)
+                    .paddingSymmetric(horizontal: 16),
                 24.height,
                 AppButton(
-                  child: Text(currentPosition == 2 ? locale.getStarted : locale.next, style: boldTextStyle(color: white)),
+                  child: Text(
+                      currentPosition == 2 ? locale.getStarted : locale.next,
+                      style: boldTextStyle(color: white)),
                   width: 230,
                   elevation: 0,
                   color: secondaryColor,
                   onTap: () async {
                     if (currentPosition == 2) {
-                      await setValue(SharedPreferenceConst.IS_FIRST_TIME, false);
-                      SelectBranchScreen().launch(context, isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
+                      await setValue(
+                          SharedPreferenceConst.IS_FIRST_TIME, false);
+                      SelectBranchScreen().launch(context,
+                          isNewTask: true,
+                          pageRouteAnimation: PageRouteAnimation.Fade);
                     } else {
-                      pageController.nextPage(duration: 500.milliseconds, curve: Curves.linearToEaseOut);
+                      pageController.nextPage(
+                          duration: 500.milliseconds,
+                          curve: Curves.linearToEaseOut);
                     }
                   },
                 ),

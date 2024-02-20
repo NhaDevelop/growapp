@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/main.dart';
+import 'package:grow_tokyo_app/main.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/cached_image_widget.dart';
@@ -47,22 +47,31 @@ class AboutProductComponent extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(orderData.productName.validate(), style: boldTextStyle(), maxLines: 1, overflow: TextOverflow.ellipsis),
+                          Text(orderData.productName.validate(),
+                              style: boldTextStyle(),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis),
                           4.height,
                           Row(
                             children: [
-                              Text('${locale.qty}: ', style: secondaryTextStyle(size: 13)),
-                              Text(orderData.qty.validate().toString(), style: primaryTextStyle()),
+                              Text('${locale.qty}: ',
+                                  style: secondaryTextStyle(size: 13)),
+                              Text(orderData.qty.validate().toString(),
+                                  style: primaryTextStyle()),
                             ],
                           ),
                           if (orderData.productVariationType != null)
                             Row(
                               children: [
-                                Text('${orderData.productVariationType.validate()}: ', style: primaryTextStyle(size: 13)),
-                                Text(orderData.productVariationValue.validate(), style: primaryTextStyle()),
+                                Text(
+                                    '${orderData.productVariationType.validate()}: ',
+                                    style: primaryTextStyle(size: 13)),
+                                Text(orderData.productVariationValue.validate(),
+                                    style: primaryTextStyle()),
                               ],
                             ),
-                          PriceWidget(price: orderData.getProductPrice.validate()),
+                          PriceWidget(
+                              price: orderData.getProductPrice.validate()),
                         ],
                       ).expand(),
                     ],

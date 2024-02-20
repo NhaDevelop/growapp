@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/main.dart';
-import 'package:frezka/utils/colors.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/utils/colors.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class CommonAppComponent extends StatefulWidget {
@@ -46,20 +46,31 @@ class _CommonAppComponentState extends State<CommonAppComponent> {
             Container(
               width: context.width(),
               height: widget.mainWidgetHeight ?? 150,
-              decoration: boxDecorationWithRoundedCorners(borderRadius: radiusOnly(bottomLeft: 20, bottomRight: 20), backgroundColor: primaryColor),
+              decoration: boxDecorationWithRoundedCorners(
+                  borderRadius: radiusOnly(bottomLeft: 20, bottomRight: 20),
+                  backgroundColor: primaryColor),
               child: widget.innerWidget,
             ),
             Column(
               children: [
                 widget.profileCircleWidget ??
                     Container(
-                      margin: EdgeInsets.only(top: widget.subWidgetHeight ?? 120, left: 24, bottom: 24, right: 24),
+                      margin: EdgeInsets.only(
+                          top: widget.subWidgetHeight ?? 120,
+                          left: 24,
+                          bottom: 24,
+                          right: 24),
                       decoration: appStore.isDarkMode
-                          ? boxDecorationWithRoundedCorners(backgroundColor: context.cardColor)
+                          ? boxDecorationWithRoundedCorners(
+                              backgroundColor: context.cardColor)
                           : boxDecorationWithRoundedCorners(
                               backgroundColor: context.cardColor,
                               boxShadow: [
-                                BoxShadow(spreadRadius: 0.4, blurRadius: 3, color: gray.withOpacity(0.1), offset: Offset(1, 6)),
+                                BoxShadow(
+                                    spreadRadius: 0.4,
+                                    blurRadius: 3,
+                                    color: gray.withOpacity(0.1),
+                                    offset: Offset(1, 6)),
                               ],
                             ),
                       child: widget.cardWidget.validate(),

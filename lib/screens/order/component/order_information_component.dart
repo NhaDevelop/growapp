@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/view_all_label_component.dart';
-import 'package:frezka/main.dart';
-import 'package:frezka/utils/common_base.dart';
+import 'package:grow_tokyo_app/components/view_all_label_component.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/utils/common_base.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/common_row_text_widget.dart';
@@ -25,13 +25,27 @@ class OrderInformationComponent extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              CommonRowTextWidget(leadingText: locale.orderDate, trailingText: orderData.orderingDate),
+              CommonRowTextWidget(
+                  leadingText: locale.orderDate,
+                  trailingText: orderData.orderingDate),
               10.height,
-              if (orderData.deliveringDate.isNotEmpty) CommonRowTextWidget(leadingText: locale.deliveredOn, trailingText: orderData.deliveringDate.validate()),
+              if (orderData.deliveringDate.isNotEmpty)
+                CommonRowTextWidget(
+                    leadingText: locale.deliveredOn,
+                    trailingText: orderData.deliveringDate.validate()),
               if (orderData.deliveringDate.isNotEmpty) 10.height,
-              CommonRowTextWidget(leadingText: locale.payment, trailingText: orderData.paymentMethod.validate().capitalizeFirstLetter()),
+              CommonRowTextWidget(
+                  leadingText: locale.payment,
+                  trailingText: orderData.paymentMethod
+                      .validate()
+                      .capitalizeFirstLetter()),
               10.height,
-              CommonRowTextWidget(leadingText: locale.deliveryStatus, trailingText: getOrderBookingStatus(status: orderData.deliveryStatus.validate().capitalizeFirstLetter())),
+              CommonRowTextWidget(
+                  leadingText: locale.deliveryStatus,
+                  trailingText: getOrderBookingStatus(
+                      status: orderData.deliveryStatus
+                          .validate()
+                          .capitalizeFirstLetter())),
             ],
           ),
         ),

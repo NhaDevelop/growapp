@@ -1,16 +1,16 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:frezka/main.dart';
-import 'package:frezka/screens/auth/auth_repository.dart';
-import 'package:frezka/screens/auth/view/forgot_password_screen.dart';
-import 'package:frezka/screens/auth/view/sign_up_screen.dart';
-import 'package:frezka/screens/dashboard/view/dashboard_screen.dart';
-import 'package:frezka/utils/colors.dart';
-import 'package:frezka/utils/common_base.dart';
-import 'package:frezka/utils/constants.dart';
-import 'package:frezka/utils/images.dart';
-import 'package:frezka/utils/model_keys.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/screens/auth/auth_repository.dart';
+import 'package:grow_tokyo_app/screens/auth/view/forgot_password_screen.dart';
+import 'package:grow_tokyo_app/screens/auth/view/sign_up_screen.dart';
+import 'package:grow_tokyo_app/screens/dashboard/view/dashboard_screen.dart';
+import 'package:grow_tokyo_app/utils/colors.dart';
+import 'package:grow_tokyo_app/utils/common_base.dart';
+import 'package:grow_tokyo_app/utils/constants.dart';
+import 'package:grow_tokyo_app/utils/images.dart';
+import 'package:grow_tokyo_app/utils/model_keys.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/app_scaffold.dart';
@@ -54,10 +54,13 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   void init() async {
-    isRemember = getBoolAsync(SharedPreferenceConst.IS_REMEMBERED, defaultValue: true);
+    isRemember =
+        getBoolAsync(SharedPreferenceConst.IS_REMEMBERED, defaultValue: true);
     if (isRemember && !isLoginTypeGoogle && !isLoginTypeApple) {
-      emailCont.text = getStringAsync(SharedPreferenceConst.USER_EMAIL, defaultValue: DEFAULT_EMAIL);
-      passwordCont.text = getStringAsync(SharedPreferenceConst.USER_PASSWORD, defaultValue: DEFAULT_PASS);
+      emailCont.text = getStringAsync(SharedPreferenceConst.USER_EMAIL,
+          defaultValue: DEFAULT_EMAIL);
+      passwordCont.text = getStringAsync(SharedPreferenceConst.USER_PASSWORD,
+          defaultValue: DEFAULT_PASS);
     }
   }
 
@@ -97,16 +100,20 @@ class _SignInScreenState extends State<SignInScreen> {
 
   void onLoginSuccessRedirection() {
     TextInput.finishAutofillContext();
-    if (widget.isFromServiceBooking.validate() || widget.isFromDashboard.validate() || widget.returnExpected.validate()) {
+    if (widget.isFromServiceBooking.validate() ||
+        widget.isFromDashboard.validate() ||
+        widget.returnExpected.validate()) {
       if (widget.isFromDashboard.validate()) {
         setStatusBarColor(context.primaryColor);
       }
       finish(context, true);
     } else {
       if (appStore.isBranchSelected) {
-        DashboardScreen().launch(context, isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
+        DashboardScreen().launch(context,
+            isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
       } else {
-        SelectBranchScreen().launch(context, isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
+        SelectBranchScreen().launch(context,
+            isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
       }
     }
     appStore.setLoading(false);
@@ -128,7 +135,6 @@ class _SignInScreenState extends State<SignInScreen> {
   void googleSignIn() async {
     appStore.setLoading(true);
     await googleSignInAuthService.signInWithGoogle(context).then((value) async {
-
       /// Social Login Api
       await loginUser(value.toJson(), isSocialLogin: true).then((value) {
         if (isRemember) {
@@ -173,7 +179,8 @@ class _SignInScreenState extends State<SignInScreen> {
                     decoration: boxDecorationWithRoundedCorners(
                       backgroundColor: context.primaryColor,
                       borderRadius: radiusOnly(bottomLeft: 20, bottomRight: 20),
-                      decorationImage: DecorationImage(image: AssetImage(bg_pattern), fit: BoxFit.cover),
+                      decorationImage: DecorationImage(
+                          image: AssetImage(bg_pattern), fit: BoxFit.cover),
                     ),
                   ),
                   Positioned(
@@ -181,7 +188,8 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: Container(
                       padding: EdgeInsets.all(16),
                       decoration: boxDecorationDefault(shape: BoxShape.circle),
-                      child: Image.asset(app_logo, height: 104, width: 104, fit: BoxFit.cover),
+                      child: Image.asset(app_logo,
+                          height: 104, width: 104, fit: BoxFit.cover),
                     ).center(),
                   ),
                   Positioned(
@@ -193,9 +201,11 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
               Column(
                 children: [
-                  Text(locale.welcomeBack, style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+                  Text(locale.welcomeBack,
+                      style: boldTextStyle(size: LABEL_TEXT_SIZE)),
                   8.height,
-                  Text(locale.youHaveBeenMissed, style: secondaryTextStyle(), textAlign: TextAlign.center),
+                  Text(locale.youHaveBeenMissed,
+                      style: secondaryTextStyle(), textAlign: TextAlign.center),
                   Column(
                     children: [
                       Form(
@@ -209,16 +219,19 @@ class _SignInScreenState extends State<SignInScreen> {
                               focus: emailFocus,
                               nextFocus: passwordFocus,
                               textFieldType: TextFieldType.EMAIL,
-                              decoration: inputDecoration(context, label: locale.email),
+                              decoration:
+                                  inputDecoration(context, label: locale.email),
                               autoFillHints: [AutofillHints.email],
-                              selectionControls: MaterialTextSelectionControls(),
+                              selectionControls:
+                                  MaterialTextSelectionControls(),
                             ),
                             16.height,
                             AppTextField(
                               controller: passwordCont,
                               textFieldType: TextFieldType.PASSWORD,
                               focus: passwordFocus,
-                              decoration: inputDecoration(context, label: locale.password),
+                              decoration: inputDecoration(context,
+                                  label: locale.password),
                               autoFillHints: [AutofillHints.password],
                               onFieldSubmitted: (s) {
                                 onSignIn();
@@ -241,7 +254,9 @@ class _SignInScreenState extends State<SignInScreen> {
                                 textStyle: secondaryTextStyle(),
                                 size: 20,
                                 onTap: (value) async {
-                                  await setValue(SharedPreferenceConst.IS_REMEMBERED, isRemember);
+                                  await setValue(
+                                      SharedPreferenceConst.IS_REMEMBERED,
+                                      isRemember);
                                   isRemember = !isRemember;
                                   setState(() {});
                                 },
@@ -256,7 +271,11 @@ class _SignInScreenState extends State<SignInScreen> {
                                 },
                                 child: Text(
                                   locale.forgotPassword,
-                                  style: secondaryTextStyle(color: appStore.isDarkMode ? territoryButtonColor : null, fontStyle: FontStyle.italic),
+                                  style: secondaryTextStyle(
+                                      color: appStore.isDarkMode
+                                          ? territoryButtonColor
+                                          : null,
+                                      fontStyle: FontStyle.italic),
                                   textAlign: TextAlign.right,
                                 ),
                               ).flexible(),
@@ -266,7 +285,8 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                       16.height,
                       AppButton(
-                        child: Text(locale.signIn, style: boldTextStyle(color: white)),
+                        child: Text(locale.signIn,
+                            style: boldTextStyle(color: white)),
                         width: context.width(),
                         color: secondaryColor,
                         onTap: () async {
@@ -285,7 +305,9 @@ class _SignInScreenState extends State<SignInScreen> {
                             },
                             child: Text(
                               locale.signUp,
-                              style: boldTextStyle(color: primaryColor, fontStyle: FontStyle.italic),
+                              style: boldTextStyle(
+                                  color: primaryColor,
+                                  fontStyle: FontStyle.italic),
                             ),
                           ),
                         ],
@@ -297,7 +319,9 @@ class _SignInScreenState extends State<SignInScreen> {
                             children: [
                               Divider(color: context.dividerColor).expand(),
                               8.width,
-                              Text(locale.or, style: boldTextStyle(color: textSecondaryColorGlobal)),
+                              Text(locale.or,
+                                  style: boldTextStyle(
+                                      color: textSecondaryColorGlobal)),
                               8.width,
                               Divider(color: context.dividerColor).expand(),
                             ],
@@ -308,18 +332,23 @@ class _SignInScreenState extends State<SignInScreen> {
                             color: context.cardColor,
                             padding: EdgeInsets.all(8),
                             textStyle: boldTextStyle(),
-                            width: context.width() - context.navigationBarHeight,
+                            width:
+                                context.width() - context.navigationBarHeight,
                             child: Row(
                               children: [
                                 Container(
                                   padding: EdgeInsets.all(12),
                                   decoration: boxDecorationWithRoundedCorners(
-                                    backgroundColor: primaryColor.withOpacity(0.1),
+                                    backgroundColor:
+                                        primaryColor.withOpacity(0.1),
                                     boxShape: BoxShape.circle,
                                   ),
                                   child: GoogleLogoWidget(size: 16),
                                 ),
-                                Text("${locale.signInWith} ${locale.google}", style: boldTextStyle(size: 12), textAlign: TextAlign.center).expand(),
+                                Text("${locale.signInWith} ${locale.google}",
+                                        style: boldTextStyle(size: 12),
+                                        textAlign: TextAlign.center)
+                                    .expand(),
                               ],
                             ),
                             onTap: googleSignIn,
@@ -333,18 +362,23 @@ class _SignInScreenState extends State<SignInScreen> {
                               color: context.cardColor,
                               padding: EdgeInsets.all(8),
                               textStyle: boldTextStyle(),
-                              width: context.width() - context.navigationBarHeight,
+                              width:
+                                  context.width() - context.navigationBarHeight,
                               child: Row(
                                 children: [
                                   Container(
                                     padding: EdgeInsets.all(8),
                                     decoration: boxDecorationWithRoundedCorners(
-                                      backgroundColor: primaryColor.withOpacity(0.1),
+                                      backgroundColor:
+                                          primaryColor.withOpacity(0.1),
                                       boxShape: BoxShape.circle,
                                     ),
                                     child: Icon(Icons.apple),
                                   ),
-                                  Text("${locale.signInWith} ${locale.apple}", style: boldTextStyle(size: 12), textAlign: TextAlign.center).expand(),
+                                  Text("${locale.signInWith} ${locale.apple}",
+                                          style: boldTextStyle(size: 12),
+                                          textAlign: TextAlign.center)
+                                      .expand(),
                                 ],
                               ),
                               onTap: appleSign,

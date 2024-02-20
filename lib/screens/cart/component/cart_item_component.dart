@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/main.dart';
+import 'package:grow_tokyo_app/main.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/cached_image_widget.dart';
@@ -46,7 +46,8 @@ class _CartItemComponentState extends State<CartItemComponent> {
       onAccept: (ctx) async {
         appStore.setLoading(true);
 
-        await removeFromCart(cartId: widget.cartListData.id.validate()).then((value) {
+        await removeFromCart(cartId: widget.cartListData.id.validate())
+            .then((value) {
           productStore.setCartItemCount(productStore.cartItemCount - 1);
           toast(value.message);
           appStore.setLoading(false);
@@ -68,12 +69,14 @@ class _CartItemComponentState extends State<CartItemComponent> {
     Map request = {
       ProductModelKey.productId: widget.cartListData.productId,
       ProductModelKey.cartId: widget.cartListData.id,
-      ProductModelKey.productVariationId: widget.cartListData.productVariationId,
+      ProductModelKey.productVariationId:
+          widget.cartListData.productVariationId,
       ProductModelKey.qty: widget.cartListData.qty,
     };
 
     await updateCart(request).then((value) {
-      toast('${locale.you}\'${locale.veChanged} ${widget.cartListData.productName} ${locale.quantityTo} ${widget.cartListData.qty}');
+      toast(
+          '${locale.you}\'${locale.veChanged} ${widget.cartListData.productName} ${locale.quantityTo} ${widget.cartListData.qty}');
       appStore.setLoading(false);
 
       onCartListUpdate.call();
@@ -89,7 +92,8 @@ class _CartItemComponentState extends State<CartItemComponent> {
       width: context.width(),
       padding: EdgeInsets.all(16),
       margin: EdgeInsets.only(left: 16, right: 16, bottom: 16),
-      decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor),
+      decoration:
+          boxDecorationWithRoundedCorners(backgroundColor: context.cardColor),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -121,10 +125,14 @@ class _CartItemComponentState extends State<CartItemComponent> {
                         padding: EdgeInsets.zero,
                         height: 20,
                         width: 20,
-                        decoration: boxDecorationDefault(shape: BoxShape.circle, border: Border.all(color: textSecondaryColorGlobal), color: context.cardColor),
+                        decoration: boxDecorationDefault(
+                            shape: BoxShape.circle,
+                            border: Border.all(color: textSecondaryColorGlobal),
+                            color: context.cardColor),
                         child: IconButton(
                           padding: EdgeInsets.zero,
-                          icon: Icon(Icons.close_rounded, color: textSecondaryColorGlobal, size: 18),
+                          icon: Icon(Icons.close_rounded,
+                              color: textSecondaryColorGlobal, size: 18),
                           onPressed: () async {
                             /// Remove Cart Api
                             await removeCart();
@@ -133,15 +141,21 @@ class _CartItemComponentState extends State<CartItemComponent> {
                       ),
                     ],
                   ),
-                  if (widget.cartListData.productDescription.validate().isNotEmpty) 4.height,
-                  if (widget.cartListData.productDescription.validate().isNotEmpty)
+                  if (widget.cartListData.productDescription
+                      .validate()
+                      .isNotEmpty)
+                    4.height,
+                  if (widget.cartListData.productDescription
+                      .validate()
+                      .isNotEmpty)
                     Text(
                       widget.cartListData.productDescription.validate(),
                       style: secondaryTextStyle(),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                  if (widget.cartListData.productVariationValue != null) 4.height,
+                  if (widget.cartListData.productVariationValue != null)
+                    4.height,
                   if (widget.cartListData.productVariationValue != null)
                     Row(
                       children: [
@@ -167,8 +181,12 @@ class _CartItemComponentState extends State<CartItemComponent> {
                 height: 26,
                 width: 74,
                 decoration: boxDecorationDefault(
-                  color: appStore.isDarkMode ? territoryButtonColor : borderColor,
-                  border: Border.all(color: appStore.isDarkMode ? territoryButtonColor : textSecondaryColorGlobal),
+                  color:
+                      appStore.isDarkMode ? territoryButtonColor : borderColor,
+                  border: Border.all(
+                      color: appStore.isDarkMode
+                          ? territoryButtonColor
+                          : textSecondaryColorGlobal),
                   borderRadius: radius(5),
                 ),
                 child: Row(
@@ -177,11 +195,16 @@ class _CartItemComponentState extends State<CartItemComponent> {
                   children: [
                     IconButton(
                       padding: EdgeInsets.zero,
-                      icon: Icon(Icons.remove, color: appStore.isDarkMode ? secondaryColor : appTextSecondaryColor, size: 14),
+                      icon: Icon(Icons.remove,
+                          color: appStore.isDarkMode
+                              ? secondaryColor
+                              : appTextSecondaryColor,
+                          size: 14),
                       highlightColor: Colors.transparent,
                       onPressed: () async {
                         if (widget.cartListData.qty.validate() > 1) {
-                          widget.cartListData.qty = widget.cartListData.qty.validate() - 1;
+                          widget.cartListData.qty =
+                              widget.cartListData.qty.validate() - 1;
                         }
 
                         /// update cart api
@@ -190,13 +213,19 @@ class _CartItemComponentState extends State<CartItemComponent> {
                         setState(() {});
                       },
                     ).expand(),
-                    Text('${widget.cartListData.qty}', style: primaryTextStyle(color: Colors.black)),
+                    Text('${widget.cartListData.qty}',
+                        style: primaryTextStyle(color: Colors.black)),
                     IconButton(
                       padding: EdgeInsets.zero,
-                      icon: Icon(Icons.add, color: appStore.isDarkMode ? secondaryColor : appTextSecondaryColor, size: 14),
+                      icon: Icon(Icons.add,
+                          color: appStore.isDarkMode
+                              ? secondaryColor
+                              : appTextSecondaryColor,
+                          size: 14),
                       highlightColor: Colors.transparent,
                       onPressed: () async {
-                        widget.cartListData.qty = widget.cartListData.qty.validate() + 1;
+                        widget.cartListData.qty =
+                            widget.cartListData.qty.validate() + 1;
 
                         /// update cart api
                         updateCartAPi();
@@ -213,15 +242,27 @@ class _CartItemComponentState extends State<CartItemComponent> {
                   child: Row(
                     children: [
                       PriceWidget(
-                        price: widget.cartListData.productVariation!.taxIncludeProductPrice.validate(),
-                        isLineThroughEnabled: widget.cartListData.isDiscount ? true : false,
+                        price: widget.cartListData.productVariation!
+                            .taxIncludeProductPrice
+                            .validate(),
+                        isLineThroughEnabled:
+                            widget.cartListData.isDiscount ? true : false,
                         size: widget.cartListData.isDiscount ? 12 : 16,
-                        color: widget.cartListData.isDiscount ? textSecondaryColorGlobal : null,
+                        color: widget.cartListData.isDiscount
+                            ? textSecondaryColorGlobal
+                            : null,
                       ),
                       4.width,
-                      if (widget.cartListData.isDiscount) PriceWidget(price: widget.cartListData.productVariation!.discountedProductPrice.validate()),
+                      if (widget.cartListData.isDiscount)
+                        PriceWidget(
+                            price: widget.cartListData.productVariation!
+                                .discountedProductPrice
+                                .validate()),
                       if (widget.cartListData.isDiscount) 8.width,
-                      if (widget.cartListData.isDiscount) Text('${widget.cartListData.discountValue}% ${locale.off}', style: primaryTextStyle(color: greenColor)),
+                      if (widget.cartListData.isDiscount)
+                        Text(
+                            '${widget.cartListData.discountValue}% ${locale.off}',
+                            style: primaryTextStyle(color: greenColor)),
                     ],
                   ),
                 ).expand(),

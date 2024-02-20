@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/cached_image_widget.dart';
+import 'package:grow_tokyo_app/components/cached_image_widget.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../screens/zoom_image_screen.dart';
@@ -25,7 +25,8 @@ class ImageBorder extends StatelessWidget {
         width: width,
         fit: BoxFit.cover,
       ).onTap(() {
-        if (src.isNotEmpty) ZoomImageScreen(galleryImages: [src], index: 0).launch(context);
+        if (src.isNotEmpty)
+          ZoomImageScreen(galleryImages: [src], index: 0).launch(context);
       }),
     );
   }

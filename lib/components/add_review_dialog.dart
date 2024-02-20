@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:frezka/screens/booking/view/booking_detail_screen.dart';
+import 'package:grow_tokyo_app/screens/booking/view/booking_detail_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../main.dart';
@@ -45,7 +45,9 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
     Map<String, dynamic> req = {};
 
     req = {
-      "id": widget.customerReview != null ? widget.customerReview!.id.validate() : null,
+      "id": widget.customerReview != null
+          ? widget.customerReview!.id.validate()
+          : null,
       "employee_id": widget.staffId.validate(),
       "rating": selectedRating.validate(),
       "review_msg": reviewCont.text.validate(),
@@ -84,7 +86,9 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
                 ),
                 child: Row(
                   children: [
-                    Text(locale.yourReview, style: boldTextStyle(color: Colors.white)).expand(),
+                    Text(locale.yourReview,
+                            style: boldTextStyle(color: Colors.white))
+                        .expand(),
                     IconButton(
                       icon: Icon(Icons.clear, color: Colors.white, size: 16),
                       onPressed: () {
@@ -109,7 +113,8 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
                             selectedRating = rating;
                             setState(() {});
                           },
-                          activeColor: getRatingBarColor(selectedRating.toInt()),
+                          activeColor:
+                              getRatingBarColor(selectedRating.toInt()),
                           inActiveColor: ratingBarColor,
                           rating: selectedRating,
                           size: 18,
@@ -134,7 +139,8 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
                     children: [
                       AppButton(
                         text: locale.cancel,
-                        textColor: isUpdate ? Colors.red : textPrimaryColorGlobal,
+                        textColor:
+                            isUpdate ? Colors.red : textPrimaryColorGlobal,
                         color: context.cardColor,
                         onTap: () {
                           finish(context);
@@ -160,7 +166,10 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
             ],
           ),
         ),
-        Observer(builder: (context) => LoaderWidget().visible(appStore.isLoading).withSize(height: 80, width: 80))
+        Observer(
+            builder: (context) => LoaderWidget()
+                .visible(appStore.isLoading)
+                .withSize(height: 80, width: 80))
       ],
     );
   }

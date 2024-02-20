@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:frezka/screens/branch/view/select_branch_screen.dart';
-import 'package:frezka/screens/dashboard/view/dashboard_screen.dart';
-import 'package:frezka/utils/images.dart';
+import 'package:grow_tokyo_app/screens/branch/view/select_branch_screen.dart';
+import 'package:grow_tokyo_app/screens/dashboard/view/dashboard_screen.dart';
+import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../components/no_branch_error_widget.dart';
@@ -42,10 +42,11 @@ class _SplashScreenState extends State<SplashScreen> {
       }
     }).catchError((e) {
       /// When error occure in Branch List API
-      push(NoBranchErrorWidget(errorMessage: e.toString()), isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
+      push(NoBranchErrorWidget(errorMessage: e.toString()),
+          isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
     });
 
-    int themeModeIndex = getIntAsync(THEME_MODE_INDEX);//TODO
+    int themeModeIndex = getIntAsync(THEME_MODE_INDEX); //TODO
     if (themeModeIndex == ThemeConst.THEME_MODE_LIGHT) {
       appStore.setDarkMode(false);
     } else if (themeModeIndex == ThemeConst.THEME_MODE_DARK) {
@@ -62,7 +63,8 @@ class _SplashScreenState extends State<SplashScreen> {
     } else if (appStore.isBranchSelected) {
       DashboardScreen().launch(context, isNewTask: true);
     } else {
-      SelectBranchScreen(isFromDashboard: true).launch(context, isNewTask: true);
+      SelectBranchScreen(isFromDashboard: true)
+          .launch(context, isNewTask: true);
     }
   }
 
@@ -76,7 +78,8 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Container(
           padding: EdgeInsets.all(16),
           decoration: boxDecorationDefault(shape: BoxShape.circle),
-          child: Image.asset(logo_gif, height: 150, width: 150, fit: BoxFit.cover),
+          child:
+              Image.asset(logo_gif, height: 150, width: 150, fit: BoxFit.cover),
         ).center(),
       ),
     );

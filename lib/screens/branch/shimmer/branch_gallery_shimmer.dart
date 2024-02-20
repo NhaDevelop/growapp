@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/shimmer_widget.dart';
+import 'package:grow_tokyo_app/components/shimmer_widget.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class BranchGalleryShimmer extends StatelessWidget {
@@ -13,7 +13,8 @@ class BranchGalleryShimmer extends StatelessWidget {
         itemCount: 20,
         listAnimationType: ListAnimationType.None,
         itemBuilder: (context, index) {
-          return ShimmerWidget(height: 100, width: context.width() / 3 - 22).cornerRadiusWithClipRRect(defaultRadius);
+          return ShimmerWidget(height: 100, width: context.width() / 3 - 22)
+              .cornerRadiusWithClipRRect(defaultRadius);
         },
       ),
     );

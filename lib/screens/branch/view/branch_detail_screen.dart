@@ -2,11 +2,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:frezka/components/app_scaffold.dart';
-import 'package:frezka/components/back_widget.dart';
-import 'package:frezka/components/loader_widget.dart';
-import 'package:frezka/components/slider_component.dart';
-import 'package:frezka/utils/colors.dart';
+import 'package:grow_tokyo_app/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/components/back_widget.dart';
+import 'package:grow_tokyo_app/components/loader_widget.dart';
+import 'package:grow_tokyo_app/components/slider_component.dart';
+import 'package:grow_tokyo_app/utils/colors.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/empty_error_state_widget.dart';
@@ -29,10 +29,17 @@ class BranchDetailScreen extends StatefulWidget {
   _BranchDetailScreenState createState() => _BranchDetailScreenState();
 }
 
-class _BranchDetailScreenState extends State<BranchDetailScreen> with TickerProviderStateMixin {
+class _BranchDetailScreenState extends State<BranchDetailScreen>
+    with TickerProviderStateMixin {
   Future<BranchDetailResponse>? future;
 
-  List<String> sectionList = [locale.about, locale.services, locale.reviews, locale.staff, locale.gallery];
+  List<String> sectionList = [
+    locale.about,
+    locale.services,
+    locale.reviews,
+    locale.staff,
+    locale.gallery
+  ];
 
   int selectedIndex = 0;
 
@@ -49,8 +56,12 @@ class _BranchDetailScreenState extends State<BranchDetailScreen> with TickerProv
   }
 
   BranchDetailResponse? getBranchInitialData() {
-    if (branchDetailCachedData.any((element) => element.data?.id == widget.branchId)) {
-      return BranchDetailResponse(data: branchDetailCachedData.firstWhere((element) => element.data?.id == widget.branchId).data);
+    if (branchDetailCachedData
+        .any((element) => element.data?.id == widget.branchId)) {
+      return BranchDetailResponse(
+          data: branchDetailCachedData
+              .firstWhere((element) => element.data?.id == widget.branchId)
+              .data);
     } else {
       return null;
     }
@@ -97,7 +108,8 @@ class _BranchDetailScreenState extends State<BranchDetailScreen> with TickerProv
               }
 
               return NestedScrollView(
-                headerSliverBuilder: (BuildContext context, innerBoxIsScrolled) {
+                headerSliverBuilder:
+                    (BuildContext context, innerBoxIsScrolled) {
                   return <Widget>[
                     SliverAppBar(
                       expandedHeight: 490,
@@ -108,11 +120,16 @@ class _BranchDetailScreenState extends State<BranchDetailScreen> with TickerProv
                         filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
                         child: Container(
                           child: BackWidget(iconColor: context.iconColor),
-                          decoration: boxDecorationDefault(shape: BoxShape.circle, color: context.cardColor.withOpacity(0.6)),
+                          decoration: boxDecorationDefault(
+                              shape: BoxShape.circle,
+                              color: context.cardColor.withOpacity(0.6)),
                         ),
                       ).cornerRadiusWithClipRRect(30).paddingLeft(6),
-                      titleTextStyle: boldTextStyle(color: whiteColor, size: 20),
-                      shape: ContinuousRectangleBorder(borderRadius: radiusOnly(bottomLeft: 20, bottomRight: 20)),
+                      titleTextStyle:
+                          boldTextStyle(color: whiteColor, size: 20),
+                      shape: ContinuousRectangleBorder(
+                          borderRadius:
+                              radiusOnly(bottomLeft: 20, bottomRight: 20)),
                       title: Text(innerBoxIsScrolled ? '' : ''),
                       centerTitle: true,
                       flexibleSpace: FlexibleSpaceBar(
@@ -144,12 +161,21 @@ class _BranchDetailScreenState extends State<BranchDetailScreen> with TickerProv
 
                               return Tab(
                                 child: Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-                                  margin: EdgeInsets.only(left: index == 0 ? 16 : 0, right: 16),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 4),
+                                  margin: EdgeInsets.only(
+                                      left: index == 0 ? 16 : 0, right: 16),
                                   decoration: boxDecorationWithRoundedCorners(
-                                    backgroundColor: index == selectedIndex ? secondaryColor : context.cardColor,
+                                    backgroundColor: index == selectedIndex
+                                        ? secondaryColor
+                                        : context.cardColor,
                                   ),
-                                  child: Text(e.toString(), style: boldTextStyle(color: index == selectedIndex ? white : textPrimaryColorGlobal)).center(),
+                                  child: Text(e.toString(),
+                                          style: boldTextStyle(
+                                              color: index == selectedIndex
+                                                  ? white
+                                                  : textPrimaryColorGlobal))
+                                      .center(),
                                 ),
                               );
                             }).toList(),
@@ -161,15 +187,25 @@ class _BranchDetailScreenState extends State<BranchDetailScreen> with TickerProv
                         key: ValueKey(selectedIndex),
                         children: sectionList.map((e) {
                           if (selectedIndex == 0) {
-                            return BranchAboutComponent(branchDescription: snap.data!.description.validate(), workingList: snap.data!.workingHourList.validate());
+                            return BranchAboutComponent(
+                                branchDescription:
+                                    snap.data!.description.validate(),
+                                workingList:
+                                    snap.data!.workingHourList.validate());
                           } else if (selectedIndex == 1) {
-                            return BranchServiceComponent(branchId: widget.branchId);
+                            return BranchServiceComponent(
+                                branchId: widget.branchId);
                           } else if (selectedIndex == 2) {
-                            return BranchReviewComponent(branchId: widget.branchId, branchTotalReview: snap.data!.totalReview.validate());
+                            return BranchReviewComponent(
+                                branchId: widget.branchId,
+                                branchTotalReview:
+                                    snap.data!.totalReview.validate());
                           } else if (selectedIndex == 3) {
-                            return BranchStaffComponent(branchId: widget.branchId);
+                            return BranchStaffComponent(
+                                branchId: widget.branchId);
                           } else if (selectedIndex == 4) {
-                            return BranchGalleryComponent(branchId: widget.branchId);
+                            return BranchGalleryComponent(
+                                branchId: widget.branchId);
                           } else {
                             return Offstage();
                           }
@@ -194,7 +230,8 @@ class _BranchDetailScreenState extends State<BranchDetailScreen> with TickerProv
               );
             },
           ),
-          Observer(builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+          Observer(
+              builder: (context) => LoaderWidget().visible(appStore.isLoading)),
         ],
       ),
     );

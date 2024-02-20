@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/main.dart';
+import 'package:grow_tokyo_app/main.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/view_all_label_component.dart';
@@ -35,7 +35,11 @@ class _FilterWeightComponentState extends State<FilterWeightComponent> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ViewAllLabel(label: locale.weight, labelTextStyle: boldTextStyle(), isShowAll: false).paddingSymmetric(horizontal: 16),
+        ViewAllLabel(
+                label: locale.weight,
+                labelTextStyle: boldTextStyle(),
+                isShowAll: false)
+            .paddingSymmetric(horizontal: 16),
         HorizontalList(
           spacing: 16,
           itemCount: weightList.length,
@@ -49,8 +53,16 @@ class _FilterWeightComponentState extends State<FilterWeightComponent> {
               },
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                decoration: boxDecorationDefault(color: weightSelectIndex == index ? indicatorColor : context.cardColor),
-                child: Text('${weightList[index]}', style: boldTextStyle(color: weightSelectIndex == index ? Colors.black : textSecondaryColorGlobal, size: 12)),
+                decoration: boxDecorationDefault(
+                    color: weightSelectIndex == index
+                        ? indicatorColor
+                        : context.cardColor),
+                child: Text('${weightList[index]}',
+                    style: boldTextStyle(
+                        color: weightSelectIndex == index
+                            ? Colors.black
+                            : textSecondaryColorGlobal,
+                        size: 12)),
               ),
             );
           },

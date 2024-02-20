@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/app_scaffold.dart';
-import 'package:frezka/screens/cart/cart_repository.dart';
-import 'package:frezka/screens/cart/model/logistic_zone_response.dart';
+import 'package:grow_tokyo_app/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/screens/cart/cart_repository.dart';
+import 'package:grow_tokyo_app/screens/cart/model/logistic_zone_response.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../main.dart';
@@ -171,7 +171,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       focus: firstNameFocus,
                       nextFocus: lastNameFocus,
                       textFieldType: TextFieldType.NAME,
-                      decoration: inputDecoration(context, label: locale.firstName),
+                      decoration:
+                          inputDecoration(context, label: locale.firstName),
                     ),
                     16.height,
                     AppTextField(
@@ -179,20 +180,28 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       focus: lastNameFocus,
                       textFieldType: TextFieldType.NAME,
                       textInputAction: TextInputAction.done,
-                      decoration: inputDecoration(context, label: locale.lastName),
+                      decoration:
+                          inputDecoration(context, label: locale.lastName),
                     ),
                     16.height,
                     Row(
                       children: [
                         DropdownButtonFormField<CountryData>(
-                          decoration: inputDecoration(context, label: locale.selectCountry),
+                          decoration: inputDecoration(context,
+                              label: locale.selectCountry),
                           isExpanded: true,
-                          value: (selectedCountry != null && selectedCountry!.id.validate() > 0) ? selectedCountry : null,
+                          value: (selectedCountry != null &&
+                                  selectedCountry!.id.validate() > 0)
+                              ? selectedCountry
+                              : null,
                           dropdownColor: context.cardColor,
                           items: countryList.map((CountryData e) {
                             return DropdownMenuItem<CountryData>(
                               value: e,
-                              child: Text(e.name!, style: primaryTextStyle(), maxLines: 1, overflow: TextOverflow.ellipsis),
+                              child: Text(e.name!,
+                                  style: primaryTextStyle(),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis),
                             );
                           }).toList(),
                           onChanged: (CountryData? value) async {
@@ -209,14 +218,21 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                         if (stateList.isNotEmpty) 12.width,
                         if (stateList.isNotEmpty)
                           DropdownButtonFormField<StateData>(
-                            decoration: inputDecoration(context, label: locale.selectState),
+                            decoration: inputDecoration(context,
+                                label: locale.selectState),
                             isExpanded: true,
                             dropdownColor: context.cardColor,
-                            value: (selectedState != null && selectedState!.id.validate() > 0) ? selectedState : null,
+                            value: (selectedState != null &&
+                                    selectedState!.id.validate() > 0)
+                                ? selectedState
+                                : null,
                             items: stateList.map((StateData e) {
                               return DropdownMenuItem<StateData>(
                                 value: e,
-                                child: Text(e.name!, style: primaryTextStyle(), maxLines: 1, overflow: TextOverflow.ellipsis),
+                                child: Text(e.name!,
+                                    style: primaryTextStyle(),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis),
                               );
                             }).toList(),
                             onChanged: (StateData? value) async {
@@ -235,14 +251,21 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       children: [
                         if (cityList.isNotEmpty)
                           DropdownButtonFormField<CityData>(
-                            decoration: inputDecoration(context, label: locale.selectCity),
+                            decoration: inputDecoration(context,
+                                label: locale.selectCity),
                             isExpanded: true,
-                            value: (selectedCity != null && selectedCity!.id.validate() > 0) ? selectedCity : null,
+                            value: (selectedCity != null &&
+                                    selectedCity!.id.validate() > 0)
+                                ? selectedCity
+                                : null,
                             dropdownColor: context.cardColor,
                             items: cityList.map((CityData e) {
                               return DropdownMenuItem<CityData>(
                                 value: e,
-                                child: Text(e.name!, style: primaryTextStyle(), maxLines: 1, overflow: TextOverflow.ellipsis),
+                                child: Text(e.name!,
+                                    style: primaryTextStyle(),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis),
                               );
                             }).toList(),
                             onChanged: (CityData? value) async {
@@ -259,7 +282,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                           focus: pinCodeFocus,
                           nextFocus: addressLine1FocusNode,
                           isValidationRequired: false,
-                          decoration: inputDecoration(context, label: locale.pincode),
+                          decoration:
+                              inputDecoration(context, label: locale.pincode),
                           onTap: () {
                             scrollController.animToBottom();
                           },
@@ -275,7 +299,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       controller: addressLine1Controller,
                       nextFocus: addressLine2FocusNode,
                       focus: addressLine1FocusNode,
-                      decoration: inputDecoration(context, label: '${locale.addressLine} 1', hint: '${locale.writeAddressHere}...'),
+                      decoration: inputDecoration(context,
+                          label: '${locale.addressLine} 1',
+                          hint: '${locale.writeAddressHere}...'),
                     ),
                     16.height,
                     AppTextField(
@@ -283,7 +309,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       controller: addressLine2Controller,
                       focus: addressLine2FocusNode,
                       isValidationRequired: false,
-                      decoration: inputDecoration(context, label: '${locale.addressLine} 2', hint: '${locale.writeLandmarkHere}...'),
+                      decoration: inputDecoration(context,
+                          label: '${locale.addressLine} 2',
+                          hint: '${locale.writeLandmarkHere}...'),
                     ),
                     8.height,
                     setAsPrimaryWidget(),
@@ -298,7 +326,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
             left: 16,
             right: 16,
             child: AppButton(
-              child: Text(isEdit ? locale.saveChanges : locale.save, style: boldTextStyle(color: white)),
+              child: Text(isEdit ? locale.saveChanges : locale.save,
+                  style: boldTextStyle(color: white)),
               width: context.width(),
               color: secondaryColor,
               onTap: () async {
@@ -321,7 +350,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       "is_primary": isPrimary.getIntBool(),
                     };
                     if (isEdit) {
-                      req.putIfAbsent("id", () => widget.address!.id.validate());
+                      req.putIfAbsent(
+                          "id", () => widget.address!.id.validate());
                     }
 
                     /// Add Or Edit Address Api Call
@@ -343,7 +373,11 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   Widget setAsPrimaryWidget() {
     return CheckboxListTile(
       value: isPrimary,
-      title: Text('Set as primary', style: boldTextStyle(color: appStore.isDarkMode ? textPrimaryColorGlobal : secondaryColor, size: 14)),
+      title: Text('Set as primary',
+          style: boldTextStyle(
+              color:
+                  appStore.isDarkMode ? textPrimaryColorGlobal : secondaryColor,
+              size: 14)),
       contentPadding: EdgeInsets.zero,
       controlAffinity: ListTileControlAffinity.leading,
       checkboxShape: RoundedRectangleBorder(borderRadius: radius(5)),

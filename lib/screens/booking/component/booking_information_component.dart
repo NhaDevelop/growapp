@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/view_all_label_component.dart';
-import 'package:frezka/screens/booking/component/booking_step2_component.dart';
-import 'package:frezka/screens/booking/component/customer_review_component.dart';
-import 'package:frezka/screens/services/models/service_response.dart';
+import 'package:grow_tokyo_app/components/view_all_label_component.dart';
+import 'package:grow_tokyo_app/screens/booking/component/booking_step2_component.dart';
+import 'package:grow_tokyo_app/screens/booking/component/customer_review_component.dart';
+import 'package:grow_tokyo_app/screens/services/models/service_response.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/common_row_text_widget.dart';
@@ -16,13 +16,16 @@ class BookingInformationComponent extends StatefulWidget {
   final String? bookingStatus;
   final List<ServiceListData> serviceList;
 
-  BookingInformationComponent({required this.booking, this.bookingStatus, required this.serviceList});
+  BookingInformationComponent(
+      {required this.booking, this.bookingStatus, required this.serviceList});
 
   @override
-  State<BookingInformationComponent> createState() => _BookingInformationComponentState();
+  State<BookingInformationComponent> createState() =>
+      _BookingInformationComponentState();
 }
 
-class _BookingInformationComponentState extends State<BookingInformationComponent> {
+class _BookingInformationComponentState
+    extends State<BookingInformationComponent> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -32,7 +35,8 @@ class _BookingInformationComponentState extends State<BookingInformationComponen
           label: locale.bookingInformation,
           trailingText: locale.change,
           trailingTextColor: lightPrimaryColor,
-          isShowAll: widget.bookingStatus == BookingStatusConst.PENDING ? true : false,
+          isShowAll:
+              widget.bookingStatus == BookingStatusConst.PENDING ? true : false,
           onTap: () {
             BookingStep2Component(
               isFromBookingInfoDetail: true,
@@ -48,11 +52,18 @@ class _BookingInformationComponentState extends State<BookingInformationComponen
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CommonRowTextWidget(leadingText: '${locale.date} & ${locale.time}', trailingText: '${widget.booking.bookingDate} At ${widget.booking.bookingTime}'),
+              CommonRowTextWidget(
+                  leadingText: '${locale.date} & ${locale.time}',
+                  trailingText:
+                      '${widget.booking.bookingDate} At ${widget.booking.bookingTime}'),
               10.height,
-              CommonRowTextWidget(leadingText: locale.specialist, trailingText: widget.booking.employeeName.validate()),
+              CommonRowTextWidget(
+                  leadingText: locale.specialist,
+                  trailingText: widget.booking.employeeName.validate()),
               10.height,
-              CommonRowTextWidget(leadingText: locale.status, trailingText: widget.booking.statusLabel),
+              CommonRowTextWidget(
+                  leadingText: locale.status,
+                  trailingText: widget.booking.statusLabel),
             ],
           ),
         ),
@@ -61,13 +72,17 @@ class _BookingInformationComponentState extends State<BookingInformationComponen
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               24.height,
-              Text(locale.serviceNote, style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+              Text(locale.serviceNote,
+                  style: boldTextStyle(size: LABEL_TEXT_SIZE)),
               8.height,
               Container(
                 decoration: boxDecorationDefault(color: context.cardColor),
                 padding: EdgeInsets.all(16),
                 width: context.width(),
-                child: ReadMoreText(widget.booking.note.validate(), style: primaryTextStyle(), textAlign: TextAlign.justify, colorClickableText: primaryColor),
+                child: ReadMoreText(widget.booking.note.validate(),
+                    style: primaryTextStyle(),
+                    textAlign: TextAlign.justify,
+                    colorClickableText: primaryColor),
               ),
             ],
           ),

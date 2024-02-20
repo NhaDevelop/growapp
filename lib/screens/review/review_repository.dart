@@ -1,6 +1,6 @@
-import 'package:frezka/models/review_data.dart';
-import 'package:frezka/screens/review/model/employee_review_model.dart';
-import 'package:frezka/utils/api_end_points.dart';
+import 'package:grow_tokyo_app/models/review_data.dart';
+import 'package:grow_tokyo_app/screens/review/model/employee_review_model.dart';
+import 'package:grow_tokyo_app/utils/api_end_points.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../main.dart';
@@ -8,11 +8,15 @@ import '../../models/base_response_model.dart';
 import '../../network/network_utils.dart';
 
 Future<BaseResponseModel> updateReview(Map request) async {
-  return BaseResponseModel.fromJson(await handleResponse(await buildHttpResponse(APIEndPoints.saveRating, request: request, method: HttpMethodType.POST)));
+  return BaseResponseModel.fromJson(await handleResponse(
+      await buildHttpResponse(APIEndPoints.saveRating,
+          request: request, method: HttpMethodType.POST)));
 }
 
 Future<BaseResponseModel> deleteReview({required int id}) async {
-  return BaseResponseModel.fromJson(await handleResponse(await buildHttpResponse(APIEndPoints.deleteRating, request: {"id": id}, method: HttpMethodType.POST)));
+  return BaseResponseModel.fromJson(await handleResponse(
+      await buildHttpResponse(APIEndPoints.deleteRating,
+          request: {"id": id}, method: HttpMethodType.POST)));
 }
 
 Future<List<ReviewData>> employeeReviews({
@@ -27,7 +31,8 @@ Future<List<ReviewData>> employeeReviews({
     String employeeId = empId != 0 ? '&employee_id=$empId' : '';
     String branchId = branId != 0 ? 'branch_id=$branId' : '';
 
-    EmployeeReviewResponse res = EmployeeReviewResponse.fromJson(await handleResponse(await buildHttpResponse(
+    EmployeeReviewResponse res = EmployeeReviewResponse.fromJson(
+        await handleResponse(await buildHttpResponse(
       '${APIEndPoints.getRating}?$branchId$employeeId&per_page=$perPage&page=$page',
       method: HttpMethodType.GET,
     )));

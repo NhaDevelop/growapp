@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:frezka/components/cached_image_widget.dart';
-import 'package:frezka/screens/dashboard/models/slider_data.dart';
-import 'package:frezka/screens/services/view/view_all_service_screen.dart';
+import 'package:grow_tokyo_app/components/cached_image_widget.dart';
+import 'package:grow_tokyo_app/screens/dashboard/models/slider_data.dart';
+import 'package:grow_tokyo_app/screens/services/view/view_all_service_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../configs.dart';
@@ -16,7 +16,8 @@ class HorizontalSliderComponent extends StatefulWidget {
   HorizontalSliderComponent({required this.sliderList});
 
   @override
-  _HorizontalSliderComponentState createState() => _HorizontalSliderComponentState();
+  _HorizontalSliderComponentState createState() =>
+      _HorizontalSliderComponentState();
 }
 
 class _HorizontalSliderComponentState extends State<HorizontalSliderComponent> {
@@ -28,14 +29,18 @@ class _HorizontalSliderComponentState extends State<HorizontalSliderComponent> {
   void initState() {
     super.initState();
 
-    if (getBoolAsync(SharedPreferenceConst.AUTO_SLIDER_STATUS, defaultValue: true) && widget.sliderList.length >= 2) {
-      timer = Timer.periodic(Duration(seconds: DASHBOARD_AUTO_SLIDER_SECOND), (Timer timer) {
+    if (getBoolAsync(SharedPreferenceConst.AUTO_SLIDER_STATUS,
+            defaultValue: true) &&
+        widget.sliderList.length >= 2) {
+      timer = Timer.periodic(Duration(seconds: DASHBOARD_AUTO_SLIDER_SECOND),
+          (Timer timer) {
         if (currentPage < widget.sliderList.length - 1) {
           currentPage++;
         } else {
           currentPage = 0;
         }
-        controller.animateToPage(currentPage, duration: Duration(milliseconds: 950), curve: Curves.easeOutQuart);
+        controller.animateToPage(currentPage,
+            duration: Duration(milliseconds: 950), curve: Curves.easeOutQuart);
       });
 
       controller.addListener(() {
@@ -75,11 +80,21 @@ class _HorizontalSliderComponentState extends State<HorizontalSliderComponent> {
             itemBuilder: (_, i) {
               SliderData data = widget.sliderList[i];
 
-              return CachedImageWidget(url: data.sliderImage.validate(), height: 200, width: context.width(), fit: BoxFit.cover, radius: defaultRadius).onTap(() {
+              return CachedImageWidget(
+                      url: data.sliderImage.validate(),
+                      height: 200,
+                      width: context.width(),
+                      fit: BoxFit.cover,
+                      radius: defaultRadius)
+                  .onTap(() {
                 if (data.type == SLIDER_TYPE_CATEGORY) {
-                  ViewAllServiceScreen(serviceTitle: data.name.validate(), categoryId: data.linkId).launch(context);
+                  ViewAllServiceScreen(
+                          serviceTitle: data.name.validate(),
+                          categoryId: data.linkId)
+                      .launch(context);
                 } else if (data.type == SLIDER_TYPE_SERVICE) {
-                  ViewAllServiceScreen(serviceTitle: data.name.validate()).launch(context);
+                  ViewAllServiceScreen(serviceTitle: data.name.validate())
+                      .launch(context);
                 }
               }).paddingSymmetric(horizontal: 16);
             },

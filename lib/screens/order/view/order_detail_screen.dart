@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/app_scaffold.dart';
-import 'package:frezka/components/loader_widget.dart';
-import 'package:frezka/utils/app_common.dart';
+import 'package:grow_tokyo_app/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/components/loader_widget.dart';
+import 'package:grow_tokyo_app/utils/app_common.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/empty_error_state_widget.dart';
@@ -46,7 +46,9 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
 
   OrderDetailResponse? getInitialData() {
     if (orderDetailCached.any((element) => element.id == widget.orderId)) {
-      return OrderDetailResponse(data: orderDetailCached.firstWhere((element) => element.id == widget.orderId));
+      return OrderDetailResponse(
+          data: orderDetailCached
+              .firstWhere((element) => element.id == widget.orderId));
     } else {
       return null;
     }
@@ -103,7 +105,9 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
             children: [
               OrderInformationComponent(orderData: snap.data!),
               16.height,
-              AboutProductComponent(orderList: snap.data!.productDetails.validate(), deliveryStatus: snap.data!.deliveryStatus.validate()),
+              AboutProductComponent(
+                  orderList: snap.data!.productDetails.validate(),
+                  deliveryStatus: snap.data!.deliveryStatus.validate()),
               16.height,
               OrderPaymentInfoComponent(orderData: snap.data!),
               16.height,

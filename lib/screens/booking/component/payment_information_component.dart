@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/price_widget.dart';
-import 'package:frezka/utils/colors.dart';
-import 'package:frezka/utils/constants.dart';
+import 'package:grow_tokyo_app/components/price_widget.dart';
+import 'package:grow_tokyo_app/utils/colors.dart';
+import 'package:grow_tokyo_app/utils/constants.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/common_row_text_widget.dart';
@@ -42,7 +42,10 @@ class PaymentInformationComponent extends StatelessWidget {
                 titleTextStyle: secondaryTextStyle(),
                 padding: EdgeInsets.zero,
                 trailing: Marquee(
-                  child: PriceWidget(price: booking.sumOfServicePrices.validate(), color: textPrimaryColorGlobal, size: 14),
+                  child: PriceWidget(
+                      price: booking.sumOfServicePrices.validate(),
+                      color: textPrimaryColorGlobal,
+                      size: 14),
                 ),
               ),
               10.height,
@@ -54,7 +57,10 @@ class PaymentInformationComponent extends StatelessWidget {
                   titleTextStyle: secondaryTextStyle(),
                   padding: EdgeInsets.zero,
                   trailing: Marquee(
-                    child: PriceWidget(price: booking.sumOfProductPrices.validate(), color: textPrimaryColorGlobal, size: 14),
+                    child: PriceWidget(
+                        price: booking.sumOfProductPrices.validate(),
+                        color: textPrimaryColorGlobal,
+                        size: 14),
                   ),
                 ).paddingBottom(10),
 
@@ -74,8 +80,16 @@ class PaymentInformationComponent extends StatelessWidget {
                             style: secondaryTextStyle(),
                           ),
                           16.width,
-                          if (tax.taxType == TaxType.PERCENT) PriceWidget(price: tax.taxAmount.validate(), color: textPrimaryColorGlobal, size: 14),
-                          if (tax.taxType == TaxType.FIXED) PriceWidget(price: tax.taxAmount.validate(), color: textPrimaryColorGlobal, size: 14),
+                          if (tax.taxType == TaxType.PERCENT)
+                            PriceWidget(
+                                price: tax.taxAmount.validate(),
+                                color: textPrimaryColorGlobal,
+                                size: 14),
+                          if (tax.taxType == TaxType.FIXED)
+                            PriceWidget(
+                                price: tax.taxAmount.validate(),
+                                color: textPrimaryColorGlobal,
+                                size: 14),
                         ],
                       ).paddingBottom(10);
                     },
@@ -89,7 +103,10 @@ class PaymentInformationComponent extends StatelessWidget {
                   children: [
                     Text(locale.tip, style: secondaryTextStyle()),
                     16.width,
-                    PriceWidget(price: booking.tip.validate(), color: textPrimaryColorGlobal, size: 14),
+                    PriceWidget(
+                        price: booking.tip.validate(),
+                        color: textPrimaryColorGlobal,
+                        size: 14),
                   ],
                 ).paddingBottom(10),
 
@@ -99,7 +116,11 @@ class PaymentInformationComponent extends StatelessWidget {
                 titleTextStyle: secondaryTextStyle(),
                 padding: EdgeInsets.zero,
                 paddingBeforeTrailing: 16,
-                trailing: Marquee(child: PriceWidget(price: booking.totalAmount.validate(), color: context.primaryColor, size: 16)),
+                trailing: Marquee(
+                    child: PriceWidget(
+                        price: booking.totalAmount.validate(),
+                        color: context.primaryColor,
+                        size: 16)),
               ),
             ],
           ),
@@ -120,12 +141,15 @@ class PaymentInformationComponent extends StatelessWidget {
                 padding: EdgeInsets.all(16),
                 child: Column(
                   children: [
-                    if (booking.payment!.externalTransactionId.validate().isNotEmpty)
+                    if (booking.payment!.externalTransactionId
+                        .validate()
+                        .isNotEmpty)
                       Column(
                         children: [
                           CommonRowTextWidget(
                             leadingText: locale.transactionId,
-                            trailingText: booking.payment!.externalTransactionId.validate(),
+                            trailingText: booking.payment!.externalTransactionId
+                                .validate(),
                             leftWidgetFlex: 3,
                             rightWidgetFlex: 7,
                           ),
@@ -138,7 +162,9 @@ class PaymentInformationComponent extends StatelessWidget {
                         titleTextStyle: secondaryTextStyle(),
                         padding: EdgeInsets.zero,
                         trailing: Marquee(
-                          child: Text(booking.payment!.transactionType.validate(), style: boldTextStyle(size: 14)),
+                          child: Text(
+                              booking.payment!.transactionType.validate(),
+                              style: boldTextStyle(size: 14)),
                         ),
                       ).paddingBottom(10),
                     SettingItemWidget(
@@ -146,7 +172,11 @@ class PaymentInformationComponent extends StatelessWidget {
                       titleTextStyle: secondaryTextStyle(),
                       padding: EdgeInsets.zero,
                       trailing: Marquee(
-                        child: Text(booking.payment!.paymentStatus == 1 ? locale.paid : locale.pending, style: boldTextStyle(size: 14)),
+                        child: Text(
+                            booking.payment!.paymentStatus == 1
+                                ? locale.paid
+                                : locale.pending,
+                            style: boldTextStyle(size: 14)),
                       ),
                     ),
                     10.height,
@@ -156,7 +186,9 @@ class PaymentInformationComponent extends StatelessWidget {
             ],
           )
         else if (booking.status == BookingStatusConst.COMPLETED &&
-            (booking.payment == null || (booking.payment != null && booking.payment!.paymentStatus == 0)))
+            (booking.payment == null ||
+                (booking.payment != null &&
+                    booking.payment!.paymentStatus == 0)))
           Column(
             children: [
               16.height,
@@ -166,7 +198,8 @@ class PaymentInformationComponent extends StatelessWidget {
                 color: secondaryColor,
                 width: context.width(),
                 onTap: () async {
-                  bool? res = await CompletePaymentScreen(booking).launch(context);
+                  bool? res =
+                      await CompletePaymentScreen(booking).launch(context);
 
                   if (res ?? false) {
                     onBookingDetailUpdate.call();

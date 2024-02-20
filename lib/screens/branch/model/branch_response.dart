@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/utils/extensions/string_extensions.dart';
+import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../utils/common_base.dart';
@@ -13,7 +13,9 @@ class BranchResponse {
 
   factory BranchResponse.fromJson(Map<String, dynamic> json) {
     return BranchResponse(
-      data: json['data'] != null ? (json['data'] as List).map((i) => BranchData.fromJson(i)).toList() : null,
+      data: json['data'] != null
+          ? (json['data'] as List).map((i) => BranchData.fromJson(i)).toList()
+          : null,
       message: json['message'],
       status: json['status'],
     );
@@ -57,8 +59,11 @@ class BranchData {
   List<WorkingHourList>? workingHourList;
 
   ///LOCAL
-  WorkingHourList? get todayTime =>
-      workingHourList.validate().isNotEmpty ? workingHourList!.firstWhere((element) => element.day.validate().toLowerCase().getWeekDayCount == DateTime.now().weekday.validate()) : null;
+  WorkingHourList? get todayTime => workingHourList.validate().isNotEmpty
+      ? workingHourList!.firstWhere((element) =>
+          element.day.validate().toLowerCase().getWeekDayCount ==
+          DateTime.now().weekday.validate())
+      : null;
 
   Color? get ratingColor => getRatingBarColor(ratingStar.validate().toInt());
 
@@ -103,7 +108,9 @@ class BranchData {
       longitude: json['longitude'],
       managerId: json['manager_id'],
       name: json['name'],
-      paymentMethod: json['payment_method'] != null ? new List<String>.from(json['payment_method']) : null,
+      paymentMethod: json['payment_method'] != null
+          ? new List<String>.from(json['payment_method'])
+          : null,
       ratingStar: json['rating_star'] != null ? json['rating_star'] : null,
       slug: json['slug'],
       status: json['status'],
@@ -112,7 +119,11 @@ class BranchData {
       updatedBy: json['updated_by'] != null ? json['updated_by'] : null,
       branchImg: json['branch_image'] != null ? json['branch_image'] : null,
       description: json['description'] != null ? json['description'] : null,
-      workingHourList: json['working_days'] != null ? (json['working_days'] as List).map((e) => WorkingHourList.fromJson(e)).toList() : null,
+      workingHourList: json['working_days'] != null
+          ? (json['working_days'] as List)
+              .map((e) => WorkingHourList.fromJson(e))
+              .toList()
+          : null,
     );
   }
 
@@ -168,7 +179,12 @@ class WorkingHourList {
   String? startTime;
   List<BranchBreaks>? branchBreaks;
 
-  WorkingHourList({this.day, this.endTime, this.isHoliday, this.startTime, this.branchBreaks});
+  WorkingHourList(
+      {this.day,
+      this.endTime,
+      this.isHoliday,
+      this.startTime,
+      this.branchBreaks});
 
   factory WorkingHourList.fromJson(Map<String, dynamic> json) {
     return WorkingHourList(
@@ -176,7 +192,11 @@ class WorkingHourList {
       endTime: json['end_time'],
       isHoliday: json['is_holiday'],
       startTime: json['start_time'],
-      branchBreaks: json['breaks'] != null ? (json['breaks'] as List).map((i) => BranchBreaks.fromJson(i)).toList() : null,
+      branchBreaks: json['breaks'] != null
+          ? (json['breaks'] as List)
+              .map((i) => BranchBreaks.fromJson(i))
+              .toList()
+          : null,
     );
   }
 
@@ -187,7 +207,8 @@ class WorkingHourList {
     data['is_holiday'] = this.isHoliday;
     data['start_time'] = this.startTime;
     if (this.branchBreaks != null) {
-      data['breaks'] = data['breaks'] = this.branchBreaks!.map((v) => v.toJson()).toList();
+      data['breaks'] =
+          data['breaks'] = this.branchBreaks!.map((v) => v.toJson()).toList();
     }
     return data;
   }

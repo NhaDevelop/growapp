@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:frezka/components/app_scaffold.dart';
-import 'package:frezka/components/loader_widget.dart';
-import 'package:frezka/utils/app_common.dart';
-import 'package:frezka/utils/colors.dart';
-import 'package:frezka/utils/common_base.dart';
+import 'package:grow_tokyo_app/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/components/loader_widget.dart';
+import 'package:grow_tokyo_app/utils/app_common.dart';
+import 'package:grow_tokyo_app/utils/colors.dart';
+import 'package:grow_tokyo_app/utils/common_base.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/cached_image_widget.dart';
@@ -68,7 +68,9 @@ class _BookingFragmentState extends State<BookingFragment> {
               width: context.width(),
               height: 150,
               decoration: boxDecorationWithRoundedCorners(
-                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20)),
                 backgroundColor: context.primaryColor,
               ),
               child: appBarWidget(
@@ -105,7 +107,10 @@ class _BookingFragmentState extends State<BookingFragment> {
                       onBookingListUpdate.call(searchBookingCont.text);
                       setState(() {});
                     },
-                    decoration: inputDecoration(context, hint: locale.searchBooking, prefixIcon: Icon(Icons.search, color: textSecondaryColorGlobal)),
+                    decoration: inputDecoration(context,
+                        hint: locale.searchBooking,
+                        prefixIcon: Icon(Icons.search,
+                            color: textSecondaryColorGlobal)),
                   ).expand(),
                   16.width,
                   Container(
@@ -129,7 +134,8 @@ class _BookingFragmentState extends State<BookingFragment> {
       body: Stack(
         children: [
           BookingListComponent(),
-          Observer(builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+          Observer(
+              builder: (context) => LoaderWidget().visible(appStore.isLoading)),
         ],
       ),
     );
@@ -141,10 +147,14 @@ class _BookingFragmentState extends State<BookingFragment> {
         context,
         child: Container(
           width: context.width(),
-          constraints: BoxConstraints(minWidth: context.height() * 0.65, maxHeight: context.height() * 0.45),
+          constraints: BoxConstraints(
+              minWidth: context.height() * 0.65,
+              maxHeight: context.height() * 0.45),
           decoration: BoxDecoration(
             color: context.scaffoldBackgroundColor,
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30.0),
+                topRight: Radius.circular(30.0)),
           ),
           child: SnapHelperWidget<List<BookingStatusData>>(
             future: fetchBookingStatusApi(),
@@ -184,7 +194,8 @@ class _BookingFragmentState extends State<BookingFragment> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(locale.filterBy, style: primaryTextStyle(size: 18)).paddingOnly(left: 25),
+                      Text(locale.filterBy, style: primaryTextStyle(size: 18))
+                          .paddingOnly(left: 25),
                       CloseButton(
                         onPressed: () {
                           hideKeyboard(context);
@@ -194,12 +205,14 @@ class _BookingFragmentState extends State<BookingFragment> {
                     ],
                   ),
                   10.height,
-                  Divider(color: context.dividerColor, height: 0).paddingSymmetric(horizontal: 16),
+                  Divider(color: context.dividerColor, height: 0)
+                      .paddingSymmetric(horizontal: 16),
                   22.height,
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(locale.bookingStatus, style: secondaryTextStyle()).paddingSymmetric(horizontal: 16),
+                      Text(locale.bookingStatus, style: secondaryTextStyle())
+                          .paddingSymmetric(horizontal: 16),
                       16.height,
                       AnimatedWrap(
                         runSpacing: 10,
@@ -212,10 +225,14 @@ class _BookingFragmentState extends State<BookingFragment> {
                           return Observer(builder: (context) {
                             return GestureDetector(
                               onTap: () {
-                                if (bookingRequestStore.selectedBookingStatusList.contains(statusData.status)) {
-                                  bookingRequestStore.selectedBookingStatusList.remove(statusData.status);
+                                if (bookingRequestStore
+                                    .selectedBookingStatusList
+                                    .contains(statusData.status)) {
+                                  bookingRequestStore.selectedBookingStatusList
+                                      .remove(statusData.status);
                                 } else {
-                                  bookingRequestStore.selectedBookingStatusList.add(statusData.status.validate());
+                                  bookingRequestStore.selectedBookingStatusList
+                                      .add(statusData.status.validate());
                                 }
                               },
                               child: Container(
@@ -223,7 +240,9 @@ class _BookingFragmentState extends State<BookingFragment> {
                                 alignment: Alignment.center,
                                 padding: EdgeInsets.symmetric(vertical: 12),
                                 decoration: boxDecorationDefault(
-                                  color: bookingRequestStore.selectedBookingStatusList.contains(statusData.status)
+                                  color: bookingRequestStore
+                                          .selectedBookingStatusList
+                                          .contains(statusData.status)
                                       ? appStore.isDarkMode
                                           ? primaryColor
                                           : lightPrimaryColor
@@ -238,12 +257,21 @@ class _BookingFragmentState extends State<BookingFragment> {
                                       Icons.check,
                                       size: 14,
                                       color: Colors.white,
-                                    ).visible(bookingRequestStore.selectedBookingStatusList.contains(statusData.status)),
-                                    4.width.visible(bookingRequestStore.selectedBookingStatusList.contains(statusData.status)),
+                                    ).visible(bookingRequestStore
+                                        .selectedBookingStatusList
+                                        .contains(statusData.status)),
+                                    4.width.visible(bookingRequestStore
+                                        .selectedBookingStatusList
+                                        .contains(statusData.status)),
                                     Text(
-                                      getBookingStatusKey(status: statusData.status.validate()),
+                                      getBookingStatusKey(
+                                          status: statusData.status.validate()),
                                       style: secondaryTextStyle(
-                                        color: bookingRequestStore.selectedBookingStatusList.contains(statusData.status) ? Colors.white : null,
+                                        color: bookingRequestStore
+                                                .selectedBookingStatusList
+                                                .contains(statusData.status)
+                                            ? Colors.white
+                                            : null,
                                       ),
                                     ),
                                   ],
@@ -263,7 +291,8 @@ class _BookingFragmentState extends State<BookingFragment> {
                             textStyle: boldTextStyle(color: Colors.white),
                             color: secondaryColor,
                             onTap: () {
-                              bookingRequestStore.selectedBookingStatusList.clear();
+                              bookingRequestStore.selectedBookingStatusList
+                                  .clear();
                               finish(context);
                               appStore.setLoading(true);
                               onBookingListUpdate.call('');

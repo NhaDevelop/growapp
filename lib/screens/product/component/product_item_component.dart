@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/main.dart';
-import 'package:frezka/utils/extensions/string_extensions.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/cached_image_widget.dart';
@@ -16,7 +16,10 @@ class ProductItemComponent extends StatefulWidget {
   final bool isFromWishList;
   final bool isFromProductDetail;
 
-  ProductItemComponent({required this.productListData, this.isFromWishList = false, this.isFromProductDetail = false});
+  ProductItemComponent(
+      {required this.productListData,
+      this.isFromWishList = false,
+      this.isFromProductDetail = false});
 
   @override
   State<ProductItemComponent> createState() => _ProductItemComponentState();
@@ -43,8 +46,10 @@ class _ProductItemComponentState extends State<ProductItemComponent> {
 
     if (widget.isFromWishList || widget.productListData.inWishlist == 1) {
       await removeFromWishList(
-        productId: widget.isFromWishList ? null : widget.productListData.id.validate(),
-        wishListId: widget.isFromWishList ? widget.productListData.id.validate() : null,
+        productId:
+            widget.isFromWishList ? null : widget.productListData.id.validate(),
+        wishListId:
+            widget.isFromWishList ? widget.productListData.id.validate() : null,
         isFromProductDetail: widget.isFromProductDetail,
       ).then((value) {
         appStore.setLoading(false);
@@ -54,7 +59,8 @@ class _ProductItemComponentState extends State<ProductItemComponent> {
         }
       });
     } else {
-      await addToWishList(productId: widget.productListData.id.validate()).then((value) {
+      await addToWishList(productId: widget.productListData.id.validate())
+          .then((value) {
         appStore.setLoading(false);
         if (value) {
           widget.productListData.inWishlist = 1;
@@ -76,7 +82,8 @@ class _ProductItemComponentState extends State<ProductItemComponent> {
           Stack(
             children: [
               ClipRRect(
-                borderRadius: radiusOnly(topLeft: defaultRadius, topRight: defaultRadius),
+                borderRadius:
+                    radiusOnly(topLeft: defaultRadius, topRight: defaultRadius),
                 child: CachedImageWidget(
                   url: widget.productListData.productImage.validate(),
                   width: context.width(),
@@ -93,18 +100,33 @@ class _ProductItemComponentState extends State<ProductItemComponent> {
                   children: [
                     Container(
                       padding: EdgeInsets.all(8),
-                      decoration: boxDecorationWithShadow(boxShape: BoxShape.rectangle, backgroundColor: context.cardColor, borderRadius: radius(18)),
-                      child: Marquee(child: Text(locale.outOfStock, style: boldTextStyle(size: 12, color: context.primaryColor))),
+                      decoration: boxDecorationWithShadow(
+                          boxShape: BoxShape.rectangle,
+                          backgroundColor: context.cardColor,
+                          borderRadius: radius(18)),
+                      child: Marquee(
+                          child: Text(locale.outOfStock,
+                              style: boldTextStyle(
+                                  size: 12, color: context.primaryColor))),
                     ).visible(widget.productListData.stockQty == 0),
                     Container(
                       padding: EdgeInsets.all(8),
-                      decoration: boxDecorationWithShadow(boxShape: BoxShape.circle, backgroundColor: context.cardColor),
-                      child: widget.productListData.inWishlist == 1 ? ic_fill_heart.iconImage(color: wishListColor, size: 16) : ic_heart.iconImage(color: textSecondaryColorGlobal, size: 16),
+                      decoration: boxDecorationWithShadow(
+                          boxShape: BoxShape.circle,
+                          backgroundColor: context.cardColor),
+                      child: widget.productListData.inWishlist == 1
+                          ? ic_fill_heart.iconImage(
+                              color: wishListColor, size: 16)
+                          : ic_heart.iconImage(
+                              color: textSecondaryColorGlobal, size: 16),
                     ).onTap(() {
                       doIfLoggedIn(context, () async {
                         onTapFavourite();
                       });
-                    }, highlightColor: Colors.transparent, splashColor: Colors.transparent, hoverColor: Colors.transparent),
+                    },
+                        highlightColor: Colors.transparent,
+                        splashColor: Colors.transparent,
+                        hoverColor: Colors.transparent),
                   ],
                 ),
               ),
@@ -113,21 +135,43 @@ class _ProductItemComponentState extends State<ProductItemComponent> {
           8.height,
           Column(
             children: [
-              Text(widget.isFromWishList ? widget.productListData.productName.validate() : widget.productListData.name.validate(), style: primaryTextStyle(), maxLines: 1, overflow: TextOverflow.ellipsis),
+              Text(
+                  widget.isFromWishList
+                      ? widget.productListData.productName.validate()
+                      : widget.productListData.name.validate(),
+                  style: primaryTextStyle(),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis),
               6.height,
               Marquee(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    if (widget.productListData.isDiscount) PriceWidget(price: widget.productListData.variationData.validate().first.discountedProductPrice.validate()),
+                    if (widget.productListData.isDiscount)
+                      PriceWidget(
+                          price: widget.productListData.variationData
+                              .validate()
+                              .first
+                              .discountedProductPrice
+                              .validate()),
                     if (widget.productListData.isDiscount) 4.width,
                     PriceWidget(
-                      price: widget.productListData.variationData.validate().first.taxIncludeProductPrice.validate(),
-                      isLineThroughEnabled: widget.productListData.isDiscount ? true : false,
-                      isBoldText: widget.productListData.isDiscount ? false : true,
+                      price: widget.productListData.variationData
+                          .validate()
+                          .first
+                          .taxIncludeProductPrice
+                          .validate(),
+                      isLineThroughEnabled:
+                          widget.productListData.isDiscount ? true : false,
+                      isBoldText:
+                          widget.productListData.isDiscount ? false : true,
                       size: widget.productListData.isDiscount ? 12 : 16,
-                      color: widget.productListData.isDiscount ? textSecondaryColorGlobal : null,
-                    ).visible(widget.productListData.variationData.validate().isNotEmpty),
+                      color: widget.productListData.isDiscount
+                          ? textSecondaryColorGlobal
+                          : null,
+                    ).visible(widget.productListData.variationData
+                        .validate()
+                        .isNotEmpty),
                   ],
                 ),
               ),
@@ -137,11 +181,17 @@ class _ProductItemComponentState extends State<ProductItemComponent> {
         ],
       ),
     ).onTap(() async {
-      final isAddedToWishlist = await ProductDetailScreen(productData: widget.productListData, isFromWishList: widget.isFromWishList).launch(context);
+      final isAddedToWishlist = await ProductDetailScreen(
+              productData: widget.productListData,
+              isFromWishList: widget.isFromWishList)
+          .launch(context);
       if (isAddedToWishlist is int) {
         widget.productListData.inWishlist = isAddedToWishlist;
         setState(() {});
       }
-    }, borderRadius: radius(), splashColor: Colors.transparent, highlightColor: Colors.transparent);
+    },
+        borderRadius: radius(),
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent);
   }
 }

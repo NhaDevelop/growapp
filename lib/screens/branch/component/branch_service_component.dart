@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:frezka/components/cached_image_widget.dart';
+import 'package:grow_tokyo_app/components/cached_image_widget.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/empty_error_state_widget.dart';
@@ -92,23 +92,36 @@ class _BranchServiceComponentState extends State<BranchServiceComponent> {
                   ServiceListData serviceListData = list[index];
 
                   return Container(
-                    decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor, borderRadius: radius()),
+                    decoration: boxDecorationWithRoundedCorners(
+                        backgroundColor: context.cardColor,
+                        borderRadius: radius()),
                     margin: EdgeInsets.only(bottom: 16),
                     padding: EdgeInsets.all(16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        CachedImageWidget(url: serviceListData.serviceImage.validate(), height: 36, width: 36, circle: true),
+                        CachedImageWidget(
+                            url: serviceListData.serviceImage.validate(),
+                            height: 36,
+                            width: 36,
+                            circle: true),
                         8.width,
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Marquee(child: Text(serviceListData.name.validate(), style: boldTextStyle(size: 14))),
-                            Text('${durationToString(serviceListData.durationMin.validate())}', style: secondaryTextStyle(size: 12)),
+                            Marquee(
+                                child: Text(serviceListData.name.validate(),
+                                    style: boldTextStyle(size: 14))),
+                            Text(
+                                '${durationToString(serviceListData.durationMin.validate())}',
+                                style: secondaryTextStyle(size: 12)),
                           ],
                         ).expand(),
                         20.width,
-                        PriceWidget(price: serviceListData.defaultPrice.validate(), color: context.primaryColor, size: 14),
+                        PriceWidget(
+                            price: serviceListData.defaultPrice.validate(),
+                            color: context.primaryColor,
+                            size: 14),
                       ],
                     ),
                   );
@@ -117,7 +130,8 @@ class _BranchServiceComponentState extends State<BranchServiceComponent> {
             );
           },
         ),
-        Observer(builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+        Observer(
+            builder: (context) => LoaderWidget().visible(appStore.isLoading)),
       ],
     );
   }

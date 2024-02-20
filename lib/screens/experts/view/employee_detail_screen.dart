@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:frezka/components/cached_image_widget.dart';
-import 'package:frezka/screens/experts/component/employee_social_accounts_component.dart';
-import 'package:frezka/screens/review/component/review_item_component.dart';
-import 'package:frezka/utils/app_common.dart';
-import 'package:frezka/utils/common_base.dart';
-import 'package:frezka/utils/images.dart';
+import 'package:grow_tokyo_app/components/cached_image_widget.dart';
+import 'package:grow_tokyo_app/screens/experts/component/employee_social_accounts_component.dart';
+import 'package:grow_tokyo_app/screens/review/component/review_item_component.dart';
+import 'package:grow_tokyo_app/utils/app_common.dart';
+import 'package:grow_tokyo_app/utils/common_base.dart';
+import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/app_scaffold.dart';
@@ -43,7 +43,9 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
   }
 
   void init() async {
-    future = getEmployeeDetail(branchId: widget.branchId ?? appStore.branchId, employeeId: widget.employeeId);
+    future = getEmployeeDetail(
+        branchId: widget.branchId ?? appStore.branchId,
+        employeeId: widget.employeeId);
   }
 
   @override
@@ -59,7 +61,11 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
         children: [
           SnapHelperWidget<EmployeeDetailResponse>(
             future: future,
-            initialData: employeeDetailCachedData.firstWhere((element) => element?.$1 == widget.employeeId.validate(),orElse: () => null)?.$2,
+            initialData: employeeDetailCachedData
+                .firstWhere(
+                    (element) => element?.$1 == widget.employeeId.validate(),
+                    orElse: () => null)
+                ?.$2,
             loadingWidget: EmployeeDetailShimmer(),
             onSuccess: (snap) {
               EmployeeData employeeData = snap.data!;
@@ -91,60 +97,89 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
                         Column(
                           children: [
                             8.height,
-                            Text(employeeData.fullName.validate(), style: boldTextStyle(size: 18)),
-                            if (employeeData.expert.validate().isNotEmpty) Text(employeeData.expert!, style: secondaryTextStyle()).paddingTop(4),
+                            Text(employeeData.fullName.validate(),
+                                style: boldTextStyle(size: 18)),
+                            if (employeeData.expert.validate().isNotEmpty)
+                              Text(employeeData.expert!,
+                                      style: secondaryTextStyle())
+                                  .paddingTop(4),
                             16.height,
                             Container(
-                              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                              decoration: boxDecorationWithRoundedCorners(backgroundColor: context.scaffoldBackgroundColor),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 8),
+                              decoration: boxDecorationWithRoundedCorners(
+                                  backgroundColor:
+                                      context.scaffoldBackgroundColor),
                               child: TextIcon(
-                                text: employeeData.ratingStar.validate().toStringAsFixed(1).toString(),
+                                text: employeeData.ratingStar
+                                    .validate()
+                                    .toStringAsFixed(1)
+                                    .toString(),
                                 spacing: 8,
                                 textStyle: boldTextStyle(),
                                 edgeInsets: EdgeInsets.zero,
-                                prefix: Icon(Icons.star, size: 18, color: employeeData.ratingColor),
+                                prefix: Icon(Icons.star,
+                                    size: 18, color: employeeData.ratingColor),
                               ),
                             ),
                             20.height,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                if (employeeData.facebookLink.validate().isNotEmpty)
+                                if (employeeData.facebookLink
+                                    .validate()
+                                    .isNotEmpty)
                                   EmployeeSocialAccountsComponent(
                                     icon: ic_facebook,
                                     onPressed: () {
-                                      commonLaunchUrl(employeeData.facebookLink.validate());
+                                      commonLaunchUrl(
+                                          employeeData.facebookLink.validate());
                                     },
                                   ),
                                 16.width,
-                                if (employeeData.instagramLink.validate().isNotEmpty)
+                                if (employeeData.instagramLink
+                                    .validate()
+                                    .isNotEmpty)
                                   EmployeeSocialAccountsComponent(
                                     icon: ic_instagram,
                                     onPressed: () {
-                                      commonLaunchUrl(employeeData.instagramLink.validate());
+                                      commonLaunchUrl(employeeData.instagramLink
+                                          .validate());
                                     },
                                   ),
                                 16.width,
-                                if (employeeData.twitterLink.validate().isNotEmpty)
+                                if (employeeData.twitterLink
+                                    .validate()
+                                    .isNotEmpty)
                                   EmployeeSocialAccountsComponent(
                                     icon: ic_twitter,
                                     onPressed: () {
-                                      commonLaunchUrl(employeeData.twitterLink.validate());
+                                      commonLaunchUrl(
+                                          employeeData.twitterLink.validate());
                                     },
                                   ),
                                 16.width,
-                                if (employeeData.dribbbleLink.validate().isNotEmpty)
+                                if (employeeData.dribbbleLink
+                                    .validate()
+                                    .isNotEmpty)
                                   EmployeeSocialAccountsComponent(
                                     icon: ic_dribble,
                                     onPressed: () {
-                                      commonLaunchUrl(employeeData.dribbbleLink.validate());
+                                      commonLaunchUrl(
+                                          employeeData.dribbbleLink.validate());
                                     },
                                   ),
                               ],
                             ),
-                            if (employeeData.facebookLink.validate().isNotEmpty &&
-                                employeeData.instagramLink.validate().isNotEmpty &&
-                                employeeData.twitterLink.validate().isNotEmpty &&
+                            if (employeeData.facebookLink
+                                    .validate()
+                                    .isNotEmpty &&
+                                employeeData.instagramLink
+                                    .validate()
+                                    .isNotEmpty &&
+                                employeeData.twitterLink
+                                    .validate()
+                                    .isNotEmpty &&
                                 employeeData.dribbbleLink.validate().isNotEmpty)
                               20.height,
                           ],
@@ -163,16 +198,23 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('${locale.about} ${employeeData.firstName.validate()}', style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+                              Text(
+                                  '${locale.about} ${employeeData.firstName.validate()}',
+                                  style: boldTextStyle(size: LABEL_TEXT_SIZE)),
                               10.height,
-                              ReadMoreText(employeeData.aboutSelf!, style: secondaryTextStyle(), textAlign: TextAlign.justify),
+                              ReadMoreText(employeeData.aboutSelf!,
+                                  style: secondaryTextStyle(),
+                                  textAlign: TextAlign.justify),
                               20.height,
                             ],
                           ),
 
                         /// Contact Info UI
-                        if (employeeData.email.validate().isNotEmpty && employeeData.mobile.validate().isNotEmpty && employeeData.joiningDate.validate().isNotEmpty)
-                          Text(locale.contactInfo, style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+                        if (employeeData.email.validate().isNotEmpty &&
+                            employeeData.mobile.validate().isNotEmpty &&
+                            employeeData.joiningDate.validate().isNotEmpty)
+                          Text(locale.contactInfo,
+                              style: boldTextStyle(size: LABEL_TEXT_SIZE)),
                         16.height,
                         if (employeeData.email.validate().isNotEmpty)
                           Column(
@@ -180,11 +222,20 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
                               Row(
                                 children: [
                                   Container(
-                                    decoration: boxDecorationWithRoundedCorners(borderRadius: radius(), backgroundColor: quaternaryButtonColor),
-                                    child: CachedImageWidget(url: ic_message, height: 12, width: 12, color: secondaryColor).paddingAll(6),
+                                    decoration: boxDecorationWithRoundedCorners(
+                                        borderRadius: radius(),
+                                        backgroundColor: quaternaryButtonColor),
+                                    child: CachedImageWidget(
+                                            url: ic_message,
+                                            height: 12,
+                                            width: 12,
+                                            color: secondaryColor)
+                                        .paddingAll(6),
                                   ),
                                   16.width,
-                                  Text(employeeData.email!, style: secondaryTextStyle()).onTap(() {
+                                  Text(employeeData.email!,
+                                          style: secondaryTextStyle())
+                                      .onTap(() {
                                     launchMail(employeeData.email.validate());
                                   }),
                                 ],
@@ -198,11 +249,20 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
                               Row(
                                 children: [
                                   Container(
-                                    decoration: boxDecorationWithRoundedCorners(borderRadius: radius(), backgroundColor: quaternaryButtonColor),
-                                    child: CachedImageWidget(url: ic_call, height: 12, width: 12, color: secondaryColor).paddingAll(6),
+                                    decoration: boxDecorationWithRoundedCorners(
+                                        borderRadius: radius(),
+                                        backgroundColor: quaternaryButtonColor),
+                                    child: CachedImageWidget(
+                                            url: ic_call,
+                                            height: 12,
+                                            width: 12,
+                                            color: secondaryColor)
+                                        .paddingAll(6),
                                   ),
                                   16.width,
-                                  Text(employeeData.mobile!, style: secondaryTextStyle()).onTap(() {
+                                  Text(employeeData.mobile!,
+                                          style: secondaryTextStyle())
+                                      .onTap(() {
                                     launchCall(employeeData.mobile.validate());
                                   }),
                                 ],
@@ -216,11 +276,22 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
                               Row(
                                 children: [
                                   Container(
-                                    decoration: boxDecorationWithRoundedCorners(borderRadius: radius(), backgroundColor: quaternaryButtonColor),
-                                    child: CachedImageWidget(url: ic_business, height: 12, width: 12, color: secondaryColor).paddingAll(6),
+                                    decoration: boxDecorationWithRoundedCorners(
+                                        borderRadius: radius(),
+                                        backgroundColor: quaternaryButtonColor),
+                                    child: CachedImageWidget(
+                                            url: ic_business,
+                                            height: 12,
+                                            width: 12,
+                                            color: secondaryColor)
+                                        .paddingAll(6),
                                   ),
                                   16.width,
-                                  Text(formatDate(employeeData.joiningDate!, format: DateFormatConst.DATE_FORMAT_2), style: secondaryTextStyle()),
+                                  Text(
+                                      formatDate(employeeData.joiningDate!,
+                                          format:
+                                              DateFormatConst.DATE_FORMAT_2),
+                                      style: secondaryTextStyle()),
                                 ],
                               ),
                               8.height,
@@ -231,7 +302,8 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
                         ViewAllLabel(
                           labelWidget: Row(
                             children: [
-                              Text(locale.reviews, style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+                              Text(locale.reviews,
+                                  style: boldTextStyle(size: LABEL_TEXT_SIZE)),
                               if (employeeData.totalReview.validate() >= 1)
                                 Text(
                                   '(${locale.basedOn} ${employeeData.totalReview.validate()} ${locale.review}${employeeData.totalReview.validate() > 1 ? '${locale.s}' : ''})',
@@ -241,7 +313,8 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
                           ),
                           list: employeeData.reviewData.validate(),
                           onTap: () {
-                            ReviewAllScreen(employeeId: snap.data!.id).launch(context);
+                            ReviewAllScreen(employeeId: snap.data!.id)
+                                .launch(context);
                           },
                         ),
                         if (employeeData.reviewData.validate().isNotEmpty)
@@ -251,12 +324,14 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
                             padding: EdgeInsets.zero,
                             physics: NeverScrollableScrollPhysics(),
                             itemBuilder: (_, i) {
-                              return ReviewItemComponent(reviewData: employeeData.reviewData![i]);
+                              return ReviewItemComponent(
+                                  reviewData: employeeData.reviewData![i]);
                             },
                           )
                         else
                           NoDataWidget(
-                            subTitle: '${locale.noReviewsYetFor} ${employeeData.firstName}',
+                            subTitle:
+                                '${locale.noReviewsYetFor} ${employeeData.firstName}',
                             imageWidget: EmptyStateWidget(),
                           ),
                       ],
@@ -285,7 +360,8 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
               );
             },
           ),
-          Observer(builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+          Observer(
+              builder: (context) => LoaderWidget().visible(appStore.isLoading)),
         ],
       ),
     );

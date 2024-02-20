@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/main.dart';
-import 'package:frezka/utils/colors.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/utils/colors.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/price_widget.dart';
@@ -42,14 +42,20 @@ class _FilterPriceComponentState extends State<FilterPriceComponent> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        ViewAllLabel(label: locale.price, labelTextStyle: boldTextStyle(), isShowAll: false).paddingSymmetric(horizontal: 16),
+        ViewAllLabel(
+                label: locale.price,
+                labelTextStyle: boldTextStyle(),
+                isShowAll: false)
+            .paddingSymmetric(horizontal: 16),
         SliderTheme(
-          data: SliderTheme.of(context).copyWith(valueIndicatorColor: lightPrimaryColor),
+          data: SliderTheme.of(context)
+              .copyWith(valueIndicatorColor: lightPrimaryColor),
           child: RangeSlider(
             min: 1,
             max: 5000,
             divisions: (5000 ~/ 10).toInt(),
-            labels: RangeLabels(rangeValues.start.toInt().toString(), rangeValues.end.toInt().toString()),
+            labels: RangeLabels(rangeValues.start.toInt().toString(),
+                rangeValues.end.toInt().toString()),
             values: rangeValues,
             onChanged: (values) {
               rangeValues = values;

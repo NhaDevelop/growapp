@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/shimmer_widget.dart';
+import 'package:grow_tokyo_app/components/shimmer_widget.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class NotificationShimmer extends StatelessWidget {
@@ -19,7 +19,9 @@ class NotificationShimmer extends StatelessWidget {
               child: Container(
                 height: 40,
                 width: 40,
-                decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor, boxShape: BoxShape.circle),
+                decoration: boxDecorationWithRoundedCorners(
+                    backgroundColor: context.cardColor,
+                    boxShape: BoxShape.circle),
               ),
             ),
             16.width,
@@ -29,7 +31,8 @@ class NotificationShimmer extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    ShimmerWidget(height: 12, width: context.width() * 0.15).expand(),
+                    ShimmerWidget(height: 12, width: context.width() * 0.15)
+                        .expand(),
                     16.width,
                     ShimmerWidget(height: 10, width: context.width() * 0.25),
                   ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/utils/colors.dart';
-import 'package:frezka/utils/constants.dart';
-import 'package:frezka/utils/images.dart';
+import 'package:grow_tokyo_app/utils/colors.dart';
+import 'package:grow_tokyo_app/utils/constants.dart';
+import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../main.dart';
@@ -41,11 +41,15 @@ class _ConfirmBookingDialog extends State<ConfirmBookingDialog> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Image.asset(ic_confirm_check, height: 100, width: 100, color: primaryColor),
+          Image.asset(ic_confirm_check,
+              height: 100, width: 100, color: primaryColor),
           16.height,
-          Text(widget.title ?? locale.confirmBooking, style: boldTextStyle(size: 20), textAlign: TextAlign.center),
+          Text(widget.title ?? locale.confirmBooking,
+              style: boldTextStyle(size: 20), textAlign: TextAlign.center),
           16.height,
-          Text(widget.subTitle ?? locale.doWantToBookAppointment, style: primaryTextStyle(), textAlign: TextAlign.center).center(),
+          Text(widget.subTitle ?? locale.doWantToBookAppointment,
+                  style: primaryTextStyle(), textAlign: TextAlign.center)
+              .center(),
           16.height,
           CheckboxListTile(
             value: isSelected,
@@ -54,7 +58,8 @@ class _ConfirmBookingDialog extends State<ConfirmBookingDialog> {
               isSelected = !isSelected;
               setState(() {});
             },
-            title: Text(locale.termsConditionsMessage, style: secondaryTextStyle()),
+            title: Text(locale.termsConditionsMessage,
+                style: secondaryTextStyle()),
             controlAffinity: ListTileControlAffinity.leading,
             contentPadding: EdgeInsets.zero,
           ),

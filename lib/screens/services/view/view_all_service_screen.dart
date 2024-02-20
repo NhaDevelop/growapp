@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:frezka/components/app_scaffold.dart';
-import 'package:frezka/components/common_bottom_price_widget.dart';
-import 'package:frezka/components/view_all_label_component.dart';
-import 'package:frezka/main.dart';
-import 'package:frezka/screens/booking/view/booking_screen.dart';
-import 'package:frezka/screens/dashboard/component/common_app_component.dart';
-import 'package:frezka/screens/dashboard/component/dashboard_appbar_component.dart';
+import 'package:grow_tokyo_app/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/components/common_bottom_price_widget.dart';
+import 'package:grow_tokyo_app/components/view_all_label_component.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/screens/booking/view/booking_screen.dart';
+import 'package:grow_tokyo_app/screens/dashboard/component/common_app_component.dart';
+import 'package:grow_tokyo_app/screens/dashboard/component/dashboard_appbar_component.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/back_widget.dart';
@@ -25,7 +25,8 @@ class ViewAllServiceScreen extends StatefulWidget {
   final String search;
   final int? categoryId;
 
-  ViewAllServiceScreen({required this.serviceTitle, this.categoryId, this.search = ""});
+  ViewAllServiceScreen(
+      {required this.serviceTitle, this.categoryId, this.search = ""});
 
   @override
   _ViewAllServiceScreenState createState() => _ViewAllServiceScreenState();
@@ -71,7 +72,8 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
   }
 
   void fetchCategoryList({bool flag = false}) async {
-    futureCategory = getCategoryList(categoryId: widget.categoryId, list: categoryList);
+    futureCategory =
+        getCategoryList(categoryId: widget.categoryId, list: categoryList);
     if (flag) setState(() {});
   }
 
@@ -83,8 +85,13 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
 
     futureService = getServiceList(
       branchId: appStore.branchId,
-      categoryId: subCategoryId != null ? '' : (widget.categoryId.validate() != 0 ? widget.categoryId!.toString() : ''),
-      subCategoryId: subCategoryId != null ? subCategoryId.validate().toString() : '',
+      categoryId: subCategoryId != null
+          ? ''
+          : (widget.categoryId.validate() != 0
+              ? widget.categoryId!.toString()
+              : ''),
+      subCategoryId:
+          subCategoryId != null ? subCategoryId.validate().toString() : '',
       page: page,
       search: searchServiceCont.text,
       list: serviceListObj,
@@ -141,7 +148,8 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
                 decoration: inputDecoration(
                   context,
                   hint: locale.searchForServices,
-                  prefixIcon: Icon(Icons.search, color: textSecondaryColorGlobal),
+                  prefixIcon:
+                      Icon(Icons.search, color: textSecondaryColorGlobal),
                 ),
               ),
               innerChild: appBarWidget(
@@ -150,7 +158,10 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
                 color: context.primaryColor,
                 textColor: white,
                 backWidget: BackWidget(),
-              ).cornerRadiusWithClipRRectOnly(bottomLeft: 20, bottomRight: 20).paddingTop(10),
+              )
+                  .cornerRadiusWithClipRRectOnly(
+                      bottomLeft: 20, bottomRight: 20)
+                  .paddingTop(10),
             ),
             mainWidgetHeight: 135,
             onSwipeRefresh: () {
@@ -158,7 +169,8 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
 
               appStore.setLoading(true);
               selectedService.clear();
-              bookingRequestStore.setSelectedServiceListInRequest(selectedService);
+              bookingRequestStore
+                  .setSelectedServiceListInRequest(selectedService);
               fetchAllServiceData(isClear: true, flag: true);
 
               return Future.value(false);
@@ -207,7 +219,10 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
                             runSpacing: 16,
                             spacing: 16,
                             itemCount: list.length,
-                            padding: EdgeInsets.only(left: 16, right: 16, top: isSubCategorySelected ? 0 : 8),
+                            padding: EdgeInsets.only(
+                                left: 16,
+                                right: 16,
+                                top: isSubCategorySelected ? 0 : 8),
                             itemBuilder: (_, i) {
                               CategoryData data = list[i];
 
@@ -227,15 +242,20 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
                                 child: Stack(
                                   clipBehavior: Clip.none,
                                   children: [
-                                    CategoryItemWidget(categoryData: data, width: context.width() / 3 - 20),
+                                    CategoryItemWidget(
+                                        categoryData: data,
+                                        width: context.width() / 3 - 20),
                                     Positioned(
                                       top: 0,
                                       right: 0,
                                       child: Container(
                                         padding: EdgeInsets.all(2),
-                                        decoration: boxDecorationDefault(color: context.primaryColor),
-                                        child: Icon(Icons.done, size: 16, color: Colors.white),
-                                      ).cornerRadiusWithClipRRect(16).visible(selectedSubCategoryIndex == i),
+                                        decoration: boxDecorationDefault(
+                                            color: context.primaryColor),
+                                        child: Icon(Icons.done,
+                                            size: 16, color: Colors.white),
+                                      ).cornerRadiusWithClipRRect(16).visible(
+                                          selectedSubCategoryIndex == i),
                                     ),
                                   ],
                                 ),
@@ -279,23 +299,34 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
                           emptyWidget: NoDataWidget(
                             title: locale.noServicesFound,
                             imageWidget: EmptyStateWidget(),
-                          ).paddingTop(searchServiceCont.text.isNotEmpty ? 0 : 120),
+                          ).paddingTop(
+                              searchServiceCont.text.isNotEmpty ? 0 : 120),
                           itemBuilder: (context, index) {
-                            ServiceListData serviceData = servicesInfoListData[index];
-                            serviceData.isServiceChecked = bookingRequestStore.selectedServiceList.any((element) => element.id.validate() == serviceData.id.validate());
+                            ServiceListData serviceData =
+                                servicesInfoListData[index];
+                            serviceData.isServiceChecked = bookingRequestStore
+                                .selectedServiceList
+                                .any((element) =>
+                                    element.id.validate() ==
+                                    serviceData.id.validate());
 
                             return ServicesInfoListComponent(
                               serviceInfo: serviceData,
                               onPressed: () {
-                                serviceData.isServiceChecked = !serviceData.isServiceChecked;
+                                serviceData.isServiceChecked =
+                                    !serviceData.isServiceChecked;
 
                                 if (serviceData.isServiceChecked) {
                                   selectedService.add(serviceData);
                                 } else {
-                                  selectedService.removeWhere((element) => element.id.validate() == serviceData.id.validate());
+                                  selectedService.removeWhere((element) =>
+                                      element.id.validate() ==
+                                      serviceData.id.validate());
                                 }
 
-                                bookingRequestStore.setSelectedServiceListInRequest(selectedService);
+                                bookingRequestStore
+                                    .setSelectedServiceListInRequest(
+                                        selectedService);
 
                                 setState(() {});
                               },
@@ -316,7 +347,10 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
             child: Observer(
               builder: (context) => CommonBottomPriceWidget(
                 buttonText: locale.bookNow,
-                title: bookingRequestStore.selectedServiceList.map((e) => e.name.validate()).toList().join(', '),
+                title: bookingRequestStore.selectedServiceList
+                    .map((e) => e.name.validate())
+                    .toList()
+                    .join(', '),
                 price: bookingRequestStore.totalAmount,
                 onTap: () {
                   hideKeyboard(context);

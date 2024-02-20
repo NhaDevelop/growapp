@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/cached_image_widget.dart';
+import 'package:grow_tokyo_app/components/cached_image_widget.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../utils/common_base.dart';
@@ -39,12 +39,20 @@ class NotificationWidget extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (notificationData.data != null && notificationData.data!.notificationDetail != null) Text('#${notificationData.data!.notificationDetail!.id.validate()}', style: boldTextStyle(size: 12)).expand(),
-                  Text(formatDate(notificationData.createdAt.validate()), style: secondaryTextStyle()),
+                  if (notificationData.data != null &&
+                      notificationData.data!.notificationDetail != null)
+                    Text('#${notificationData.data!.notificationDetail!.id.validate()}',
+                            style: boldTextStyle(size: 12))
+                        .expand(),
+                  Text(formatDate(notificationData.createdAt.validate()),
+                      style: secondaryTextStyle()),
                 ],
               ),
               8.height,
-              Text(notificationData.data!.subject.validate(), style: secondaryTextStyle(), maxLines: 3, overflow: TextOverflow.ellipsis),
+              Text(notificationData.data!.subject.validate(),
+                  style: secondaryTextStyle(),
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis),
             ],
           ).expand(),
         ],

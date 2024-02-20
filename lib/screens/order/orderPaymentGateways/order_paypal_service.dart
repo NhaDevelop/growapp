@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 // import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
-// import 'package:frezka/configs.dart';
+// import 'package:grow_tokyo_app/configs.dart';
 // import 'package:nb_utils/nb_utils.dart';
 
 // import '../../../main.dart';

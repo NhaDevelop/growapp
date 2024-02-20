@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/view_all_label_component.dart';
-import 'package:frezka/screens/branch/view/branch_list_screen.dart';
-import 'package:frezka/screens/dashboard/component/branch_item_component.dart';
+import 'package:grow_tokyo_app/components/view_all_label_component.dart';
+import 'package:grow_tokyo_app/screens/branch/view/branch_list_screen.dart';
+import 'package:grow_tokyo_app/screens/dashboard/component/branch_item_component.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -48,8 +48,10 @@ class _NearYouComponentState extends State<NearYouComponent> {
 
   void getLocation() {
     Geolocator.requestPermission().then((value) {
-      if (value == LocationPermission.whileInUse || value == LocationPermission.always) {
-        Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high).then((value) {
+      if (value == LocationPermission.whileInUse ||
+          value == LocationPermission.always) {
+        Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+            .then((value) {
           currentLocation = value;
           setState(() {});
         }).catchError(onError);
@@ -87,12 +89,19 @@ class _NearYouComponentState extends State<NearYouComponent> {
 
                   return Container(
                     width: context.width() * 0.85,
-                    decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor, borderRadius: radius()),
+                    decoration: boxDecorationWithRoundedCorners(
+                        backgroundColor: context.cardColor,
+                        borderRadius: radius()),
                     margin: EdgeInsets.only(right: 8),
-                    child: BranchItemComponent(branchData: branchData, position: currentLocation),
+                    child: BranchItemComponent(
+                        branchData: branchData, position: currentLocation),
                   ).onTap(() {
-                    BranchDetailScreen(branchId: branchData.id.validate()).launch(context);
-                  }, borderRadius: radius(), splashColor: Colors.transparent, highlightColor: Colors.transparent);
+                    BranchDetailScreen(branchId: branchData.id.validate())
+                        .launch(context);
+                  },
+                      borderRadius: radius(),
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent);
                 },
               ),
             ],

@@ -1,4 +1,4 @@
-import 'package:frezka/screens/booking/model/booking_list_response.dart';
+import 'package:grow_tokyo_app/screens/booking/model/booking_list_response.dart';
 
 class BookingDetailResponse {
   BookingListData? data;
@@ -9,7 +9,8 @@ class BookingDetailResponse {
 
   factory BookingDetailResponse.fromJson(Map<String, dynamic> json) {
     return BookingDetailResponse(
-      data: json['data'] != null ? BookingListData.fromJson(json['data']) : null,
+      data:
+          json['data'] != null ? BookingListData.fromJson(json['data']) : null,
       message: json['message'],
       status: json['status'],
     );
@@ -83,8 +84,13 @@ class Payment {
       externalTransactionId: json['external_transaction_id'],
       id: json['id'],
       paymentStatus: json['payment_status'],
-      requestToken: json['request_token'] != null ? json['request_token'] : null,
-      taxPercentage: json['tax_percentage'] != null ? (json['tax_percentage'] as List).map((i) => TaxPercentage.fromJson(i)).toList() : null,
+      requestToken:
+          json['request_token'] != null ? json['request_token'] : null,
+      taxPercentage: json['tax_percentage'] != null
+          ? (json['tax_percentage'] as List)
+              .map((i) => TaxPercentage.fromJson(i))
+              .toList()
+          : null,
       tipAmount: json['tip_amount'],
       transactionType: json['transaction_type'],
       updatedAt: json['updated_at'],
@@ -121,7 +127,8 @@ class Payment {
       data['request_token'] = this.requestToken;
     }
     if (this.taxPercentage != null) {
-      data['tax_percentage'] = this.taxPercentage!.map((v) => v.toJson()).toList();
+      data['tax_percentage'] =
+          this.taxPercentage!.map((v) => v.toJson()).toList();
     }
     if (this.updatedBy != null) {
       data['updated_by'] = this.updatedBy;

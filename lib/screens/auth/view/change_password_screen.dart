@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/utils/extensions/string_extensions.dart';
+import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/app_scaffold.dart';
@@ -48,7 +48,8 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
 
-      if (getStringAsync(SharedPreferenceConst.USER_PASSWORD) != oldPasswordCont.text) {
+      if (getStringAsync(SharedPreferenceConst.USER_PASSWORD) !=
+          oldPasswordCont.text) {
         return toast(locale.oldPasswordDoesNotMatchMessage);
       }
 
@@ -63,7 +64,8 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
       await changePasswordAPI(request).then((res) async {
         userStore.setToken(res.data!.apiToken.validate());
-        await setValue(SharedPreferenceConst.USER_PASSWORD, newPasswordCont.text);
+        await setValue(
+            SharedPreferenceConst.USER_PASSWORD, newPasswordCont.text);
         showDialog(
           context: context,
           useSafeArea: false,
@@ -94,7 +96,8 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(locale.newPasswordsMustBeDifferent, style: secondaryTextStyle()),
+              Text(locale.newPasswordsMustBeDifferent,
+                  style: secondaryTextStyle()),
               24.height,
               AppTextField(
                 textFieldType: TextFieldType.PASSWORD,
@@ -102,8 +105,10 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 focus: oldPasswordFocus,
                 nextFocus: newPasswordFocus,
                 errorThisFieldRequired: locale.thisFieldIsRequired,
-                suffixPasswordVisibleWidget: ic_show.iconImage(size: 10).paddingAll(14),
-                suffixPasswordInvisibleWidget: ic_hide.iconImage(size: 10).paddingAll(14),
+                suffixPasswordVisibleWidget:
+                    ic_show.iconImage(size: 10).paddingAll(14),
+                suffixPasswordInvisibleWidget:
+                    ic_hide.iconImage(size: 10).paddingAll(14),
                 decoration: inputDecoration(
                   context,
                   label: locale.oldPassword,
@@ -116,8 +121,10 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 focus: newPasswordFocus,
                 nextFocus: reenterPasswordFocus,
                 errorThisFieldRequired: locale.thisFieldIsRequired,
-                suffixPasswordVisibleWidget: ic_show.iconImage(size: 10).paddingAll(14),
-                suffixPasswordInvisibleWidget: ic_hide.iconImage(size: 10).paddingAll(14),
+                suffixPasswordVisibleWidget:
+                    ic_show.iconImage(size: 10).paddingAll(14),
+                suffixPasswordInvisibleWidget:
+                    ic_hide.iconImage(size: 10).paddingAll(14),
                 decoration: inputDecoration(context, label: locale.newPassword),
               ),
               16.height,
@@ -126,8 +133,10 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 controller: reenterPasswordCont,
                 focus: reenterPasswordFocus,
                 errorThisFieldRequired: locale.thisFieldIsRequired,
-                suffixPasswordVisibleWidget: ic_show.iconImage(size: 10).paddingAll(14),
-                suffixPasswordInvisibleWidget: ic_hide.iconImage(size: 10).paddingAll(14),
+                suffixPasswordVisibleWidget:
+                    ic_show.iconImage(size: 10).paddingAll(14),
+                suffixPasswordInvisibleWidget:
+                    ic_hide.iconImage(size: 10).paddingAll(14),
                 validator: (v) {
                   if (v != newPasswordCont.text) {
                     return locale.thePasswordDoesNotMatch;
@@ -139,7 +148,8 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 onFieldSubmitted: (s) {
                   changePassword();
                 },
-                decoration: inputDecoration(context, label: locale.reEnterPassword),
+                decoration:
+                    inputDecoration(context, label: locale.reEnterPassword),
               ),
               24.height,
               AppButton(

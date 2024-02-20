@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:frezka/main.dart';
-import 'package:frezka/utils/extensions/string_extensions.dart';
-import 'package:frezka/utils/images.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
+import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/view_all_label_component.dart';
@@ -10,7 +10,8 @@ import '../../../utils/constants.dart';
 
 class ProductQuantityComponent extends StatefulWidget {
   @override
-  _ProductQuantityComponentState createState() => _ProductQuantityComponentState();
+  _ProductQuantityComponentState createState() =>
+      _ProductQuantityComponentState();
 }
 
 class _ProductQuantityComponentState extends State<ProductQuantityComponent> {
@@ -40,9 +41,11 @@ class _ProductQuantityComponentState extends State<ProductQuantityComponent> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ViewAllLabel(label: locale.quantity, isShowAll: false).paddingSymmetric(horizontal: 16),
+        ViewAllLabel(label: locale.quantity, isShowAll: false)
+            .paddingSymmetric(horizontal: 16),
         Container(
-          decoration: boxDecorationDefault(color: context.cardColor, shape: BoxShape.rectangle),
+          decoration: boxDecorationDefault(
+              color: context.cardColor, shape: BoxShape.rectangle),
           width: context.width() * 0.35,
           height: 40,
           child: Observer(builder: (context) {
@@ -51,7 +54,11 @@ class _ProductQuantityComponentState extends State<ProductQuantityComponent> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 IconButton(
-                  icon: ic_minus.iconImage(color: productStore.qty > 1 ? textPrimaryColorGlobal : textSecondaryColorGlobal, size: 15),
+                  icon: ic_minus.iconImage(
+                      color: productStore.qty > 1
+                          ? textPrimaryColorGlobal
+                          : textSecondaryColorGlobal,
+                      size: 15),
                   onPressed: () async {
                     if (productStore.qty > 1) {
                       productStore.qty--;
@@ -61,9 +68,17 @@ class _ProductQuantityComponentState extends State<ProductQuantityComponent> {
                 ),
                 Text('${productStore.qty}', style: primaryTextStyle()),
                 IconButton(
-                  icon: ic_add.iconImage(color: productStore.qty < productStore.selectedVariationData.productStockQty.validate() ? textPrimaryColorGlobal : textSecondaryColorGlobal, size: 15),
+                  icon: ic_add.iconImage(
+                      color: productStore.qty <
+                              productStore.selectedVariationData.productStockQty
+                                  .validate()
+                          ? textPrimaryColorGlobal
+                          : textSecondaryColorGlobal,
+                      size: 15),
                   onPressed: () async {
-                    if (productStore.qty < productStore.selectedVariationData.productStockQty.validate()) {
+                    if (productStore.qty <
+                        productStore.selectedVariationData.productStockQty
+                            .validate()) {
                       productStore.qty++;
                     }
                     setState(() {});

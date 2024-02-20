@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:frezka/utils/images.dart';
+import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -19,13 +19,17 @@ List<AboutModel> getAboutDataModel({required BuildContext context}) {
     onTap: () async {
       if (isAndroid) {
         if (getStringAsync(APP_PLAY_STORE_URL).isNotEmpty) {
-          commonLaunchUrl(getStringAsync(APP_PLAY_STORE_URL), launchMode: LaunchMode.externalApplication);
+          commonLaunchUrl(getStringAsync(APP_PLAY_STORE_URL),
+              launchMode: LaunchMode.externalApplication);
         } else {
-          commonLaunchUrl('${getSocialMediaLink(LinkProvider.PLAY_STORE)}${await getPackageName()}', launchMode: LaunchMode.externalApplication);
+          commonLaunchUrl(
+              '${getSocialMediaLink(LinkProvider.PLAY_STORE)}${await getPackageName()}',
+              launchMode: LaunchMode.externalApplication);
         }
       } else if (isIOS) {
         if (getStringAsync(APP_APPSTORE_URL).isNotEmpty) {
-          commonLaunchUrl(getStringAsync(APP_APPSTORE_URL), launchMode: LaunchMode.externalApplication);
+          commonLaunchUrl(getStringAsync(APP_APPSTORE_URL),
+              launchMode: LaunchMode.externalApplication);
         }
       }
     },
@@ -35,9 +39,11 @@ List<AboutModel> getAboutDataModel({required BuildContext context}) {
     icon: ic_share,
     onTap: () async {
       if (isIOS) {
-        Share.share('${locale.share} $APP_NAME ${locale.app}\n\n$appStoreAppBaseURL');
+        Share.share(
+            '${locale.share} $APP_NAME ${locale.app}\n\n$appStoreAppBaseURL');
       } else {
-        Share.share('${locale.share} $APP_NAME ${locale.app}\n\n$playStoreBaseURL${await getPackageInfo().then((value) => value.packageName.validate())}');
+        Share.share(
+            '${locale.share} $APP_NAME ${locale.app}\n\n$playStoreBaseURL${await getPackageInfo().then((value) => value.packageName.validate())}');
       }
     },
   ));
@@ -59,14 +65,16 @@ List<AboutModel> getHelpList({required BuildContext context}) {
     title: locale.privacyPolicy,
     icon: ic_privacy_policy,
     onTap: () {
-      commonLaunchUrl(PRIVACY_POLICY_URL, launchMode: LaunchMode.externalApplication);
+      commonLaunchUrl(PRIVACY_POLICY_URL,
+          launchMode: LaunchMode.externalApplication);
     },
   ));
   aboutList.add(AboutModel(
     title: locale.termsConditions,
     icon: ic_terms_conditions,
     onTap: () {
-      commonLaunchUrl(TERMS_CONDITION_URL, launchMode: LaunchMode.externalApplication);
+      commonLaunchUrl(TERMS_CONDITION_URL,
+          launchMode: LaunchMode.externalApplication);
     },
   ));
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/app_scaffold.dart';
-import 'package:frezka/components/loader_widget.dart';
-import 'package:frezka/utils/colors.dart';
+import 'package:grow_tokyo_app/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/components/loader_widget.dart';
+import 'package:grow_tokyo_app/utils/colors.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/empty_error_state_widget.dart';
@@ -62,7 +62,11 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      appBarWidget: commonAppBarWidget(context, title: locale.cart, appBarHeight: 70, showLeadingIcon: true, roundCornerShape: true),
+      appBarWidget: commonAppBarWidget(context,
+          title: locale.cart,
+          appBarHeight: 70,
+          showLeadingIcon: true,
+          roundCornerShape: true),
       body: SnapHelperWidget(
         future: future,
         loadingWidget: LoaderWidget(),
@@ -121,7 +125,8 @@ class _CartScreenState extends State<CartScreen> {
                     itemCount: cartList.$1.length,
                     itemBuilder: (context, index) {
                       productStore.setCartListData(cartList.$1);
-                      return CartItemComponent(cartListData: cartList.$1[index]);
+                      return CartItemComponent(
+                          cartListData: cartList.$1[index]);
                     },
                   ),
                 ],
@@ -136,13 +141,18 @@ class _CartScreenState extends State<CartScreen> {
                     color: context.cardColor,
                     borderRadius: radiusOnly(topLeft: 20, topRight: 20),
                     boxShadow: [
-                      BoxShadow(spreadRadius: 6, blurRadius: 10, offset: Offset(0, -1), color: context.dividerColor),
+                      BoxShadow(
+                          spreadRadius: 6,
+                          blurRadius: 10,
+                          offset: Offset(0, -1),
+                          color: context.dividerColor),
                     ],
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ViewAllLabel(label: locale.productPriceDetails, isShowAll: false),
+                      ViewAllLabel(
+                          label: locale.productPriceDetails, isShowAll: false),
 
                       /// Subtotal
                       if (cartList.$2.cartPriceData!.discountAmount != 0)
@@ -152,7 +162,9 @@ class _CartScreenState extends State<CartScreen> {
                           padding: EdgeInsets.zero,
                           trailing: Marquee(
                             child: PriceWidget(
-                              price: cartList.$2.cartPriceData!.taxIncludedAmount.validate(),
+                              price: cartList
+                                  .$2.cartPriceData!.taxIncludedAmount
+                                  .validate(),
                               color: textPrimaryColorGlobal,
                               size: 14,
                             ),
@@ -168,7 +180,8 @@ class _CartScreenState extends State<CartScreen> {
                           padding: EdgeInsets.zero,
                           trailing: Marquee(
                             child: PriceWidget(
-                              price: cartList.$2.cartPriceData!.discountAmount.validate(),
+                              price: cartList.$2.cartPriceData!.discountAmount
+                                  .validate(),
                               color: Colors.green,
                               size: 14,
                               isBoldText: true,
@@ -184,7 +197,8 @@ class _CartScreenState extends State<CartScreen> {
                         padding: EdgeInsets.zero,
                         trailing: Marquee(
                           child: PriceWidget(
-                            price: cartList.$2.cartPriceData!.totalAmount.validate(),
+                            price: cartList.$2.cartPriceData!.totalAmount
+                                .validate(),
                             color: textPrimaryColorGlobal,
                             size: 14,
                           ),
@@ -193,11 +207,14 @@ class _CartScreenState extends State<CartScreen> {
                       20.height,
                       AppButton(
                         width: context.width(),
-                        child: Text(locale.next, style: boldTextStyle(color: Colors.white)),
+                        child: Text(locale.next,
+                            style: boldTextStyle(color: Colors.white)),
                         color: secondaryColor,
                         onTap: () {
-                          productStore.setCartPriceData(cartList.$2.cartPriceData!);
-                          SelectAddressScreen().launch(context, pageRouteAnimation: PageRouteAnimation.Fade);
+                          productStore
+                              .setCartPriceData(cartList.$2.cartPriceData!);
+                          SelectAddressScreen().launch(context,
+                              pageRouteAnimation: PageRouteAnimation.Fade);
                         },
                       ),
                       20.height,

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:frezka/components/app_scaffold.dart';
-import 'package:frezka/components/common_bottom_price_widget.dart';
-import 'package:frezka/components/custom_stepper.dart';
-import 'package:frezka/components/view_all_label_component.dart';
-import 'package:frezka/screens/experts/component/employee_list_component.dart';
-import 'package:frezka/utils/colors.dart';
+import 'package:grow_tokyo_app/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/components/common_bottom_price_widget.dart';
+import 'package:grow_tokyo_app/components/custom_stepper.dart';
+import 'package:grow_tokyo_app/components/view_all_label_component.dart';
+import 'package:grow_tokyo_app/screens/experts/component/employee_list_component.dart';
+import 'package:grow_tokyo_app/utils/colors.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/empty_error_state_widget.dart';
@@ -45,9 +45,17 @@ class _BookingStep1ComponentState extends State<BookingStep1Component> {
 
   void init() async {
     if (widget.isReschedule) {
-      serviceIds = bookingRequestStore.selectedServiceList.validate().map((e) => e.serviceId.validate()).toList().join(',');
+      serviceIds = bookingRequestStore.selectedServiceList
+          .validate()
+          .map((e) => e.serviceId.validate())
+          .toList()
+          .join(',');
     } else {
-      serviceIds = bookingRequestStore.selectedServiceList.validate().map((e) => e.id.validate()).toList().join(',');
+      serviceIds = bookingRequestStore.selectedServiceList
+          .validate()
+          .map((e) => e.id.validate())
+          .toList()
+          .join(',');
     }
 
     future = getEmployeeList(
@@ -79,7 +87,8 @@ class _BookingStep1ComponentState extends State<BookingStep1Component> {
                 return NoDataWidget(
                   title: locale.noStaffFound,
                   imageWidget: EmptyStateWidget(),
-                  subTitle: '${locale.noStaffAvailableForBranchMessage}\n${locale.tryToChangeYourService}',
+                  subTitle:
+                      '${locale.noStaffAvailableForBranchMessage}\n${locale.tryToChangeYourService}',
                   retryText: locale.goBack,
                   onRetry: () {
                     finish(context);
@@ -91,13 +100,15 @@ class _BookingStep1ComponentState extends State<BookingStep1Component> {
                 fit: StackFit.expand,
                 children: [
                   AnimatedScrollView(
-                    padding: EdgeInsets.only(left: 20, right: 20, top: 60, bottom: 100),
+                    padding: EdgeInsets.only(
+                        left: 20, right: 20, top: 60, bottom: 100),
                     physics: AlwaysScrollableScrollPhysics(),
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          ViewAllLabel(label: locale.chooseYourExpert, isShowAll: false),
+                          ViewAllLabel(
+                              label: locale.chooseYourExpert, isShowAll: false),
                           40.height,
                           AnimatedWrap(
                             runSpacing: 36,
@@ -105,7 +116,9 @@ class _BookingStep1ComponentState extends State<BookingStep1Component> {
                             columnCount: 2,
                             itemCount: list.length,
                             listAnimationType: ListAnimationType.Scale,
-                            scaleConfiguration: ScaleConfiguration(duration: 300.milliseconds, delay: 50.milliseconds),
+                            scaleConfiguration: ScaleConfiguration(
+                                duration: 300.milliseconds,
+                                delay: 50.milliseconds),
                             itemBuilder: (_, i) {
                               EmployeeData data = list[i];
 
@@ -122,8 +135,12 @@ class _BookingStep1ComponentState extends State<BookingStep1Component> {
                                 child: EmployeeListComponent(
                                   expertData: data,
                                   width: context.width() / 2 - 30,
-                                  decoration: boxDecorationWithRoundedCorners(backgroundColor: selectedIndex == i ? indicatorColor : context.cardColor),
-                                  expertNameTextColor: selectedIndex == i ? Colors.black : null,
+                                  decoration: boxDecorationWithRoundedCorners(
+                                      backgroundColor: selectedIndex == i
+                                          ? indicatorColor
+                                          : context.cardColor),
+                                  expertNameTextColor:
+                                      selectedIndex == i ? Colors.black : null,
                                 ),
                               );
                             },
@@ -155,15 +172,23 @@ class _BookingStep1ComponentState extends State<BookingStep1Component> {
                     right: 0,
                     child: Observer(
                       builder: (_) => CommonBottomPriceWidget(
-                        title: bookingRequestStore.selectedServiceList.map((e) => widget.isReschedule ? e.serviceName.validate() : e.name.validate()).toList().join(', '),
+                        title: bookingRequestStore.selectedServiceList
+                            .map((e) => widget.isReschedule
+                                ? e.serviceName.validate()
+                                : e.name.validate())
+                            .toList()
+                            .join(', '),
                         price: bookingRequestStore.totalAmount,
                         buttonText: locale.next,
                         onTap: () {
                           if (employeeId != null) {
                             Fluttertoast.cancel();
-                            bookingRequestStore.setEmployeeIdInRequest(employeeId.validate());
+                            bookingRequestStore
+                                .setEmployeeIdInRequest(employeeId.validate());
                             /*log(bookingRequestStore.toJson());*/
-                            customStepperController.nextPage(duration: 200.milliseconds, curve: Curves.easeOut);
+                            customStepperController.nextPage(
+                                duration: 200.milliseconds,
+                                curve: Curves.easeOut);
                           } else {
                             toast(locale.pleaseChooseYourExpert);
                           }
@@ -189,7 +214,8 @@ class _BookingStep1ComponentState extends State<BookingStep1Component> {
               );
             },
           ),
-          Observer(builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+          Observer(
+              builder: (context) => LoaderWidget().visible(appStore.isLoading)),
         ],
       ),
     );

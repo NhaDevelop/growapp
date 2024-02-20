@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/cached_image_widget.dart';
-import 'package:frezka/utils/constants.dart';
+import 'package:grow_tokyo_app/components/cached_image_widget.dart';
+import 'package:grow_tokyo_app/utils/constants.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/common_row_text_widget.dart';
@@ -14,7 +14,8 @@ class BookingServiceInformationComponent extends StatelessWidget {
   final List<ProductsInfo>? productList;
   final String? bookingStatus;
 
-  BookingServiceInformationComponent({required this.serviceList, this.bookingStatus, this.productList});
+  BookingServiceInformationComponent(
+      {required this.serviceList, this.bookingStatus, this.productList});
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +55,10 @@ class BookingServiceInformationComponent extends StatelessWidget {
           ),
         ),
         if (productList.validate().isNotEmpty) 20.height,
-        if (productList.validate().isNotEmpty) Text(locale.parchasedProducts, style: boldTextStyle(size: LABEL_TEXT_SIZE)).paddingBottom(12),
+        if (productList.validate().isNotEmpty)
+          Text(locale.parchasedProducts,
+                  style: boldTextStyle(size: LABEL_TEXT_SIZE))
+              .paddingBottom(12),
         if (productList.validate().isNotEmpty)
           AnimatedWrap(
             runSpacing: 16,
@@ -83,20 +87,33 @@ class BookingServiceInformationComponent extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(productData.productName.validate(), style: boldTextStyle(), maxLines: 1, overflow: TextOverflow.ellipsis),
+                            Text(productData.productName.validate(),
+                                style: boldTextStyle(),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis),
                             4.height,
-                            Text(productData.variationName.validate(), style: primaryTextStyle()),
+                            Text(productData.variationName.validate(),
+                                style: primaryTextStyle()),
                             if (productData.variationName != null)
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
-                                      Text('${locale.qty}: ', style: secondaryTextStyle(size: 13)),
-                                      Text(productData.productQty.validate().toString(), style: primaryTextStyle()),
+                                      Text('${locale.qty}: ',
+                                          style: secondaryTextStyle(size: 13)),
+                                      Text(
+                                          productData.productQty
+                                              .validate()
+                                              .toString(),
+                                          style: primaryTextStyle()),
                                     ],
                                   ),
-                                  PriceWidget(price: productData.discountedPrice.validate(), size: 14),
+                                  PriceWidget(
+                                      price: productData.discountedPrice
+                                          .validate(),
+                                      size: 14),
                                 ],
                               ),
                           ],

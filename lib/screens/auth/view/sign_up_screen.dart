@@ -1,10 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:frezka/main.dart';
-import 'package:frezka/screens/auth/auth_repository.dart';
-import 'package:frezka/utils/common_base.dart';
-import 'package:frezka/utils/constants.dart';
-import 'package:frezka/utils/images.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/screens/auth/auth_repository.dart';
+import 'package:grow_tokyo_app/utils/common_base.dart';
+import 'package:grow_tokyo_app/utils/constants.dart';
+import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/app_scaffold.dart';
@@ -18,7 +18,13 @@ class SignUpScreen extends StatefulWidget {
   final bool isOTPLogin;
   final String? uid;
 
-  SignUpScreen({Key? key, this.phoneNumber, this.isOTPLogin = false, this.countryCode, this.uid}) : super(key: key);
+  SignUpScreen(
+      {Key? key,
+      this.phoneNumber,
+      this.isOTPLogin = false,
+      this.countryCode,
+      this.uid})
+      : super(key: key);
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -98,7 +104,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ..mobile = mobileCont.text.trim()
         ..gender = genderValue.validate().toLowerCase();
 
-      await createUser(tempRegisterData.toJson()).then((registerResponse) async {
+      await createUser(tempRegisterData.toJson())
+          .then((registerResponse) async {
         appStore.setLoading(false);
         toast(registerResponse.message.validate());
 
@@ -134,7 +141,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     decoration: boxDecorationWithRoundedCorners(
                       backgroundColor: primaryColor,
                       borderRadius: radiusOnly(bottomLeft: 20, bottomRight: 20),
-                      decorationImage: DecorationImage(image: AssetImage(bg_pattern), fit: BoxFit.cover),
+                      decorationImage: DecorationImage(
+                          image: AssetImage(bg_pattern), fit: BoxFit.cover),
                     ),
                   ),
                   Positioned(
@@ -142,16 +150,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: Container(
                       padding: EdgeInsets.all(16),
                       decoration: boxDecorationDefault(shape: BoxShape.circle),
-                      child: Image.asset(app_logo, height: 104, width: 104, fit: BoxFit.cover),
+                      child: Image.asset(app_logo,
+                          height: 104, width: 104, fit: BoxFit.cover),
                     ).center(),
                   ),
                 ],
               ),
               Column(
                 children: [
-                  Text(locale.helloUser, style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+                  Text(locale.helloUser,
+                      style: boldTextStyle(size: LABEL_TEXT_SIZE)),
                   8.height,
-                  Text(locale.createYourAccountFor, style: secondaryTextStyle(), textAlign: TextAlign.center),
+                  Text(locale.createYourAccountFor,
+                      style: secondaryTextStyle(), textAlign: TextAlign.center),
                   Column(
                     children: [
                       16.height,
@@ -166,8 +177,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               focus: firstNameFocus,
                               nextFocus: lastNameFocus,
                               textFieldType: TextFieldType.NAME,
-                              readOnly: widget.isOTPLogin.validate() ? widget.isOTPLogin : false,
-                              decoration: inputDecoration(context, label: locale.firstName),
+                              readOnly: widget.isOTPLogin.validate()
+                                  ? widget.isOTPLogin
+                                  : false,
+                              decoration: inputDecoration(context,
+                                  label: locale.firstName),
                             ),
                             16.height,
                             AppTextField(
@@ -175,8 +189,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               focus: lastNameFocus,
                               nextFocus: emailFocus,
                               textFieldType: TextFieldType.NAME,
-                              readOnly: widget.isOTPLogin.validate() ? widget.isOTPLogin : false,
-                              decoration: inputDecoration(context, label: locale.lastName),
+                              readOnly: widget.isOTPLogin.validate()
+                                  ? widget.isOTPLogin
+                                  : false,
+                              decoration: inputDecoration(context,
+                                  label: locale.lastName),
                             ),
                             16.height,
                             AppTextField(
@@ -184,7 +201,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               focus: emailFocus,
                               nextFocus: passwordFocus,
                               textFieldType: TextFieldType.EMAIL,
-                              decoration: inputDecoration(context, label: locale.email),
+                              decoration:
+                                  inputDecoration(context, label: locale.email),
                             ),
                             16.height,
                             AppTextField(
@@ -192,8 +210,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               textFieldType: TextFieldType.PASSWORD,
                               focus: passwordFocus,
                               nextFocus: mobileFocus,
-                              readOnly: widget.isOTPLogin.validate() ? widget.isOTPLogin : false,
-                              decoration: inputDecoration(context, label: locale.password),
+                              readOnly: widget.isOTPLogin.validate()
+                                  ? widget.isOTPLogin
+                                  : false,
+                              decoration: inputDecoration(context,
+                                  label: locale.password),
                               autoFillHints: [AutofillHints.password],
                               onFieldSubmitted: (s) {
                                 if (widget.isOTPLogin) {
@@ -215,8 +236,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               textFieldType: TextFieldType.PHONE,
                               controller: mobileCont,
                               focus: mobileFocus,
-                              errorThisFieldRequired: locale.thisFieldIsRequired,
-                              decoration: inputDecoration(context, label: locale.contactNumber),
+                              errorThisFieldRequired:
+                                  locale.thisFieldIsRequired,
+                              decoration: inputDecoration(context,
+                                  label: locale.contactNumber),
                               maxLength: 15,
                             ),
                             16.height,
@@ -225,7 +248,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       16.height,
                       AppButton(
-                        child: Text(locale.signUp, style: boldTextStyle(color: white)),
+                        child: Text(locale.signUp,
+                            style: boldTextStyle(color: white)),
                         width: context.width(),
                         color: secondaryColor,
                         onTap: () async {
@@ -240,7 +264,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(locale.alreadyHaveAnAccount, style: secondaryTextStyle()),
+                          Text(locale.alreadyHaveAnAccount,
+                              style: secondaryTextStyle()),
                           TextButton(
                             onPressed: () {
                               hideKeyboard(context);
@@ -248,7 +273,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             },
                             child: Text(
                               locale.signIn,
-                              style: boldTextStyle(color: primaryColor, fontStyle: FontStyle.italic),
+                              style: boldTextStyle(
+                                  color: primaryColor,
+                                  fontStyle: FontStyle.italic),
                             ),
                           ),
                         ],

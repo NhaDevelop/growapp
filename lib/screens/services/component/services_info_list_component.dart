@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/price_widget.dart';
-import 'package:frezka/utils/colors.dart';
-import 'package:frezka/utils/common_base.dart';
+import 'package:grow_tokyo_app/components/price_widget.dart';
+import 'package:grow_tokyo_app/utils/colors.dart';
+import 'package:grow_tokyo_app/utils/common_base.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/cached_image_widget.dart';
@@ -12,10 +12,12 @@ class ServicesInfoListComponent extends StatefulWidget {
   final ServiceListData serviceInfo;
   final Function() onPressed;
 
-  ServicesInfoListComponent({required this.serviceInfo, required this.onPressed});
+  ServicesInfoListComponent(
+      {required this.serviceInfo, required this.onPressed});
 
   @override
-  _ServicesInfoListComponentState createState() => _ServicesInfoListComponentState();
+  _ServicesInfoListComponentState createState() =>
+      _ServicesInfoListComponentState();
 }
 
 class _ServicesInfoListComponentState extends State<ServicesInfoListComponent> {
@@ -41,7 +43,8 @@ class _ServicesInfoListComponentState extends State<ServicesInfoListComponent> {
         widget.onPressed.call();
       },
       child: Container(
-        decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor, borderRadius: radius()),
+        decoration: boxDecorationWithRoundedCorners(
+            backgroundColor: context.cardColor, borderRadius: radius()),
         padding: EdgeInsets.only(left: 16, right: 8, top: 16, bottom: 16),
         margin: EdgeInsets.only(bottom: 16),
         child: Row(
@@ -61,8 +64,13 @@ class _ServicesInfoListComponentState extends State<ServicesInfoListComponent> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Marquee(child: Text('${widget.serviceInfo.name.validate()}', style: boldTextStyle())),
-                    Marquee(child: Text('${durationToString(widget.serviceInfo.durationMin.validate())}', style: secondaryTextStyle())),
+                    Marquee(
+                        child: Text('${widget.serviceInfo.name.validate()}',
+                            style: boldTextStyle())),
+                    Marquee(
+                        child: Text(
+                            '${durationToString(widget.serviceInfo.durationMin.validate())}',
+                            style: secondaryTextStyle())),
                   ],
                 ).expand(),
               ],
@@ -75,7 +83,9 @@ class _ServicesInfoListComponentState extends State<ServicesInfoListComponent> {
                   value: widget.serviceInfo.isServiceChecked,
                   shape: RoundedRectangleBorder(borderRadius: radius(5)),
                   visualDensity: VisualDensity.compact,
-                  activeColor: appStore.isDarkMode ? territoryButtonColor : secondaryColor,
+                  activeColor: appStore.isDarkMode
+                      ? territoryButtonColor
+                      : secondaryColor,
                   side: BorderSide(color: textSecondaryColorGlobal),
                   checkColor: appStore.isDarkMode ? Colors.black : Colors.white,
                   onChanged: (value) {

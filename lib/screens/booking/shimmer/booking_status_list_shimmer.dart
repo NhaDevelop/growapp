@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/screens/booking/shimmer/booking_list_shimmer.dart';
+import 'package:grow_tokyo_app/screens/booking/shimmer/booking_list_shimmer.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/shimmer_widget.dart';
@@ -21,7 +21,9 @@ class BookingStatusListShimmer extends StatelessWidget {
               indicatorSize: TabBarIndicatorSize.tab,
               indicatorColor: primaryColor,
               tabs: List.generate(6, (index) {
-                return Tab(child: ShimmerWidget(height: 25, width: context.width() * 0.14));
+                return Tab(
+                    child: ShimmerWidget(
+                        height: 25, width: context.width() * 0.14));
               }),
             ),
           ),

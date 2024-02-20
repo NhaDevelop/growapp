@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/shimmer_widget.dart';
+import 'package:grow_tokyo_app/components/shimmer_widget.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class BookingListShimmer extends StatelessWidget {
@@ -15,7 +15,8 @@ class BookingListShimmer extends StatelessWidget {
         return Container(
           width: context.width(),
           margin: EdgeInsets.all(8),
-          decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor),
+          decoration: boxDecorationWithRoundedCorners(
+              backgroundColor: context.cardColor),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -25,7 +26,8 @@ class BookingListShimmer extends StatelessWidget {
                   ShimmerWidget(
                     child: Container(
                       height: 24,
-                      padding: EdgeInsets.symmetric(vertical: 4, horizontal: 26),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 4, horizontal: 26),
                       decoration: boxDecorationWithRoundedCorners(
                         backgroundColor: context.cardColor,
                         borderRadius: radiusOnly(topLeft: defaultRadius),
@@ -35,7 +37,8 @@ class BookingListShimmer extends StatelessWidget {
                   ShimmerWidget(
                     child: Container(
                       height: 24,
-                      padding: EdgeInsets.symmetric(vertical: 3, horizontal: 30),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 3, horizontal: 30),
                       decoration: boxDecorationWithRoundedCorners(
                         backgroundColor: context.cardColor,
                         borderRadius: radiusOnly(topRight: defaultRadius),
@@ -62,8 +65,10 @@ class BookingListShimmer extends StatelessWidget {
                           10.height,
                           Row(
                             children: [
-                              ShimmerWidget(height: 20, width: 20).paddingRight(4),
-                              ShimmerWidget(height: 12, width: context.width()).flexible(),
+                              ShimmerWidget(height: 20, width: 20)
+                                  .paddingRight(4),
+                              ShimmerWidget(height: 12, width: context.width())
+                                  .flexible(),
                             ],
                           ),
                         ],
@@ -81,14 +86,16 @@ class BookingListShimmer extends StatelessWidget {
                             children: [
                               ShimmerWidget(height: 14, width: 14),
                               8.width,
-                              ShimmerWidget(height: 16, width: context.width() * 0.15),
+                              ShimmerWidget(
+                                  height: 16, width: context.width() * 0.15),
                             ],
                           ),
                           Row(
                             children: [
                               ShimmerWidget(height: 14, width: 14),
                               8.width,
-                              ShimmerWidget(height: 16, width: context.width() * 0.15),
+                              ShimmerWidget(
+                                  height: 16, width: context.width() * 0.15),
                             ],
                           ),
                         ],
@@ -99,7 +106,8 @@ class BookingListShimmer extends StatelessWidget {
                     child: Container(
                       height: 45,
                       width: context.width(),
-                      decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor),
+                      decoration: boxDecorationWithRoundedCorners(
+                          backgroundColor: context.cardColor),
                     ),
                   ).paddingSymmetric(horizontal: 16, vertical: 8),
                   8.height,

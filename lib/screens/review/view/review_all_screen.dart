@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:frezka/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/components/app_scaffold.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/back_widget.dart';
@@ -88,8 +88,10 @@ class _ReviewAllScreenState extends State<ReviewAllScreen> {
             },
             onSuccess: (data) {
               return AnimatedListView(
-                itemBuilder: (context, index) => ReviewItemComponent(reviewData: data[index]),
-                slideConfiguration: SlideConfiguration(duration: 400.milliseconds, delay: 50.milliseconds),
+                itemBuilder: (context, index) =>
+                    ReviewItemComponent(reviewData: data[index]),
+                slideConfiguration: SlideConfiguration(
+                    duration: 400.milliseconds, delay: 50.milliseconds),
                 shrinkWrap: true,
                 listAnimationType: ListAnimationType.FadeIn,
                 fadeInConfiguration: FadeInConfiguration(duration: 2.seconds),
@@ -120,7 +122,8 @@ class _ReviewAllScreenState extends State<ReviewAllScreen> {
               );
             },
           ),
-          Observer(builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+          Observer(
+              builder: (context) => LoaderWidget().visible(appStore.isLoading)),
         ],
       ),
     );

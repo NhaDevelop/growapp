@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/screens/branch/model/branch_configuration_response.dart';
+import 'package:grow_tokyo_app/screens/branch/model/branch_configuration_response.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../utils/colors.dart';
@@ -12,7 +12,11 @@ class SlotItemComponent extends StatefulWidget {
 
   final VoidCallback? onTap;
 
-  SlotItemComponent({required this.timeSlot, required this.isSelected, this.onTap, required this.selectedHorizontalDate});
+  SlotItemComponent(
+      {required this.timeSlot,
+      required this.isSelected,
+      this.onTap,
+      required this.selectedHorizontalDate});
 
   @override
   State<SlotItemComponent> createState() => _SlotItemComponentState();
@@ -31,15 +35,21 @@ class _SlotItemComponentState extends State<SlotItemComponent> {
         alignment: Alignment.center,
         decoration: boxDecorationWithRoundedCorners(
           borderRadius: radius(),
-          backgroundColor: widget.isSelected ? indicatorColor : context.scaffoldBackgroundColor,
+          backgroundColor: widget.isSelected
+              ? indicatorColor
+              : context.scaffoldBackgroundColor,
         ),
         child: Marquee(
           child: Text(
             formatOnlyTime(context, startTime: widget.timeSlot.startTime),
             style: boldTextStyle(
               size: 12,
-              color: widget.isSelected ? Colors.black : textSecondaryColorGlobal,
-              decoration: !widget.timeSlot.slotAvailability(widget.selectedHorizontalDate) ? TextDecoration.lineThrough : null,
+              color:
+                  widget.isSelected ? Colors.black : textSecondaryColorGlobal,
+              decoration: !widget.timeSlot
+                      .slotAvailability(widget.selectedHorizontalDate)
+                  ? TextDecoration.lineThrough
+                  : null,
             ),
           ),
         ),

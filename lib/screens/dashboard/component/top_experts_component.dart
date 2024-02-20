@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/view_all_label_component.dart';
-import 'package:frezka/screens/experts/component/employee_list_component.dart';
-import 'package:frezka/screens/experts/view/employee_list_screen.dart';
+import 'package:grow_tokyo_app/components/view_all_label_component.dart';
+import 'package:grow_tokyo_app/screens/experts/component/employee_list_component.dart';
+import 'package:grow_tokyo_app/screens/experts/view/employee_list_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../main.dart';
@@ -54,11 +54,13 @@ class _TopExpertsComponentState extends State<TopExpertsComponent> {
           columnCount: 2,
           itemCount: widget.topExpertList.validate().take(6).length,
           listAnimationType: ListAnimationType.Scale,
-          scaleConfiguration: ScaleConfiguration(duration: 300.milliseconds, delay: 50.milliseconds),
+          scaleConfiguration: ScaleConfiguration(
+              duration: 300.milliseconds, delay: 50.milliseconds),
           itemBuilder: (_, i) {
             EmployeeData data = widget.topExpertList.validate()[i];
             return EmployeeListComponent(expertData: data).onTap(() {
-              EmployeeDetailScreen(employeeId: data.id.validate()).launch(context);
+              EmployeeDetailScreen(employeeId: data.id.validate())
+                  .launch(context);
             }, borderRadius: radius());
           },
         ).paddingSymmetric(horizontal: 16),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/app_scaffold.dart';
-import 'package:frezka/components/price_widget.dart';
-import 'package:frezka/screens/cart/cart_repository.dart';
-import 'package:frezka/screens/cart/model/address_list_response.dart';
-import 'package:frezka/screens/cart/model/logistic_zone_response.dart';
-import 'package:frezka/utils/extensions/string_extensions.dart';
+import 'package:grow_tokyo_app/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/components/price_widget.dart';
+import 'package:grow_tokyo_app/screens/cart/cart_repository.dart';
+import 'package:grow_tokyo_app/screens/cart/model/address_list_response.dart';
+import 'package:grow_tokyo_app/screens/cart/model/logistic_zone_response.dart';
+import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/dotted_line.dart';
@@ -55,9 +55,16 @@ class _SelectAddressScreenState extends State<SelectAddressScreen> {
     ).whenComplete(() async {
       try {
         if (addressList.isNotEmpty) {
-          defaultAddressId = addressList.firstWhere((element) => element.isPrimary.validate().getBoolInt(), orElse: () => UserAddress()).id.validate();
+          defaultAddressId = addressList
+              .firstWhere(
+                  (element) => element.isPrimary.validate().getBoolInt(),
+                  orElse: () => UserAddress())
+              .id
+              .validate();
           await getLogisticZoneApi(addressId: defaultAddressId);
-          productStore.setSelectedAddressData(addressList.firstWhere((element) => element.isPrimary.validate().getBoolInt(), orElse: () => UserAddress()));
+          productStore.setSelectedAddressData(addressList.firstWhere(
+              (element) => element.isPrimary.validate().getBoolInt(),
+              orElse: () => UserAddress()));
         }
       } catch (e) {
         appStore.setLoading(false);
@@ -77,7 +84,10 @@ class _SelectAddressScreenState extends State<SelectAddressScreen> {
     return SizedBox(
       height: 38,
       width: 38,
-      child: IconButton(padding: EdgeInsets.zero, icon: icon.iconImage(size: 18), onPressed: onTap),
+      child: IconButton(
+          padding: EdgeInsets.zero,
+          icon: icon.iconImage(size: 18),
+          onPressed: onTap),
     );
   }
 
@@ -97,7 +107,11 @@ class _SelectAddressScreenState extends State<SelectAddressScreen> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      appBarWidget: commonAppBarWidget(context, title: locale.selectAddress, appBarHeight: 70, showLeadingIcon: true, roundCornerShape: true),
+      appBarWidget: commonAppBarWidget(context,
+          title: locale.selectAddress,
+          appBarHeight: 70,
+          showLeadingIcon: true,
+          roundCornerShape: true),
       body: Stack(
         children: [
           SnapHelperWidget<List<UserAddress>>(
@@ -123,7 +137,8 @@ class _SelectAddressScreenState extends State<SelectAddressScreen> {
                   retryText: locale.addNewAddress,
                   imageWidget: EmptyStateWidget(),
                   onRetry: () async {
-                    final result = await AddAddressScreen().launch(context, pageRouteAnimation: PageRouteAnimation.Fade);
+                    final result = await AddAddressScreen().launch(context,
+                        pageRouteAnimation: PageRouteAnimation.Fade);
                     if (result == true) {
                       page = 1;
                       appStore.setLoading(true);
@@ -134,7 +149,8 @@ class _SelectAddressScreenState extends State<SelectAddressScreen> {
               }
 
               return AnimatedScrollView(
-                padding: EdgeInsets.only(left: 16, right: 16, bottom: 90, top: 20),
+                padding:
+                    EdgeInsets.only(left: 16, right: 16, bottom: 90, top: 20),
                 physics: AlwaysScrollableScrollPhysics(),
                 onSwipeRefresh: () async {
                   page = 1;
@@ -152,7 +168,8 @@ class _SelectAddressScreenState extends State<SelectAddressScreen> {
                       UserAddress addressData = addressList[index];
 
                       return Container(
-                        decoration: boxDecorationDefault(color: context.cardColor, borderRadius: radius()),
+                        decoration: boxDecorationDefault(
+                            color: context.cardColor, borderRadius: radius()),
                         margin: EdgeInsets.only(bottom: 16),
                         child: Stack(
                           children: [
@@ -162,7 +179,8 @@ class _SelectAddressScreenState extends State<SelectAddressScreen> {
                                 RadioListTile(
                                   value: addressData.id.validate(),
                                   groupValue: defaultAddressId,
-                                  shape: RoundedRectangleBorder(borderRadius: radius()),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: radius()),
                                   visualDensity: VisualDensity.compact,
                                   dense: true,
                                   contentPadding: EdgeInsets.all(8),
@@ -173,7 +191,8 @@ class _SelectAddressScreenState extends State<SelectAddressScreen> {
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                   subtitle: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         '${addressData.addressLine1.validate()} ${addressData.addressLine2.validate()}',
@@ -182,13 +201,15 @@ class _SelectAddressScreenState extends State<SelectAddressScreen> {
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                       Text(
-                                        '${addressData.cityName.validate()}' ' - ${addressData.postalCode.validate()}',
+                                        '${addressData.cityName.validate()}'
+                                        ' - ${addressData.postalCode.validate()}',
                                         style: secondaryTextStyle(size: 12),
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                       Text(
-                                        '${addressData.stateName.validate()}' ', ${addressData.countryName.validate()}',
+                                        '${addressData.stateName.validate()}'
+                                        ', ${addressData.countryName.validate()}',
                                         style: secondaryTextStyle(size: 12),
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
@@ -201,7 +222,11 @@ class _SelectAddressScreenState extends State<SelectAddressScreen> {
                                       buildIconWidget(
                                         icon: ic_edit_square,
                                         onTap: () async {
-                                          final result = await AddAddressScreen(address: addressData).launch(context, pageRouteAnimation: PageRouteAnimation.Fade);
+                                          final result = await AddAddressScreen(
+                                                  address: addressData)
+                                              .launch(context,
+                                                  pageRouteAnimation:
+                                                      PageRouteAnimation.Fade);
                                           if (result == true) {
                                             page = 1;
                                             appStore.setLoading(true);
@@ -211,36 +236,50 @@ class _SelectAddressScreenState extends State<SelectAddressScreen> {
                                       ),
                                       buildIconWidget(
                                         icon: ic_delete,
-                                        onTap: () => handleDeleteAddressClick(addressList, index, context),
-                                      ).visible(!addressData.isPrimary.validate().getBoolInt()),
+                                        onTap: () => handleDeleteAddressClick(
+                                            addressList, index, context),
+                                      ).visible(!addressData.isPrimary
+                                          .validate()
+                                          .getBoolInt()),
                                     ],
                                   ),
                                   onChanged: (value) async {
-                                    defaultAddressId = addressData.id.validate();
+                                    defaultAddressId =
+                                        addressData.id.validate();
 
                                     if (!widget.isFromProfile) {
                                       /// LogisticZone Api
-                                      await getLogisticZoneApi(addressId: defaultAddressId);
+                                      await getLogisticZoneApi(
+                                          addressId: defaultAddressId);
                                     }
 
-                                    productStore.setSelectedAddressData(addressData);
+                                    productStore
+                                        .setSelectedAddressData(addressData);
                                     setState(() {});
                                   },
                                 ),
-                                if (!widget.isFromProfile) logisticWidget(context).visible(defaultAddressId == addressData.id.validate()),
+                                if (!widget.isFromProfile)
+                                  logisticWidget(context).visible(
+                                      defaultAddressId ==
+                                          addressData.id.validate()),
                               ],
                             ),
                             Positioned(
                               right: 0,
                               child: Container(
-                                padding: EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 4, horizontal: 16),
                                 decoration: boxDecorationWithRoundedCorners(
                                   backgroundColor: territoryButtonColor,
-                                  borderRadius: radiusOnly(bottomLeft: defaultRadius),
+                                  borderRadius:
+                                      radiusOnly(bottomLeft: defaultRadius),
                                 ),
-                                child: Text(locale.primary, style: boldTextStyle(color: secondaryColor, size: 12)),
+                                child: Text(locale.primary,
+                                    style: boldTextStyle(
+                                        color: secondaryColor, size: 12)),
                               ),
-                            ).visible(addressData.isPrimary.validate().getBoolInt()),
+                            ).visible(
+                                addressData.isPrimary.validate().getBoolInt()),
                           ],
                         ),
                       );
@@ -259,10 +298,14 @@ class _SelectAddressScreenState extends State<SelectAddressScreen> {
                 Container(
                   height: 50,
                   alignment: Alignment.center,
-                  decoration: boxDecorationDefault(color: context.cardColor, border: Border.all(color: primaryColor)),
-                  child: Text(locale.addNewAddress, style: boldTextStyle(color: primaryColor)),
+                  decoration: boxDecorationDefault(
+                      color: context.cardColor,
+                      border: Border.all(color: primaryColor)),
+                  child: Text(locale.addNewAddress,
+                      style: boldTextStyle(color: primaryColor)),
                 ).onTap(() async {
-                  final result = await AddAddressScreen().launch(context, pageRouteAnimation: PageRouteAnimation.Fade);
+                  final result = await AddAddressScreen().launch(context,
+                      pageRouteAnimation: PageRouteAnimation.Fade);
                   if (result == true) {
                     page = 1;
                     appStore.setLoading(true);
@@ -273,10 +316,12 @@ class _SelectAddressScreenState extends State<SelectAddressScreen> {
                 if (isSelectedLogistic)
                   AppButton(
                     width: context.width(),
-                    child: Text(locale.deliverHere, style: boldTextStyle(color: Colors.white)),
+                    child: Text(locale.deliverHere,
+                        style: boldTextStyle(color: Colors.white)),
                     color: secondaryColor,
                     onTap: () {
-                      AdditionalDetailScreen().launch(context, pageRouteAnimation: PageRouteAnimation.Fade);
+                      AdditionalDetailScreen().launch(context,
+                          pageRouteAnimation: PageRouteAnimation.Fade);
                     },
                   ).expand(),
               ],
@@ -287,7 +332,8 @@ class _SelectAddressScreenState extends State<SelectAddressScreen> {
     );
   }
 
-  Future<void> handleDeleteAddressClick(List<UserAddress> addressList, int index, BuildContext context) async {
+  Future<void> handleDeleteAddressClick(
+      List<UserAddress> addressList, int index, BuildContext context) async {
     showConfirmDialogCustom(
       context,
       primaryColor: context.primaryColor,
@@ -296,9 +342,11 @@ class _SelectAddressScreenState extends State<SelectAddressScreen> {
       negativeText: locale.cancel,
       onAccept: (ctx) async {
         appStore.setLoading(true);
-        removeAddress(addressId: addressList[index].id.validate()).then((value) {
+        removeAddress(addressId: addressList[index].id.validate())
+            .then((value) {
           addressList.removeAt(index);
-          if (value.message.validate().isNotEmpty) toast(locale.addressDeleteSuccessfully);
+          if (value.message.validate().isNotEmpty)
+            toast(locale.addressDeleteSuccessfully);
           setState(() {});
           appStore.setLoading(false);
         }).catchError(onError);
@@ -311,13 +359,19 @@ class _SelectAddressScreenState extends State<SelectAddressScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (logisticList.isEmpty) Text('*${locale.weAreNotShipping}.', style: secondaryTextStyle(color: wishListColor, fontStyle: FontStyle.italic)),
-        if (logisticList.isNotEmpty) DottedLine(lineThickness: 1, dashLength: 4, dashColor: context.dividerColor),
+        if (logisticList.isEmpty)
+          Text('*${locale.weAreNotShipping}.',
+              style: secondaryTextStyle(
+                  color: wishListColor, fontStyle: FontStyle.italic)),
+        if (logisticList.isNotEmpty)
+          DottedLine(
+              lineThickness: 1, dashLength: 4, dashColor: context.dividerColor),
         8.height,
         if (logisticList.isNotEmpty)
           Text(
             locale.deliveryCharge,
-            style: secondaryTextStyle(color: Colors.green, size: 14, fontStyle: FontStyle.italic),
+            style: secondaryTextStyle(
+                color: Colors.green, size: 14, fontStyle: FontStyle.italic),
           ).paddingSymmetric(horizontal: 16),
         AnimatedWrap(
           itemCount: logisticList.length,
@@ -325,22 +379,29 @@ class _SelectAddressScreenState extends State<SelectAddressScreen> {
             LogisticZoneData logisticData = logisticList[index];
 
             return Container(
-              decoration: boxDecorationDefault(color: context.cardColor, borderRadius: radius()),
+              decoration: boxDecorationDefault(
+                  color: context.cardColor, borderRadius: radius()),
               padding: EdgeInsets.only(left: 10, right: 16, bottom: 10),
               child: CheckboxListTile(
                 value: logisticData.isLogisticCheck,
                 title: Text(
                   logisticData.name.validate(),
-                  style: boldTextStyle(color: appStore.isDarkMode ? textPrimaryColorGlobal : secondaryColor, size: 14),
+                  style: boldTextStyle(
+                      color: appStore.isDarkMode
+                          ? textPrimaryColorGlobal
+                          : secondaryColor,
+                      size: 14),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
                 secondary: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(logisticData.standardDeliveryTime.validate(), style: secondaryTextStyle()),
+                    Text(logisticData.standardDeliveryTime.validate(),
+                        style: secondaryTextStyle()),
                     8.width,
-                    PriceWidget(price: logisticData.standardDeliveryCharge.validate()),
+                    PriceWidget(
+                        price: logisticData.standardDeliveryCharge.validate()),
                   ],
                 ),
                 contentPadding: EdgeInsets.zero,
@@ -349,7 +410,8 @@ class _SelectAddressScreenState extends State<SelectAddressScreen> {
                 checkboxShape: RoundedRectangleBorder(borderRadius: radius(5)),
                 side: BorderSide(color: textSecondaryColorGlobal),
                 dense: true,
-                activeColor: appStore.isDarkMode ? primaryColor : secondaryColor,
+                activeColor:
+                    appStore.isDarkMode ? primaryColor : secondaryColor,
                 onChanged: (value) {
                   logisticData.isLogisticCheck = !logisticData.isLogisticCheck;
 

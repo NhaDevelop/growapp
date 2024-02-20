@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/main.dart';
+import 'package:grow_tokyo_app/main.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
@@ -18,15 +18,25 @@ Future<void> initOneSignal() async {
   OneSignal.Notifications.addClickListener((event) {
     log("${event.jsonRepresentation()}");
     if (event.notification.additionalData != null) {
-      final additionalData = event.notification.additionalData!['additional_data'];
+      final additionalData =
+          event.notification.additionalData!['additional_data'];
 
-      if (event.notification.additionalData!['additional_data'].containsKey('id')) {
-        int? notId = event.notification.additionalData!['additional_data']["id"];
+      if (event.notification.additionalData!['additional_data']
+          .containsKey('id')) {
+        int? notId =
+            event.notification.additionalData!['additional_data']["id"];
 
-        if (event.notification.additionalData!['additional_data']['notification_group'] == 'shop') {
-          navigatorKey.currentState!.push(MaterialPageRoute(builder: (context) => OrderDetailScreen(orderId: notId.validate(), orderCode: additionalData['order_code'])));
+        if (event.notification.additionalData!['additional_data']
+                ['notification_group'] ==
+            'shop') {
+          navigatorKey.currentState!.push(MaterialPageRoute(
+              builder: (context) => OrderDetailScreen(
+                  orderId: notId.validate(),
+                  orderCode: additionalData['order_code'])));
         } else {
-          navigatorKey.currentState!.push(MaterialPageRoute(builder: (context) => BookingDetailScreen(bookingId: notId.validate())));
+          navigatorKey.currentState!.push(MaterialPageRoute(
+              builder: (context) =>
+                  BookingDetailScreen(bookingId: notId.validate())));
         }
       }
     }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:frezka/components/app_scaffold.dart';
-import 'package:frezka/components/loader_widget.dart';
-import 'package:frezka/screens/order/order_repository.dart';
+import 'package:grow_tokyo_app/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/components/loader_widget.dart';
+import 'package:grow_tokyo_app/screens/order/order_repository.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/cached_image_widget.dart';
@@ -68,7 +68,9 @@ class _OrderListScreenState extends State<OrderListScreen> {
               width: context.width(),
               height: 150,
               decoration: boxDecorationWithRoundedCorners(
-                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20)),
                 backgroundColor: context.primaryColor,
               ),
               child: appBarWidget(
@@ -105,7 +107,10 @@ class _OrderListScreenState extends State<OrderListScreen> {
                       onOrderListUpdate.call(searchProductCont.text);
                       setState(() {});
                     },
-                    decoration: inputDecoration(context, hint: locale.searchOrder, prefixIcon: Icon(Icons.search, color: textSecondaryColorGlobal)),
+                    decoration: inputDecoration(context,
+                        hint: locale.searchOrder,
+                        prefixIcon: Icon(Icons.search,
+                            color: textSecondaryColorGlobal)),
                   ).expand(),
                   16.width,
                   Container(
@@ -129,7 +134,8 @@ class _OrderListScreenState extends State<OrderListScreen> {
       body: Stack(
         children: [
           OrderListComponent(),
-          Observer(builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+          Observer(
+              builder: (context) => LoaderWidget().visible(appStore.isLoading)),
         ],
       ),
     );
@@ -141,10 +147,14 @@ class _OrderListScreenState extends State<OrderListScreen> {
         context,
         child: Container(
           width: context.width(),
-          constraints: BoxConstraints(minWidth: context.height() * 0.65, maxHeight: context.height() * 0.45),
+          constraints: BoxConstraints(
+              minWidth: context.height() * 0.65,
+              maxHeight: context.height() * 0.45),
           decoration: BoxDecoration(
             color: context.scaffoldBackgroundColor,
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30.0),
+                topRight: Radius.circular(30.0)),
           ),
           child: SnapHelperWidget<List<OrderStatusData>>(
             future: fetchOrderStatusApi(),
@@ -184,7 +194,8 @@ class _OrderListScreenState extends State<OrderListScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(locale.filterBy, style: primaryTextStyle(size: 18)).paddingOnly(left: 25),
+                      Text(locale.filterBy, style: primaryTextStyle(size: 18))
+                          .paddingOnly(left: 25),
                       CloseButton(
                         onPressed: () {
                           hideKeyboard(context);
@@ -194,12 +205,14 @@ class _OrderListScreenState extends State<OrderListScreen> {
                     ],
                   ),
                   10.height,
-                  Divider(color: context.dividerColor, height: 0).paddingSymmetric(horizontal: 16),
+                  Divider(color: context.dividerColor, height: 0)
+                      .paddingSymmetric(horizontal: 16),
                   22.height,
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(locale.deliveryStatus, style: secondaryTextStyle()).paddingSymmetric(horizontal: 16),
+                      Text(locale.deliveryStatus, style: secondaryTextStyle())
+                          .paddingSymmetric(horizontal: 16),
                       16.height,
                       AnimatedWrap(
                         runSpacing: 10,
@@ -212,10 +225,13 @@ class _OrderListScreenState extends State<OrderListScreen> {
                           return Observer(builder: (context) {
                             return GestureDetector(
                               onTap: () {
-                                if (productStore.selectedOrderStatusList.contains(statusData.name)) {
-                                  productStore.selectedOrderStatusList.remove(statusData.name);
+                                if (productStore.selectedOrderStatusList
+                                    .contains(statusData.name)) {
+                                  productStore.selectedOrderStatusList
+                                      .remove(statusData.name);
                                 } else {
-                                  productStore.selectedOrderStatusList.add(statusData.name.validate());
+                                  productStore.selectedOrderStatusList
+                                      .add(statusData.name.validate());
                                 }
                               },
                               child: Container(
@@ -223,7 +239,8 @@ class _OrderListScreenState extends State<OrderListScreen> {
                                 alignment: Alignment.center,
                                 padding: EdgeInsets.symmetric(vertical: 12),
                                 decoration: boxDecorationDefault(
-                                  color: productStore.selectedOrderStatusList.contains(statusData.name)
+                                  color: productStore.selectedOrderStatusList
+                                          .contains(statusData.name)
                                       ? appStore.isDarkMode
                                           ? primaryColor
                                           : lightPrimaryColor
@@ -238,12 +255,21 @@ class _OrderListScreenState extends State<OrderListScreen> {
                                       Icons.check,
                                       size: 14,
                                       color: Colors.white,
-                                    ).visible(productStore.selectedOrderStatusList.contains(statusData.name)),
-                                    4.width.visible(productStore.selectedOrderStatusList.contains(statusData.name)),
+                                    ).visible(productStore
+                                        .selectedOrderStatusList
+                                        .contains(statusData.name)),
+                                    4.width.visible(productStore
+                                        .selectedOrderStatusList
+                                        .contains(statusData.name)),
                                     Text(
-                                      getOrderBookingStatus(status: statusData.name.validate()),
+                                      getOrderBookingStatus(
+                                          status: statusData.name.validate()),
                                       style: secondaryTextStyle(
-                                        color: productStore.selectedOrderStatusList.contains(statusData.name) ? Colors.white : null,
+                                        color: productStore
+                                                .selectedOrderStatusList
+                                                .contains(statusData.name)
+                                            ? Colors.white
+                                            : null,
                                       ),
                                     ),
                                   ],

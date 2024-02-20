@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:frezka/components/app_scaffold.dart';
-import 'package:frezka/components/custom_stepper.dart';
-import 'package:frezka/components/slot_widget.dart';
-import 'package:frezka/components/view_all_label_component.dart';
-import 'package:frezka/main.dart';
-import 'package:frezka/utils/colors.dart';
-import 'package:frezka/utils/common_base.dart';
-import 'package:frezka/utils/constants.dart';
-import 'package:frezka/utils/extensions/date_extensions.dart';
-import 'package:frezka/utils/extensions/int_extension.dart';
-import 'package:frezka/utils/horizontalCalender/date_item.dart';
-import 'package:frezka/utils/horizontalCalender/date_picker_controller.dart';
-import 'package:frezka/utils/horizontalCalender/horizontal_date_picker.dart';
+import 'package:grow_tokyo_app/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/components/custom_stepper.dart';
+import 'package:grow_tokyo_app/components/slot_widget.dart';
+import 'package:grow_tokyo_app/components/view_all_label_component.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/utils/colors.dart';
+import 'package:grow_tokyo_app/utils/common_base.dart';
+import 'package:grow_tokyo_app/utils/constants.dart';
+import 'package:grow_tokyo_app/utils/extensions/date_extensions.dart';
+import 'package:grow_tokyo_app/utils/extensions/int_extension.dart';
+import 'package:grow_tokyo_app/utils/horizontalCalender/date_item.dart';
+import 'package:grow_tokyo_app/utils/horizontalCalender/date_picker_controller.dart';
+import 'package:grow_tokyo_app/utils/horizontalCalender/horizontal_date_picker.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/common_bottom_price_widget.dart';
@@ -34,7 +34,12 @@ class BookingStep2Component extends StatefulWidget {
   final int? employeeId;
   final List<ServiceListData>? serviceList;
 
-  BookingStep2Component({this.isFromBookingInfoDetail = false, this.bookingId, this.serviceList, this.employeeId, this.isReschedule = false});
+  BookingStep2Component(
+      {this.isFromBookingInfoDetail = false,
+      this.bookingId,
+      this.serviceList,
+      this.employeeId,
+      this.isReschedule = false});
 
   @override
   _BookingStep2ComponentState createState() => _BookingStep2ComponentState();
@@ -49,7 +54,8 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
 
   DateTime selectedHorizontalDate = DateTime.now();
 
-  List<String> monthList = List.generate(12, (index) => (index + 1).toMonthName());
+  List<String> monthList =
+      List.generate(12, (index) => (index + 1).toMonthName());
   int currentMonthNumber = DateTime.now().month;
   int selectedMonthIndex = DateTime.now().month - 1;
 
@@ -61,7 +67,9 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
     super.initState();
     init();
 
-    bookingRequestStore.setDateInRequest(selectedHorizontalDate.setFormattedDate(DateFormatConst.DATE_FORMAT_5).toString());
+    bookingRequestStore.setDateInRequest(selectedHorizontalDate
+        .setFormattedDate(DateFormatConst.DATE_FORMAT_5)
+        .toString());
   }
 
   void init() async {
@@ -100,7 +108,8 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
             children: [
               SnapHelperWidget(
                 future: future,
-                loadingWidget: BookingStep2Shimmer(isFromBookingInfoDetail: widget.isFromBookingInfoDetail),
+                loadingWidget: BookingStep2Shimmer(
+                    isFromBookingInfoDetail: widget.isFromBookingInfoDetail),
                 errorBuilder: (error) {
                   return NoDataWidget(
                     title: error,
@@ -128,13 +137,31 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
                     );
                   }
 
-                  if (snap.data!.slot.validate().any((element) => element.day == selectedHorizontalDate.weekday.getWeekDayName)) {
-                    startTime = snap.data!.slot.validate().firstWhere((element) => element.day == selectedHorizontalDate.weekday.getWeekDayName).startTime.validate();
-                    endTime = snap.data!.slot.validate().firstWhere((element) => element.day == selectedHorizontalDate.weekday.getWeekDayName).endTime.validate();
+                  if (snap.data!.slot.validate().any((element) =>
+                      element.day ==
+                      selectedHorizontalDate.weekday.getWeekDayName)) {
+                    startTime = snap.data!.slot
+                        .validate()
+                        .firstWhere((element) =>
+                            element.day ==
+                            selectedHorizontalDate.weekday.getWeekDayName)
+                        .startTime
+                        .validate();
+                    endTime = snap.data!.slot
+                        .validate()
+                        .firstWhere((element) =>
+                            element.day ==
+                            selectedHorizontalDate.weekday.getWeekDayName)
+                        .endTime
+                        .validate();
                   }
 
                   return AnimatedScrollView(
-                    padding: EdgeInsets.only(left: 20, right: 20, top: widget.isFromBookingInfoDetail ? 10 : 60, bottom: widget.isFromBookingInfoDetail ? 60 : 80),
+                    padding: EdgeInsets.only(
+                        left: 20,
+                        right: 20,
+                        top: widget.isFromBookingInfoDetail ? 10 : 60,
+                        bottom: widget.isFromBookingInfoDetail ? 60 : 80),
                     onSwipeRefresh: () async {
                       init();
                       setState(() {});
@@ -145,19 +172,24 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
                       ViewAllLabel(label: locale.date, isShowAll: false),
                       8.height,
                       Container(
-                        decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor, borderRadius: radius()),
+                        decoration: boxDecorationWithRoundedCorners(
+                            backgroundColor: context.cardColor,
+                            borderRadius: radius()),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SettingItemWidget(
-                              title: '${monthList[selectedMonthIndex]} ${selectedHorizontalDate.year}',
-                              titleTextStyle: boldTextStyle(size: 14, color: textSecondaryColorGlobal),
+                              title:
+                                  '${monthList[selectedMonthIndex]} ${selectedHorizontalDate.year}',
+                              titleTextStyle: boldTextStyle(
+                                  size: 14, color: textSecondaryColorGlobal),
                               padding: EdgeInsets.zero,
                               trailing: Row(
                                 children: [
                                   IconButton(
                                     onPressed: () {
-                                      if (selectedMonthIndex < currentMonthNumber) {
+                                      if (selectedMonthIndex <
+                                          currentMonthNumber) {
                                         //
                                       } else {
                                         selectedMonthIndex--;
@@ -167,7 +199,10 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
                                     icon: Icon(
                                       Icons.arrow_back_ios,
                                       size: ICON_SIZE,
-                                      color: selectedMonthIndex < currentMonthNumber ? grey : context.iconColor,
+                                      color: selectedMonthIndex <
+                                              currentMonthNumber
+                                          ? grey
+                                          : context.iconColor,
                                     ),
                                   ),
                                   IconButton(
@@ -182,7 +217,9 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
                                       icon: Icon(
                                         Icons.arrow_forward_ios_sharp,
                                         size: ICON_SIZE,
-                                        color: selectedMonthIndex == 11 ? grey : context.iconColor,
+                                        color: selectedMonthIndex == 11
+                                            ? grey
+                                            : context.iconColor,
                                       )),
                                 ],
                               ),
@@ -192,22 +229,45 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
                               datePickerController: _datePickerController,
                               height: 70,
                               startDate: DateTime.now(),
-                              endDate: DateTime(DateTime.now().year, DateTime.now().month + 2),
+                              endDate: DateTime(DateTime.now().year,
+                                  DateTime.now().month + 2),
                               selectedDate: selectedHorizontalDate,
                               widgetWidth: context.width(),
                               selectedColor: indicatorColor,
                               selectedTextColor: Colors.black,
-                              dateItemComponentList: [DateItem.Month, DateItem.WeekDay, DateItem.Day],
+                              dateItemComponentList: [
+                                DateItem.Month,
+                                DateItem.WeekDay,
+                                DateItem.Day
+                              ],
                               dayFontSize: 14,
                               weekDayFontSize: 14,
                               onValueSelected: (date) {
-                                _datePickerController.scrollTo(selectedHorizontalDate);
+                                _datePickerController
+                                    .scrollTo(selectedHorizontalDate);
                                 selectedHorizontalDate = date;
                                 log(selectedHorizontalDate);
 
-                                if (snap.data!.slot.validate().any((element) => element.day == selectedHorizontalDate.weekday.getWeekDayName)) {
-                                  startTime = snap.data!.slot.validate().firstWhere((element) => element.day == selectedHorizontalDate.weekday.getWeekDayName).startTime.validate();
-                                  endTime = snap.data!.slot.validate().firstWhere((element) => element.day == selectedHorizontalDate.weekday.getWeekDayName).endTime.validate();
+                                if (snap.data!.slot.validate().any((element) =>
+                                    element.day ==
+                                    selectedHorizontalDate
+                                        .weekday.getWeekDayName)) {
+                                  startTime = snap.data!.slot
+                                      .validate()
+                                      .firstWhere((element) =>
+                                          element.day ==
+                                          selectedHorizontalDate
+                                              .weekday.getWeekDayName)
+                                      .startTime
+                                      .validate();
+                                  endTime = snap.data!.slot
+                                      .validate()
+                                      .firstWhere((element) =>
+                                          element.day ==
+                                          selectedHorizontalDate
+                                              .weekday.getWeekDayName)
+                                      .endTime
+                                      .validate();
                                 }
 
                                 keyForSlotWidget = UniqueKey();
@@ -219,20 +279,24 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
                         ),
                       ),
                       16.height,
-                      ViewAllLabel(label: locale.availableSlots, isShowAll: false),
+                      ViewAllLabel(
+                          label: locale.availableSlots, isShowAll: false),
                       8.height,
                       SlotWidget(
                         key: keyForSlotWidget,
                         selectedHorizontalDate: selectedHorizontalDate,
                         startTime: startTime,
                         endTime: endTime,
-                        slotDuration: snap.data!.slotDuration.validate(value: DEFAULT_SLOT_INTERVAL_DURATION),
+                        slotDuration: snap.data!.slotDuration
+                            .validate(value: DEFAULT_SLOT_INTERVAL_DURATION),
                       ),
                     ],
                   );
                 },
               ),
-              Observer(builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+              Observer(
+                  builder: (context) =>
+                      LoaderWidget().visible(appStore.isLoading)),
             ],
           ),
           Positioned(
@@ -241,21 +305,30 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
             right: 0,
             child: Observer(
               builder: (_) => CommonBottomPriceWidget(
-                title: bookingRequestStore.selectedServiceList.map((e) => widget.isReschedule ? e.serviceName.validate() : e.name.validate()).toList().join(', '),
+                title: bookingRequestStore.selectedServiceList
+                    .map((e) => widget.isReschedule
+                        ? e.serviceName.validate()
+                        : e.name.validate())
+                    .toList()
+                    .join(', '),
                 price: bookingRequestStore.totalAmount,
                 buttonText: locale.next,
                 onTap: () async {
                   if (bookingRequestStore.time.isNotEmpty) {
-                    bookingRequestStore.setDateInRequest(selectedHorizontalDate.setFormattedDate(DateFormatConst.DATE_FORMAT_5).toString());
+                    bookingRequestStore.setDateInRequest(selectedHorizontalDate
+                        .setFormattedDate(DateFormatConst.DATE_FORMAT_5)
+                        .toString());
 
                     /// Slot Verify API Call
                     doIfLoggedIn(context, () async {
                       appStore.setLoading(true);
 
-                      await verifySlot(bookingRequestStore.employeeId, '${bookingRequestStore.date} ${bookingRequestStore.time}:00').then((value) {
-
+                      await verifySlot(bookingRequestStore.employeeId,
+                              '${bookingRequestStore.date} ${bookingRequestStore.time}:00')
+                          .then((value) {
                         log(bookingRequestStore.toJson());
-                        customStepperController.nextPage(duration: 200.milliseconds, curve: Curves.easeOut);
+                        customStepperController.nextPage(
+                            duration: 200.milliseconds, curve: Curves.easeOut);
                       }).catchError((e) {
                         toast(e.toString());
                       });
@@ -281,14 +354,18 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
             onAccept: (_) {
               List<ServiceListData> selectedService = [];
 
-              bookingRequestStore.setEmployeeIdInRequest(widget.employeeId.validate());
-              bookingRequestStore.setDateInRequest(selectedHorizontalDate.setFormattedDate(DateFormatConst.DATE_FORMAT_5).toString());
+              bookingRequestStore
+                  .setEmployeeIdInRequest(widget.employeeId.validate());
+              bookingRequestStore.setDateInRequest(selectedHorizontalDate
+                  .setFormattedDate(DateFormatConst.DATE_FORMAT_5)
+                  .toString());
 
               widget.serviceList.validate().forEachIndexed((element, index) {
                 selectedService.add(widget.serviceList.validate()[index]);
               });
 
-              bookingRequestStore.setSelectedServiceListInRequest(selectedService);
+              bookingRequestStore
+                  .setSelectedServiceListInRequest(selectedService);
 
               String tempDate = bookingRequestStore.date.validate();
               String tempTime = bookingRequestStore.time.validate();
@@ -297,22 +374,38 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
 
               DateTime initialDateTime = DateTime.parse(dateString);
 
-              String updatedDateTime = formatDate(initialDateTime.toString(), format: DateFormatConst.NEW_FORMAT);
+              String updatedDateTime = formatDate(initialDateTime.toString(),
+                  format: DateFormatConst.NEW_FORMAT);
 
-              bookingRequestStore.selectedServiceList.validate().forEachIndexed((element, index) {
+              bookingRequestStore.selectedServiceList
+                  .validate()
+                  .forEachIndexed((element, index) {
                 if (index == 0) {
-                  element.startDateTime = formatDate(initialDateTime.toString(), format: DateFormatConst.NEW_FORMAT);
+                  element.startDateTime = formatDate(initialDateTime.toString(),
+                      format: DateFormatConst.NEW_FORMAT);
                   element.previousTime = initialDateTime;
                 } else {
-                  ServiceListData previousData = bookingRequestStore.selectedServiceList.validate()[index - 1];
-                  element.startDateTime = formatDate(previousData.previousTime!.add(previousData.durationMin.minutes).toString(), format: DateFormatConst.NEW_FORMAT);
-                  element.previousTime = previousData.previousTime!.add(previousData.durationMin.minutes);
+                  ServiceListData previousData = bookingRequestStore
+                      .selectedServiceList
+                      .validate()[index - 1];
+                  element.startDateTime = formatDate(
+                      previousData.previousTime!
+                          .add(previousData.durationMin.minutes)
+                          .toString(),
+                      format: DateFormatConst.NEW_FORMAT);
+                  element.previousTime = previousData.previousTime!
+                      .add(previousData.durationMin.minutes);
                 }
               });
 
               appStore.setLoading(true);
 
-              bookingUpdate(bookingRequestStore.toJson(dateTime: updatedDateTime, bookingId: widget.bookingId, bookingStatus: BookingStatusConst.PENDING, isUpdate: true)).then((value) {
+              bookingUpdate(bookingRequestStore.toJson(
+                      dateTime: updatedDateTime,
+                      bookingId: widget.bookingId,
+                      bookingStatus: BookingStatusConst.PENDING,
+                      isUpdate: true))
+                  .then((value) {
                 appStore.setLoading(false);
 
                 onBookingDetailUpdate.call();

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:frezka/components/view_all_label_component.dart';
-import 'package:frezka/screens/review/view/review_all_screen.dart';
+import 'package:grow_tokyo_app/components/view_all_label_component.dart';
+import 'package:grow_tokyo_app/screens/review/view/review_all_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/empty_error_state_widget.dart';
@@ -17,7 +17,8 @@ class BranchReviewComponent extends StatefulWidget {
   final int branchId;
   final int? branchTotalReview;
 
-  const BranchReviewComponent({super.key, required this.branchId, this.branchTotalReview});
+  const BranchReviewComponent(
+      {super.key, required this.branchId, this.branchTotalReview});
 
   @override
   _BranchReviewComponentState createState() => _BranchReviewComponentState();
@@ -97,7 +98,8 @@ class _BranchReviewComponentState extends State<BranchReviewComponent> {
                   ViewAllLabel(
                     labelWidget: Row(
                       children: [
-                        Text(locale.reviews, style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+                        Text(locale.reviews,
+                            style: boldTextStyle(size: LABEL_TEXT_SIZE)),
                         if (widget.branchTotalReview.validate() >= 1)
                           Text(
                             '(${locale.basedOn} ${widget.branchTotalReview.validate()} ${locale.review}${widget.branchTotalReview.validate() > 1 ? '${locale.s}' : ''})',
@@ -107,7 +109,8 @@ class _BranchReviewComponentState extends State<BranchReviewComponent> {
                     ),
                     list: list,
                     onTap: () {
-                      ReviewAllScreen(branchId: widget.branchId).launch(context);
+                      ReviewAllScreen(branchId: widget.branchId)
+                          .launch(context);
                     },
                   ),
                   AnimatedListView(
@@ -116,14 +119,16 @@ class _BranchReviewComponentState extends State<BranchReviewComponent> {
                     padding: EdgeInsets.zero,
                     listAnimationType: ListAnimationType.FadeIn,
                     physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (_, i) => ReviewItemComponent(reviewData: list[i]),
+                    itemBuilder: (_, i) =>
+                        ReviewItemComponent(reviewData: list[i]),
                   ),
                 ],
               ),
             );
           },
         ),
-        Observer(builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+        Observer(
+            builder: (context) => LoaderWidget().visible(appStore.isLoading)),
       ],
     );
   }

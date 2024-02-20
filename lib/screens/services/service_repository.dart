@@ -1,5 +1,5 @@
-import 'package:frezka/screens/services/models/service_response.dart';
-import 'package:frezka/utils/api_end_points.dart';
+import 'package:grow_tokyo_app/screens/services/models/service_response.dart';
+import 'package:grow_tokyo_app/utils/api_end_points.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../main.dart';
@@ -27,7 +27,8 @@ Future<List<ServiceListData>> getServiceList({
       req = categoryId.isNotEmpty ? '&category_id=$categoryId' : '';
     }
 
-    ServiceResponse res = ServiceResponse.fromJson(await handleResponse(await buildHttpResponse(
+    ServiceResponse res =
+        ServiceResponse.fromJson(await handleResponse(await buildHttpResponse(
       '${APIEndPoints.serviceList}?branch_id=$branchId$req$searchPara&per_page=$perPage&page=$page',
       method: HttpMethodType.GET,
     )));

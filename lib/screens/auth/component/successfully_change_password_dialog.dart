@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/screens/dashboard/view/dashboard_screen.dart';
-import 'package:frezka/utils/constants.dart';
-import 'package:frezka/utils/images.dart';
+import 'package:grow_tokyo_app/screens/dashboard/view/dashboard_screen.dart';
+import 'package:grow_tokyo_app/utils/constants.dart';
+import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../main.dart';
 
 class SuccessfullyChangePasswordDialog extends StatefulWidget {
   @override
-  _SuccessfullyChangePasswordDialogState createState() => _SuccessfullyChangePasswordDialogState();
+  _SuccessfullyChangePasswordDialogState createState() =>
+      _SuccessfullyChangePasswordDialogState();
 }
 
-class _SuccessfullyChangePasswordDialogState extends State<SuccessfullyChangePasswordDialog> {
+class _SuccessfullyChangePasswordDialogState
+    extends State<SuccessfullyChangePasswordDialog> {
   @override
   void initState() {
     super.initState();
@@ -38,13 +40,20 @@ class _SuccessfullyChangePasswordDialogState extends State<SuccessfullyChangePas
         clipBehavior: Clip.none,
         children: [
           Container(
-            padding: EdgeInsets.only(left: 16, top: 45 + 16, right: 16, bottom: 16),
+            padding:
+                EdgeInsets.only(left: 16, top: 45 + 16, right: 16, bottom: 16),
             margin: EdgeInsets.only(top: 45),
-            decoration: BoxDecoration(shape: BoxShape.rectangle, color: Colors.white, borderRadius: BorderRadius.circular(16)),
+            decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16)),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text(locale.yourPassWorResetSuccessfully, style: boldTextStyle(size: LABEL_TEXT_SIZE, color: context.primaryColor), textAlign: TextAlign.center),
+                Text(locale.yourPassWorResetSuccessfully,
+                    style: boldTextStyle(
+                        size: LABEL_TEXT_SIZE, color: context.primaryColor),
+                    textAlign: TextAlign.center),
                 16.height,
                 Text(
                   locale.yourAccountIsReady,
@@ -57,7 +66,9 @@ class _SuccessfullyChangePasswordDialogState extends State<SuccessfullyChangePas
                   color: context.primaryColor,
                   width: context.width(),
                   onTap: () {
-                    DashboardScreen().launch(context, isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
+                    DashboardScreen().launch(context,
+                        isNewTask: true,
+                        pageRouteAnimation: PageRouteAnimation.Fade);
                   },
                 ),
                 16.height,
@@ -70,10 +81,16 @@ class _SuccessfullyChangePasswordDialogState extends State<SuccessfullyChangePas
               decoration: boxDecorationDefault(
                 shape: BoxShape.circle,
                 boxShadow: [
-                  BoxShadow(spreadRadius: 0, blurRadius: 0, blurStyle: BlurStyle.normal, offset: Offset(0.1, 0.5), color: Colors.grey.shade500),
+                  BoxShadow(
+                      spreadRadius: 0,
+                      blurRadius: 0,
+                      blurStyle: BlurStyle.normal,
+                      offset: Offset(0.1, 0.5),
+                      color: Colors.grey.shade500),
                 ],
               ),
-              child: Image.asset(ic_confetti_ball, fit: BoxFit.cover, height: 50),
+              child:
+                  Image.asset(ic_confetti_ball, fit: BoxFit.cover, height: 50),
             ),
           ),
         ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:frezka/components/app_scaffold.dart';
-import 'package:frezka/screens/branch/view/branch_detail_screen.dart';
+import 'package:grow_tokyo_app/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/screens/branch/view/branch_detail_screen.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -87,7 +87,8 @@ class _BranchListScreenState extends State<BranchListScreen> {
               return AnimatedListView(
                 itemCount: list.length,
                 shrinkWrap: true,
-                padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 16),
+                padding:
+                    EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 16),
                 emptyWidget: NoDataWidget(
                   title: locale.noBranchFound,
                   imageWidget: EmptyStateWidget(),
@@ -104,9 +105,15 @@ class _BranchListScreenState extends State<BranchListScreen> {
                 itemBuilder: (context, index) {
                   BranchData branchData = list[index];
 
-                  return BranchItemComponent(branchData: branchData, position: widget.position).onTap(() {
-                    BranchDetailScreen(branchId: branchData.id.validate()).launch(context);
-                  }, highlightColor: Colors.transparent, hoverColor: Colors.transparent, splashColor: Colors.transparent);
+                  return BranchItemComponent(
+                          branchData: branchData, position: widget.position)
+                      .onTap(() {
+                    BranchDetailScreen(branchId: branchData.id.validate())
+                        .launch(context);
+                  },
+                          highlightColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          splashColor: Colors.transparent);
                 },
                 onNextPage: () {
                   if (!isLastPage) {
@@ -128,7 +135,8 @@ class _BranchListScreenState extends State<BranchListScreen> {
               );
             },
           ),
-          Observer(builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+          Observer(
+              builder: (context) => LoaderWidget().visible(appStore.isLoading)),
         ],
       ),
     );

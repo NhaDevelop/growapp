@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:frezka/paymentGateways/services/paypal_service.dart';
-import 'package:frezka/store/booking_request_store.dart';
+import 'package:grow_tokyo_app/paymentGateways/services/paypal_service.dart';
+import 'package:grow_tokyo_app/store/booking_request_store.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/app_scaffold.dart';
@@ -57,9 +57,11 @@ class CompletePaymentScreenState extends State<CompletePaymentScreen> {
     selectedPayment = payments.first;
     appStore.setLoading(true);
 
-    bookingRequestStore.setSelectedServiceListInRequest(widget.booking.serviceList.validate());
+    bookingRequestStore
+        .setSelectedServiceListInRequest(widget.booking.serviceList.validate());
     bookingRequestStore.setBookingIdInRequest(widget.booking.id.validate());
-    bookingRequestStore.setTaxPercentageInRequest(branchConfigurationCached!.tax.validate());
+    bookingRequestStore
+        .setTaxPercentageInRequest(branchConfigurationCached!.tax.validate());
 
     getBranchConfiguration(appStore.branchId).then((value) {
       appStore.setLoading(false);
@@ -75,7 +77,8 @@ class CompletePaymentScreenState extends State<CompletePaymentScreen> {
   Future<void> savePayment() async {
     hideKeyboard(context);
     if (selectedPayment.id == PaymentMethods.PAYMENT_METHOD_RAZORPAY) {
-      paymentMethod = PaymentMethods.PAYMENT_METHOD_RAZORPAY.capitalizeFirstLetter();
+      paymentMethod =
+          PaymentMethods.PAYMENT_METHOD_RAZORPAY.capitalizeFirstLetter();
       appStore.setLoading(true);
 
       razorPayService.init(
@@ -96,7 +99,8 @@ class CompletePaymentScreenState extends State<CompletePaymentScreen> {
 
       razorPayService.razorPayCheckout();
     } else if (selectedPayment.id == PaymentMethods.PAYMENT_METHOD_STRIPE) {
-      paymentMethod = PaymentMethods.PAYMENT_METHOD_STRIPE.capitalizeFirstLetter();
+      paymentMethod =
+          PaymentMethods.PAYMENT_METHOD_STRIPE.capitalizeFirstLetter();
       appStore.setLoading(true);
 
       await stripeServices.init(
@@ -124,7 +128,8 @@ class CompletePaymentScreenState extends State<CompletePaymentScreen> {
         toast(e.toString());
       });
     } else if (selectedPayment.id == PaymentMethods.PAYMENT_METHOD_PAYSTACK) {
-      paymentMethod = PaymentMethods.PAYMENT_METHOD_PAYSTACK.capitalizeFirstLetter();
+      paymentMethod =
+          PaymentMethods.PAYMENT_METHOD_PAYSTACK.capitalizeFirstLetter();
       appStore.setLoading(true);
 
       await paystackServices.init(
@@ -145,9 +150,9 @@ class CompletePaymentScreenState extends State<CompletePaymentScreen> {
       appStore.setLoading(false);
 
       paystackServices.checkout();
-
     } else if (selectedPayment.id == PaymentMethods.PAYMENT_METHOD_PAYPAL) {
-      paymentMethod = PaymentMethods.PAYMENT_METHOD_PAYPAL.capitalizeFirstLetter();
+      paymentMethod =
+          PaymentMethods.PAYMENT_METHOD_PAYPAL.capitalizeFirstLetter();
       appStore.setLoading(true);
 
       await payPalServices.init(
@@ -170,8 +175,10 @@ class CompletePaymentScreenState extends State<CompletePaymentScreen> {
       appStore.setLoading(false);
 
       payPalServices.paypalCheckOut();
-    } else if (selectedPayment.id == PaymentMethods.PAYMENT_METHOD_FLUTTER_WAVE) {
-      paymentMethod = PaymentMethods.PAYMENT_METHOD_FLUTTER_WAVE.capitalizeFirstLetter();
+    } else if (selectedPayment.id ==
+        PaymentMethods.PAYMENT_METHOD_FLUTTER_WAVE) {
+      paymentMethod =
+          PaymentMethods.PAYMENT_METHOD_FLUTTER_WAVE.capitalizeFirstLetter();
       appStore.setLoading(true);
 
       flutterWaveServices.checkout(
@@ -199,7 +206,8 @@ class CompletePaymentScreenState extends State<CompletePaymentScreen> {
       useSafeArea: false,
       builder: (BuildContext context) => CommonAppDialog(
         title: '${locale.paymentSuccessful}',
-        subTitle: '${locale.yourPaymentIsPaidSuccessfullyMessage} $paymentMethod',
+        subTitle:
+            '${locale.yourPaymentIsPaidSuccessfullyMessage} $paymentMethod',
         buttonText: locale.goToBookingDetail,
         onTap: () {
           finish(context);
@@ -246,13 +254,20 @@ class CompletePaymentScreenState extends State<CompletePaymentScreen> {
                   padding: EdgeInsets.zero,
                   itemBuilder: (context, index) {
                     return Container(
-                      decoration: boxDecorationWithRoundedCorners(borderRadius: radius(), backgroundColor: context.cardColor),
+                      decoration: boxDecorationWithRoundedCorners(
+                          borderRadius: radius(),
+                          backgroundColor: context.cardColor),
                       margin: EdgeInsets.only(bottom: 16),
                       child: SettingItemWidget(
                         title: payments[index].paymentMethod.validate(),
                         titleTextStyle: boldTextStyle(size: 14),
-                        padding: EdgeInsets.only(left: 16, bottom: 10, top: 10, right: 10),
-                        leading: CachedImageWidget(url: payments[index].icon.validate(), height: 22, width: 22, fit: BoxFit.contain),
+                        padding: EdgeInsets.only(
+                            left: 16, bottom: 10, top: 10, right: 10),
+                        leading: CachedImageWidget(
+                            url: payments[index].icon.validate(),
+                            height: 22,
+                            width: 22,
+                            fit: BoxFit.contain),
                         radius: radius(),
                         trailing: Radio<PaymentData>(
                           value: payments[index],
@@ -292,7 +307,11 @@ class CompletePaymentScreenState extends State<CompletePaymentScreen> {
             right: 0,
             child: Observer(
               builder: (_) => CommonBottomPriceWidget(
-                title: bookingRequestStore.selectedServiceList.validate().map((e) => e.serviceName.validate()).toList().join(', '),
+                title: bookingRequestStore.selectedServiceList
+                    .validate()
+                    .map((e) => e.serviceName.validate())
+                    .toList()
+                    .join(', '),
                 price: bookingRequestStore.totalAmount,
                 buttonText: locale.confirm,
                 onTap: () {

@@ -1,6 +1,6 @@
-import 'package:frezka/screens/booking/model/booking_detail_response.dart';
-import 'package:frezka/screens/booking/model/booking_list_response.dart';
-import 'package:frezka/utils/api_end_points.dart';
+import 'package:grow_tokyo_app/screens/booking/model/booking_detail_response.dart';
+import 'package:grow_tokyo_app/screens/booking/model/booking_list_response.dart';
+import 'package:grow_tokyo_app/utils/api_end_points.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../main.dart';
@@ -10,7 +10,9 @@ import 'model/booking_status_response.dart';
 
 Future<List<BookingStatusData>> getBookingStatus() async {
   try {
-    var res = BookingStatusResponse.fromJson(await handleResponse(await buildHttpResponse(APIEndPoints.bookingStatus, method: HttpMethodType.GET)));
+    var res = BookingStatusResponse.fromJson(await handleResponse(
+        await buildHttpResponse(APIEndPoints.bookingStatus,
+            method: HttpMethodType.GET)));
     appStore.setLoading(false);
 
     bookingStatusListCached = res.data;
@@ -24,7 +26,9 @@ Future<List<BookingStatusData>> getBookingStatus() async {
 
 Future<BookingDetailResponse> getBookingDetail({required int bookingId}) async {
   try {
-    var res = BookingDetailResponse.fromJson(await handleResponse(await buildHttpResponse('${APIEndPoints.bookingDetail}?id=$bookingId', method: HttpMethodType.GET)));
+    var res = BookingDetailResponse.fromJson(await handleResponse(
+        await buildHttpResponse('${APIEndPoints.bookingDetail}?id=$bookingId',
+            method: HttpMethodType.GET)));
     appStore.setLoading(false);
 
     if (bookingDetailCached.any((element) => element.id == res.data!.id)) {
@@ -40,11 +44,15 @@ Future<BookingDetailResponse> getBookingDetail({required int bookingId}) async {
 }
 
 Future saveBookingAPI(Map request) async {
-  return await handleResponse(await buildHttpResponse(APIEndPoints.saveBooking, request: request, method: HttpMethodType.POST));
+  return await handleResponse(await buildHttpResponse(APIEndPoints.saveBooking,
+      request: request, method: HttpMethodType.POST));
 }
 
 Future bookingUpdate(Map request) async {
-  return await handleResponse(await buildHttpResponse(APIEndPoints.bookingUpdate, request: request, method: HttpMethodType.POST));
+  return await handleResponse(await buildHttpResponse(
+      APIEndPoints.bookingUpdate,
+      request: request,
+      method: HttpMethodType.POST));
 }
 
 Future verifySlot(int employeeId, String startDateTime) async {
@@ -52,7 +60,8 @@ Future verifySlot(int employeeId, String startDateTime) async {
     "employee_id": employeeId,
     "start_date_time": startDateTime, //"2023-06-15 09:30:00"
   };
-  return await handleResponse(await buildHttpResponse(APIEndPoints.verifySlot, request: request, method: HttpMethodType.POST));
+  return await handleResponse(await buildHttpResponse(APIEndPoints.verifySlot,
+      request: request, method: HttpMethodType.POST));
 }
 
 Future<List<BookingListData>> getBookingList({
@@ -69,7 +78,8 @@ Future<List<BookingListData>> getBookingList({
 
     String searchBooking = search.isNotEmpty ? '&search=$search' : '';
 
-    BookingListResponse res = BookingListResponse.fromJson(await handleResponse(await buildHttpResponse(
+    BookingListResponse res = BookingListResponse.fromJson(
+        await handleResponse(await buildHttpResponse(
       '${APIEndPoints.bookingList}?branch_id=$branchId$statusData$searchBooking&per_page=$perPage&page=$page',
       method: HttpMethodType.GET,
     )));

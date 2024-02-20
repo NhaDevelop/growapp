@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/screens/order/component/order_list_component.dart';
+import 'package:grow_tokyo_app/screens/order/component/order_list_component.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/cached_image_widget.dart';
@@ -22,34 +22,51 @@ class OrderItemComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: context.width(),
-      decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor),
+      decoration:
+          boxDecorationWithRoundedCorners(backgroundColor: context.cardColor),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: getOrderData.orderCode != null ? MainAxisAlignment.spaceBetween : MainAxisAlignment.end,
+            mainAxisAlignment: getOrderData.orderCode != null
+                ? MainAxisAlignment.spaceBetween
+                : MainAxisAlignment.end,
             children: [
               if (getOrderData.orderCode != null)
                 Container(
                   padding: EdgeInsets.symmetric(vertical: 4, horizontal: 16),
                   decoration: boxDecorationWithRoundedCorners(
-                    backgroundColor: getOrderData.deliveryStatus == OrderStatusConst.DELIVERED ? primaryColor : territoryButtonColor,
+                    backgroundColor: getOrderData.deliveryStatus ==
+                            OrderStatusConst.DELIVERED
+                        ? primaryColor
+                        : territoryButtonColor,
                     borderRadius: radiusOnly(topLeft: defaultRadius),
                   ),
                   child: Text(
                     getOrderData.orderCode.validate(),
-                    style: boldTextStyle(color: getOrderData.deliveryStatus == OrderStatusConst.DELIVERED ? Colors.white : secondaryColor, size: 12),
+                    style: boldTextStyle(
+                        color: getOrderData.deliveryStatus ==
+                                OrderStatusConst.DELIVERED
+                            ? Colors.white
+                            : secondaryColor,
+                        size: 12),
                   ),
                 ),
               Container(
                 padding: EdgeInsets.symmetric(vertical: 3, horizontal: 16),
                 decoration: boxDecorationWithRoundedCorners(
-                  backgroundColor: getOrderData.deliveryStatus == OrderStatusConst.DELIVERED ? secondaryColor : territoryButtonColor,
+                  backgroundColor:
+                      getOrderData.deliveryStatus == OrderStatusConst.DELIVERED
+                          ? secondaryColor
+                          : territoryButtonColor,
                   borderRadius: radiusOnly(topRight: defaultRadius),
                 ),
                 child: PriceWidget(
                   price: getOrderData.totalAmount.validate(),
-                  color: getOrderData.deliveryStatus == OrderStatusConst.DELIVERED ? Colors.white : secondaryColor,
+                  color:
+                      getOrderData.deliveryStatus == OrderStatusConst.DELIVERED
+                          ? Colors.white
+                          : secondaryColor,
                   size: 14,
                 ),
               ),
@@ -62,7 +79,8 @@ class OrderItemComponent extends StatelessWidget {
               AnimatedWrap(
                 itemCount: getOrderData.productDetails.validate().length,
                 itemBuilder: (context, index) {
-                  CartListData orderListData = getOrderData.productDetails.validate()[index];
+                  CartListData orderListData =
+                      getOrderData.productDetails.validate()[index];
 
                   return Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,33 +96,52 @@ class OrderItemComponent extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(orderListData.productName.validate(), style: boldTextStyle(), maxLines: 1, overflow: TextOverflow.ellipsis),
+                          Text(orderListData.productName.validate(),
+                              style: boldTextStyle(),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis),
                           if (orderListData.productVariationType != null)
                             Row(
                               children: [
-                                Text('${orderListData.productVariationType}: ', style: secondaryTextStyle()),
-                                Text(orderListData.productVariationValue.validate(), style: primaryTextStyle(size: 14)),
+                                Text('${orderListData.productVariationType}: ',
+                                    style: secondaryTextStyle()),
+                                Text(
+                                    orderListData.productVariationValue
+                                        .validate(),
+                                    style: primaryTextStyle(size: 14)),
                               ],
                             ),
                           Row(
                             children: [
                               Text('Qty: ', style: secondaryTextStyle()),
-                              Text(orderListData.qty.validate().toString(), style: primaryTextStyle(size: 14)),
+                              Text(orderListData.qty.validate().toString(),
+                                  style: primaryTextStyle(size: 14)),
                             ],
                           ),
                           Marquee(
                             child: Row(
                               children: [
                                 PriceWidget(
-                                  price: orderListData.taxIncludeProductPrice.validate(),
-                                  isLineThroughEnabled: orderListData.isDiscount ? true : false,
+                                  price: orderListData.taxIncludeProductPrice
+                                      .validate(),
+                                  isLineThroughEnabled:
+                                      orderListData.isDiscount ? true : false,
                                   size: orderListData.isDiscount ? 12 : 16,
-                                  color: orderListData.isDiscount ? textSecondaryColorGlobal : null,
+                                  color: orderListData.isDiscount
+                                      ? textSecondaryColorGlobal
+                                      : null,
                                 ),
                                 4.width,
-                                if (orderListData.isDiscount) PriceWidget(price: orderListData.getProductPrice.validate()),
+                                if (orderListData.isDiscount)
+                                  PriceWidget(
+                                      price: orderListData.getProductPrice
+                                          .validate()),
                                 if (orderListData.isDiscount) 8.width,
-                                if (orderListData.isDiscount) Text('${orderListData.discountValue.validate()}% off', style: primaryTextStyle(color: greenColor)),
+                                if (orderListData.isDiscount)
+                                  Text(
+                                      '${orderListData.discountValue.validate()}% off',
+                                      style:
+                                          primaryTextStyle(color: greenColor)),
                               ],
                             ),
                           ),
@@ -123,7 +160,8 @@ class OrderItemComponent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(locale.payment, style: secondaryTextStyle()),
-              Text('${getOrderData.paymentStatus.capitalizeFirstLetter()}', style: boldTextStyle(color: Colors.green)),
+              Text('${getOrderData.paymentStatus.capitalizeFirstLetter()}',
+                  style: boldTextStyle(color: Colors.green)),
             ],
           ).paddingSymmetric(horizontal: 16),
           10.height,
@@ -131,11 +169,15 @@ class OrderItemComponent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(locale.deliveryStatus, style: secondaryTextStyle()),
-              Text('${getOrderBookingStatus(status: getOrderData.deliveryStatus.validate()).capitalizeFirstLetter()}', style: boldTextStyle(color: Colors.green)),
+              Text(
+                  '${getOrderBookingStatus(status: getOrderData.deliveryStatus.validate()).capitalizeFirstLetter()}',
+                  style: boldTextStyle(color: Colors.green)),
             ],
           ).paddingSymmetric(horizontal: 16),
           10.height,
-          if ((getOrderData.deliveryStatus == OrderStatusConst.ORDER_PLACED || getOrderData.deliveryStatus == OrderStatusConst.PROCESSING || getOrderData.deliveryStatus == OrderStatusConst.PENDING) &&
+          if ((getOrderData.deliveryStatus == OrderStatusConst.ORDER_PLACED ||
+                  getOrderData.deliveryStatus == OrderStatusConst.PROCESSING ||
+                  getOrderData.deliveryStatus == OrderStatusConst.PENDING) &&
               getOrderData.paymentStatus == SERVICE_PAYMENT_STATUS_UNPAID)
             AppButton(
               text: locale.cancelOrder,
@@ -155,7 +197,8 @@ class OrderItemComponent extends StatelessWidget {
                   onAccept: (_) {
                     appStore.setLoading(true);
 
-                    orderUpdate(orderId: getOrderData.id.validate()).then((value) {
+                    orderUpdate(orderId: getOrderData.id.validate())
+                        .then((value) {
                       onOrderListUpdate.call('');
                       appStore.setLoading(false);
                       toast(locale.theOrderHasBeenCancelled);
@@ -174,7 +217,13 @@ class OrderItemComponent extends StatelessWidget {
       ),
     ).onTap(() {
       hideKeyboard(context);
-      OrderDetailScreen(orderId: getOrderData.id.validate(), orderCode: getOrderData.orderCode.validate()).launch(context, pageRouteAnimation: PageRouteAnimation.Fade);
-    }, borderRadius: radius(), highlightColor: Colors.transparent, splashColor: Colors.transparent).paddingOnly(bottom: 16);
+      OrderDetailScreen(
+              orderId: getOrderData.id.validate(),
+              orderCode: getOrderData.orderCode.validate())
+          .launch(context, pageRouteAnimation: PageRouteAnimation.Fade);
+    },
+        borderRadius: radius(),
+        highlightColor: Colors.transparent,
+        splashColor: Colors.transparent).paddingOnly(bottom: 16);
   }
 }

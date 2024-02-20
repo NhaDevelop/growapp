@@ -1,7 +1,7 @@
 // import 'dart:convert';
 
 // import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:frezka/screens/booking/model/booking_detail_response.dart';
+import 'package:grow_tokyo_app/screens/booking/model/booking_detail_response.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:nb_utils/nb_utils.dart';

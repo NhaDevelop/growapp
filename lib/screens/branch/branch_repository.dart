@@ -1,11 +1,11 @@
-import 'package:frezka/main.dart';
-import 'package:frezka/network/network_utils.dart';
-import 'package:frezka/screens/branch/model/branch_configuration_response.dart';
-import 'package:frezka/screens/branch/model/branch_detail_response.dart';
-import 'package:frezka/screens/branch/model/branch_gallery_list_response.dart';
-import 'package:frezka/screens/branch/model/branch_response.dart';
-import 'package:frezka/utils/api_end_points.dart';
-import 'package:frezka/utils/constants.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/network/network_utils.dart';
+import 'package:grow_tokyo_app/screens/branch/model/branch_configuration_response.dart';
+import 'package:grow_tokyo_app/screens/branch/model/branch_detail_response.dart';
+import 'package:grow_tokyo_app/screens/branch/model/branch_gallery_list_response.dart';
+import 'package:grow_tokyo_app/screens/branch/model/branch_response.dart';
+import 'package:grow_tokyo_app/utils/api_end_points.dart';
+import 'package:grow_tokyo_app/utils/constants.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../models/review_data.dart';
@@ -23,7 +23,8 @@ Future<List<BranchData>> getBranchList({
   BranchData? selectedBranch,
 }) async {
   try {
-    BranchResponse res = BranchResponse.fromJson(await handleResponse(await buildHttpResponse(
+    BranchResponse res =
+        BranchResponse.fromJson(await handleResponse(await buildHttpResponse(
       '${APIEndPoints.branchList}?per_page=$perPage&page=$page',
       method: HttpMethodType.GET,
     )));
@@ -45,25 +46,30 @@ Future<List<BranchData>> getBranchList({
 }
 
 Future<void> setBranchAndRedirectToDashboard(BranchData branchData) async {
-  await appStore.setBranchId(branchData.id.validate(value: UNSELECTED_BRANCH_ID));
+  await appStore
+      .setBranchId(branchData.id.validate(value: UNSELECTED_BRANCH_ID));
   await appStore.setBranchAddress(branchData.addressLine1.validate());
   await appStore.setBranchName(branchData.name.validate());
   await appStore.setBranchContactNumber(branchData.contactNumber.validate());
 
-  push(DashboardScreen(), isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
+  push(DashboardScreen(),
+      isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
 }
 
 Future<BranchDetailResponse> getBranchDetail(int branchId) async {
   try {
-    var res = BranchDetailResponse.fromJson(await handleResponse(await buildHttpResponse(
+    var res = BranchDetailResponse.fromJson(
+        await handleResponse(await buildHttpResponse(
       '${APIEndPoints.branchDetail}?branch_id=$branchId',
       method: HttpMethodType.GET,
     )));
 
-    if (!branchDetailCachedData.any((element) => element.data?.id == branchId)) {
+    if (!branchDetailCachedData
+        .any((element) => element.data?.id == branchId)) {
       branchDetailCachedData.add(res);
     } else {
-      int index = branchDetailCachedData.indexWhere((element) => element.data?.id == branchId);
+      int index = branchDetailCachedData
+          .indexWhere((element) => element.data?.id == branchId);
       branchDetailCachedData[index] = res;
     }
 
@@ -76,9 +82,15 @@ Future<BranchDetailResponse> getBranchDetail(int branchId) async {
   }
 }
 
-Future<List<EmployeeData>> getBranchEmployeeList({int? branchId, int page = 1, var perPage = PER_PAGE_ITEM, required List<EmployeeData> list, Function(bool)? lastPageCallBack}) async {
+Future<List<EmployeeData>> getBranchEmployeeList(
+    {int? branchId,
+    int page = 1,
+    var perPage = PER_PAGE_ITEM,
+    required List<EmployeeData> list,
+    Function(bool)? lastPageCallBack}) async {
   try {
-    BranchEmployeeListResponse res = BranchEmployeeListResponse.fromJson(await handleResponse(await buildHttpResponse(
+    BranchEmployeeListResponse res = BranchEmployeeListResponse.fromJson(
+        await handleResponse(await buildHttpResponse(
       '${APIEndPoints.branchEmployee}?branch_id=$branchId&per_page=$perPage&page=$page',
       method: HttpMethodType.GET,
     )));
@@ -97,9 +109,15 @@ Future<List<EmployeeData>> getBranchEmployeeList({int? branchId, int page = 1, v
   return list;
 }
 
-Future<List<BranchGalleryData>> getBranchGalleryList({int? branchId, int page = 1, var perPage = PER_PAGE_ITEM, required List<BranchGalleryData> list, Function(bool)? lastPageCallBack}) async {
+Future<List<BranchGalleryData>> getBranchGalleryList(
+    {int? branchId,
+    int page = 1,
+    var perPage = PER_PAGE_ITEM,
+    required List<BranchGalleryData> list,
+    Function(bool)? lastPageCallBack}) async {
   try {
-    BranchGalleryListResponse res = BranchGalleryListResponse.fromJson(await handleResponse(await buildHttpResponse(
+    BranchGalleryListResponse res = BranchGalleryListResponse.fromJson(
+        await handleResponse(await buildHttpResponse(
       '${APIEndPoints.branchGallery}?branch_id=$branchId&per_page=$perPage&page=$page',
       method: HttpMethodType.GET,
     )));
@@ -118,9 +136,15 @@ Future<List<BranchGalleryData>> getBranchGalleryList({int? branchId, int page = 
   return list;
 }
 
-Future<List<ReviewData>> getBranchReviewList({int? branchId, int page = 1, var perPage = PER_PAGE_ITEM, required List<ReviewData> list, Function(bool)? lastPageCallBack}) async {
+Future<List<ReviewData>> getBranchReviewList(
+    {int? branchId,
+    int page = 1,
+    var perPage = PER_PAGE_ITEM,
+    required List<ReviewData> list,
+    Function(bool)? lastPageCallBack}) async {
   try {
-    BranchReviewListResponse res = BranchReviewListResponse.fromJson(await handleResponse(await buildHttpResponse(
+    BranchReviewListResponse res = BranchReviewListResponse.fromJson(
+        await handleResponse(await buildHttpResponse(
       '${APIEndPoints.branchReview}?branch_id=$branchId&per_page=$perPage&page=$page',
       method: HttpMethodType.GET,
     )));
@@ -139,9 +163,15 @@ Future<List<ReviewData>> getBranchReviewList({int? branchId, int page = 1, var p
   return list;
 }
 
-Future<List<ServiceListData>> getBranchServiceList({int? branchId, int page = 1, var perPage = PER_PAGE_ITEM, required List<ServiceListData> list, Function(bool)? lastPageCallBack}) async {
+Future<List<ServiceListData>> getBranchServiceList(
+    {int? branchId,
+    int page = 1,
+    var perPage = PER_PAGE_ITEM,
+    required List<ServiceListData> list,
+    Function(bool)? lastPageCallBack}) async {
   try {
-    ServiceResponse res = ServiceResponse.fromJson(await handleResponse(await buildHttpResponse(
+    ServiceResponse res =
+        ServiceResponse.fromJson(await handleResponse(await buildHttpResponse(
       '${APIEndPoints.branchService}?branch_id=$branchId&per_page=$perPage&page=$page',
       method: HttpMethodType.GET,
     )));
@@ -162,9 +192,12 @@ Future<List<ServiceListData>> getBranchServiceList({int? branchId, int page = 1,
 
 Future<BranchConfigurationResponse> getBranchConfiguration(int branchId) async {
   try {
-    var res = BranchConfigurationResponse.fromJson(await handleResponse(await buildHttpResponse('${APIEndPoints.branchConfiguration}?branch_id=$branchId', method: HttpMethodType.GET)));
+    var res = BranchConfigurationResponse.fromJson(await handleResponse(
+        await buildHttpResponse(
+            '${APIEndPoints.branchConfiguration}?branch_id=$branchId',
+            method: HttpMethodType.GET)));
     appStore.setLoading(false);
-    
+
     bookingRequestStore.setTaxPercentageInRequest(res.data!.tax!);
 
     branchConfigurationCached = res.data;

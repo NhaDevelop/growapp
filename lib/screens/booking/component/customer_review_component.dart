@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/utils/extensions/string_extensions.dart';
+import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/add_review_dialog.dart';
@@ -19,10 +19,15 @@ class CustomerReviewComponent extends StatefulWidget {
   final ReviewData? customerReview;
   final String employeeName;
 
-  CustomerReviewComponent({this.bookingStatus, this.staffId, this.customerReview, this.employeeName = ''});
+  CustomerReviewComponent(
+      {this.bookingStatus,
+      this.staffId,
+      this.customerReview,
+      this.employeeName = ''});
 
   @override
-  _CustomerReviewComponentState createState() => _CustomerReviewComponentState();
+  _CustomerReviewComponentState createState() =>
+      _CustomerReviewComponentState();
 }
 
 class _CustomerReviewComponentState extends State<CustomerReviewComponent> {
@@ -58,17 +63,31 @@ class _CustomerReviewComponentState extends State<CustomerReviewComponent> {
                     ViewAllLabel(
                       label: locale.yourReview,
                       onTap: () {
-                        ReviewAllScreen(employeeId: widget.staffId).launch(context);
+                        ReviewAllScreen(employeeId: widget.staffId)
+                            .launch(context);
                       },
                     ),
                     Row(
                       children: [
                         ...[
-                          Icon(Icons.star, size: 14, color: getRatingBarColor(widget.customerReview!.rating.validate().toInt())),
+                          Icon(Icons.star,
+                              size: 14,
+                              color: getRatingBarColor(widget
+                                  .customerReview!.rating
+                                  .validate()
+                                  .toInt())),
                           4.width,
                           Text(
-                            widget.customerReview!.rating.validate().toStringAsFixed(1).toString(),
-                            style: boldTextStyle(color: getRatingBarColor(widget.customerReview!.rating.validate().toInt()), size: 14),
+                            widget.customerReview!.rating
+                                .validate()
+                                .toStringAsFixed(1)
+                                .toString(),
+                            style: boldTextStyle(
+                                color: getRatingBarColor(widget
+                                    .customerReview!.rating
+                                    .validate()
+                                    .toInt()),
+                                size: 14),
                           ),
                           Spacer(),
                           TextButton(
@@ -77,7 +96,9 @@ class _CustomerReviewComponentState extends State<CustomerReviewComponent> {
                                 context,
                                 contentPadding: EdgeInsets.zero,
                                 builder: (p0) {
-                                  return AddReviewDialog(customerReview: widget.customerReview, staffId: widget.staffId);
+                                  return AddReviewDialog(
+                                      customerReview: widget.customerReview,
+                                      staffId: widget.staffId);
                                 },
                               );
                             },
@@ -100,7 +121,10 @@ class _CustomerReviewComponentState extends State<CustomerReviewComponent> {
                                 onAccept: (p0) async {
                                   appStore.setLoading(true);
 
-                                  await deleteReview(id: widget.customerReview!.id.validate()).then((value) {
+                                  await deleteReview(
+                                          id: widget.customerReview!.id
+                                              .validate())
+                                      .then((value) {
                                     toast(value.message);
                                   }).catchError((e) {
                                     toast(e.toString());
@@ -129,7 +153,8 @@ class _CustomerReviewComponentState extends State<CustomerReviewComponent> {
                 )
               else
                 AppButton(
-                  child: Text('${locale.rate} ${widget.employeeName}', style: boldTextStyle(color: Colors.white)),
+                  child: Text('${locale.rate} ${widget.employeeName}',
+                      style: boldTextStyle(color: Colors.white)),
                   color: context.primaryColor,
                   width: context.width(),
                   elevation: 0,
@@ -139,7 +164,9 @@ class _CustomerReviewComponentState extends State<CustomerReviewComponent> {
                       context,
                       contentPadding: EdgeInsets.zero,
                       builder: (p0) {
-                        return AddReviewDialog(staffId: widget.staffId, customerReview: widget.customerReview);
+                        return AddReviewDialog(
+                            staffId: widget.staffId,
+                            customerReview: widget.customerReview);
                       },
                     );
                   },

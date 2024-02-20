@@ -1,8 +1,8 @@
-import 'package:frezka/models/base_response_model.dart';
-import 'package:frezka/screens/cart/model/city_list_response.dart';
-import 'package:frezka/screens/cart/model/country_list_response.dart';
-import 'package:frezka/screens/cart/model/logistic_zone_response.dart';
-import 'package:frezka/screens/cart/model/state_list_response.dart';
+import 'package:grow_tokyo_app/models/base_response_model.dart';
+import 'package:grow_tokyo_app/screens/cart/model/city_list_response.dart';
+import 'package:grow_tokyo_app/screens/cart/model/country_list_response.dart';
+import 'package:grow_tokyo_app/screens/cart/model/logistic_zone_response.dart';
+import 'package:grow_tokyo_app/screens/cart/model/state_list_response.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../main.dart';
@@ -14,15 +14,22 @@ import 'model/cart_list_response.dart';
 import 'model/cart_response.dart';
 
 Future<CartResponse> addToCart(request) async {
-  return CartResponse.fromJson(await handleResponse(await buildHttpResponse(APIEndPoints.addToCart, request: request, method: HttpMethodType.POST)));
+  return CartResponse.fromJson(await handleResponse(await buildHttpResponse(
+      APIEndPoints.addToCart,
+      request: request,
+      method: HttpMethodType.POST)));
 }
 
 Future<BaseResponseModel> updateCart(request) async {
-  return BaseResponseModel.fromJson(await handleResponse(await buildHttpResponse(APIEndPoints.updateCart, request: request, method: HttpMethodType.POST)));
+  return BaseResponseModel.fromJson(await handleResponse(
+      await buildHttpResponse(APIEndPoints.updateCart,
+          request: request, method: HttpMethodType.POST)));
 }
 
 Future<CartResponse> removeFromCart({required int cartId}) async {
-  return CartResponse.fromJson(await handleResponse(await buildHttpResponse('${APIEndPoints.removeFromCart}?cart_id=$cartId', method: HttpMethodType.GET)));
+  return CartResponse.fromJson(await handleResponse(await buildHttpResponse(
+      '${APIEndPoints.removeFromCart}?cart_id=$cartId',
+      method: HttpMethodType.GET)));
 }
 
 Future<(List<CartListData>, CartListResponse)> getCartList({
@@ -32,7 +39,9 @@ Future<(List<CartListData>, CartListResponse)> getCartList({
   Function(bool)? lastPageCallBack,
 }) async {
   try {
-    var res = CartListResponse.fromJson(await handleResponse(await buildHttpResponse(APIEndPoints.getCartList, method: HttpMethodType.GET)));
+    var res = CartListResponse.fromJson(await handleResponse(
+        await buildHttpResponse(APIEndPoints.getCartList,
+            method: HttpMethodType.GET)));
 
     if (page == 1) cartList.$1.clear();
     cartList.$1.addAll(res.data.validate());
@@ -58,7 +67,10 @@ Future<List<UserAddress>> getAddressList({
   Function(bool)? lastPageCallBack,
 }) async {
   try {
-    var res = AddressListResponse.fromJson(await handleResponse(await buildHttpResponse(APIEndPoints.getAddressList + "?per_page=$perPage&page=$page", method: HttpMethodType.GET)));
+    var res = AddressListResponse.fromJson(await handleResponse(
+        await buildHttpResponse(
+            APIEndPoints.getAddressList + "?per_page=$perPage&page=$page",
+            method: HttpMethodType.GET)));
 
     if (page == 1) addressList.clear();
     addressList.addAll(res.userAddress.validate());
@@ -75,29 +87,42 @@ Future<List<UserAddress>> getAddressList({
 }
 
 Future<BaseResponseModel> removeAddress({required int addressId}) async {
-  return BaseResponseModel.fromJson(await handleResponse(await buildHttpResponse('${APIEndPoints.removeAddress}?id=$addressId', method: HttpMethodType.GET)));
+  return BaseResponseModel.fromJson(await handleResponse(
+      await buildHttpResponse('${APIEndPoints.removeAddress}?id=$addressId',
+          method: HttpMethodType.GET)));
 }
 
-Future<BaseResponseModel> addEditAddress({required Map request, bool isEdit = false}) async {
-  return BaseResponseModel.fromJson(await handleResponse(await buildHttpResponse(isEdit ? APIEndPoints.editAddress : APIEndPoints.addAddress, request: request, method: HttpMethodType.POST)));
+Future<BaseResponseModel> addEditAddress(
+    {required Map request, bool isEdit = false}) async {
+  return BaseResponseModel.fromJson(await handleResponse(
+      await buildHttpResponse(
+          isEdit ? APIEndPoints.editAddress : APIEndPoints.addAddress,
+          request: request,
+          method: HttpMethodType.POST)));
 }
 
 Future<List<CountryData>> getCountryList() async {
-  var res = CountryListResponse.fromJson(await handleResponse(await buildHttpResponse(APIEndPoints.countryList, method: HttpMethodType.GET)));
+  var res = CountryListResponse.fromJson(await handleResponse(
+      await buildHttpResponse(APIEndPoints.countryList,
+          method: HttpMethodType.GET)));
   appStore.setLoading(false);
 
   return res.data.validate();
 }
 
 Future<List<StateData>> getStateList({required int countryId}) async {
-  var res = StateListResponse.fromJson(await handleResponse(await buildHttpResponse('${APIEndPoints.stateList}?country_id=$countryId', method: HttpMethodType.GET)));
+  var res = StateListResponse.fromJson(await handleResponse(
+      await buildHttpResponse('${APIEndPoints.stateList}?country_id=$countryId',
+          method: HttpMethodType.GET)));
   appStore.setLoading(false);
 
   return res.data.validate();
 }
 
 Future<List<CityData>> getCityList({required int stateId}) async {
-  var res = CityListResponse.fromJson(await handleResponse(await buildHttpResponse('${APIEndPoints.cityList}?state_id=$stateId', method: HttpMethodType.GET)));
+  var res = CityListResponse.fromJson(await handleResponse(
+      await buildHttpResponse('${APIEndPoints.cityList}?state_id=$stateId',
+          method: HttpMethodType.GET)));
   appStore.setLoading(false);
 
   return res.data.validate();
@@ -105,7 +130,10 @@ Future<List<CityData>> getCityList({required int stateId}) async {
 
 Future<List<LogisticZoneData>> getLogisticZone({required int addressId}) async {
   try {
-    var res = LogisticZoneResponse.fromJson(await handleResponse(await buildHttpResponse('${APIEndPoints.getLogisticZoneList}?address_id=$addressId', method: HttpMethodType.GET)));
+    var res = LogisticZoneResponse.fromJson(await handleResponse(
+        await buildHttpResponse(
+            '${APIEndPoints.getLogisticZoneList}?address_id=$addressId',
+            method: HttpMethodType.GET)));
     appStore.setLoading(false);
 
     return res.data.validate();

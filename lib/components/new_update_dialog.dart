@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:frezka/main.dart';
-import 'package:frezka/utils/colors.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/utils/colors.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -26,17 +26,24 @@ class NewUpdateDialog extends StatelessWidget {
               60.height,
               Text(locale.newUpdate, style: boldTextStyle(size: 18)),
               8.height,
-              Text(locale.anUpdateToIs, style: secondaryTextStyle(), textAlign: TextAlign.left),
+              Text(locale.anUpdateToIs,
+                  style: secondaryTextStyle(), textAlign: TextAlign.left),
               24.height,
               Row(
                 children: [
                   AppButton(
-                    child: Text(locale.closeApp, style: boldTextStyle(color: primaryColor)),
-                    shapeBorder: RoundedRectangleBorder(borderRadius: radius(), side: BorderSide(color: primaryColor)),
+                    child: Text(locale.closeApp,
+                        style: boldTextStyle(color: primaryColor)),
+                    shapeBorder: RoundedRectangleBorder(
+                        borderRadius: radius(),
+                        side: BorderSide(color: primaryColor)),
                     elevation: 0,
                     onTap: () async {
-                      if (getIntAsync(ConfigurationKeyConst.IS_FORCE_UPDATE) == 1) {
-                        exit(0);   /// For Close the App
+                      if (getIntAsync(ConfigurationKeyConst.IS_FORCE_UPDATE) ==
+                          1) {
+                        exit(0);
+
+                        /// For Close the App
                       } else {
                         finish(context);
                       }
@@ -44,7 +51,8 @@ class NewUpdateDialog extends StatelessWidget {
                   ).expand(),
                   16.width,
                   AppButton(
-                    child: Text(locale.update, style: boldTextStyle(color: white)),
+                    child:
+                        Text(locale.update, style: boldTextStyle(color: white)),
                     shapeBorder: RoundedRectangleBorder(borderRadius: radius()),
                     color: primaryColor,
                     elevation: 0,
@@ -58,7 +66,9 @@ class NewUpdateDialog extends StatelessWidget {
                           launchMode: LaunchMode.externalApplication,
                         );
 
-                        if (getIntAsync(ConfigurationKeyConst.IS_FORCE_UPDATE) == 1) {
+                        if (getIntAsync(
+                                ConfigurationKeyConst.IS_FORCE_UPDATE) ==
+                            1) {
                           exit(0);
                         } else {
                           finish(context);
@@ -73,7 +83,8 @@ class NewUpdateDialog extends StatelessWidget {
         ),
         Positioned(
           top: -42,
-          child: Image.asset(imgForceUpdate, height: 100, width: 100, fit: BoxFit.cover),
+          child: Image.asset(imgForceUpdate,
+              height: 100, width: 100, fit: BoxFit.cover),
         ),
       ],
     );

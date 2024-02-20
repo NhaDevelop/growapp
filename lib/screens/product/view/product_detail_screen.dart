@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:frezka/components/app_scaffold.dart';
-import 'package:frezka/components/loader_widget.dart';
-import 'package:frezka/screens/product/model/product_detail_response.dart';
-import 'package:frezka/screens/product/view/product_wish_list_screen.dart';
-import 'package:frezka/utils/extensions/string_extensions.dart';
+import 'package:grow_tokyo_app/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/components/loader_widget.dart';
+import 'package:grow_tokyo_app/screens/product/model/product_detail_response.dart';
+import 'package:grow_tokyo_app/screens/product/view/product_wish_list_screen.dart';
+import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/back_widget.dart';
@@ -61,12 +61,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   void init({bool flag = false}) async {
     /// Product Detail Api
     future = getProductDetail(
-      productId: widget.isFromWishList ? widget.productData.productId.validate() : widget.productData.id.validate(),
+      productId: widget.isFromWishList
+          ? widget.productData.productId.validate()
+          : widget.productData.id.validate(),
       userId: appStore.isLoggedIn ? userStore.userId : null,
       onResult: (value) {
         productDetailRes = value;
         if (productDetailRes.data!.variationData.validate().isNotEmpty) {
-          productStore.setSelectedVariationData(productDetailRes.data!.variationData.validate().first);
+          productStore.setSelectedVariationData(
+              productDetailRes.data!.variationData.validate().first);
         }
       },
     );
@@ -110,11 +113,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   Widget actionsWidget({required Widget widget, VoidCallback? onTap}) {
     return Container(
       padding: EdgeInsets.all(8),
-      decoration: boxDecorationWithShadow(boxShape: BoxShape.circle, backgroundColor: context.cardColor),
+      decoration: boxDecorationWithShadow(
+          boxShape: BoxShape.circle, backgroundColor: context.cardColor),
       child: widget,
     ).onTap(() {
       onTap?.call();
-    }, highlightColor: Colors.transparent, splashColor: Colors.transparent, hoverColor: Colors.transparent);
+    },
+        highlightColor: Colors.transparent,
+        splashColor: Colors.transparent,
+        hoverColor: Colors.transparent);
   }
 
   Future<void> addProductToCart() async {
@@ -185,17 +192,23 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   listAnimationType: ListAnimationType.FadeIn,
                   padding: EdgeInsets.only(bottom: 85),
                   children: [
-                    ProductSliderComponent(productGallaryData: snap.data!.productGallaryData.validate()),
+                    ProductSliderComponent(
+                        productGallaryData:
+                            snap.data!.productGallaryData.validate()),
                     16.height,
                     ProductInfoComponent(productData: snap.data!),
                     ProductPacketComponent(productData: snap.data!),
-                    if (productStore.selectedVariationData.productStockQty != 0) ProductQuantityComponent(),
+                    if (productStore.selectedVariationData.productStockQty != 0)
+                      ProductQuantityComponent(),
                     16.height,
                     ProductDescriptionComponent(productData: snap.data!),
                     20.height,
-                    ProductRatingReviewComponent(reviewDetails: snap.data!.productReview.validate(), productReviewData: snap.data!),
+                    ProductRatingReviewComponent(
+                        reviewDetails: snap.data!.productReview.validate(),
+                        productReviewData: snap.data!),
                     20.height,
-                    TopProductComponent(relatedProductData: snap.relatedProduct.validate()),
+                    TopProductComponent(
+                        relatedProductData: snap.relatedProduct.validate()),
                     20.height,
                   ],
                   onSwipeRefresh: () async {
@@ -211,11 +224,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     child: BackWidget(
                       iconColor: context.iconColor,
                       onPressed: () {
-                        finish(context, productDetailRes.data!.inWishlist.validate());
+                        finish(context,
+                            productDetailRes.data!.inWishlist.validate());
                         return Future(() => false);
                       },
                     ),
-                    decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.white),
                   ).scale(scale: 0.86),
                 ),
                 Positioned(
@@ -224,15 +239,19 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   child: Row(
                     children: [
                       actionsWidget(
-                        widget: ic_heart.iconImage(size: 25, color: textSecondaryColorGlobal),
+                        widget: ic_heart.iconImage(
+                            size: 25, color: textSecondaryColorGlobal),
                         onTap: () {
                           doIfLoggedIn(context, () async {
-                            ProductWishListScreen(isFromProductDetail: true).launch(context);
+                            ProductWishListScreen(isFromProductDetail: true)
+                                .launch(context);
                           });
                         },
                       ),
                       8.width,
-                      CartIconBtnComponent(cartIconColor: textSecondaryColorGlobal, showBGCardColor: true),
+                      CartIconBtnComponent(
+                          cartIconColor: textSecondaryColorGlobal,
+                          showBGCardColor: true),
                     ],
                   ),
                 ),
@@ -250,7 +269,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           height: 46,
                           splashColor: context.cardColor,
                           padding: EdgeInsets.zero,
-                          child: snap.data!.inWishlist == 1 ? ic_fill_heart.iconImage(color: wishListColor, size: 26, fit: BoxFit.contain) : ic_heart.iconImage(color: primaryColor, size: 26),
+                          child: snap.data!.inWishlist == 1
+                              ? ic_fill_heart.iconImage(
+                                  color: wishListColor,
+                                  size: 26,
+                                  fit: BoxFit.contain)
+                              : ic_heart.iconImage(
+                                  color: primaryColor, size: 26),
                           onTap: () {
                             doIfLoggedIn(context, () {
                               onTapFavourite(snap.data!);
@@ -260,20 +285,41 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         16.width,
                         Observer(builder: (context) {
                           return AppButton(
-                            color: productStore.selectedVariationData.productStockQty == 0 ? null : context.primaryColor,
+                            color: productStore.selectedVariationData
+                                        .productStockQty ==
+                                    0
+                                ? null
+                                : context.primaryColor,
                             width: 45,
                             height: 47,
-                            enabled: productStore.selectedVariationData.productStockQty == 0 ? false : true,
-                            disabledColor: productStore.selectedVariationData.productStockQty == 0 ? context.primaryColor.withOpacity(0.8) : null,
+                            enabled: productStore.selectedVariationData
+                                        .productStockQty ==
+                                    0
+                                ? false
+                                : true,
+                            disabledColor: productStore.selectedVariationData
+                                        .productStockQty ==
+                                    0
+                                ? context.primaryColor.withOpacity(0.8)
+                                : null,
                             splashColor: context.primaryColor,
                             padding: EdgeInsets.zero,
                             child: Text(
-                              productStore.selectedVariationData.inCart == IN_CART ? locale.goToCart : locale.addToCart,
-                              style: boldTextStyle(color: productStore.selectedVariationData.productStockQty == 0 ? Colors.white70 : Colors.white),
+                              productStore.selectedVariationData.inCart ==
+                                      IN_CART
+                                  ? locale.goToCart
+                                  : locale.addToCart,
+                              style: boldTextStyle(
+                                  color: productStore.selectedVariationData
+                                              .productStockQty ==
+                                          0
+                                      ? Colors.white70
+                                      : Colors.white),
                             ),
                             onTap: () {
                               doIfLoggedIn(context, () async {
-                                if (productStore.selectedVariationData.inCart == IN_CART) {
+                                if (productStore.selectedVariationData.inCart ==
+                                    IN_CART) {
                                   CartScreen().launch(context);
                                 } else {
                                   /// Add To Cart Api

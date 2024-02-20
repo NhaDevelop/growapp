@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 // import 'package:flutter_paystack/flutter_paystack.dart';
-import 'package:frezka/main.dart';
+import 'package:grow_tokyo_app/main.dart';
 // import 'package:nb_utils/nb_utils.dart';
 
 // import '../../../configs.dart';

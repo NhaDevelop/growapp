@@ -1,4 +1,4 @@
-import 'package:frezka/screens/booking/model/booking_detail_response.dart';
+import 'package:grow_tokyo_app/screens/booking/model/booking_detail_response.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../main.dart';
@@ -17,11 +17,19 @@ class BookingRequestModel {
   //LOCAL
   num tipAmount;
 
-  num get totalAmount => selectedServiceList.validate().sumByDouble((p0) => p0.defaultPrice.validate());
+  num get totalAmount => selectedServiceList
+      .validate()
+      .sumByDouble((p0) => p0.defaultPrice.validate());
 
-  double get fixedTaxAmount => taxPercentage.validate().where((element) => element.type == TaxType.FIXED).sumByDouble((p0) => (p0.taxAmount.validate()));
+  double get fixedTaxAmount => taxPercentage
+      .validate()
+      .where((element) => element.type == TaxType.FIXED)
+      .sumByDouble((p0) => (p0.taxAmount.validate()));
 
-  double get percentTaxAmount => taxPercentage.validate().where((element) => element.type == TaxType.PERCENT).sumByDouble((p0) => ((totalAmount * p0.percent.validate()) / 100));
+  double get percentTaxAmount => taxPercentage
+      .validate()
+      .where((element) => element.type == TaxType.PERCENT)
+      .sumByDouble((p0) => ((totalAmount * p0.percent.validate()) / 100));
 
   num get totalTax => fixedTaxAmount + percentTaxAmount;
 
@@ -45,11 +53,16 @@ class BookingRequestModel {
     data['branch_id'] = appStore.branchId;
 
     if (this.selectedServiceList != null) {
-      data['services'] = this.selectedServiceList.validate().map((e) => e.toBookingServiceJson()).toList();
+      data['services'] = this
+          .selectedServiceList
+          .validate()
+          .map((e) => e.toBookingServiceJson())
+          .toList();
     }
 
     if (this.taxPercentage != null) {
-      data['tax_percentage'] = this.taxPercentage.validate().map((e) => e.toJson()).toList();
+      data['tax_percentage'] =
+          this.taxPercentage.validate().map((e) => e.toJson()).toList();
     }
 
     return data;

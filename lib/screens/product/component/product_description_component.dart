@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/main.dart';
-import 'package:frezka/utils/colors.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/utils/colors.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/view_all_label_component.dart';
@@ -17,7 +17,8 @@ class ProductDescriptionComponent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ViewAllLabel(label: locale.description, isShowAll: false).paddingSymmetric(horizontal: 16),
+        ViewAllLabel(label: locale.description, isShowAll: false)
+            .paddingSymmetric(horizontal: 16),
         ReadMoreText(
           parseHtmlString(productData.description),
           trimLines: 3,

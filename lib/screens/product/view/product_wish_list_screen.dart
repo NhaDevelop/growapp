@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/app_scaffold.dart';
-import 'package:frezka/components/loader_widget.dart';
-import 'package:frezka/utils/app_common.dart';
+import 'package:grow_tokyo_app/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/components/loader_widget.dart';
+import 'package:grow_tokyo_app/utils/app_common.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/empty_error_state_widget.dart';
@@ -111,7 +111,8 @@ class _ProductWishListScreenState extends State<ProductWishListScreen> {
             }
 
             return AnimatedScrollView(
-              padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 30),
+              padding:
+                  EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 30),
               crossAxisAlignment: CrossAxisAlignment.start,
               physics: AlwaysScrollableScrollPhysics(),
               onSwipeRefresh: () async {

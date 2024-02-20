@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/app_scaffold.dart';
-import 'package:frezka/utils/extensions/string_extensions.dart';
-import 'package:frezka/utils/images.dart';
+import 'package:grow_tokyo_app/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
+import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../main.dart';
@@ -72,8 +72,11 @@ class _AdditionalDetailScreenState extends State<AdditionalDetailScreen> {
                       focus: fullNameFocus,
                       nextFocus: mobileFocus,
                       textFieldType: TextFieldType.NAME,
-                      decoration: inputDecoration(context, label: locale.fullName),
-                      suffix: ic_unselected_profile.iconImage(fit: BoxFit.contain, size: 14).paddingAll(16),
+                      decoration:
+                          inputDecoration(context, label: locale.fullName),
+                      suffix: ic_unselected_profile
+                          .iconImage(fit: BoxFit.contain, size: 14)
+                          .paddingAll(16),
                     ),
                     16.height,
                     AppTextField(
@@ -81,7 +84,9 @@ class _AdditionalDetailScreenState extends State<AdditionalDetailScreen> {
                       focus: emailFocus,
                       textFieldType: TextFieldType.EMAIL,
                       decoration: inputDecoration(context, label: locale.email),
-                      suffix: ic_message.iconImage(fit: BoxFit.contain, size: 14).paddingAll(16),
+                      suffix: ic_message
+                          .iconImage(fit: BoxFit.contain, size: 14)
+                          .paddingAll(16),
                     ),
                     16.height,
                     AppTextField(
@@ -89,7 +94,8 @@ class _AdditionalDetailScreenState extends State<AdditionalDetailScreen> {
                       controller: mobileCont,
                       focus: mobileFocus,
                       maxLength: 15,
-                      decoration: inputDecoration(context, label: locale.contactNumber),
+                      decoration:
+                          inputDecoration(context, label: locale.contactNumber),
                     ),
                     16.height,
                     AppTextField(
@@ -98,7 +104,8 @@ class _AdditionalDetailScreenState extends State<AdditionalDetailScreen> {
                       focus: alternateFocus,
                       maxLength: 15,
                       isValidationRequired: false,
-                      decoration: inputDecoration(context, label: locale.alternateContactNumber),
+                      decoration: inputDecoration(context,
+                          label: locale.alternateContactNumber),
                     ),
                   ],
                 ),
@@ -111,7 +118,8 @@ class _AdditionalDetailScreenState extends State<AdditionalDetailScreen> {
             right: 16,
             child: AppButton(
               width: context.width(),
-              child: Text(locale.confirm, style: boldTextStyle(color: Colors.white)),
+              child: Text(locale.confirm,
+                  style: boldTextStyle(color: Colors.white)),
               color: secondaryColor,
               onTap: () async {
                 appStore.setLoading(true);
@@ -120,10 +128,12 @@ class _AdditionalDetailScreenState extends State<AdditionalDetailScreen> {
                 productStore.setCustomerFullName(fullNameCont.text);
                 productStore.setCustomerEmail(emailCont.text);
                 productStore.setCustomerContactNumber(mobileCont.text);
-                productStore.setCustomerAlternateContactNumber(alternateMobileCont.text);
+                productStore.setCustomerAlternateContactNumber(
+                    alternateMobileCont.text);
 
                 appStore.setLoading(false);
-                OrderSummaryScreen().launch(context, pageRouteAnimation: PageRouteAnimation.Fade);
+                OrderSummaryScreen().launch(context,
+                    pageRouteAnimation: PageRouteAnimation.Fade);
               },
             ),
           ),

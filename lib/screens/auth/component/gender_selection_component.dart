@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/main.dart';
+import 'package:grow_tokyo_app/main.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../utils/colors.dart';
@@ -10,10 +10,12 @@ class GenderSelectionComponent extends StatefulWidget {
   final String? type;
   final Function(String value) onTap;
 
-  GenderSelectionComponent({Key? key, this.type, required this.onTap}) : super(key: key);
+  GenderSelectionComponent({Key? key, this.type, required this.onTap})
+      : super(key: key);
 
   @override
-  State<GenderSelectionComponent> createState() => _GenderSelectionComponentState();
+  State<GenderSelectionComponent> createState() =>
+      _GenderSelectionComponentState();
 }
 
 class _GenderSelectionComponentState extends State<GenderSelectionComponent> {
@@ -35,7 +37,8 @@ class _GenderSelectionComponentState extends State<GenderSelectionComponent> {
   void init() {
     isUpdate = widget.type != null;
     if (isUpdate) {
-      selectedGender = genderList.indexWhere((element) => element.value == widget.type.validate());
+      selectedGender = genderList
+          .indexWhere((element) => element.value == widget.type.validate());
     }
   }
 
@@ -57,29 +60,42 @@ class _GenderSelectionComponentState extends State<GenderSelectionComponent> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: List.generate(
               genderList.length,
-                  (index) {
+              (index) {
                 bool isSelected = selectedGender == index;
                 return Container(
                   width: context.width() / 3 - 32,
                   padding: EdgeInsets.fromLTRB(index == 2 ? 8 : 0, 16, 8, 16),
-                  decoration: boxDecorationDefault(borderRadius: radius(defaultRadius), color: context.cardColor),
+                  decoration: boxDecorationDefault(
+                      borderRadius: radius(defaultRadius),
+                      color: context.cardColor),
                   child: Row(
                     children: [
                       Container(
-                        padding: isSelected ? EdgeInsets.all(2) : EdgeInsets.all(1),
+                        padding:
+                            isSelected ? EdgeInsets.all(2) : EdgeInsets.all(1),
                         decoration: boxDecorationDefault(
                           shape: BoxShape.circle,
-                          border: Border.all(color: isSelected ? primaryColor : appTextSecondaryColor.withOpacity(0.5)),
+                          border: Border.all(
+                              color: isSelected
+                                  ? primaryColor
+                                  : appTextSecondaryColor.withOpacity(0.5)),
                           color: Colors.transparent,
                         ),
                         child: Container(
                           height: isSelected ? 12 : 12,
                           width: isSelected ? 12 : 12,
-                          decoration: boxDecorationDefault(shape: BoxShape.circle, color: isSelected ? primaryColor : white),
+                          decoration: boxDecorationDefault(
+                              shape: BoxShape.circle,
+                              color: isSelected ? primaryColor : white),
                         ),
                       ),
                       8.width,
-                      Marquee(child: Text("${genderList[index].name.validate()}", style: primaryTextStyle(size: 14), textAlign: TextAlign.center)).flexible(),
+                      Marquee(
+                              child: Text(
+                                  "${genderList[index].name.validate()}",
+                                  style: primaryTextStyle(size: 14),
+                                  textAlign: TextAlign.center))
+                          .flexible(),
                     ],
                   ).center(),
                 ).onTap(() {
@@ -90,7 +106,9 @@ class _GenderSelectionComponentState extends State<GenderSelectionComponent> {
                     selectedGender = index;
                   }
                   setState(() {});
-                }, borderRadius: BorderRadius.circular(defaultRadius)).paddingRight(16);
+                },
+                    borderRadius:
+                        BorderRadius.circular(defaultRadius)).paddingRight(16);
               },
             ),
           ),

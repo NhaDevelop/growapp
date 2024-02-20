@@ -3,16 +3,18 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:frezka/main.dart';
-import 'package:frezka/screens/auth/auth_repository.dart';
-import 'package:frezka/screens/auth/model/user_data_model.dart';
-import 'package:frezka/utils/constants.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/screens/auth/auth_repository.dart';
+import 'package:grow_tokyo_app/screens/auth/model/user_data_model.dart';
+import 'package:grow_tokyo_app/utils/constants.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:the_apple_sign_in/the_apple_sign_in.dart';
 
 class AuthService {
   Future<String> setRegisterData({required UserData userData}) async {
-    return await userService.addDocumentWithCustomId(userData.uid.validate(), userData.toJson()).then((value) async {
+    return await userService
+        .addDocumentWithCustomId(userData.uid.validate(), userData.toJson())
+        .then((value) async {
       return value.id.validate();
     }).catchError((e) {
       throw false;
@@ -20,10 +22,16 @@ class AuthService {
   }
 
 //region Email
-  Future<String> signUpWithEmailPassword(BuildContext context, {required UserData userData}) async {
-    return await auth.createUserWithEmailAndPassword(email: userData.email.validate(), password: DEFAULT_FIREBASE_PASSWORD).then((userCredential) async {
+  Future<String> signUpWithEmailPassword(BuildContext context,
+      {required UserData userData}) async {
+    return await auth
+        .createUserWithEmailAndPassword(
+            email: userData.email.validate(),
+            password: DEFAULT_FIREBASE_PASSWORD)
+        .then((userCredential) async {
       User currentUser = userCredential.user!;
-      String displayName = userData.firstName.validate() + userData.lastName.validate();
+      String displayName =
+          userData.firstName.validate() + userData.lastName.validate();
 
       userData.uid = currentUser.uid.validate();
       userData.email = currentUser.email.validate();
@@ -42,11 +50,15 @@ class AuthService {
     });
   }
 
-  Future<String> signInWithEmailPassword({required String email, String? uid, bool isSocialLogin = false}) async {
+  Future<String> signInWithEmailPassword(
+      {required String email, String? uid, bool isSocialLogin = false}) async {
     if (isSocialLogin) {
       return uid.validate();
     }
-    return await auth.signInWithEmailAndPassword(email: email, password: DEFAULT_FIREBASE_PASSWORD).then((value) async {
+    return await auth
+        .signInWithEmailAndPassword(
+            email: email, password: DEFAULT_FIREBASE_PASSWORD)
+        .then((value) async {
       return value.user!.uid.validate();
     }).catchError((e) async {
       appStore.setLoading(false);
@@ -80,7 +92,8 @@ class AuthService {
           final oAuthProvider = OAuthProvider('apple.com');
           final credential = oAuthProvider.credential(
             idToken: String.fromCharCodes(appleIdCredential.identityToken!),
-            accessToken: String.fromCharCodes(appleIdCredential.authorizationCode!),
+            accessToken:
+                String.fromCharCodes(appleIdCredential.authorizationCode!),
           );
 
           final authResult = await auth.signInWithCredential(credential);
@@ -120,8 +133,10 @@ class AuthService {
 
   Future<void> saveAppleData(AuthorizationResult result) async {
     await setValue(SharedPreferenceConst.APPLE_EMAIL, result.credential!.email);
-    await setValue(SharedPreferenceConst.APPLE_GIVE_NAME, result.credential!.fullName!.givenName);
-    await setValue(SharedPreferenceConst.APPLE_FAMILY_NAME, result.credential!.fullName!.familyName);
+    await setValue(SharedPreferenceConst.APPLE_GIVE_NAME,
+        result.credential!.fullName!.givenName);
+    await setValue(SharedPreferenceConst.APPLE_FAMILY_NAME,
+        result.credential!.fullName!.familyName);
   }
 
   Future<void> saveAppleDataWithoutEmail(User user) async {
@@ -131,10 +146,20 @@ class AuthService {
     log('appleFamilyName:- ${getStringAsync(SharedPreferenceConst.APPLE_FAMILY_NAME)}');
 
     var req = {
-      'email': getStringAsync(SharedPreferenceConst.APPLE_EMAIL).isNotEmpty ? getStringAsync(SharedPreferenceConst.APPLE_EMAIL) : getStringAsync(SharedPreferenceConst.APPLE_UID) + '@gmail.com',
-      'first_name': getStringAsync(SharedPreferenceConst.APPLE_GIVE_NAME).isNotEmpty ? getStringAsync(SharedPreferenceConst.APPLE_GIVE_NAME) : '',
-      'last_name': getStringAsync(SharedPreferenceConst.APPLE_FAMILY_NAME).isNotEmpty ? getStringAsync(SharedPreferenceConst.APPLE_FAMILY_NAME) : '',
-      "username": getStringAsync(SharedPreferenceConst.APPLE_EMAIL).isNotEmpty ? getStringAsync(SharedPreferenceConst.APPLE_EMAIL) : getStringAsync(SharedPreferenceConst.APPLE_UID) + '@gmail.com',
+      'email': getStringAsync(SharedPreferenceConst.APPLE_EMAIL).isNotEmpty
+          ? getStringAsync(SharedPreferenceConst.APPLE_EMAIL)
+          : getStringAsync(SharedPreferenceConst.APPLE_UID) + '@gmail.com',
+      'first_name':
+          getStringAsync(SharedPreferenceConst.APPLE_GIVE_NAME).isNotEmpty
+              ? getStringAsync(SharedPreferenceConst.APPLE_GIVE_NAME)
+              : '',
+      'last_name':
+          getStringAsync(SharedPreferenceConst.APPLE_FAMILY_NAME).isNotEmpty
+              ? getStringAsync(SharedPreferenceConst.APPLE_FAMILY_NAME)
+              : '',
+      "username": getStringAsync(SharedPreferenceConst.APPLE_EMAIL).isNotEmpty
+          ? getStringAsync(SharedPreferenceConst.APPLE_EMAIL)
+          : getStringAsync(SharedPreferenceConst.APPLE_UID) + '@gmail.com',
       "profile_image": '',
       "social_image": '',
       'accessToken': '12345678',

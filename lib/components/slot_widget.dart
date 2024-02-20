@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/main.dart';
-import 'package:frezka/utils/constants.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/utils/constants.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../screens/booking/component/slot_item_component.dart';
@@ -49,17 +49,22 @@ class _SlotWidgetState extends State<SlotWidget> {
 
     DateTime temp = DateTime.now();
 
-    startTimeString = '${temp.year}-${temp.month < 10 ? '0${temp.month}' : temp.month}-${temp.day < 10 ? '0${temp.day}' : temp.day} $startTimeString';
-    endTimeString = '${temp.year}-${temp.month < 10 ? '0${temp.month}' : temp.month}-${temp.day < 10 ? '0${temp.day}' : temp.day} $endTimeString';
+    startTimeString =
+        '${temp.year}-${temp.month < 10 ? '0${temp.month}' : temp.month}-${temp.day < 10 ? '0${temp.day}' : temp.day} $startTimeString';
+    endTimeString =
+        '${temp.year}-${temp.month < 10 ? '0${temp.month}' : temp.month}-${temp.day < 10 ? '0${temp.day}' : temp.day} $endTimeString';
 
     DateTime startTime = DateTime.parse(startTimeString);
     DateTime endTime = DateTime.parse(endTimeString);
 
-    Duration duration = Duration(hours: int.parse(timeDuration.split(':')[0]), minutes: int.parse(timeDuration.split(':')[1]));
+    Duration duration = Duration(
+        hours: int.parse(timeDuration.split(':')[0]),
+        minutes: int.parse(timeDuration.split(':')[1]));
 
     while (startTime.isBefore(endTime)) {
       SlotData slotData = SlotData();
-      slotData.startTime = formatDate(startTime.toString(), format: DateFormatConst.HOUR_24_FORMAT);
+      slotData.startTime = formatDate(startTime.toString(),
+          format: DateFormatConst.HOUR_24_FORMAT);
       slotData.previousTimeSlot = startTime;
 
       // Determine time slot
@@ -110,7 +115,8 @@ class _SlotWidgetState extends State<SlotWidget> {
             padding: EdgeInsets.all(16),
             width: context.width(),
             margin: EdgeInsets.only(bottom: 50),
-            decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor, borderRadius: radius()),
+            decoration: boxDecorationWithRoundedCorners(
+                backgroundColor: context.cardColor, borderRadius: radius()),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: categorizedSlots.entries.map((entry) {
@@ -129,7 +135,8 @@ class _SlotWidgetState extends State<SlotWidget> {
                       listAnimationType: ListAnimationType.None,
                       itemBuilder: (context, index) {
                         SlotData timeSlot = sessionSlots[index];
-                        bool isSelected = selectedIndex == index && selectedSession == timeSlot.sessionText;
+                        bool isSelected = selectedIndex == index &&
+                            selectedSession == timeSlot.sessionText;
 
                         return SlotItemComponent(
                           timeSlot: timeSlot,
@@ -137,20 +144,22 @@ class _SlotWidgetState extends State<SlotWidget> {
                           selectedHorizontalDate: widget.selectedHorizontalDate,
                           onTap: () {
                             /// check if time slot is available or not
-                            if (timeSlot.slotAvailability(widget.selectedHorizontalDate)) {
+                            if (timeSlot.slotAvailability(
+                                widget.selectedHorizontalDate)) {
                               if (isSelected) {
                                 selectedIndex = -1;
                                 bookingRequestStore.setTimeInRequest('');
                               } else {
-                                bookingRequestStore.setTimeInRequest(timeSlot.startTime.validate());
+                                bookingRequestStore.setTimeInRequest(
+                                    timeSlot.startTime.validate());
 
                                 selectedIndex = index;
-                                selectedSession = timeSlot.sessionText.validate();
+                                selectedSession =
+                                    timeSlot.sessionText.validate();
 
                                 if (widget.isFromQuickBooking) {
                                   finish(context, bookingRequestStore.time);
                                 }
-
                               }
                             } else {
                               toast(locale.youCannotBookPrevious);

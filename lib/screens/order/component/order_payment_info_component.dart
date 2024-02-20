@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/screens/order/model/order_detail_response.dart';
-import 'package:frezka/utils/colors.dart';
+import 'package:grow_tokyo_app/screens/order/model/order_detail_response.dart';
+import 'package:grow_tokyo_app/utils/colors.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/price_widget.dart';
@@ -18,7 +18,8 @@ class OrderPaymentInfoComponent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ViewAllLabel(label: locale.priceDetails, isShowAll: false, labelSize: 14),
+        ViewAllLabel(
+            label: locale.priceDetails, isShowAll: false, labelSize: 14),
         Container(
           decoration: boxDecorationDefault(color: context.cardColor),
           padding: EdgeInsets.all(16),
@@ -30,7 +31,11 @@ class OrderPaymentInfoComponent extends StatelessWidget {
                 title: locale.subtotal,
                 titleTextStyle: secondaryTextStyle(),
                 padding: EdgeInsets.zero,
-                trailing: Marquee(child: PriceWidget(price: orderData.subTotalAmount.validate(), color: textPrimaryColorGlobal, size: 14)),
+                trailing: Marquee(
+                    child: PriceWidget(
+                        price: orderData.subTotalAmount.validate(),
+                        color: textPrimaryColorGlobal,
+                        size: 14)),
               ),
               10.height,
 
@@ -40,7 +45,11 @@ class OrderPaymentInfoComponent extends StatelessWidget {
                   title: locale.tax,
                   titleTextStyle: secondaryTextStyle(),
                   padding: EdgeInsets.zero,
-                  trailing: Marquee(child: PriceWidget(price: orderData.totalTaxAmount.validate(), color: textPrimaryColorGlobal, size: 14)),
+                  trailing: Marquee(
+                      child: PriceWidget(
+                          price: orderData.totalTaxAmount.validate(),
+                          color: textPrimaryColorGlobal,
+                          size: 14)),
                 ).paddingBottom(10),
 
               /// Delivery Charge
@@ -49,7 +58,11 @@ class OrderPaymentInfoComponent extends StatelessWidget {
                   title: locale.deliveryCharge,
                   titleTextStyle: secondaryTextStyle(),
                   padding: EdgeInsets.zero,
-                  trailing: Marquee(child: PriceWidget(price: orderData.logisticCharge.validate(), color: textPrimaryColorGlobal, size: 14)),
+                  trailing: Marquee(
+                      child: PriceWidget(
+                          price: orderData.logisticCharge.validate(),
+                          color: textPrimaryColorGlobal,
+                          size: 14)),
                 ).paddingBottom(10),
 
               /// Payment Status
@@ -57,7 +70,15 @@ class OrderPaymentInfoComponent extends StatelessWidget {
                 title: locale.paymentStatus,
                 titleTextStyle: secondaryTextStyle(),
                 padding: EdgeInsets.zero,
-                trailing: Marquee(child: PriceWidget(price: 0, priceText: getBookingPaymentStatus(status: orderData.paymentStatus.validate().capitalizeFirstLetter()), color: textPrimaryColorGlobal, size: 14)),
+                trailing: Marquee(
+                    child: PriceWidget(
+                        price: 0,
+                        priceText: getBookingPaymentStatus(
+                            status: orderData.paymentStatus
+                                .validate()
+                                .capitalizeFirstLetter()),
+                        color: textPrimaryColorGlobal,
+                        size: 14)),
               ),
               10.height,
 
@@ -67,7 +88,10 @@ class OrderPaymentInfoComponent extends StatelessWidget {
                 titleTextStyle: secondaryTextStyle(),
                 padding: EdgeInsets.zero,
                 trailing: Marquee(
-                  child: PriceWidget(price: orderData.totalAmount.validate(), color: primaryColor, size: 14),
+                  child: PriceWidget(
+                      price: orderData.totalAmount.validate(),
+                      color: primaryColor,
+                      size: 14),
                 ),
               ),
             ],
@@ -82,18 +106,48 @@ class OrderPaymentInfoComponent extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (orderData.userName.validate().trim().isNotEmpty) Marquee(child: Text(orderData.userName.capitalizeFirstLetter(), style: boldTextStyle())).paddingBottom(8),
-              if (orderData.addressLine1.validate().trim().isNotEmpty) Marquee(child: Text(orderData.addressLine1.validate().capitalizeFirstLetter(), style: secondaryTextStyle())),
-              if (orderData.addressLine2.validate().trim().isNotEmpty) Marquee(child: Text(orderData.addressLine2.validate().capitalizeFirstLetter(), style: secondaryTextStyle())),
+              if (orderData.userName.validate().trim().isNotEmpty)
+                Marquee(
+                        child: Text(orderData.userName.capitalizeFirstLetter(),
+                            style: boldTextStyle()))
+                    .paddingBottom(8),
+              if (orderData.addressLine1.validate().trim().isNotEmpty)
+                Marquee(
+                    child: Text(
+                        orderData.addressLine1
+                            .validate()
+                            .capitalizeFirstLetter(),
+                        style: secondaryTextStyle())),
+              if (orderData.addressLine2.validate().trim().isNotEmpty)
+                Marquee(
+                    child: Text(
+                        orderData.addressLine2
+                            .validate()
+                            .capitalizeFirstLetter(),
+                        style: secondaryTextStyle())),
               10.height,
-              if (orderData.city.validate().trim().isNotEmpty) Marquee(child: Text(orderData.city.validate().capitalizeFirstLetter(), style: secondaryTextStyle())).paddingBottom(10),
-              if (orderData.state.validate().trim().isNotEmpty) Marquee(child: Text('${orderData.state.validate().capitalizeFirstLetter()} - ${orderData.postalCode.validate()}', style: secondaryTextStyle())).paddingBottom(10),
+              if (orderData.city.validate().trim().isNotEmpty)
+                Marquee(
+                        child: Text(
+                            orderData.city.validate().capitalizeFirstLetter(),
+                            style: secondaryTextStyle()))
+                    .paddingBottom(10),
+              if (orderData.state.validate().trim().isNotEmpty)
+                Marquee(
+                        child: Text(
+                            '${orderData.state.validate().capitalizeFirstLetter()} - ${orderData.postalCode.validate()}',
+                            style: secondaryTextStyle()))
+                    .paddingBottom(10),
               if (orderData.phoneNo.validate().trim().isNotEmpty)
                 Marquee(
                   child: RichTextWidget(
                     list: [
-                      TextSpan(text: '${locale.contactNumber}: ', style: secondaryTextStyle()),
-                      TextSpan(text: orderData.phoneNo.validate(), style: boldTextStyle(size: 12)),
+                      TextSpan(
+                          text: '${locale.contactNumber}: ',
+                          style: secondaryTextStyle()),
+                      TextSpan(
+                          text: orderData.phoneNo.validate(),
+                          style: boldTextStyle(size: 12)),
                     ],
                   ),
                 ),
@@ -102,8 +156,12 @@ class OrderPaymentInfoComponent extends StatelessWidget {
                 Marquee(
                   child: RichTextWidget(
                     list: [
-                      TextSpan(text: locale.alternativeContactNumber, style: secondaryTextStyle()),
-                      TextSpan(text: orderData.alternativePhoneNo.validate(), style: boldTextStyle(size: 12)),
+                      TextSpan(
+                          text: locale.alternativeContactNumber,
+                          style: secondaryTextStyle()),
+                      TextSpan(
+                          text: orderData.alternativePhoneNo.validate(),
+                          style: boldTextStyle(size: 12)),
                     ],
                   ),
                 ).paddingBottom(10),

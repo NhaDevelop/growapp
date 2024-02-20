@@ -1,4 +1,4 @@
-import 'package:frezka/screens/booking/model/booking_detail_response.dart';
+import 'package:grow_tokyo_app/screens/booking/model/booking_detail_response.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../network/network_utils.dart';
@@ -28,5 +28,6 @@ Future savePay({
 
   if (serviceTip != null) request.putIfAbsent("tip", () => serviceTip.toInt());
 
-  return await handleResponse(await buildHttpResponse(APIEndPoints.savePayment, request: request, method: HttpMethodType.POST));
+  return await handleResponse(await buildHttpResponse(APIEndPoints.savePayment,
+      request: request, method: HttpMethodType.POST));
 }

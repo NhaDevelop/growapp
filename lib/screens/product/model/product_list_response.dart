@@ -1,4 +1,4 @@
-import 'package:frezka/screens/product/model/product_review_data_model.dart';
+import 'package:grow_tokyo_app/screens/product/model/product_review_data_model.dart';
 
 import '../../category/model/category_response.dart';
 
@@ -11,7 +11,9 @@ class ProductListResponse {
 
   factory ProductListResponse.fromJson(Map<String, dynamic> json) {
     return ProductListResponse(
-      data: json['data'] != null ? (json['data'] as List).map((i) => ProductData.fromJson(i)).toList() : null,
+      data: json['data'] != null
+          ? (json['data'] as List).map((i) => ProductData.fromJson(i)).toList()
+          : null,
       message: json['message'],
       status: json['status'],
     );
@@ -134,7 +136,11 @@ class ProductData {
     return ProductData(
       brandId: json['brand_id'],
       brandName: json['brand_name'],
-      category: json['category'] != null ? (json['category'] as List).map((i) => CategoryData.fromJson(i)).toList() : null,
+      category: json['category'] != null
+          ? (json['category'] as List)
+              .map((i) => CategoryData.fromJson(i))
+              .toList()
+          : null,
       createdAt: json['created_at'],
       createdBy: json['created_by'],
       deletedAt: json['deleted_at'] != null ? json['deleted_at'] : null,
@@ -174,9 +180,19 @@ class ProductData {
       productId: json['product_id'],
       productName: json['product_name'],
       productDescription: json['product_description'],
-      variationData: json['variation_data'] != null ? (json['variation_data'] as List).map((i) => VariationData.fromJson(i)).toList() : null,
-      productGallaryData: json['product_gallary'] != null ? new List<String>.from(json['product_gallary']) : null,
-      productReview: json['product_review'] != null ? (json['product_review'] as List).map((i) => ProductReviewDataModel.fromJson(i)).toList() : null,
+      variationData: json['variation_data'] != null
+          ? (json['variation_data'] as List)
+              .map((i) => VariationData.fromJson(i))
+              .toList()
+          : null,
+      productGallaryData: json['product_gallary'] != null
+          ? new List<String>.from(json['product_gallary'])
+          : null,
+      productReview: json['product_review'] != null
+          ? (json['product_review'] as List)
+              .map((i) => ProductReviewDataModel.fromJson(i))
+              .toList()
+          : null,
     );
   }
 
@@ -227,13 +243,15 @@ class ProductData {
       data['category'] = this.category!.map((v) => v.toJson()).toList();
     }
     if (this.variationData != null) {
-      data['variation_data'] = this.variationData!.map((v) => v.toJson()).toList();
+      data['variation_data'] =
+          this.variationData!.map((v) => v.toJson()).toList();
     }
     if (this.productGallaryData != null) {
       data['product_gallary'] = this.productGallaryData;
     }
     if (this.productReview != null) {
-      data['product_review'] = this.productReview!.map((v) => v.toJson()).toList();
+      data['product_review'] =
+          this.productReview!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -280,7 +298,11 @@ class VariationData {
       inCart: json['in_cart'],
       locationId: json['location_id'],
       productStockQty: json['product_stock_qty'],
-      combination: json['combination'] != null ? (json['combination'] as List).map((i) => ProductCombinationData.fromJson(i)).toList() : null,
+      combination: json['combination'] != null
+          ? (json['combination'] as List)
+              .map((i) => ProductCombinationData.fromJson(i))
+              .toList()
+          : null,
     );
   }
 
@@ -309,7 +331,11 @@ class ProductCombinationData {
   String? productVariationType;
   String? productVariationValue;
 
-  ProductCombinationData({this.id, this.productVariationName, this.productVariationType, this.productVariationValue});
+  ProductCombinationData(
+      {this.id,
+      this.productVariationName,
+      this.productVariationType,
+      this.productVariationValue});
 
   factory ProductCombinationData.fromJson(Map<String, dynamic> json) {
     return ProductCombinationData(

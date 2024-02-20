@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:frezka/configs.dart';
-import 'package:frezka/main.dart';
-import 'package:frezka/utils/common_base.dart';
+import 'package:grow_tokyo_app/configs.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/utils/common_base.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
@@ -42,14 +42,22 @@ Map<String, String> buildHeaderTokens({
   header.putIfAbsent(
       HttpHeaders.contentTypeHeader, () => 'application/json; charset=utf-8');
 
-  if (appStore.isLoggedIn && extraKeys.containsKey('isStripePayment') && extraKeys['isStripePayment']) {
-    header.putIfAbsent(HttpHeaders.acceptHeader, () => 'application/x-www-form-urlencoded');
+  if (appStore.isLoggedIn &&
+      extraKeys.containsKey('isStripePayment') &&
+      extraKeys['isStripePayment']) {
+    header.putIfAbsent(
+        HttpHeaders.acceptHeader, () => 'application/x-www-form-urlencoded');
     header[HttpHeaders.contentTypeHeader] = 'application/x-www-form-urlencoded';
-    header.putIfAbsent(HttpHeaders.authorizationHeader, () => 'Bearer ${extraKeys!['stripeKeyPayment']}');
-  } else if (appStore.isLoggedIn && extraKeys.containsKey('isFlutterWave') && extraKeys['isFlutterWave']) {
-    header.putIfAbsent(HttpHeaders.authorizationHeader, () => "Bearer ${extraKeys!['flutterWaveSecretKey']}");
+    header.putIfAbsent(HttpHeaders.authorizationHeader,
+        () => 'Bearer ${extraKeys!['stripeKeyPayment']}');
+  } else if (appStore.isLoggedIn &&
+      extraKeys.containsKey('isFlutterWave') &&
+      extraKeys['isFlutterWave']) {
+    header.putIfAbsent(HttpHeaders.authorizationHeader,
+        () => "Bearer ${extraKeys!['flutterWaveSecretKey']}");
   } else if (appStore.isLoggedIn) {
-    header.putIfAbsent(HttpHeaders.authorizationHeader, () => 'Bearer ${userStore.token}');
+    header.putIfAbsent(
+        HttpHeaders.authorizationHeader, () => 'Bearer ${userStore.token}');
   }
 
   log(jsonEncode(header));
@@ -193,27 +201,36 @@ Future<void> reGenerateToken() async {
   await saveOneSignalPlayerId();
   Map req = {
     CommonKey.email: getStringAsync(SharedPreferenceConst.USER_EMAIL),
-    if (isLoginTypeUser) CommonKey.password: getStringAsync(SharedPreferenceConst.USER_PASSWORD),
+    if (isLoginTypeUser)
+      CommonKey.password: getStringAsync(SharedPreferenceConst.USER_PASSWORD),
     CommonKey.playerId: getStringAsync(SharedPreferenceConst.PLAYER_ID),
-    if (!isLoginTypeUser) CommonKey.profileImage: getStringAsync(SharedPreferenceConst.PROFILE_IMAGE),
-    if (!isLoginTypeUser) CommonKey.loginType: getStringAsync(SharedPreferenceConst.USER_TYPE),
+    if (!isLoginTypeUser)
+      CommonKey.profileImage:
+          getStringAsync(SharedPreferenceConst.PROFILE_IMAGE),
+    if (!isLoginTypeUser)
+      CommonKey.loginType: getStringAsync(SharedPreferenceConst.USER_TYPE),
   };
 
-  return await loginUser(req, isSocialLogin: !isLoginTypeUser, isRegenerateToken: true).then((value) async {
+  return await loginUser(req,
+          isSocialLogin: !isLoginTypeUser, isRegenerateToken: true)
+      .then((value) async {
     //
   }).catchError((e) {
     throw e;
   });
 }
 
-Future<MultipartRequest> getMultiPartRequest(String endPoint, {String? baseUrl}) async {
+Future<MultipartRequest> getMultiPartRequest(String endPoint,
+    {String? baseUrl}) async {
   String url = '${baseUrl ?? buildBaseUrl(endPoint).toString()}';
   log(url);
   return MultipartRequest('POST', Uri.parse(url));
 }
 
-Future<void> sendMultiPartRequest(MultipartRequest multiPartRequest, {Function(dynamic)? onSuccess, Function(dynamic)? onError}) async {
-  http.Response response = await http.Response.fromStream(await multiPartRequest.send());
+Future<void> sendMultiPartRequest(MultipartRequest multiPartRequest,
+    {Function(dynamic)? onSuccess, Function(dynamic)? onError}) async {
+  http.Response response =
+      await http.Response.fromStream(await multiPartRequest.send());
   apiPrint(
       url: multiPartRequest.url.toString(),
       headers: jsonEncode(multiPartRequest.headers),
@@ -232,13 +249,15 @@ Future<void> sendMultiPartRequest(MultipartRequest multiPartRequest, {Function(d
   }
 }
 
-Future<List<MultipartFile>> getMultipartImages2({required List<XFile> files, required String name}) async {
+Future<List<MultipartFile>> getMultipartImages2(
+    {required List<XFile> files, required String name}) async {
   List<MultipartFile> multiPartRequest = [];
 
   await Future.forEach<XFile>(files, (element) async {
     int i = files.indexOf(element);
 
-    multiPartRequest.add(await MultipartFile.fromPath('$name[${i.toString()}]', element.path.validate()));
+    multiPartRequest.add(await MultipartFile.fromPath(
+        '$name[${i.toString()}]', element.path.validate()));
     log('MultipartFile: $name[${i.toString()}]');
   });
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/main.dart';
-import 'package:frezka/screens/product/component/product_item_component.dart';
-import 'package:frezka/screens/product/view/product_list_screen.dart';
-import 'package:frezka/screens/product/model/product_list_response.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/screens/product/component/product_item_component.dart';
+import 'package:grow_tokyo_app/screens/product/view/product_list_screen.dart';
+import 'package:grow_tokyo_app/screens/product/model/product_list_response.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/view_all_label_component.dart';
@@ -24,7 +24,10 @@ class BestSellerProductComponent extends StatelessWidget {
           label: locale.bestSellerProduct,
           list: bestSellerProductList,
           onTap: () {
-            ProductListScreen(appBarTitleText: locale.bestSellerProduct, isBestSeller: '1').launch(context);
+            ProductListScreen(
+                    appBarTitleText: locale.bestSellerProduct,
+                    isBestSeller: '1')
+                .launch(context);
           },
         ).paddingOnly(left: 16, right: 8),
         AnimatedWrap(
@@ -33,9 +36,11 @@ class BestSellerProductComponent extends StatelessWidget {
           columnCount: 2,
           itemCount: bestSellerProductList.take(6).length,
           listAnimationType: ListAnimationType.FadeIn,
-          scaleConfiguration: ScaleConfiguration(duration: 300.milliseconds, delay: 50.milliseconds),
+          scaleConfiguration: ScaleConfiguration(
+              duration: 300.milliseconds, delay: 50.milliseconds),
           itemBuilder: (_, index) {
-            return ProductItemComponent(productListData: bestSellerProductList[index]);
+            return ProductItemComponent(
+                productListData: bestSellerProductList[index]);
           },
         ).paddingOnly(top: 10, left: 16, right: 16, bottom: 16)
       ],

@@ -1,5 +1,5 @@
 // import 'package:flutter/material.dart';
-import 'package:frezka/screens/booking/model/booking_detail_response.dart';
+import 'package:grow_tokyo_app/screens/booking/model/booking_detail_response.dart';
 // import 'package:nb_utils/nb_utils.dart';
 // import 'package:razorpay_flutter/razorpay_flutter.dart';
 

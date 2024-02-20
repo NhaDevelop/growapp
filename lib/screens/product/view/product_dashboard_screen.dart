@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/app_scaffold.dart';
-import 'package:frezka/components/loader_widget.dart';
-import 'package:frezka/screens/product/view/product_wish_list_screen.dart';
+import 'package:grow_tokyo_app/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/components/loader_widget.dart';
+import 'package:grow_tokyo_app/screens/product/view/product_wish_list_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/empty_error_state_widget.dart';
@@ -27,7 +27,8 @@ class ProductScreen extends StatefulWidget {
   _ProductScreenState createState() => _ProductScreenState();
 }
 
-class _ProductScreenState extends State<ProductScreen> with TickerProviderStateMixin {
+class _ProductScreenState extends State<ProductScreen>
+    with TickerProviderStateMixin {
   TextEditingController searchProductCont = TextEditingController();
 
   FocusNode searchFocusNode = FocusNode();
@@ -71,7 +72,8 @@ class _ProductScreenState extends State<ProductScreen> with TickerProviderStateM
   }
 
   void init({bool flag = false}) async {
-    future = productDashboard(userId: appStore.isLoggedIn ? userStore.userId : null);
+    future =
+        productDashboard(userId: appStore.isLoggedIn ? userStore.userId : null);
 
     if (flag) setState(() {});
   }
@@ -98,7 +100,9 @@ class _ProductScreenState extends State<ProductScreen> with TickerProviderStateM
             Container(
               width: context.width(),
               height: 150,
-              decoration: boxDecorationWithRoundedCorners(borderRadius: radiusOnly(bottomLeft: 20, bottomRight: 20), backgroundColor: context.primaryColor),
+              decoration: boxDecorationWithRoundedCorners(
+                  borderRadius: radiusOnly(bottomLeft: 20, bottomRight: 20),
+                  backgroundColor: context.primaryColor),
               child: appBarWidget(
                 locale.shop,
                 center: true,
@@ -108,7 +112,8 @@ class _ProductScreenState extends State<ProductScreen> with TickerProviderStateM
                 textSize: APPBAR_TEXT_SIZE,
                 actions: [
                   IconButton(
-                    icon: Icon(Icons.favorite_border_outlined, color: Colors.white),
+                    icon: Icon(Icons.favorite_border_outlined,
+                        color: Colors.white),
                     onPressed: () async {
                       doIfLoggedIn(context, () {
                         ProductWishListScreen().launch(context);
@@ -139,7 +144,10 @@ class _ProductScreenState extends State<ProductScreen> with TickerProviderStateM
                   appStore.setLoading(true);
                   handleSearch(flag: true);
                 },
-                decoration: inputDecoration(context, hint: locale.searchForProduct, prefixIcon: Icon(Icons.search, color: textSecondaryColorGlobal)),
+                decoration: inputDecoration(context,
+                    hint: locale.searchForProduct,
+                    prefixIcon:
+                        Icon(Icons.search, color: textSecondaryColorGlobal)),
               ),
             ),
           ],
@@ -177,7 +185,8 @@ class _ProductScreenState extends State<ProductScreen> with TickerProviderStateM
                 }
 
                 return AnimatedScrollView(
-                  padding: EdgeInsets.only(left: 16, right: 16, top: 40, bottom: 30),
+                  padding:
+                      EdgeInsets.only(left: 16, right: 16, top: 40, bottom: 30),
                   onSwipeRefresh: () async {
                     page = 1;
 
@@ -199,7 +208,8 @@ class _ProductScreenState extends State<ProductScreen> with TickerProviderStateM
                       spacing: 16,
                       runSpacing: 16,
                       itemBuilder: (context, index) {
-                        return ProductItemComponent(productListData: productList[index]);
+                        return ProductItemComponent(
+                            productListData: productList[index]);
                       },
                     ),
                   ],
@@ -223,7 +233,8 @@ class _ProductScreenState extends State<ProductScreen> with TickerProviderStateM
                 );
               },
               onSuccess: (snap) {
-                if (snap.data == null || snap.data!.category.validate().isEmpty) {
+                if (snap.data == null ||
+                    snap.data!.category.validate().isEmpty) {
                   return NoDataWidget(
                     title: locale.atThisTimeThere,
                     retryText: locale.reload,
@@ -247,16 +258,23 @@ class _ProductScreenState extends State<ProductScreen> with TickerProviderStateM
                   },
                   children: [
                     /// Product Category Component
-                    ProductCategoryComponent(productCategoryList: snap.data!.category.validate()),
+                    ProductCategoryComponent(
+                        productCategoryList: snap.data!.category.validate()),
 
                     /// Featured Product Component
-                    FeaturedProductComponent(featuredProductList: snap.data!.featuredProduct.validate()),
+                    FeaturedProductComponent(
+                        featuredProductList:
+                            snap.data!.featuredProduct.validate()),
 
                     /// Best Seller Product Component
-                    BestSellerProductComponent(bestSellerProductList: snap.data!.bestsellerProduct.validate()),
+                    BestSellerProductComponent(
+                        bestSellerProductList:
+                            snap.data!.bestsellerProduct.validate()),
 
                     /// Discount Product Component
-                    DiscountProductComponent(discountProductList: snap.data!.discountProduct.validate()),
+                    DiscountProductComponent(
+                        discountProductList:
+                            snap.data!.discountProduct.validate()),
                   ],
                 );
               },

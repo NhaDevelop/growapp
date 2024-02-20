@@ -1,4 +1,4 @@
-import 'package:frezka/utils/app_common.dart';
+import 'package:grow_tokyo_app/utils/app_common.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -10,15 +10,14 @@ class AppLanguageScreen extends StatefulWidget {
 }
 
 class _AppLanguageScreenState extends State<AppLanguageScreen> {
-
- @override
+  @override
   void initState() {
     super.initState();
     init();
   }
 
   void init() async {
-  //
+    //
   }
 
   @override
@@ -29,7 +28,11 @@ class _AppLanguageScreenState extends State<AppLanguageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBarWidget(context, title: locale.appLanguage, appBarHeight: 70, roundCornerShape: true, showLeadingIcon: true),
+      appBar: commonAppBarWidget(context,
+          title: locale.appLanguage,
+          appBarHeight: 70,
+          roundCornerShape: true,
+          showLeadingIcon: true),
       body: LanguageListWidget(
         widgetType: WidgetType.LIST,
         onLanguageChange: (v) {

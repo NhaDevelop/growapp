@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:frezka/screens/order/model/order_list_response.dart';
-import 'package:frezka/screens/order/model/order_status_response.dart';
+import 'package:grow_tokyo_app/screens/order/model/order_list_response.dart';
+import 'package:grow_tokyo_app/screens/order/model/order_status_response.dart';
 import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -16,7 +16,9 @@ import 'model/order_detail_response.dart';
 
 Future<List<OrderStatusData>> getOrderStatus() async {
   try {
-    var res = OrderStatusResponse.fromJson(await handleResponse(await buildHttpResponse(APIEndPoints.getOrderStatusList, method: HttpMethodType.GET)));
+    var res = OrderStatusResponse.fromJson(await handleResponse(
+        await buildHttpResponse(APIEndPoints.getOrderStatusList,
+            method: HttpMethodType.GET)));
     appStore.setLoading(false);
 
     orderStatusListCached = res.data;
@@ -38,16 +40,22 @@ Future<dynamic> updateOrderReview({
   Function(dynamic)? onSuccess,
 }) async {
   if (appStore.isLoggedIn) {
-    MultipartRequest multiPartRequest = await getMultiPartRequest('${reviewId.isNotEmpty ? APIEndPoints.updateReview : APIEndPoints.addReview}');
+    MultipartRequest multiPartRequest = await getMultiPartRequest(
+        '${reviewId.isNotEmpty ? APIEndPoints.updateReview : APIEndPoints.addReview}');
 
-    if (reviewId.isNotEmpty) multiPartRequest.fields[ProductModelKey.reviewId] = reviewId;
-    if (productId.isNotEmpty) multiPartRequest.fields[ProductModelKey.productId] = productId;
-    if (productVariationId.isNotEmpty) multiPartRequest.fields[ProductModelKey.productVariationId] = productVariationId;
+    if (reviewId.isNotEmpty)
+      multiPartRequest.fields[ProductModelKey.reviewId] = reviewId;
+    if (productId.isNotEmpty)
+      multiPartRequest.fields[ProductModelKey.productId] = productId;
+    if (productVariationId.isNotEmpty)
+      multiPartRequest.fields[ProductModelKey.productVariationId] =
+          productVariationId;
     if (rating.isNotEmpty) multiPartRequest.fields["rating"] = rating;
     if (reviewMsg.isNotEmpty) multiPartRequest.fields["review_msg"] = reviewMsg;
 
     if (files.validate().isNotEmpty) {
-      multiPartRequest.files.addAll(await getMultipartImages2(files: files.validate(), name: 'gallery'));
+      multiPartRequest.files.addAll(
+          await getMultipartImages2(files: files.validate(), name: 'gallery'));
       // multiPartRequest.fields['attachment_count'] = files.validate().length.toString();
     }
 
@@ -71,20 +79,28 @@ Future<dynamic> updateOrderReview({
 }
 
 Future<BaseResponseModel> deleteOrderReview({required int id}) async {
-  return BaseResponseModel.fromJson(await handleResponse(await buildHttpResponse('${APIEndPoints.removeReview}?review_id=$id', method: HttpMethodType.GET)));
+  return BaseResponseModel.fromJson(await handleResponse(
+      await buildHttpResponse('${APIEndPoints.removeReview}?review_id=$id',
+          method: HttpMethodType.GET)));
 }
 
 Future placeOrderAPI(Map request) async {
-  return await handleResponse(await buildHttpResponse(APIEndPoints.placeOrder, request: request, method: HttpMethodType.POST));
+  return await handleResponse(await buildHttpResponse(APIEndPoints.placeOrder,
+      request: request, method: HttpMethodType.POST));
 }
 
 Future orderUpdate({required int orderId}) async {
-  return await handleResponse(await buildHttpResponse('${APIEndPoints.cancelOrder}?id=$orderId', method: HttpMethodType.GET));
+  return await handleResponse(await buildHttpResponse(
+      '${APIEndPoints.cancelOrder}?id=$orderId',
+      method: HttpMethodType.GET));
 }
 
 Future<OrderDetailResponse> getOrderDetail({required int orderId}) async {
   try {
-    var res = OrderDetailResponse.fromJson(await handleResponse(await buildHttpResponse('${APIEndPoints.getOrderDetails}?order_id=$orderId', method: HttpMethodType.GET)));
+    var res = OrderDetailResponse.fromJson(await handleResponse(
+        await buildHttpResponse(
+            '${APIEndPoints.getOrderDetails}?order_id=$orderId',
+            method: HttpMethodType.GET)));
     appStore.setLoading(false);
 
     if (orderDetailCached.any((element) => element.id == res.data!.id)) {
@@ -115,7 +131,8 @@ Future<List<OrderListData>> getOrderList({
     String perPages = 'per_page=$perPage&';
     String pages = 'page=$page';
 
-    OrderListResponse res = OrderListResponse.fromJson(await handleResponse(await buildHttpResponse(
+    OrderListResponse res =
+        OrderListResponse.fromJson(await handleResponse(await buildHttpResponse(
       '${APIEndPoints.getOrderList}?$statusData$perPages$pages',
       method: HttpMethodType.GET,
     )));

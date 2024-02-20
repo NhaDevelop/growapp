@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/main.dart';
-import 'package:frezka/screens/booking/view/booking_screen.dart';
-import 'package:frezka/utils/common_base.dart';
-import 'package:frezka/utils/extensions/string_extensions.dart';
-import 'package:frezka/utils/images.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/screens/booking/view/booking_screen.dart';
+import 'package:grow_tokyo_app/utils/common_base.dart';
+import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
+import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/cached_image_widget.dart';
@@ -26,7 +26,8 @@ class BookingItemComponent extends StatelessWidget {
     return Container(
       width: context.width(),
       margin: EdgeInsets.all(8),
-      decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor),
+      decoration:
+          boxDecorationWithRoundedCorners(backgroundColor: context.cardColor),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -36,23 +37,35 @@ class BookingItemComponent extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(vertical: 4, horizontal: 16),
                 decoration: boxDecorationWithRoundedCorners(
-                  backgroundColor: bookingData.status == BookingStatusConst.COMPLETED ? primaryColor : territoryButtonColor,
+                  backgroundColor:
+                      bookingData.status == BookingStatusConst.COMPLETED
+                          ? primaryColor
+                          : territoryButtonColor,
                   borderRadius: radiusOnly(topLeft: defaultRadius),
                 ),
                 child: Text(
                   '#${bookingData.id.validate()}',
-                  style: boldTextStyle(color: bookingData.status == BookingStatusConst.COMPLETED ? Colors.white : secondaryColor, size: 12),
+                  style: boldTextStyle(
+                      color: bookingData.status == BookingStatusConst.COMPLETED
+                          ? Colors.white
+                          : secondaryColor,
+                      size: 12),
                 ),
               ),
               Container(
                 padding: EdgeInsets.symmetric(vertical: 3, horizontal: 16),
                 decoration: boxDecorationWithRoundedCorners(
-                  backgroundColor: bookingData.status == BookingStatusConst.COMPLETED ? secondaryColor : territoryButtonColor,
+                  backgroundColor:
+                      bookingData.status == BookingStatusConst.COMPLETED
+                          ? secondaryColor
+                          : territoryButtonColor,
                   borderRadius: radiusOnly(topRight: defaultRadius),
                 ),
                 child: PriceWidget(
                   price: bookingData.totalAmount.validate(),
-                  color: bookingData.status == BookingStatusConst.COMPLETED ? Colors.white : secondaryColor,
+                  color: bookingData.status == BookingStatusConst.COMPLETED
+                      ? Colors.white
+                      : secondaryColor,
                   size: 14,
                 ),
               ),
@@ -66,7 +79,9 @@ class BookingItemComponent extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CachedImageWidget(
-                    url: bookingData.serviceList.validate().isNotEmpty ? bookingData.serviceList!.first.serviceImage.validate() : '',
+                    url: bookingData.serviceList.validate().isNotEmpty
+                        ? bookingData.serviceList!.first.serviceImage.validate()
+                        : '',
                     height: 75,
                     width: 75,
                     fit: BoxFit.cover,
@@ -78,14 +93,19 @@ class BookingItemComponent extends StatelessWidget {
                     children: [
                       Marquee(
                         directionMarguee: DirectionMarguee.oneDirection,
-                        child: Text(bookingData.branchName.validate(), style: boldTextStyle()),
+                        child: Text(bookingData.branchName.validate(),
+                            style: boldTextStyle()),
                       ),
                       2.height,
                       if (bookingData.serviceList.validate().isNotEmpty)
                         Marquee(
                           directionMarguee: DirectionMarguee.oneDirection,
                           child: Text(
-                            bookingData.serviceList.validate().map((e) => e.serviceName.validate()).toList().join(', '),
+                            bookingData.serviceList
+                                .validate()
+                                .map((e) => e.serviceName.validate())
+                                .toList()
+                                .join(', '),
                             style: secondaryTextStyle(),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -117,9 +137,12 @@ class BookingItemComponent extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          ic_booking_status.iconImage(size: 16, color: primaryColor).paddingRight(8),
+                          ic_booking_status
+                              .iconImage(size: 16, color: primaryColor)
+                              .paddingRight(8),
                           Text(
-                            getBookingStatusKey(status: bookingData.status.validate()),
+                            getBookingStatusKey(
+                                status: bookingData.status.validate()),
                             style: boldTextStyle(size: 13, color: primaryColor),
                             maxLines: 1,
                           ),
@@ -138,16 +161,19 @@ class BookingItemComponent extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          ic_selected_booking.iconImage(size: 12, color: primaryColor),
+                          ic_selected_booking.iconImage(
+                              size: 12, color: primaryColor),
                           8.width,
-                          Text(bookingData.bookingDate.validate(), style: primaryTextStyle(), maxLines: 1),
+                          Text(bookingData.bookingDate.validate(),
+                              style: primaryTextStyle(), maxLines: 1),
                         ],
                       ),
                       Row(
                         children: [
                           ic_clock.iconImage(size: 14, color: primaryColor),
                           8.width,
-                          Text(bookingData.bookingTime.validate(), style: primaryTextStyle(), maxLines: 1),
+                          Text(bookingData.bookingTime.validate(),
+                              style: primaryTextStyle(), maxLines: 1),
                         ],
                       ),
                     ],
@@ -166,13 +192,19 @@ class BookingItemComponent extends StatelessWidget {
                       color: territoryButtonColor,
                       elevation: 0,
                       onTap: () {
-                        BookingScreen(services: bookingData.serviceList.validate(), isReschedule: true).launch(context);
+                        BookingScreen(
+                                services: bookingData.serviceList.validate(),
+                                isReschedule: true)
+                            .launch(context);
                       },
                     ).paddingSymmetric(horizontal: 16),
                     8.height,
                   ],
                 ),
-              if (bookingData.status == BookingStatusConst.PENDING && (bookingData.payment == null || (bookingData.payment != null && bookingData.payment!.paymentStatus != 1)))
+              if (bookingData.status == BookingStatusConst.PENDING &&
+                  (bookingData.payment == null ||
+                      (bookingData.payment != null &&
+                          bookingData.payment!.paymentStatus != 1)))
                 AppButton(
                   text: locale.cancelAppointment,
                   padding: EdgeInsets.symmetric(vertical: 12),
@@ -215,7 +247,10 @@ class BookingItemComponent extends StatelessWidget {
         ],
       ).onTap(() {
         hideKeyboard(context);
-        BookingDetailScreen(bookingId: bookingData.id.validate(), bookingStatus: bookingData.status.validate()).launch(context);
+        BookingDetailScreen(
+                bookingId: bookingData.id.validate(),
+                bookingStatus: bookingData.status.validate())
+            .launch(context);
       }, borderRadius: radius()),
     );
   }

@@ -1,4 +1,4 @@
-import 'package:frezka/screens/product/model/product_list_response.dart';
+import 'package:grow_tokyo_app/screens/product/model/product_list_response.dart';
 
 class ProductWishListResponse {
   List<ProductData>? data;
@@ -9,7 +9,9 @@ class ProductWishListResponse {
 
   factory ProductWishListResponse.fromJson(Map<String, dynamic> json) {
     return ProductWishListResponse(
-      data: json['data'] != null ? (json['data'] as List).map((i) => ProductData.fromJson(i)).toList() : null,
+      data: json['data'] != null
+          ? (json['data'] as List).map((i) => ProductData.fromJson(i)).toList()
+          : null,
       message: json['message'],
       status: json['status'],
     );

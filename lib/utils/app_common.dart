@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as custom_tabs;
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
-import 'package:frezka/components/back_widget.dart';
-import 'package:frezka/components/html_widget.dart';
-import 'package:frezka/main.dart';
-import 'package:frezka/utils/colors.dart';
-import 'package:frezka/utils/constants.dart';
+import 'package:grow_tokyo_app/components/back_widget.dart';
+import 'package:grow_tokyo_app/components/html_widget.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/utils/colors.dart';
+import 'package:grow_tokyo_app/utils/constants.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:html/parser.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -14,20 +14,36 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'common_base.dart';
 
-Future<bool> get isIqonicProduct async => await getPackageName() == appPackageName;
+Future<bool> get isIqonicProduct async =>
+    await getPackageName() == appPackageName;
 
 // Currency position common
-bool get isCurrencyPositionLeft => getStringAsync(SharedPreferenceConst.CURRENCY_POSITION, defaultValue: CURRENCY_POSITION_LEFT) == CURRENCY_POSITION_LEFT;
+bool get isCurrencyPositionLeft =>
+    getStringAsync(SharedPreferenceConst.CURRENCY_POSITION,
+        defaultValue: CURRENCY_POSITION_LEFT) ==
+    CURRENCY_POSITION_LEFT;
 
-bool get isCurrencyPositionRight => getStringAsync(SharedPreferenceConst.CURRENCY_POSITION, defaultValue: CURRENCY_POSITION_LEFT) == CURRENCY_POSITION_RIGHT;
+bool get isCurrencyPositionRight =>
+    getStringAsync(SharedPreferenceConst.CURRENCY_POSITION,
+        defaultValue: CURRENCY_POSITION_LEFT) ==
+    CURRENCY_POSITION_RIGHT;
 
-bool get isCurrencyPositionLeftWithSpace => getStringAsync(SharedPreferenceConst.CURRENCY_POSITION, defaultValue: CURRENCY_POSITION_LEFT) == CURRENCY_POSITION_LEFT_WITH_SPACE;
+bool get isCurrencyPositionLeftWithSpace =>
+    getStringAsync(SharedPreferenceConst.CURRENCY_POSITION,
+        defaultValue: CURRENCY_POSITION_LEFT) ==
+    CURRENCY_POSITION_LEFT_WITH_SPACE;
 
-bool get isCurrencyPositionRightWithSpace => getStringAsync(SharedPreferenceConst.CURRENCY_POSITION, defaultValue: CURRENCY_POSITION_LEFT) == CURRENCY_POSITION_RIGHT_WITH_SPACE;
+bool get isCurrencyPositionRightWithSpace =>
+    getStringAsync(SharedPreferenceConst.CURRENCY_POSITION,
+        defaultValue: CURRENCY_POSITION_LEFT) ==
+    CURRENCY_POSITION_RIGHT_WITH_SPACE;
 //endregion
 
-Future<void> commonLaunchUrl(String address, {LaunchMode launchMode = LaunchMode.inAppWebView}) async {
-  await launchUrl(Uri.parse(address), mode: launchMode).then((value) => null).catchError((e) {
+Future<void> commonLaunchUrl(String address,
+    {LaunchMode launchMode = LaunchMode.inAppWebView}) async {
+  await launchUrl(Uri.parse(address), mode: launchMode)
+      .then((value) => null)
+      .catchError((e) {
     toast('${locale.invalidUrl}: $address');
   });
 }
@@ -35,15 +51,18 @@ Future<void> commonLaunchUrl(String address, {LaunchMode launchMode = LaunchMode
 void launchCall(String? url) {
   if (url.validate().isNotEmpty) {
     if (isIOS)
-      commonLaunchUrl('tel://' + url!, launchMode: LaunchMode.externalApplication);
+      commonLaunchUrl('tel://' + url!,
+          launchMode: LaunchMode.externalApplication);
     else
-      commonLaunchUrl('tel:' + url!, launchMode: LaunchMode.externalApplication);
+      commonLaunchUrl('tel:' + url!,
+          launchMode: LaunchMode.externalApplication);
   }
 }
 
 void launchMap(String? url) {
   if (url.validate().isNotEmpty) {
-    commonLaunchUrl(GOOGLE_MAP_PREFIX + url!, launchMode: LaunchMode.externalApplication);
+    commonLaunchUrl(GOOGLE_MAP_PREFIX + url!,
+        launchMode: LaunchMode.externalApplication);
   }
 }
 
@@ -94,17 +113,22 @@ String parseHtmlString(String? htmlString) {
   return parse(parse(htmlString).body!.text).documentElement!.text;
 }
 
-PreferredSizeWidget commonAppBarWidget(BuildContext context, {String? title, double? appBarHeight, bool? showLeadingIcon, bool? roundCornerShape, List<Widget>? actions}) {
+PreferredSizeWidget commonAppBarWidget(BuildContext context,
+    {String? title,
+    double? appBarHeight,
+    bool? showLeadingIcon,
+    bool? roundCornerShape,
+    List<Widget>? actions}) {
   return PreferredSize(
     preferredSize: Size.fromHeight(appBarHeight ?? 100.0),
     child: AppBar(
-      title: Text(title!, style: boldTextStyle(color: whiteColor, size: APPBAR_TEXT_SIZE)),
-      systemOverlayStyle: SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
+      title: Text(title!,
+          style: boldTextStyle(color: whiteColor, size: APPBAR_TEXT_SIZE)),
+      systemOverlayStyle:
+          SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
       backgroundColor: primaryColor,
       centerTitle: true,
-      leading: !showLeadingIcon.validate()
-          ? Offstage()
-          : BackWidget(),
+      leading: !showLeadingIcon.validate() ? Offstage() : BackWidget(),
       elevation: 0,
       actions: actions,
       shape: roundCornerShape.validate()
@@ -116,7 +140,8 @@ PreferredSizeWidget commonAppBarWidget(BuildContext context, {String? title, dou
   );
 }
 
-double calculateDistance(double startLat, double startLong, double endLat, double endLong) {
+double calculateDistance(
+    double startLat, double startLong, double endLat, double endLong) {
   double distance = Geolocator.distanceBetween(
     startLat,
     startLong,
@@ -128,16 +153,24 @@ double calculateDistance(double startLat, double startLong, double endLat, doubl
   return double.parse((distanceInKiloMeters).toStringAsFixed(2));
 }
 
-(String, Color) getBranchIsOpen({required String startTime, required String endTime, bool isHoliday = false}) {
+(String, Color) getBranchIsOpen(
+    {required String startTime,
+    required String endTime,
+    bool isHoliday = false}) {
   if (isHoliday) {
     return (BRANCH_STATUS_CLOSED, Colors.red);
   }
 
   final currentTime = TimeOfDay.now();
-  final branchStartTime = TimeOfDay(hour: int.parse(startTime.split(':')[0]), minute: int.parse(startTime.split(':')[1]));
-  final branchEndTime = TimeOfDay(hour: int.parse(endTime.split(':')[0]), minute: int.parse(endTime.split(':')[1]));
+  final branchStartTime = TimeOfDay(
+      hour: int.parse(startTime.split(':')[0]),
+      minute: int.parse(startTime.split(':')[1]));
+  final branchEndTime = TimeOfDay(
+      hour: int.parse(endTime.split(':')[0]),
+      minute: int.parse(endTime.split(':')[1]));
 
-  if (isTimeBefore(currentTime, branchStartTime) || isTimeAfter(currentTime, branchEndTime)) {
+  if (isTimeBefore(currentTime, branchStartTime) ||
+      isTimeAfter(currentTime, branchEndTime)) {
     return (locale.closed, Colors.red);
   } else {
     return (locale.open, Colors.green);

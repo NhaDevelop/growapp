@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/main.dart';
+import 'package:grow_tokyo_app/main.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class LoaderWidget extends StatelessWidget {
@@ -15,7 +15,7 @@ class LoaderWidget extends StatelessWidget {
       'assets/frezka_loader.gif',
       height: height ?? 150,
       width: width ?? 150,
-      color: color  ?? (appStore.isDarkMode ? Colors.white : Colors.black),
+      color: color ?? (appStore.isDarkMode ? Colors.white : Colors.black),
     ).center();
   }
 }

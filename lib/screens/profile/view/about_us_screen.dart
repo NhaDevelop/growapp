@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:frezka/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/components/app_scaffold.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../configs.dart';
@@ -23,7 +23,8 @@ class _AboutScreenState extends State<AboutScreen> {
   }
 
   void init() async {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.white, statusBarBrightness: Brightness.light));
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: Colors.white, statusBarBrightness: Brightness.light));
   }
 
   @override
@@ -48,11 +49,13 @@ class _AboutScreenState extends State<AboutScreen> {
         fadeInConfiguration: FadeInConfiguration(duration: 2.seconds),
         children: [
           16.height,
-          Text(APP_NAME, style: boldTextStyle(size: 20, color: context.primaryColor)),
+          Text(APP_NAME,
+              style: boldTextStyle(size: 20, color: context.primaryColor)),
           16.height,
           Align(
             alignment: Alignment.centerLeft,
-            child: Text(getStringAsync(ConfigurationKeyConst.SITE_DESCRIPTION), style: primaryTextStyle(), textAlign: TextAlign.justify),
+            child: Text(getStringAsync(ConfigurationKeyConst.SITE_DESCRIPTION),
+                style: primaryTextStyle(), textAlign: TextAlign.justify),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -62,12 +65,17 @@ class _AboutScreenState extends State<AboutScreen> {
                   height: 80,
                   width: 80,
                   padding: EdgeInsets.all(16),
-                  decoration: boxDecorationWithRoundedCorners(borderRadius: radius(), backgroundColor: context.scaffoldBackgroundColor),
+                  decoration: boxDecorationWithRoundedCorners(
+                      borderRadius: radius(),
+                      backgroundColor: context.scaffoldBackgroundColor),
                   child: Column(
                     children: [
-                      Image.asset(ic_call, height: 22, color: context.primaryColor),
+                      Image.asset(ic_call,
+                          height: 22, color: context.primaryColor),
                       4.height,
-                      Text(locale.call, style: secondaryTextStyle(), textAlign: TextAlign.center),
+                      Text(locale.call,
+                          style: secondaryTextStyle(),
+                          textAlign: TextAlign.center),
                     ],
                   ),
                 ).onTap(
@@ -83,12 +91,16 @@ class _AboutScreenState extends State<AboutScreen> {
                   height: 80,
                   width: 80,
                   padding: EdgeInsets.all(16),
-                  decoration: boxDecorationWithRoundedCorners(borderRadius: radius(), backgroundColor: context.scaffoldBackgroundColor),
+                  decoration: boxDecorationWithRoundedCorners(
+                      borderRadius: radius(),
+                      backgroundColor: context.scaffoldBackgroundColor),
                   child: Column(
                     children: [
                       Image.asset(ic_message, height: 22, color: primaryColor),
                       4.height,
-                      Text(locale.email, style: secondaryTextStyle(), textAlign: TextAlign.center),
+                      Text(locale.email,
+                          style: secondaryTextStyle(),
+                          textAlign: TextAlign.center),
                     ],
                   ),
                 ).onTap(

@@ -1,5 +1,5 @@
 // import 'package:flutterwave_standard/flutterwave.dart';
-// import 'package:frezka/main.dart';
+// import 'package:grow_tokyo_app/main.dart';
 // import 'package:nb_utils/nb_utils.dart';
 // import 'package:uuid/uuid.dart';
 

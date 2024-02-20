@@ -1,4 +1,4 @@
-import 'package:frezka/screens/product/model/product_list_response.dart';
+import 'package:grow_tokyo_app/screens/product/model/product_list_response.dart';
 
 class ProductDetailResponse {
   ProductData? data;
@@ -6,14 +6,19 @@ class ProductDetailResponse {
   bool? status;
   List<ProductData>? relatedProduct;
 
-  ProductDetailResponse({this.data, this.message, this.status, this.relatedProduct});
+  ProductDetailResponse(
+      {this.data, this.message, this.status, this.relatedProduct});
 
   factory ProductDetailResponse.fromJson(Map<String, dynamic> json) {
     return ProductDetailResponse(
       data: json['data'] != null ? ProductData.fromJson(json['data']) : null,
       message: json['message'],
       status: json['status'],
-      relatedProduct: json['related-product'] != null ? (json['related-product'] as List).map((i) => ProductData.fromJson(i)).toList() : null,
+      relatedProduct: json['related-product'] != null
+          ? (json['related-product'] as List)
+              .map((i) => ProductData.fromJson(i))
+              .toList()
+          : null,
     );
   }
 

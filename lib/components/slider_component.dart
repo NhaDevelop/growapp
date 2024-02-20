@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frezka/components/cached_image_widget.dart';
+import 'package:grow_tokyo_app/components/cached_image_widget.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../screens/branch/component/branch_information_component.dart';
@@ -35,7 +35,9 @@ class _SliderComponentState extends State<SliderComponent> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: boxDecorationDefault(color: context.scaffoldBackgroundColor, borderRadius: BorderRadius.circular(0)),
+      decoration: boxDecorationDefault(
+          color: context.scaffoldBackgroundColor,
+          borderRadius: BorderRadius.circular(0)),
       child: AnimatedScrollView(
         physics: NeverScrollableScrollPhysics(),
         listAnimationType: ListAnimationType.None,
