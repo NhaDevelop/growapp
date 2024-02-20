@@ -6,6 +6,8 @@ import '../../../main.dart';
 import '../../../utils/constants.dart';
 
 class DashboardShimmer extends StatelessWidget {
+  const DashboardShimmer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -35,9 +37,9 @@ class DashboardShimmer extends StatelessWidget {
               16.height,
               Row(
                 children: [
-                  ShimmerWidget(height: 50).expand(),
+                  const ShimmerWidget(height: 50).expand(),
                   16.width,
-                  ShimmerWidget(height: 50).expand(),
+                  const ShimmerWidget(height: 50).expand(),
                 ],
               ),
               16.height,
@@ -74,13 +76,13 @@ class DashboardShimmer extends StatelessWidget {
                           Container(
                             width: context.width() / 3 - 20,
                             height: CATEGORY_ICON_SIZE,
-                            padding: EdgeInsets.all(8),
+                            padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(color: context.cardColor, shape: BoxShape.circle),
                           ),
                           Container(
                             width: 60,
                             height: 10,
-                            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                             decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor),
                           ),
                         ],
@@ -141,7 +143,7 @@ class DashboardShimmer extends StatelessWidget {
                       ShimmerWidget(
                         child: Container(
                           width: (context.width() - 48) / 2,
-                          padding: EdgeInsets.only(top: 48, left: 16, right: 16),
+                          padding: const EdgeInsets.only(top: 48, left: 16, right: 16),
                           decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor),
                           child: Column(
                             children: [
@@ -165,7 +167,7 @@ class DashboardShimmer extends StatelessWidget {
                           child: Container(
                             width: 62,
                             height: 62,
-                            padding: EdgeInsets.all(8),
+                            padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(color: context.cardColor, shape: BoxShape.circle),
                           ),
                         ),
@@ -190,7 +192,7 @@ class DashboardShimmer extends StatelessWidget {
               ).paddingOnly(left: 16, right: 16, top: 20),
               HorizontalList(
                 itemCount: 5,
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 spacing: 16,
                 itemBuilder: (context, index) {
                   return ShimmerWidget(

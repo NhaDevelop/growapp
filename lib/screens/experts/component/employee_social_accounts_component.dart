@@ -7,7 +7,7 @@ class EmployeeSocialAccountsComponent extends StatelessWidget {
   final String icon;
   final VoidCallback? onPressed;
 
-  EmployeeSocialAccountsComponent({required this.icon, this.onPressed});
+  const EmployeeSocialAccountsComponent({super.key, required this.icon, this.onPressed});
 
   @override
   Widget build(BuildContext context) {

@@ -8,8 +8,10 @@ import '../../../components/view_all_label_component.dart';
 import '../../../utils/constants.dart';
 
 class FilterPriceComponent extends StatefulWidget {
+  const FilterPriceComponent({super.key});
+
   @override
-  _FilterPriceComponentState createState() => _FilterPriceComponentState();
+  State<FilterPriceComponent> createState() => _FilterPriceComponentState();
 }
 
 class _FilterPriceComponentState extends State<FilterPriceComponent> {
@@ -29,7 +31,7 @@ class _FilterPriceComponentState extends State<FilterPriceComponent> {
       rangeValues = RangeValues(1, 5000);
     }*/
 
-    rangeValues = RangeValues(1, 5000);
+    rangeValues = const RangeValues(1, 5000);
   }
 
   @override

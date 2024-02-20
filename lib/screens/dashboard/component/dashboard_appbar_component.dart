@@ -22,15 +22,16 @@ class DashboardAppBarComponent extends StatefulWidget {
   final double? positionWidgetHeight;
   final VoidCallback? onTapSearch;
 
-  DashboardAppBarComponent(
-      {this.innerChild,
+  const DashboardAppBarComponent(
+      {super.key,
+      this.innerChild,
       this.hintText,
       this.positionWidget,
       this.positionWidgetHeight,
       this.onTapSearch});
 
   @override
-  _DashboardAppBarComponentState createState() =>
+  State<DashboardAppBarComponent> createState() =>
       _DashboardAppBarComponentState();
 }
 
@@ -62,11 +63,13 @@ class _DashboardAppBarComponentState extends State<DashboardAppBarComponent> {
       lastError = '';
       speech.listen(
         onResult: resultListener,
-        listenFor: Duration(seconds: 30),
-        pauseFor: Duration(seconds: 10),
-        partialResults: true,
-        cancelOnError: true,
-        listenMode: ListenMode.deviceDefault,
+        listenFor: const Duration(seconds: 30),
+        pauseFor: const Duration(seconds: 10),
+        listenOptions: SpeechListenOptions(
+          partialResults: true,
+          cancelOnError: true,
+          listenMode: ListenMode.deviceDefault,
+        ),
       );
       setState(() {});
     } else {
@@ -104,7 +107,7 @@ class _DashboardAppBarComponentState extends State<DashboardAppBarComponent> {
 
   void statusListener(String status) {
     setState(() {
-      lastStatus = '$status';
+      lastStatus = status;
       log("lastStatus: $lastStatus");
     });
 
@@ -159,11 +162,11 @@ class _DashboardAppBarComponentState extends State<DashboardAppBarComponent> {
                       );
                     }),
                     Image.asset(ic_hi, height: 22, fit: BoxFit.cover),
-                    Spacer(),
+                    const Spacer(),
                     IconButton(
                       onPressed: () {
                         doIfLoggedIn(context, () {
-                          NotificationFragment().launch(context);
+                          const NotificationFragment().launch(context);
                         });
                       },
                       icon: ic_unselected_bell.iconImage(
@@ -184,13 +187,14 @@ class _DashboardAppBarComponentState extends State<DashboardAppBarComponent> {
                                 style: primaryTextStyle(color: Colors.white)))
                         .expand(),
                     8.width,
-                    Icon(Icons.keyboard_arrow_down, color: Colors.white),
+                    const Icon(Icons.keyboard_arrow_down, color: Colors.white),
                   ],
                 ).paddingOnly(right: 12).onTap(() {
-                  SelectBranchScreen(isFromDashboard: true).launch(context);
+                  const SelectBranchScreen(isFromDashboard: true)
+                      .launch(context);
                 }),
                 16.height,
-                DottedLine(dashColor: lightPrimaryColor, dashGapLength: 0)
+                const DottedLine(dashColor: lightPrimaryColor, dashGapLength: 0)
                     .paddingOnly(right: 10),
               ],
             ),
@@ -204,34 +208,33 @@ class _DashboardAppBarComponentState extends State<DashboardAppBarComponent> {
             width: context.width(),
             decoration: boxDecorationWithRoundedCorners(
                 backgroundColor: context.cardColor),
-            child: widget.positionWidget != null
-                ? widget.positionWidget
-                : Stack(
-                    clipBehavior: Clip.hardEdge,
-                    children: [
-                      AppTextField(
-                        textFieldType: TextFieldType.NAME,
-                        onTap: widget.onTapSearch,
-                        decoration: inputDecoration(
-                          context,
-                          label: widget.hintText ?? '',
-                          prefixIcon: Icon(Icons.search,
-                              color: textSecondaryColorGlobal),
-                        ),
+            child: widget.positionWidget ??
+                Stack(
+                  clipBehavior: Clip.hardEdge,
+                  children: [
+                    AppTextField(
+                      textFieldType: TextFieldType.NAME,
+                      onTap: widget.onTapSearch,
+                      decoration: inputDecoration(
+                        context,
+                        label: widget.hintText ?? '',
+                        prefixIcon:
+                            Icon(Icons.search, color: textSecondaryColorGlobal),
                       ),
-                      Positioned(
-                        left: isRTL ? 16 : null,
-                        right: isRTL ? null : 16,
-                        child: IconButton(
-                          icon: Icon(Icons.mic_none_outlined),
-                          color: textSecondaryColorGlobal,
-                          onPressed: () async {
-                            startListening();
-                          },
-                        ),
+                    ),
+                    Positioned(
+                      left: isRTL ? 16 : null,
+                      right: isRTL ? null : 16,
+                      child: IconButton(
+                        icon: const Icon(Icons.mic_none_outlined),
+                        color: textSecondaryColorGlobal,
+                        onPressed: () async {
+                          startListening();
+                        },
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
+                ),
           ),
         )
       ],

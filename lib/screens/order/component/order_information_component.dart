@@ -10,7 +10,7 @@ import '../model/order_detail_response.dart';
 class OrderInformationComponent extends StatelessWidget {
   final OrderListData orderData;
 
-  OrderInformationComponent({required this.orderData});
+  const OrderInformationComponent({super.key, required this.orderData});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class OrderInformationComponent extends StatelessWidget {
         ViewAllLabel(label: locale.orderDetail, isShowAll: false),
         Container(
           decoration: boxDecorationDefault(color: context.cardColor),
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,

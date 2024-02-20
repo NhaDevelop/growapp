@@ -14,10 +14,10 @@ import '../shimmer/branch_gallery_shimmer.dart';
 class BranchGalleryComponent extends StatefulWidget {
   final int branchId;
 
-  BranchGalleryComponent({required this.branchId});
+  const BranchGalleryComponent({super.key, required this.branchId});
 
   @override
-  _BranchGalleryComponentState createState() => _BranchGalleryComponentState();
+  State<BranchGalleryComponent> createState() => _BranchGalleryComponentState();
 }
 
 class _BranchGalleryComponentState extends State<BranchGalleryComponent> {
@@ -58,14 +58,14 @@ class _BranchGalleryComponentState extends State<BranchGalleryComponent> {
         SnapHelperWidget<List<BranchGalleryData>>(
           future: future,
           initialData: branchGalleryListResponseCached,
-          loadingWidget: BranchGalleryShimmer(),
+          loadingWidget: const BranchGalleryShimmer(),
           onSuccess: (list) {
             if (list.isEmpty) {
               return SingleChildScrollView(
                 child: NoDataWidget(
                   title: locale.noGalleryFound,
                   subTitle: locale.galleryWillBeAppearedHere,
-                  imageWidget: EmptyStateWidget(),
+                  imageWidget: const EmptyStateWidget(),
                 ),
               );
             }
@@ -80,13 +80,14 @@ class _BranchGalleryComponentState extends State<BranchGalleryComponent> {
 
                 return GestureDetector(
                   onTap: () {
-                    if (galleryData.fullUrl.validate().isNotEmpty)
+                    if (galleryData.fullUrl.validate().isNotEmpty) {
                       ZoomImageScreen(
                               galleryImages: list
                                   .map((e) => e.fullUrl.validate())
                                   .toList(),
                               index: index)
                           .launch(context);
+                    }
                   },
                   child: CachedImageWidget(
                     url: galleryData.fullUrl.validate(),
@@ -102,7 +103,7 @@ class _BranchGalleryComponentState extends State<BranchGalleryComponent> {
             return NoDataWidget(
               title: error,
               retryText: locale.reload,
-              imageWidget: ErrorStateWidget(),
+              imageWidget: const ErrorStateWidget(),
               onRetry: () {
                 page = 1;
                 appStore.setLoading(true);
@@ -114,7 +115,8 @@ class _BranchGalleryComponentState extends State<BranchGalleryComponent> {
           },
         ),
         Observer(
-            builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+            builder: (context) =>
+                const LoaderWidget().visible(appStore.isLoading)),
       ],
     );
   }

@@ -14,9 +14,9 @@ class BookingStatusResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
-    data['status'] = this.status;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
+    data['status'] = status;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -42,11 +42,11 @@ class BookingStatusData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['color_hex'] = this.colorHex;
-    data['is_disabled'] = this.isDisabled;
-    data['status'] = this.status;
-    data['title'] = this.title;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['color_hex'] = colorHex;
+    data['is_disabled'] = isDisabled;
+    data['status'] = status;
+    data['title'] = title;
     return data;
   }
 }

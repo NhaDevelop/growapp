@@ -22,19 +22,20 @@ class ProductRatingReviewComponent extends StatelessWidget {
   final List<ProductReviewDataModel> reviewDetails;
   final ProductData productReviewData;
 
-  ProductRatingReviewComponent(
-      {required this.reviewDetails, required this.productReviewData});
+  const ProductRatingReviewComponent(
+      {super.key, required this.reviewDetails, required this.productReviewData});
 
   @override
   Widget build(BuildContext context) {
-    if (productReviewData.productReview.validate().isEmpty)
+    if (productReviewData.productReview.validate().isEmpty) {
       return Text(locale.noRatingsYet, style: boldTextStyle())
           .paddingSymmetric(horizontal: 16);
+    }
 
     return Container(
       color: context.cardColor,
-      padding: EdgeInsets.symmetric(horizontal: 16),
-      margin: EdgeInsets.only(top: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      margin: const EdgeInsets.only(top: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -83,7 +84,7 @@ class ProductRatingReviewComponent extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Container(
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 4),
                             alignment: Alignment.center,
                             decoration: boxDecorationWithRoundedCorners(
@@ -91,7 +92,7 @@ class ProductRatingReviewComponent extends StatelessWidget {
                                     context.scaffoldBackgroundColor),
                             child: TextIcon(
                               text: reviewData.rating.validate().toString(),
-                              edgeInsets: EdgeInsets.only(left: 0),
+                              edgeInsets: const EdgeInsets.only(left: 0),
                               textStyle:
                                   boldTextStyle(size: 14, color: primaryColor),
                               prefix: Icon(Icons.star,
@@ -137,7 +138,7 @@ class ProductRatingReviewComponent extends StatelessWidget {
                             fit: BoxFit.cover,
                             radius: defaultRadius,
                           ).onTap(() {
-                            if (galleryData.fullUrl.validate().isNotEmpty)
+                            if (galleryData.fullUrl.validate().isNotEmpty) {
                               ZoomImageScreen(
                                 galleryImages: reviewData.reviewGallary
                                     .validate()
@@ -145,6 +146,7 @@ class ProductRatingReviewComponent extends StatelessWidget {
                                     .toList(),
                                 index: index,
                               ).launch(context);
+                            }
                           });
                         },
                       ),

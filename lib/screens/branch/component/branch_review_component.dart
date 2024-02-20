@@ -21,7 +21,7 @@ class BranchReviewComponent extends StatefulWidget {
       {super.key, required this.branchId, this.branchTotalReview});
 
   @override
-  _BranchReviewComponentState createState() => _BranchReviewComponentState();
+  State<BranchReviewComponent> createState() => _BranchReviewComponentState();
 }
 
 class _BranchReviewComponentState extends State<BranchReviewComponent> {
@@ -62,13 +62,13 @@ class _BranchReviewComponentState extends State<BranchReviewComponent> {
         SnapHelperWidget<List<ReviewData>>(
           future: future,
           initialData: branchReviewListResponseCached,
-          loadingWidget: BranchReviewShimmer(),
+          loadingWidget: const BranchReviewShimmer(),
           errorBuilder: (error) {
             return SingleChildScrollView(
               child: NoDataWidget(
                 title: error,
                 retryText: locale.reload,
-                imageWidget: ErrorStateWidget(),
+                imageWidget: const ErrorStateWidget(),
                 onRetry: () {
                   page = 1;
                   appStore.setLoading(true);
@@ -85,13 +85,13 @@ class _BranchReviewComponentState extends State<BranchReviewComponent> {
                 child: NoDataWidget(
                   title: locale.noReviewsFound,
                   subTitle: locale.yourReviewsWillBeAppearedHere,
-                  imageWidget: EmptyStateWidget(),
+                  imageWidget: const EmptyStateWidget(),
                 ),
               );
             }
 
             return SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -102,7 +102,7 @@ class _BranchReviewComponentState extends State<BranchReviewComponent> {
                             style: boldTextStyle(size: LABEL_TEXT_SIZE)),
                         if (widget.branchTotalReview.validate() >= 1)
                           Text(
-                            '(${locale.basedOn} ${widget.branchTotalReview.validate()} ${locale.review}${widget.branchTotalReview.validate() > 1 ? '${locale.s}' : ''})',
+                            '(${locale.basedOn} ${widget.branchTotalReview.validate()} ${locale.review}${widget.branchTotalReview.validate() > 1 ? locale.s : ''})',
                             style: secondaryTextStyle(),
                           ).paddingLeft(4),
                       ],
@@ -118,7 +118,7 @@ class _BranchReviewComponentState extends State<BranchReviewComponent> {
                     shrinkWrap: true,
                     padding: EdgeInsets.zero,
                     listAnimationType: ListAnimationType.FadeIn,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (_, i) =>
                         ReviewItemComponent(reviewData: list[i]),
                   ),
@@ -128,7 +128,8 @@ class _BranchReviewComponentState extends State<BranchReviewComponent> {
           },
         ),
         Observer(
-            builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+            builder: (context) =>
+                const LoaderWidget().visible(appStore.isLoading)),
       ],
     );
   }

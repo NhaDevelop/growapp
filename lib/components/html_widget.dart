@@ -10,18 +10,18 @@ class HtmlWidget extends StatelessWidget {
   final Color? color;
   final String? title;
 
-  HtmlWidget({this.postContent, this.color, this.title});
+  const HtmlWidget({super.key, this.postContent, this.color, this.title});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarWidget(title.validate(),
           elevation: 0,
-          backWidget: BackWidget(),
+          backWidget: const BackWidget(),
           color: context.primaryColor,
           textColor: Colors.white),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Html(data: postContent!),
       ),
     );

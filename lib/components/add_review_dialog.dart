@@ -14,7 +14,7 @@ class AddReviewDialog extends StatefulWidget {
   final ReviewData? customerReview;
   final int? staffId;
 
-  AddReviewDialog({
+  const AddReviewDialog({super.key, 
     this.staffId,
     this.customerReview,
   });
@@ -45,9 +45,7 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
     Map<String, dynamic> req = {};
 
     req = {
-      "id": widget.customerReview != null
-          ? widget.customerReview!.id.validate()
-          : null,
+      "id": widget.customerReview?.id.validate(),
       "employee_id": widget.staffId.validate(),
       "rating": selectedRating.validate(),
       "review_msg": reviewCont.text.validate(),
@@ -79,7 +77,7 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
             children: [
               Container(
                 width: context.width(),
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                 decoration: boxDecorationDefault(
                   color: primaryColor,
                   borderRadius: radiusOnly(topRight: 8, topLeft: 8),
@@ -90,7 +88,7 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
                             style: boldTextStyle(color: Colors.white))
                         .expand(),
                     IconButton(
-                      icon: Icon(Icons.clear, color: Colors.white, size: 16),
+                      icon: const Icon(Icons.clear, color: Colors.white, size: 16),
                       onPressed: () {
                         finish(context);
                       },
@@ -102,7 +100,7 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     decoration: boxDecorationDefault(color: context.cardColor),
                     child: Row(
                       children: [
@@ -167,7 +165,7 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
           ),
         ),
         Observer(
-            builder: (context) => LoaderWidget()
+            builder: (context) => const LoaderWidget()
                 .visible(appStore.isLoading)
                 .withSize(height: 80, width: 80))
       ],

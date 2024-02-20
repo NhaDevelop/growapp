@@ -4,6 +4,8 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../../components/shimmer_widget.dart';
 
 class BranchDetailShimmer extends StatelessWidget {
+  const BranchDetailShimmer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -26,12 +28,12 @@ class BranchDetailShimmer extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ShimmerWidget(height: 16, width: context.width() * 0.25),
-                  ShimmerWidget(height: 30, width: 50),
+                  const ShimmerWidget(height: 30, width: 50),
                 ],
               ),
               Row(
                 children: [
-                  ShimmerWidget(height: 16, width: 16),
+                  const ShimmerWidget(height: 16, width: 16),
                   12.width,
                   ShimmerWidget(height: 12, width: context.width() * 0.25),
                 ],
@@ -39,7 +41,7 @@ class BranchDetailShimmer extends StatelessWidget {
               8.height,
               Row(
                 children: [
-                  ShimmerWidget(height: 16, width: 16),
+                  const ShimmerWidget(height: 16, width: 16),
                   10.width,
                   ShimmerWidget(height: 12, width: context.width() * 0.15),
                   4.width,
@@ -50,11 +52,11 @@ class BranchDetailShimmer extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ShimmerWidget(height: 30, width: 50).expand(),
+                  const ShimmerWidget(height: 30, width: 50).expand(),
                   12.width,
-                  ShimmerWidget(height: 30, width: 50).expand(),
+                  const ShimmerWidget(height: 30, width: 50).expand(),
                   12.width,
-                  ShimmerWidget(height: 30, width: 50).expand(),
+                  const ShimmerWidget(height: 30, width: 50).expand(),
                   12.width,
                 ],
               ),

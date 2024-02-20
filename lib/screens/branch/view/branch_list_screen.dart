@@ -17,10 +17,10 @@ import '../shimmer/select_branch_shimmer.dart';
 class BranchListScreen extends StatefulWidget {
   final Position? position;
 
-  BranchListScreen({this.position});
+  const BranchListScreen({super.key, this.position});
 
   @override
-  _BranchListScreenState createState() => _BranchListScreenState();
+  State<BranchListScreen> createState() => _BranchListScreenState();
 }
 
 class _BranchListScreenState extends State<BranchListScreen> {
@@ -72,7 +72,7 @@ class _BranchListScreenState extends State<BranchListScreen> {
               return NoDataWidget(
                 title: error,
                 retryText: locale.reload,
-                imageWidget: ErrorStateWidget(),
+                imageWidget: const ErrorStateWidget(),
                 onRetry: () {
                   page = 1;
                   appStore.setLoading(true);
@@ -82,16 +82,16 @@ class _BranchListScreenState extends State<BranchListScreen> {
                 },
               );
             },
-            loadingWidget: SelectBranchShimmer().paddingAll(16),
+            loadingWidget: const SelectBranchShimmer().paddingAll(16),
             onSuccess: (list) {
               return AnimatedListView(
                 itemCount: list.length,
                 shrinkWrap: true,
-                padding:
-                    EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 16),
+                padding: const EdgeInsets.only(
+                    left: 16, right: 16, top: 16, bottom: 16),
                 emptyWidget: NoDataWidget(
                   title: locale.noBranchFound,
-                  imageWidget: EmptyStateWidget(),
+                  imageWidget: const EmptyStateWidget(),
                   retryText: locale.reload,
                   onRetry: () {
                     page = 1;
@@ -101,7 +101,7 @@ class _BranchListScreenState extends State<BranchListScreen> {
                     setState(() {});
                   },
                 ),
-                physics: AlwaysScrollableScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   BranchData branchData = list[index];
 
@@ -136,7 +136,8 @@ class _BranchListScreenState extends State<BranchListScreen> {
             },
           ),
           Observer(
-              builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+              builder: (context) =>
+                  const LoaderWidget().visible(appStore.isLoading)),
         ],
       ),
     );

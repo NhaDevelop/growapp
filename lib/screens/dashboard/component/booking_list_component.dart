@@ -11,6 +11,8 @@ import '../../booking/shimmer/booking_list_shimmer.dart';
 late Function(String) onBookingListUpdate;
 
 class BookingListComponent extends StatefulWidget {
+  const BookingListComponent({super.key});
+
   @override
   State<BookingListComponent> createState() => _BookingListComponentState();
 }
@@ -64,7 +66,7 @@ class _BookingListComponentState extends State<BookingListComponent> {
             return NoDataWidget(
               title: error,
               retryText: locale.reload,
-              imageWidget: ErrorStateWidget(),
+              imageWidget: const ErrorStateWidget(),
               onRetry: () {
                 page = 1;
                 appStore.setLoading(true);
@@ -73,12 +75,12 @@ class _BookingListComponentState extends State<BookingListComponent> {
               },
             );
           },
-          loadingWidget: BookingListShimmer(),
+          loadingWidget: const BookingListShimmer(),
           onSuccess: (bookingList) {
             return AnimatedListView(
-              physics: AlwaysScrollableScrollPhysics(),
+              physics: const AlwaysScrollableScrollPhysics(),
               itemCount: bookingList.length,
-              padding: EdgeInsets.only(left: 8, right: 8, top: 40, bottom: 12),
+              padding: const EdgeInsets.only(left: 8, right: 8, top: 40, bottom: 12),
               shrinkWrap: true,
               emptyWidget: NoDataWidget(
                 title: locale.noBookingsFound,
@@ -87,7 +89,7 @@ class _BookingListComponentState extends State<BookingListComponent> {
                 onRetry: () {
                   init(flag: true);
                 },
-                imageWidget: EmptyStateWidget(),
+                imageWidget: const EmptyStateWidget(),
               ).paddingSymmetric(horizontal: 16),
               itemBuilder: (_, i) => BookingItemComponent(bookingData: bookingList[i]),
               onNextPage: () {

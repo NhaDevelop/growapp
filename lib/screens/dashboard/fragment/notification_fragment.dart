@@ -15,8 +15,10 @@ import '../../notifications/shimmer/notification_shimmer.dart';
 import '../../order/view/order_detail_screen.dart';
 
 class NotificationFragment extends StatefulWidget {
+  const NotificationFragment({super.key});
+
   @override
-  _NotificationFragmentState createState() => _NotificationFragmentState();
+  State<NotificationFragment> createState() => _NotificationFragmentState();
 }
 
 class _NotificationFragmentState extends State<NotificationFragment> {
@@ -59,7 +61,7 @@ class _NotificationFragmentState extends State<NotificationFragment> {
         actions: [
           if (showMarkAsReadButton)
             IconButton(
-              icon: Icon(Icons.clear_all_rounded, color: Colors.white),
+              icon: const Icon(Icons.clear_all_rounded, color: Colors.white),
               onPressed: () async {
                 appStore.setLoading(true);
 
@@ -73,11 +75,11 @@ class _NotificationFragmentState extends State<NotificationFragment> {
           SnapHelperWidget<List<NotificationData>>(
             future: future,
             initialData: notificationListCached,
-            loadingWidget: NotificationShimmer(),
+            loadingWidget: const NotificationShimmer(),
             errorBuilder: (error) {
               return NoDataWidget(
                 title: error,
-                imageWidget: ErrorStateWidget(),
+                imageWidget: const ErrorStateWidget(),
                 retryText: locale.reload,
                 onRetry: () {
                   appStore.setLoading(true);
@@ -90,21 +92,21 @@ class _NotificationFragmentState extends State<NotificationFragment> {
               return AnimatedListView(
                 shrinkWrap: true,
                 itemCount: list.length,
-                padding: EdgeInsets.only(top: 8),
-                slideConfiguration: SlideConfiguration(duration: 400.milliseconds, delay: 50.milliseconds),
+                padding: const EdgeInsets.only(top: 8),
+                slideConfiguration: SlideConfiguration(
+                    duration: 400.milliseconds, delay: 50.milliseconds),
                 listAnimationType: ListAnimationType.FadeIn,
                 fadeInConfiguration: FadeInConfiguration(duration: 2.seconds),
-                physics: AlwaysScrollableScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(),
                 emptyWidget: NoDataWidget(
                   title: locale.noNotifications,
                   subTitle: locale.weLlNotifyYouOnce,
-                  imageWidget: EmptyStateWidget(),
+                  imageWidget: const EmptyStateWidget(),
                 ),
-                onSwipeRefresh: () {
+                onSwipeRefresh: () async {
                   appStore.setLoading(true);
 
                   init(flag: true);
-                  return Future.value(true);
                 },
                 itemBuilder: (context, index) {
                   NotificationData notificationData = list[index];
@@ -112,21 +114,39 @@ class _NotificationFragmentState extends State<NotificationFragment> {
                   return GestureDetector(
                     onTap: () async {
                       /// Tap on notification redirect to booking detail screen
-                      if (notificationData.data!.notificationDetail!.id.validate() > 0) {
-                        if (notificationData.data!.notificationDetail!.notificationGroup == "shop") {
-                          OrderDetailScreen(orderId: notificationData.data!.notificationDetail!.id.validate(), orderCode: notificationData.data!.notificationDetail!.orderCode.validate()).launch(context, pageRouteAnimation: PageRouteAnimation.Fade);
+                      if (notificationData.data!.notificationDetail!.id
+                              .validate() >
+                          0) {
+                        if (notificationData
+                                .data!.notificationDetail!.notificationGroup ==
+                            "shop") {
+                          OrderDetailScreen(
+                                  orderId: notificationData
+                                      .data!.notificationDetail!.id
+                                      .validate(),
+                                  orderCode: notificationData
+                                      .data!.notificationDetail!.orderCode
+                                      .validate())
+                              .launch(context,
+                                  pageRouteAnimation: PageRouteAnimation.Fade);
                         } else {
-                          BookingDetailScreen(bookingId: notificationData.id.validate().toInt()).launch(context);
+                          BookingDetailScreen(
+                                  bookingId:
+                                      notificationData.id.validate().toInt())
+                              .launch(context);
                         }
                       }
                     },
-                    child: NotificationWidget(notificationData: notificationData),
+                    child:
+                        NotificationWidget(notificationData: notificationData),
                   );
                 },
               );
             },
           ),
-          Observer(builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+          Observer(
+              builder: (context) =>
+                  const LoaderWidget().visible(appStore.isLoading)),
         ],
       ),
     );

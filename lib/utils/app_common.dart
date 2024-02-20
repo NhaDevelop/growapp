@@ -50,12 +50,13 @@ Future<void> commonLaunchUrl(String address,
 
 void launchCall(String? url) {
   if (url.validate().isNotEmpty) {
-    if (isIOS)
-      commonLaunchUrl('tel://' + url!,
+    if (isIOS) {
+      commonLaunchUrl('tel://${url!}',
           launchMode: LaunchMode.externalApplication);
-    else
-      commonLaunchUrl('tel:' + url!,
+    } else {
+      commonLaunchUrl('tel:${url!}',
           launchMode: LaunchMode.externalApplication);
+    }
   }
 }
 
@@ -91,14 +92,14 @@ void launchUrlCustomTab(String? url) {
   if (url.validate().isNotEmpty) {
     custom_tabs.launch(
       url!,
-      customTabsOption: custom_tabs.CustomTabsOption(
+      customTabsOption: const custom_tabs.CustomTabsOption(
         enableDefaultShare: true,
         enableInstantApps: true,
         enableUrlBarHiding: true,
         showPageTitle: true,
         toolbarColor: primaryColor,
       ),
-      safariVCOption: custom_tabs.SafariViewControllerOption(
+      safariVCOption: const custom_tabs.SafariViewControllerOption(
         preferredBarTintColor: primaryColor,
         preferredControlTintColor: Colors.white,
         barCollapsingEnabled: true,
@@ -125,17 +126,17 @@ PreferredSizeWidget commonAppBarWidget(BuildContext context,
       title: Text(title!,
           style: boldTextStyle(color: whiteColor, size: APPBAR_TEXT_SIZE)),
       systemOverlayStyle:
-          SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
+          const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
       backgroundColor: primaryColor,
       centerTitle: true,
-      leading: !showLeadingIcon.validate() ? Offstage() : BackWidget(),
+      leading: !showLeadingIcon.validate() ? const Offstage() : const BackWidget(),
       elevation: 0,
       actions: actions,
       shape: roundCornerShape.validate()
-          ? RoundedRectangleBorder(
+          ? const RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
             )
-          : RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.zero)),
+          : const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.zero)),
     ),
   );
 }

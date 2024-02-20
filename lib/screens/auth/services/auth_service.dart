@@ -83,7 +83,7 @@ class AuthService {
   Future<void> appleSignIn() async {
     if (await TheAppleSignIn.isAvailable()) {
       AuthorizationResult result = await TheAppleSignIn.performRequests([
-        AppleIdRequest(requestedScopes: [Scope.email, Scope.fullName])
+        const AppleIdRequest(requestedScopes: [Scope.email, Scope.fullName])
       ]);
 
       switch (result.status) {
@@ -148,7 +148,7 @@ class AuthService {
     var req = {
       'email': getStringAsync(SharedPreferenceConst.APPLE_EMAIL).isNotEmpty
           ? getStringAsync(SharedPreferenceConst.APPLE_EMAIL)
-          : getStringAsync(SharedPreferenceConst.APPLE_UID) + '@gmail.com',
+          : '${getStringAsync(SharedPreferenceConst.APPLE_UID)}@gmail.com',
       'first_name':
           getStringAsync(SharedPreferenceConst.APPLE_GIVE_NAME).isNotEmpty
               ? getStringAsync(SharedPreferenceConst.APPLE_GIVE_NAME)
@@ -159,7 +159,7 @@ class AuthService {
               : '',
       "username": getStringAsync(SharedPreferenceConst.APPLE_EMAIL).isNotEmpty
           ? getStringAsync(SharedPreferenceConst.APPLE_EMAIL)
-          : getStringAsync(SharedPreferenceConst.APPLE_UID) + '@gmail.com',
+          : '${getStringAsync(SharedPreferenceConst.APPLE_UID)}@gmail.com',
       "profile_image": '',
       "social_image": '',
       'accessToken': '12345678',
@@ -167,7 +167,7 @@ class AuthService {
       "user_type": LoginTypeConst.LOGIN_TYPE_USER,
     };
 
-    log("Apple Login Json" + jsonEncode(req));
+    log("Apple Login Json${jsonEncode(req)}");
 
     await loginUser(req, isSocialLogin: true).then((value) async {
       //

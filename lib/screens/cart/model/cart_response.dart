@@ -16,11 +16,11 @@ class CartResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
-    data['status'] = this.status;
-    if (this.cart != null) {
-      data['cart'] = this.cart!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
+    data['status'] = status;
+    if (cart != null) {
+      data['cart'] = cart!.toJson();
     }
     return data;
   }

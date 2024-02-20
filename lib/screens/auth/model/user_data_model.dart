@@ -56,7 +56,7 @@ class UserData {
       status: json['status'],
       displayName: json['display_name'],
       uid: json['uid'],
-      userRole: json['user_role'] != null ? new List<String>.from(json['user_role']) : null,
+      userRole: json['user_role'] != null ? List<String>.from(json['user_role']) : null,
       username: json['username'],
       loginType: json['login_type'],
       socialImage: json['social_image'],
@@ -69,28 +69,28 @@ class UserData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.apiToken != null) data['api_token'] = this.apiToken;
-    if (this.mobile != null) data['mobile'] = this.mobile;
-    if (this.gender != null) data['gender'] = this.gender;
-    if (this.email != null) data['email'] = this.email;
-    if (this.firstName != null) data['first_name'] = this.firstName;
-    if (this.id != null) data['id'] = this.id;
-    if (this.lastName != null) data['last_name'] = this.lastName;
-    if (this.playerId != null) data['player_id'] = this.playerId;
-    if (this.status != null) data['status'] = this.status;
-    if (this.username != null) data['username'] = this.username;
-    if (this.displayName != null) data['display_name'] = this.displayName;
-    if (this.loginType != null) data['login_type'] = this.loginType;
-    if (this.socialImage != null) data['social_image'] = this.socialImage;
-    if (this.createdAt != null) data['created_at'] = this.createdAt;
-    if (this.updatedAt != null) data['updated_at'] = this.updatedAt;
-    if (this.uid != null) data['uid'] = this.uid;
-    if (this.password != null) data['password'] = this.password;
-    if (this.userType != null) data['user_type'] = this.userType;
-    if (this.profileImage != null) data['profile_image'] = this.profileImage;
-    if (this.userRole != null) {
-      data['user_role'] = this.userRole;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (apiToken != null) data['api_token'] = apiToken;
+    if (mobile != null) data['mobile'] = mobile;
+    if (gender != null) data['gender'] = gender;
+    if (email != null) data['email'] = email;
+    if (firstName != null) data['first_name'] = firstName;
+    if (id != null) data['id'] = id;
+    if (lastName != null) data['last_name'] = lastName;
+    if (playerId != null) data['player_id'] = playerId;
+    if (status != null) data['status'] = status;
+    if (username != null) data['username'] = username;
+    if (displayName != null) data['display_name'] = displayName;
+    if (loginType != null) data['login_type'] = loginType;
+    if (socialImage != null) data['social_image'] = socialImage;
+    if (createdAt != null) data['created_at'] = createdAt;
+    if (updatedAt != null) data['updated_at'] = updatedAt;
+    if (uid != null) data['uid'] = uid;
+    if (password != null) data['password'] = password;
+    if (userType != null) data['user_type'] = userType;
+    if (profileImage != null) data['profile_image'] = profileImage;
+    if (userRole != null) {
+      data['user_role'] = userRole;
     }
     return data;
   }

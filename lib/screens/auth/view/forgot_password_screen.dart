@@ -8,8 +8,10 @@ import 'package:grow_tokyo_app/utils/model_keys.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
+  const ForgotPasswordScreen({super.key});
+
   @override
-  _ForgotPasswordScreenState createState() => _ForgotPasswordScreenState();
+  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
 }
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
@@ -66,7 +68,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               width: context.width(),
               decoration: boxDecorationDefault(
                 color: context.primaryColor,
@@ -82,7 +84,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     onPressed: () {
                       finish(context);
                     },
-                    icon: Icon(Icons.clear, color: Colors.white, size: 20),
+                    icon:
+                        const Icon(Icons.clear, color: Colors.white, size: 20),
                   )
                 ],
               ),

@@ -4,18 +4,20 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../../components/shimmer_widget.dart';
 
 class BookingDetailShimmer extends StatelessWidget {
+  const BookingDetailShimmer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return AnimatedScrollView(
-      padding: EdgeInsets.all(16),
-      physics: AlwaysScrollableScrollPhysics(),
+      padding: const EdgeInsets.all(16),
+      physics: const AlwaysScrollableScrollPhysics(),
       children: [
         /// Location Information UI
         ShimmerWidget(height: 12, width: context.width() * 0.30),
         14.height,
         Container(
           decoration: boxDecorationDefault(color: context.cardColor),
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -59,7 +61,7 @@ class BookingDetailShimmer extends StatelessWidget {
         14.height,
         Container(
           decoration: boxDecorationDefault(color: context.cardColor),
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -96,8 +98,8 @@ class BookingDetailShimmer extends StatelessWidget {
         ShimmerWidget(height: 12, width: context.width() * 0.35),
         Container(
           decoration: boxDecorationDefault(color: context.cardColor),
-          padding: EdgeInsets.all(16),
-          margin: EdgeInsets.only(top: 14),
+          padding: const EdgeInsets.all(16),
+          margin: const EdgeInsets.only(top: 14),
           child: AnimatedWrap(
             runSpacing: 10,
             itemCount: 3,
@@ -115,9 +117,9 @@ class BookingDetailShimmer extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ShimmerWidget(height: 12).expand(flex: 2),
+                      const ShimmerWidget(height: 12).expand(flex: 2),
                       16.width,
-                      ShimmerWidget(height: 12).expand(flex: 1),
+                      const ShimmerWidget(height: 12).expand(flex: 1),
                     ],
                   ).expand(),
                 ],
@@ -131,8 +133,8 @@ class BookingDetailShimmer extends StatelessWidget {
         ShimmerWidget(height: 12, width: context.width() * 0.30),
         Container(
           decoration: boxDecorationDefault(color: context.cardColor),
-          padding: EdgeInsets.all(16),
-          margin: EdgeInsets.only(top: 14,bottom: 16),
+          padding: const EdgeInsets.all(16),
+          margin: const EdgeInsets.only(top: 14,bottom: 16),
           child: Column(
             children: [
               /// Subtotal
@@ -190,8 +192,8 @@ class BookingDetailShimmer extends StatelessWidget {
         ShimmerWidget(height: 12, width: context.width() * 0.30),
         Container(
           decoration: boxDecorationDefault(color: context.cardColor),
-          padding: EdgeInsets.all(16),
-          margin: EdgeInsets.only(top: 14, bottom: 16),
+          padding: const EdgeInsets.all(16),
+          margin: const EdgeInsets.only(top: 14, bottom: 16),
           child: Column(
             children: [
               /// Transaction ID

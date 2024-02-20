@@ -12,8 +12,10 @@ import '../product_repository.dart';
 import 'product_list_screen.dart';
 
 class ProductCategoryScreen extends StatefulWidget {
+  const ProductCategoryScreen({super.key});
+
   @override
-  _ProductCategoryScreenState createState() => _ProductCategoryScreenState();
+  State<ProductCategoryScreen> createState() => _ProductCategoryScreenState();
 }
 
 class _ProductCategoryScreenState extends State<ProductCategoryScreen> {
@@ -62,12 +64,12 @@ class _ProductCategoryScreenState extends State<ProductCategoryScreen> {
       body: SnapHelperWidget<List<CategoryData>>(
         future: future,
         initialData: productCategoryListCached,
-        loadingWidget: LoaderWidget(),
+        loadingWidget: const LoaderWidget(),
         errorBuilder: (error) {
           return NoDataWidget(
             title: error,
             retryText: locale.reload,
-            imageWidget: ErrorStateWidget(),
+            imageWidget: const ErrorStateWidget(),
             onRetry: () {
               page = 1;
               appStore.setLoading(true);
@@ -81,7 +83,7 @@ class _ProductCategoryScreenState extends State<ProductCategoryScreen> {
             return NoDataWidget(
               title: locale.noCategoryFound,
               subTitle: locale.thereAreNoCategories,
-              imageWidget: EmptyStateWidget(),
+              imageWidget: const EmptyStateWidget(),
               retryText: locale.reload,
               onRetry: () {
                 page = 1;
@@ -100,9 +102,9 @@ class _ProductCategoryScreenState extends State<ProductCategoryScreen> {
 
               return await 2.seconds.delay;
             },
-            physics: AlwaysScrollableScrollPhysics(),
+            physics: const AlwaysScrollableScrollPhysics(),
             listAnimationType: ListAnimationType.Scale,
-            padding: EdgeInsets.only(left: 16, right: 16, top: 20),
+            padding: const EdgeInsets.only(left: 16, right: 16, top: 20),
             onNextPage: () {
               if (!isLastPage) {
                 page++;

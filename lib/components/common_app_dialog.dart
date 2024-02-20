@@ -14,8 +14,9 @@ class CommonAppDialog extends StatefulWidget {
   final Function? onTap;
   final bool isQuickBooking;
 
-  CommonAppDialog(
-      {this.icon,
+  const CommonAppDialog(
+      {super.key,
+      this.icon,
       this.title,
       this.subTitle,
       this.buttonText,
@@ -23,7 +24,7 @@ class CommonAppDialog extends StatefulWidget {
       this.isQuickBooking = false});
 
   @override
-  _CommonAppDialogState createState() => _CommonAppDialogState();
+  State<CommonAppDialog> createState() => _CommonAppDialogState();
 }
 
 class _CommonAppDialogState extends State<CommonAppDialog> {
@@ -49,7 +50,7 @@ class _CommonAppDialogState extends State<CommonAppDialog> {
       elevation: 0.0,
       backgroundColor: Colors.transparent,
       child: Container(
-        padding: EdgeInsets.all(25),
+        padding: const EdgeInsets.all(25),
         decoration: BoxDecoration(
             shape: BoxShape.rectangle,
             color: context.cardColor,
@@ -58,10 +59,10 @@ class _CommonAppDialogState extends State<CommonAppDialog> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             CircleAvatar(
-                child: Image.asset(widget.icon ?? ic_confetti_ball,
-                    fit: BoxFit.cover, height: 50),
                 backgroundColor: indicatorColor,
-                radius: 50),
+                radius: 50,
+                child: Image.asset(widget.icon ?? ic_confetti_ball,
+                    fit: BoxFit.cover, height: 50)),
             16.height,
             Text(widget.title.validate(),
                 style: boldTextStyle(size: LABEL_TEXT_SIZE),
@@ -76,30 +77,30 @@ class _CommonAppDialogState extends State<CommonAppDialog> {
               Row(
                 children: [
                   AppButton(
-                    child: Text(locale.cancel, style: boldTextStyle()),
                     color: context.cardColor,
                     width: context.width(),
                     onTap: () {
                       finish(context);
                     },
+                    child: Text(locale.cancel, style: boldTextStyle()),
                   ).expand(),
                   16.width,
                   AppButton(
-                    child: Text(widget.buttonText.validate(),
-                        style: boldTextStyle(color: white)),
                     color: secondaryColor,
                     width: context.width(),
                     onTap: widget.onTap,
+                    child: Text(widget.buttonText.validate(),
+                        style: boldTextStyle(color: white)),
                   ).expand(),
                 ],
               )
             else
               AppButton(
-                child: Text(widget.buttonText.validate(),
-                    style: boldTextStyle(color: white)),
                 color: secondaryColor,
                 width: context.width(),
                 onTap: widget.onTap,
+                child: Text(widget.buttonText.validate(),
+                    style: boldTextStyle(color: white)),
               ),
           ],
         ),

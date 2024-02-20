@@ -13,6 +13,8 @@ import '../../cart/model/cart_list_response.dart';
 import '../../product/view/product_payment_screen.dart';
 
 class OrderSummaryScreen extends StatelessWidget {
+  const OrderSummaryScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
@@ -24,12 +26,12 @@ class OrderSummaryScreen extends StatelessWidget {
       body: Stack(
         children: [
           AnimatedScrollView(
-            padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 80),
+            padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 80),
             children: [
               Container(
                 width: context.width(),
                 decoration: boxDecorationDefault(color: context.cardColor),
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -66,7 +68,7 @@ class OrderSummaryScreen extends StatelessWidget {
 
                   return Container(
                     decoration: boxDecorationDefault(color: context.cardColor),
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -158,7 +160,7 @@ class OrderSummaryScreen extends StatelessWidget {
               16.height,
               Container(
                 decoration: boxDecorationDefault(color: context.cardColor),
-                padding: EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -290,13 +292,13 @@ class OrderSummaryScreen extends StatelessWidget {
             right: 16,
             child: AppButton(
               width: context.width(),
-              child: Text(locale.proceed,
-                  style: boldTextStyle(color: Colors.white)),
               color: secondaryColor,
               onTap: () {
-                ProductPaymentScreen().launch(context,
+                const ProductPaymentScreen().launch(context,
                     pageRouteAnimation: PageRouteAnimation.Fade);
               },
+              child: Text(locale.proceed,
+                  style: boldTextStyle(color: Colors.white)),
             ),
           ),
         ],

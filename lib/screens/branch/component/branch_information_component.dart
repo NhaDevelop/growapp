@@ -16,7 +16,7 @@ import '../../../utils/common_base.dart';
 class BranchInformationComponent extends StatefulWidget {
   final BranchData branchData;
 
-  BranchInformationComponent({required this.branchData});
+  const BranchInformationComponent({super.key, required this.branchData});
 
   @override
   State<BranchInformationComponent> createState() =>
@@ -41,7 +41,7 @@ class _BranchInformationComponentState
       decoration: boxDecorationDefault(color: color ?? context.cardColor),
       alignment: Alignment.center,
       child: TextIcons(
-        edgeInsets: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        edgeInsets: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
         expandedText: true,
         useMarquee: true,
         text: title.validate(),
@@ -71,7 +71,7 @@ class _BranchInformationComponentState
                     style: boldTextStyle(size: 16)),
                 6.width,
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 1),
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
                   decoration: boxDecorationWithRoundedCorners(
                       backgroundColor: quaternaryButtonColor),
                   child: Text(
@@ -116,7 +116,7 @@ class _BranchInformationComponentState
                 textStyle: primaryTextStyle(),
                 maxLine: 2,
                 expandedText: true,
-                edgeInsets: EdgeInsets.only(left: 0),
+                edgeInsets: const EdgeInsets.only(left: 0),
                 prefix: ic_location.iconImage(
                     color: textSecondaryColorGlobal, size: 16),
               ),
@@ -134,7 +134,7 @@ class _BranchInformationComponentState
                 style: primaryTextStyle()),
             if (widget.branchData.totalReview.validate() >= 1)
               Text(
-                '(${locale.basedOn} ${widget.branchData.totalReview.validate()} ${locale.review}${widget.branchData.totalReview.validate() > 1 ? '${locale.s}' : ''})',
+                '(${locale.basedOn} ${widget.branchData.totalReview.validate()} ${locale.review}${widget.branchData.totalReview.validate() > 1 ? locale.s : ''})',
                 style: secondaryTextStyle(),
               ).paddingLeft(4),
           ],
@@ -171,12 +171,14 @@ class _BranchInformationComponentState
                 String shareBranch =
                     "${locale.branchName}: ${widget.branchData.name}";
 
-                if (widget.branchData.addressLine1.validate().isNotEmpty)
+                if (widget.branchData.addressLine1.validate().isNotEmpty) {
                   shareBranch =
                       '$shareBranch\n${locale.place}: ${widget.branchData.addressLine1}';
-                if (widget.branchData.contactNumber.validate().isNotEmpty)
+                }
+                if (widget.branchData.contactNumber.validate().isNotEmpty) {
                   shareBranch =
                       '$shareBranch\n${locale.contactNumber}: ${widget.branchData.contactNumber}';
+                }
 
                 Share.share(shareBranch);
               },

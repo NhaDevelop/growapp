@@ -11,19 +11,20 @@ import '../../../main.dart';
 class FeaturedProductComponent extends StatelessWidget {
   final List<ProductData> featuredProductList;
 
-  FeaturedProductComponent({required this.featuredProductList});
+  const FeaturedProductComponent({super.key, required this.featuredProductList});
 
   @override
   Widget build(BuildContext context) {
-    if (featuredProductList.isEmpty)
+    if (featuredProductList.isEmpty) {
       return Container(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
         child: NoDataWidget(
-            title: locale.noProductsFound, imageWidget: EmptyStateWidget()),
+            title: locale.noProductsFound, imageWidget: const EmptyStateWidget()),
       );
+    }
 
     return Container(
-      padding: EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.only(bottom: 16),
       width: context.width(),
       decoration: BoxDecoration(
           color: appStore.isDarkMode
@@ -44,7 +45,7 @@ class FeaturedProductComponent extends StatelessWidget {
           ).paddingOnly(left: 16, right: 8),
           HorizontalList(
             itemCount: featuredProductList.take(6).length,
-            padding: EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 16),
+            padding: const EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 16),
             crossAxisAlignment: WrapCrossAlignment.start,
             itemBuilder: (_, i) {
               return ProductItemComponent(

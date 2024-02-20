@@ -46,6 +46,6 @@ Future<List<ReviewData>> employeeReviews({
     return list;
   } catch (e) {
     appStore.setLoading(false);
-    throw e;
+    rethrow;
   }
 }

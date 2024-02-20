@@ -25,10 +25,11 @@ class EmployeeDetailScreen extends StatefulWidget {
   final int employeeId;
   final int? branchId;
 
-  EmployeeDetailScreen({required this.employeeId, this.branchId});
+  const EmployeeDetailScreen(
+      {super.key, required this.employeeId, this.branchId});
 
   @override
-  _EmployeeDetailScreenState createState() => _EmployeeDetailScreenState();
+  State<EmployeeDetailScreen> createState() => _EmployeeDetailScreenState();
 }
 
 class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
@@ -66,7 +67,7 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
                     (element) => element?.$1 == widget.employeeId.validate(),
                     orElse: () => null)
                 ?.$2,
-            loadingWidget: EmployeeDetailShimmer(),
+            loadingWidget: const EmployeeDetailShimmer(),
             onSuccess: (snap) {
               EmployeeData employeeData = snap.data!;
 
@@ -92,7 +93,7 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
                           fit: BoxFit.cover,
                           width: 98,
                           radius: 150,
-                          child: DefaultUserImagePlaceholder(),
+                          child: const DefaultUserImagePlaceholder(),
                         ).paddingTop(16),
                         Column(
                           children: [
@@ -105,7 +106,7 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
                                   .paddingTop(4),
                             16.height,
                             Container(
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   horizontal: 16, vertical: 8),
                               decoration: boxDecorationWithRoundedCorners(
                                   backgroundColor:
@@ -189,7 +190,7 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
                   ),
                   10.height,
                   Padding(
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child: AnimatedScrollView(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -225,7 +226,7 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
                                     decoration: boxDecorationWithRoundedCorners(
                                         borderRadius: radius(),
                                         backgroundColor: quaternaryButtonColor),
-                                    child: CachedImageWidget(
+                                    child: const CachedImageWidget(
                                             url: ic_message,
                                             height: 12,
                                             width: 12,
@@ -252,7 +253,7 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
                                     decoration: boxDecorationWithRoundedCorners(
                                         borderRadius: radius(),
                                         backgroundColor: quaternaryButtonColor),
-                                    child: CachedImageWidget(
+                                    child: const CachedImageWidget(
                                             url: ic_call,
                                             height: 12,
                                             width: 12,
@@ -279,7 +280,7 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
                                     decoration: boxDecorationWithRoundedCorners(
                                         borderRadius: radius(),
                                         backgroundColor: quaternaryButtonColor),
-                                    child: CachedImageWidget(
+                                    child: const CachedImageWidget(
                                             url: ic_business,
                                             height: 12,
                                             width: 12,
@@ -306,7 +307,7 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
                                   style: boldTextStyle(size: LABEL_TEXT_SIZE)),
                               if (employeeData.totalReview.validate() >= 1)
                                 Text(
-                                  '(${locale.basedOn} ${employeeData.totalReview.validate()} ${locale.review}${employeeData.totalReview.validate() > 1 ? '${locale.s}' : ''})',
+                                  '(${locale.basedOn} ${employeeData.totalReview.validate()} ${locale.review}${employeeData.totalReview.validate() > 1 ? locale.s : ''})',
                                   style: secondaryTextStyle(),
                                 ).paddingLeft(4),
                             ],
@@ -322,7 +323,7 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
                             itemCount: employeeData.reviewData!.take(10).length,
                             shrinkWrap: true,
                             padding: EdgeInsets.zero,
-                            physics: NeverScrollableScrollPhysics(),
+                            physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (_, i) {
                               return ReviewItemComponent(
                                   reviewData: employeeData.reviewData![i]);
@@ -332,7 +333,7 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
                           NoDataWidget(
                             subTitle:
                                 '${locale.noReviewsYetFor} ${employeeData.firstName}',
-                            imageWidget: EmptyStateWidget(),
+                            imageWidget: const EmptyStateWidget(),
                           ),
                       ],
                     ),
@@ -349,7 +350,7 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
             errorBuilder: (error) {
               return NoDataWidget(
                 title: error,
-                imageWidget: ErrorStateWidget(),
+                imageWidget: const ErrorStateWidget(),
                 retryText: locale.reload,
                 onRetry: () {
                   appStore.setLoading(true);
@@ -361,7 +362,8 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
             },
           ),
           Observer(
-              builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+              builder: (context) =>
+                  const LoaderWidget().visible(appStore.isLoading)),
         ],
       ),
     );

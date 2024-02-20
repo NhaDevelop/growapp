@@ -12,8 +12,8 @@ class EmployeeListComponent extends StatelessWidget {
   final Decoration? decoration;
   final Color? expertNameTextColor;
 
-  EmployeeListComponent(
-      {required this.expertData,
+  const EmployeeListComponent(
+      {super.key, required this.expertData,
       this.width,
       this.decoration,
       this.expertNameTextColor});
@@ -26,7 +26,7 @@ class EmployeeListComponent extends StatelessWidget {
       children: [
         Container(
           width: width ?? (context.width() - 48) / 2,
-          padding: EdgeInsets.only(top: 48, left: 16, right: 16),
+          padding: const EdgeInsets.only(top: 48, left: 16, right: 16),
           decoration: decoration ??
               boxDecorationWithRoundedCorners(
                   backgroundColor: context.cardColor),
@@ -43,7 +43,7 @@ class EmployeeListComponent extends StatelessWidget {
                         style: secondaryTextStyle())),
               6.height,
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: boxDecorationWithRoundedCorners(
                     backgroundColor: context.scaffoldBackgroundColor),
                 child: TextIcon(
@@ -52,7 +52,7 @@ class EmployeeListComponent extends StatelessWidget {
                       .toStringAsFixed(1)
                       .toString(),
                   spacing: 4,
-                  edgeInsets: EdgeInsets.only(left: 0),
+                  edgeInsets: const EdgeInsets.only(left: 0),
                   prefix: Icon(Icons.star,
                       size: 16,
                       color: getRatingBarColor(
@@ -71,7 +71,7 @@ class EmployeeListComponent extends StatelessWidget {
             width: 65,
             circle: true,
             fit: BoxFit.cover,
-            child: DefaultUserImagePlaceholder(),
+            child: const DefaultUserImagePlaceholder(),
           ),
         ),
       ],

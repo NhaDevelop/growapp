@@ -16,7 +16,7 @@ Future<void> initOneSignal() async {
 
   ///Handle Navigation
   OneSignal.Notifications.addClickListener((event) {
-    log("${event.jsonRepresentation()}");
+    log(event.jsonRepresentation());
     if (event.notification.additionalData != null) {
       final additionalData =
           event.notification.additionalData!['additional_data'];

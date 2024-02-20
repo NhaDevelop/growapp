@@ -11,8 +11,10 @@ import '../../../utils/constants.dart';
 import '../../../utils/images.dart';
 
 class AboutScreen extends StatefulWidget {
+  const AboutScreen({super.key});
+
   @override
-  _AboutScreenState createState() => _AboutScreenState();
+  State<AboutScreen> createState() => _AboutScreenState();
 }
 
 class _AboutScreenState extends State<AboutScreen> {
@@ -23,7 +25,7 @@ class _AboutScreenState extends State<AboutScreen> {
   }
 
   void init() async {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
         statusBarColor: Colors.white, statusBarBrightness: Brightness.light));
   }
 
@@ -45,7 +47,7 @@ class _AboutScreenState extends State<AboutScreen> {
       body: AnimatedScrollView(
         crossAxisAlignment: CrossAxisAlignment.center,
         listAnimationType: ListAnimationType.FadeIn,
-        padding: EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         fadeInConfiguration: FadeInConfiguration(duration: 2.seconds),
         children: [
           16.height,
@@ -64,7 +66,7 @@ class _AboutScreenState extends State<AboutScreen> {
                 Container(
                   height: 80,
                   width: 80,
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   decoration: boxDecorationWithRoundedCorners(
                       borderRadius: radius(),
                       backgroundColor: context.scaffoldBackgroundColor),
@@ -90,7 +92,7 @@ class _AboutScreenState extends State<AboutScreen> {
                 Container(
                   height: 80,
                   width: 80,
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   decoration: boxDecorationWithRoundedCorners(
                       borderRadius: radius(),
                       backgroundColor: context.scaffoldBackgroundColor),

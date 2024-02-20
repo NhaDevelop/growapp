@@ -16,7 +16,7 @@ import '../view/complete_payment_screen.dart';
 class PaymentInformationComponent extends StatelessWidget {
   final BookingListData booking;
 
-  PaymentInformationComponent({required this.booking});
+  const PaymentInformationComponent({super.key, required this.booking});
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +32,8 @@ class PaymentInformationComponent extends StatelessWidget {
         ),
         Container(
           decoration: boxDecorationDefault(color: context.cardColor),
-          padding: EdgeInsets.all(16),
-          margin: EdgeInsets.only(bottom: 16),
+          padding: const EdgeInsets.all(16),
+          margin: const EdgeInsets.only(bottom: 16),
           child: Column(
             children: [
               /// Subtotal
@@ -138,7 +138,7 @@ class PaymentInformationComponent extends StatelessWidget {
               ),
               Container(
                 decoration: boxDecorationDefault(color: context.cardColor),
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   children: [
                     if (booking.payment!.externalTransactionId

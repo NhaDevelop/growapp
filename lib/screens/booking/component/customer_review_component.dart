@@ -19,14 +19,15 @@ class CustomerReviewComponent extends StatefulWidget {
   final ReviewData? customerReview;
   final String employeeName;
 
-  CustomerReviewComponent(
-      {this.bookingStatus,
+  const CustomerReviewComponent(
+      {super.key,
+      this.bookingStatus,
       this.staffId,
       this.customerReview,
       this.employeeName = ''});
 
   @override
-  _CustomerReviewComponentState createState() =>
+  State<CustomerReviewComponent> createState() =>
       _CustomerReviewComponentState();
 }
 
@@ -89,7 +90,7 @@ class _CustomerReviewComponentState extends State<CustomerReviewComponent> {
                                     .toInt()),
                                 size: 14),
                           ),
-                          Spacer(),
+                          const Spacer(),
                           TextButton(
                             onPressed: () {
                               showInDialog(
@@ -153,12 +154,10 @@ class _CustomerReviewComponentState extends State<CustomerReviewComponent> {
                 )
               else
                 AppButton(
-                  child: Text('${locale.rate} ${widget.employeeName}',
-                      style: boldTextStyle(color: Colors.white)),
                   color: context.primaryColor,
                   width: context.width(),
                   elevation: 0,
-                  margin: EdgeInsets.only(top: 16),
+                  margin: const EdgeInsets.only(top: 16),
                   onTap: () {
                     showInDialog(
                       context,
@@ -170,6 +169,8 @@ class _CustomerReviewComponentState extends State<CustomerReviewComponent> {
                       },
                     );
                   },
+                  child: Text('${locale.rate} ${widget.employeeName}',
+                      style: boldTextStyle(color: Colors.white)),
                 ),
               8.height,
             ],

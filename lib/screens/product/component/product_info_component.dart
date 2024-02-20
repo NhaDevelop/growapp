@@ -11,12 +11,12 @@ import '../model/product_list_response.dart';
 class ProductInfoComponent extends StatelessWidget {
   final ProductData productData;
 
-  ProductInfoComponent({required this.productData});
+  const ProductInfoComponent({super.key, required this.productData});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

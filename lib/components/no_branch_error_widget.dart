@@ -10,7 +10,12 @@ class NoBranchErrorWidget extends StatelessWidget {
   final double? width;
   final VoidCallback? onPressed;
 
-  const NoBranchErrorWidget({this.height, this.width, required this.errorMessage, this.onPressed});
+  const NoBranchErrorWidget(
+      {super.key,
+      this.height,
+      this.width,
+      required this.errorMessage,
+      this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -18,14 +23,17 @@ class NoBranchErrorWidget extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Lottie.asset('assets/lottie/error_lottie.json', repeat: true, height: 300),
-          Text(errorMessage, style: boldTextStyle(size: 18), textAlign: TextAlign.center).center(),
+          Lottie.asset('assets/lottie/error_lottie.json',
+              repeat: true, height: 300),
+          Text(errorMessage,
+                  style: boldTextStyle(size: 18), textAlign: TextAlign.center)
+              .center(),
           16.height,
           TextButton(
             onPressed: () async {
               if (await isNetworkAvailable()) {
                 // onPressed?.call();
-                RestartAppWidget.init(context);
+                if (context.mounted) RestartAppWidget.init(context);
               } else {
                 toast(locale.yourInternetIsNotWorking);
               }

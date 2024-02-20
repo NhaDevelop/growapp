@@ -102,7 +102,7 @@ void main() async {
 
   await appStore.setLanguage(
       getStringAsync(SELECTED_LANGUAGE_CODE, defaultValue: DEFAULT_LANGUAGE));
-  locale = await AppLocalizations().load(Locale(appStore.selectedLanguageCode));
+  locale = await const AppLocalizations().load(Locale(appStore.selectedLanguageCode));
 
   Firebase.initializeApp().then((value) {
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
@@ -161,7 +161,7 @@ void main() async {
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -186,8 +186,8 @@ class _MyAppState extends State<MyApp> {
           navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
           supportedLocales: LanguageDataModel.languageLocales(),
-          localizationsDelegates: [
-            const AppLocalizations(),
+          localizationsDelegates: const [
+            AppLocalizations(),
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
@@ -198,7 +198,7 @@ class _MyAppState extends State<MyApp> {
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
           themeMode: appStore.isDarkMode ? ThemeMode.dark : ThemeMode.light,
-          home: SplashScreen(),
+          home: const SplashScreen(),
         ),
       ),
     );

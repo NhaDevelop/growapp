@@ -4,17 +4,19 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../../components/shimmer_widget.dart';
 
 class ReviewAllShimmer extends StatelessWidget {
+  const ReviewAllShimmer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return AnimatedListView(
       itemCount: 20,
       shrinkWrap: true,
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       listAnimationType: ListAnimationType.None,
       itemBuilder: (p0, index) {
         return Container(
-          padding: EdgeInsets.all(16),
-          margin: EdgeInsets.symmetric(vertical: 8),
+          padding: const EdgeInsets.all(16),
+          margin: const EdgeInsets.symmetric(vertical: 8),
           width: context.width(),
           decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor),
           child: Column(
@@ -25,7 +27,7 @@ class ReviewAllShimmer extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      ShimmerWidget(height: 22, width: 35),
+                      const ShimmerWidget(height: 22, width: 35),
                       8.width,
                       ShimmerWidget(height: 16, width: context.width() * 0.25),
                     ],

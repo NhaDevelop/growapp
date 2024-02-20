@@ -21,10 +21,11 @@ class BookingDetailScreen extends StatefulWidget {
   final int bookingId;
   final String? bookingStatus;
 
-  BookingDetailScreen({required this.bookingId, this.bookingStatus});
+  const BookingDetailScreen(
+      {super.key, required this.bookingId, this.bookingStatus});
 
   @override
-  _BookingDetailScreenState createState() => _BookingDetailScreenState();
+  State<BookingDetailScreen> createState() => _BookingDetailScreenState();
 }
 
 class _BookingDetailScreenState extends State<BookingDetailScreen> {
@@ -76,12 +77,12 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
           SnapHelperWidget<BookingDetailResponse>(
             future: future,
             initialData: getInitialData(),
-            loadingWidget: BookingDetailShimmer(),
+            loadingWidget: const BookingDetailShimmer(),
             errorBuilder: (error) {
               return NoDataWidget(
                 title: error,
                 retryText: locale.reload,
-                imageWidget: ErrorStateWidget(),
+                imageWidget: const ErrorStateWidget(),
                 onRetry: () {
                   appStore.setLoading(true);
 
@@ -105,8 +106,8 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
               }
 
               return AnimatedScrollView(
-                padding: EdgeInsets.all(16),
-                physics: AlwaysScrollableScrollPhysics(),
+                padding: const EdgeInsets.all(16),
+                physics: const AlwaysScrollableScrollPhysics(),
                 children: [
                   LocationInformationComponent(booking: snap.data!),
                   16.height,
@@ -134,7 +135,8 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
             },
           ),
           Observer(
-              builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+              builder: (context) =>
+                  const LoaderWidget().visible(appStore.isLoading)),
         ],
       ),
     );

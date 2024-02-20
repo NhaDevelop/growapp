@@ -19,7 +19,7 @@ import '../shimmer/select_branch_shimmer.dart';
 class SelectBranchScreen extends StatefulWidget {
   final bool isFromDashboard;
 
-  SelectBranchScreen({this.isFromDashboard = false});
+  const SelectBranchScreen({super.key, this.isFromDashboard = false});
 
   @override
   State<SelectBranchScreen> createState() => _SelectBranchScreenState();
@@ -69,7 +69,8 @@ class _SelectBranchScreenState extends State<SelectBranchScreen> {
       await appStore
           .setBranchContactNumber(branchList.first.contactNumber.validate());
 
-      DashboardScreen().launch(context,
+      if (!mounted) return;
+      const DashboardScreen().launch(context,
           isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
     }
   }
@@ -94,10 +95,8 @@ class _SelectBranchScreenState extends State<SelectBranchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () {
-        return Future.value(widget.isFromDashboard);
-      },
+    return PopScope(
+      canPop: widget.isFromDashboard,
       child: AppScaffold(
         appBarWidget: commonAppBarWidget(
           context,
@@ -116,7 +115,7 @@ class _SelectBranchScreenState extends State<SelectBranchScreen> {
                 return NoDataWidget(
                   title: error,
                   retryText: locale.reload,
-                  imageWidget: ErrorStateWidget(),
+                  imageWidget: const ErrorStateWidget(),
                   onRetry: () {
                     page = 1;
                     appStore.setLoading(true);
@@ -126,7 +125,7 @@ class _SelectBranchScreenState extends State<SelectBranchScreen> {
                   },
                 );
               },
-              loadingWidget: SelectBranchShimmer(),
+              loadingWidget: const SelectBranchShimmer(),
               onSuccess: (list) {
                 ///If there is only one Branch in the list
                 redirectToDashboard(branchList: list);
@@ -138,12 +137,12 @@ class _SelectBranchScreenState extends State<SelectBranchScreen> {
                       left: 16,
                       right: 16,
                       top: 16),
-                  physics: AlwaysScrollableScrollPhysics(),
+                  physics: const AlwaysScrollableScrollPhysics(),
                   itemCount: list.length,
                   shrinkWrap: true,
                   emptyWidget: NoDataWidget(
                     title: locale.noBranchFound,
-                    imageWidget: EmptyStateWidget(),
+                    imageWidget: const EmptyStateWidget(),
                     retryText: locale.reload,
                     onRetry: () {
                       page = 1;
@@ -199,11 +198,10 @@ class _SelectBranchScreenState extends State<SelectBranchScreen> {
             ),
             Observer(
                 builder: (context) =>
-                    LoaderWidget().visible(appStore.isLoading)),
+                    const LoaderWidget().visible(appStore.isLoading)),
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.arrow_right_alt_rounded, color: Colors.white),
           backgroundColor: secondaryColor,
           onPressed: () async {
             if (appStore.branchId != selectedBranchId) {
@@ -223,18 +221,21 @@ class _SelectBranchScreenState extends State<SelectBranchScreen> {
                   await appStore.setBranchContactNumber(
                       selectedBranch!.contactNumber.validate());
 
-                  DashboardScreen().launch(context,
-                      isNewTask: true,
-                      pageRouteAnimation: PageRouteAnimation.Fade);
+                  if (context.mounted) {
+                    const DashboardScreen().launch(context,
+                        isNewTask: true,
+                        pageRouteAnimation: PageRouteAnimation.Fade);
+                  }
                 },
                 title: '${locale.doYouWantExplore} ${selectedBranch!.name}?',
                 primaryColor: context.primaryColor,
               );
             } else {
-              DashboardScreen().launch(context,
+              const DashboardScreen().launch(context,
                   isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
             }
           },
+          child: const Icon(Icons.arrow_right_alt_rounded, color: Colors.white),
         ).visible(
             branchList.isNotEmpty && selectedBranchId != UNSELECTED_BRANCH_ID),
       ),

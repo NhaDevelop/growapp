@@ -3,6 +3,8 @@ import 'package:grow_tokyo_app/components/shimmer_widget.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class CategoryShimmer extends StatelessWidget {
+  const CategoryShimmer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

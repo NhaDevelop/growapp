@@ -13,8 +13,10 @@ import '../component/filter_rating_component.dart';
 import '../component/filter_weight_component.dart';
 
 class ProductFilterScreen extends StatefulWidget {
+  const ProductFilterScreen({super.key});
+
   @override
-  _ProductFilterScreenState createState() => _ProductFilterScreenState();
+  State<ProductFilterScreen> createState() => _ProductFilterScreenState();
 }
 
 class _ProductFilterScreenState extends State<ProductFilterScreen> {
@@ -46,19 +48,19 @@ class _ProductFilterScreenState extends State<ProductFilterScreen> {
       body: Stack(
         children: [
           AnimatedScrollView(
-            padding: EdgeInsets.only(bottom: 80, top: 16),
+            padding: const EdgeInsets.only(bottom: 80, top: 16),
             children: [
-              FilterGenderComponent(),
+              const FilterGenderComponent(),
               16.height,
-              FilterWeightComponent(),
+              const FilterWeightComponent(),
               16.height,
-              FilterCategoryComponent(),
+              const FilterCategoryComponent(),
               16.height,
-              FilterPriceComponent(),
+              const FilterPriceComponent(),
               8.height,
-              FilterRatingComponent(),
+              const FilterRatingComponent(),
               16.height,
-              FilterProductBrandComponent(),
+              const FilterProductBrandComponent(),
             ],
           ),
           Positioned(

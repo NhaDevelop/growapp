@@ -20,9 +20,9 @@ class ProductDashboardResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
-    data['status'] = this.status;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
+    data['status'] = status;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
@@ -68,21 +68,21 @@ class ProductDashboardData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.bestsellerProduct != null) {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (bestsellerProduct != null) {
       data['bestseller_product'] =
-          this.bestsellerProduct!.map((v) => v.toJson()).toList();
+          bestsellerProduct!.map((v) => v.toJson()).toList();
     }
-    if (this.category != null) {
-      data['category'] = this.category!.map((v) => v.toJson()).toList();
+    if (category != null) {
+      data['category'] = category!.map((v) => v.toJson()).toList();
     }
-    if (this.discountProduct != null) {
+    if (discountProduct != null) {
       data['discount_product'] =
-          this.discountProduct!.map((v) => v.toJson()).toList();
+          discountProduct!.map((v) => v.toJson()).toList();
     }
-    if (this.featuredProduct != null) {
+    if (featuredProduct != null) {
       data['featured_product'] =
-          this.featuredProduct!.map((v) => v.toJson()).toList();
+          featuredProduct!.map((v) => v.toJson()).toList();
     }
     return data;
   }

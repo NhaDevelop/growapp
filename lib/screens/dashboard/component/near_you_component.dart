@@ -13,10 +13,10 @@ import '../../branch/view/branch_detail_screen.dart';
 class NearYouComponent extends StatefulWidget {
   final String? title;
 
-  NearYouComponent({required this.title, Key? key}) : super(key: key);
+  const NearYouComponent({required this.title, super.key});
 
   @override
-  _NearYouComponentState createState() => _NearYouComponentState();
+  State<NearYouComponent> createState() => _NearYouComponentState();
 }
 
 class _NearYouComponentState extends State<NearYouComponent> {
@@ -65,7 +65,7 @@ class _NearYouComponentState extends State<NearYouComponent> {
       future: future,
       initialData: branchListCached,
       builder: (context, snap) {
-        if (snap.data.validate().isEmpty) return Offstage();
+        if (snap.data.validate().isEmpty) return const Offstage();
 
         if (snap.hasData) {
           return Column(
@@ -80,19 +80,21 @@ class _NearYouComponentState extends State<NearYouComponent> {
               HorizontalList(
                 controller: controller,
                 itemCount: snap.data.validate().length,
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 crossAxisAlignment: WrapCrossAlignment.start,
                 itemBuilder: (context, i) {
                   BranchData branchData = snap.data![i];
 
-                  if (branchData.id == appStore.branchId) return Offstage();
-
+                  if (branchData.id == appStore.branchId) {
+                    return const Offstage();
+                  }
                   return Container(
                     width: context.width() * 0.85,
                     decoration: boxDecorationWithRoundedCorners(
                         backgroundColor: context.cardColor,
                         borderRadius: radius()),
-                    margin: EdgeInsets.only(right: 8),
+                    margin: const EdgeInsets.only(right: 8),
                     child: BranchItemComponent(
                         branchData: branchData, position: currentLocation),
                   ).onTap(() {
@@ -110,9 +112,9 @@ class _NearYouComponentState extends State<NearYouComponent> {
 
         return snapWidgetHelper(
           snap,
-          loadingWidget: Offstage(),
+          loadingWidget: const Offstage(),
           errorBuilder: (error) {
-            return Offstage();
+            return const Offstage();
           },
         );
       },

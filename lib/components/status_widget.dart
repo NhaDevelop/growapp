@@ -5,18 +5,18 @@ class StatusWidget extends StatelessWidget {
   final String? text;
   final Color? color;
 
-  StatusWidget({required this.text, this.color});
+  const StatusWidget({super.key, required this.text, this.color});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       alignment: Alignment.center,
       decoration: boxDecorationDefault(
-        color: color != null ? color!.withAlpha(20) : null,
-        boxShadow: [BoxShadow(color: Colors.transparent)],
+        color: color?.withAlpha(20),
+        boxShadow: [const BoxShadow(color: Colors.transparent)],
       ),
-      child: Text(text ?? '', style: boldTextStyle(color: color ?? null, size: 14)),
+      child: Text(text ?? '', style: boldTextStyle(color: color, size: 14)),
     );
   }
 }

@@ -19,7 +19,7 @@ class BranchItemComponent extends StatefulWidget {
   final bool isFormSignIn;
   final Position? position;
 
-  BranchItemComponent({
+  const BranchItemComponent({super.key, 
     required this.branchData,
     this.selectedBranchId,
     this.currentBranchIndex,
@@ -67,7 +67,7 @@ class _BranchItemComponentState extends State<BranchItemComponent> {
             setState(() {});
           },
           child: Container(
-            margin: EdgeInsets.only(bottom: 16),
+            margin: const EdgeInsets.only(bottom: 16),
             decoration: boxDecorationWithRoundedCorners(
                 backgroundColor: context.cardColor, borderRadius: radius()),
             child: Column(
@@ -93,7 +93,7 @@ class _BranchItemComponentState extends State<BranchItemComponent> {
                             overflow: TextOverflow.ellipsis),
                         6.width,
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
                           decoration: boxDecorationWithRoundedCorners(
                               backgroundColor: quaternaryButtonColor),
                           child: Text(
@@ -114,9 +114,9 @@ class _BranchItemComponentState extends State<BranchItemComponent> {
                       expandedText: true,
                       onTap: () {
                         launchMap(
-                            '${widget.branchData.addressLine1.validate()}');
+                            widget.branchData.addressLine1.validate());
                       },
-                      edgeInsets: EdgeInsets.only(left: 0),
+                      edgeInsets: const EdgeInsets.only(left: 0),
                       prefix: ic_location.iconImage(
                           color: textSecondaryColorGlobal, size: 16),
                     ),
@@ -149,7 +149,7 @@ class _BranchItemComponentState extends State<BranchItemComponent> {
                                   .validate()
                                   .toString(),
                               spacing: 10,
-                              edgeInsets: EdgeInsets.only(left: 0),
+                              edgeInsets: const EdgeInsets.only(left: 0),
                               prefix: Icon(Icons.star,
                                   size: 18,
                                   color: getRatingBarColor(widget
@@ -159,7 +159,7 @@ class _BranchItemComponentState extends State<BranchItemComponent> {
                             ),
                             if (widget.branchData.totalReview.validate() >= 1)
                               Text(
-                                '(${locale.basedOn} ${widget.branchData.totalReview.validate()} ${locale.review}${widget.branchData.totalReview.validate() > 1 ? '${locale.s}' : ''})',
+                                '(${locale.basedOn} ${widget.branchData.totalReview.validate()} ${locale.review}${widget.branchData.totalReview.validate() > 1 ? locale.s : ''})',
                                 style: secondaryTextStyle(),
                               ).paddingLeft(4),
                           ],
@@ -207,11 +207,11 @@ class _BranchItemComponentState extends State<BranchItemComponent> {
           Container(
             height: cardSize,
             width: context.width(),
-            margin: EdgeInsets.only(bottom: 16),
+            margin: const EdgeInsets.only(bottom: 16),
             decoration: boxDecorationWithRoundedCorners(
                 backgroundColor: context.primaryColor.withOpacity(0.4),
                 borderRadius: radius()),
-            child: Icon(Icons.check_circle_outline_outlined,
+            child: const Icon(Icons.check_circle_outline_outlined,
                 size: 40, color: white),
           ),
       ],

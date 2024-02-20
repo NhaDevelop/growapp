@@ -41,7 +41,7 @@ Future<List<BranchData>> getBranchList({
     return branchList;
   } catch (e) {
     appStore.setLoading(false);
-    throw e;
+    rethrow;
   }
 }
 
@@ -52,7 +52,7 @@ Future<void> setBranchAndRedirectToDashboard(BranchData branchData) async {
   await appStore.setBranchName(branchData.name.validate());
   await appStore.setBranchContactNumber(branchData.contactNumber.validate());
 
-  push(DashboardScreen(),
+  push(const DashboardScreen(),
       isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
 }
 
@@ -78,7 +78,7 @@ Future<BranchDetailResponse> getBranchDetail(int branchId) async {
     return res;
   } catch (e) {
     appStore.setLoading(false);
-    throw e;
+    rethrow;
   }
 }
 
@@ -104,7 +104,7 @@ Future<List<EmployeeData>> getBranchEmployeeList(
     appStore.setLoading(false);
   } catch (e) {
     appStore.setLoading(false);
-    throw e;
+    rethrow;
   }
   return list;
 }
@@ -131,7 +131,7 @@ Future<List<BranchGalleryData>> getBranchGalleryList(
     appStore.setLoading(false);
   } catch (e) {
     appStore.setLoading(false);
-    throw e;
+    rethrow;
   }
   return list;
 }
@@ -158,7 +158,7 @@ Future<List<ReviewData>> getBranchReviewList(
     appStore.setLoading(false);
   } catch (e) {
     appStore.setLoading(false);
-    throw e;
+    rethrow;
   }
   return list;
 }
@@ -185,7 +185,7 @@ Future<List<ServiceListData>> getBranchServiceList(
     appStore.setLoading(false);
   } catch (e) {
     appStore.setLoading(false);
-    throw e;
+    rethrow;
   }
   return list;
 }
@@ -205,6 +205,6 @@ Future<BranchConfigurationResponse> getBranchConfiguration(int branchId) async {
     return res;
   } catch (e) {
     appStore.setLoading(false);
-    throw e;
+    rethrow;
   }
 }

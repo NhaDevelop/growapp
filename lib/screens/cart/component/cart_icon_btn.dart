@@ -31,7 +31,7 @@ class CartIconBtnComponent extends StatelessWidget {
                   color: cartIconColor ?? Colors.white, size: 25),
               onPressed: () {
                 doIfLoggedIn(context, () {
-                  CartScreen().launch(context);
+                  const CartScreen().launch(context);
                 });
               },
             ),

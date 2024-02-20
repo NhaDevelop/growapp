@@ -32,7 +32,7 @@ class DateItemWidget extends StatelessWidget {
 
   final List<DateItem> dateItemComponentList;
 
-  DateItemWidget({
+  DateItemWidget({super.key, 
     required this.dateTime,
     required this.dateItemState,
     required this.width,
@@ -55,21 +55,21 @@ class DateItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: width + padding,
-      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       height: height,
       padding: EdgeInsets.only(left: padding / 2, right: padding / 2),
       decoration: BoxDecoration(color: _getContainerColorByState(dateItemState), borderRadius: radius()),
       alignment: Alignment.center,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: List<Widget>.generate(this.dateItemComponentList.length, (index) {
-          switch (this.dateItemComponentList[index]) {
+        children: List<Widget>.generate(dateItemComponentList.length, (index) {
+          switch (dateItemComponentList[index]) {
             case DateItem.WeekDay:
-              return Text(DateFormat.E(this.locale).format(this.dateTime), style: TextStyle(color: _getTextColorByState(dateItemState), fontSize: this.weekDayFontSize, fontWeight: _getTextWeightByState(dateItemState)));
+              return Text(DateFormat.E(locale).format(dateTime), style: TextStyle(color: _getTextColorByState(dateItemState), fontSize: weekDayFontSize, fontWeight: _getTextWeightByState(dateItemState)));
             case DateItem.Day:
               return Text(
-                DateFormat.d().format(this.dateTime),
-                style: TextStyle(color: _getTextColorByState(dateItemState), fontSize: this.dayFontSize, fontWeight: _getTextWeightByState(dateItemState)),
+                DateFormat.d().format(dateTime),
+                style: TextStyle(color: _getTextColorByState(dateItemState), fontSize: dayFontSize, fontWeight: _getTextWeightByState(dateItemState)),
               );
             /*case DateItem.Month:
               return Text(
@@ -77,7 +77,7 @@ class DateItemWidget extends StatelessWidget {
                 style: TextStyle(color: _getTextColorByState(dateItemState), fontSize: this.monthFontSize, fontWeight: _getTextWeightByState(dateItemState)),
               );*/
             default:
-              return Offstage();
+              return const Offstage();
           }
         }),
       ),

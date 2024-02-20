@@ -7,8 +7,10 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../../main.dart';
 
 class SuccessfullyChangePasswordDialog extends StatefulWidget {
+  const SuccessfullyChangePasswordDialog({super.key});
+
   @override
-  _SuccessfullyChangePasswordDialogState createState() =>
+  State<SuccessfullyChangePasswordDialog> createState() =>
       _SuccessfullyChangePasswordDialogState();
 }
 
@@ -40,9 +42,9 @@ class _SuccessfullyChangePasswordDialogState
         clipBehavior: Clip.none,
         children: [
           Container(
-            padding:
-                EdgeInsets.only(left: 16, top: 45 + 16, right: 16, bottom: 16),
-            margin: EdgeInsets.only(top: 45),
+            padding: const EdgeInsets.only(
+                left: 16, top: 45 + 16, right: 16, bottom: 16),
+            margin: const EdgeInsets.only(top: 45),
             decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
                 color: Colors.white,
@@ -62,14 +64,14 @@ class _SuccessfullyChangePasswordDialogState
                 ).center(),
                 24.height,
                 AppButton(
-                  child: Text(locale.done, style: boldTextStyle(color: white)),
                   color: context.primaryColor,
                   width: context.width(),
                   onTap: () {
-                    DashboardScreen().launch(context,
+                    const DashboardScreen().launch(context,
                         isNewTask: true,
                         pageRouteAnimation: PageRouteAnimation.Fade);
                   },
+                  child: Text(locale.done, style: boldTextStyle(color: white)),
                 ),
                 16.height,
               ],
@@ -77,7 +79,7 @@ class _SuccessfullyChangePasswordDialogState
           ),
           Positioned(
             child: Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               decoration: boxDecorationDefault(
                 shape: BoxShape.circle,
                 boxShadow: [
@@ -85,7 +87,7 @@ class _SuccessfullyChangePasswordDialogState
                       spreadRadius: 0,
                       blurRadius: 0,
                       blurStyle: BlurStyle.normal,
-                      offset: Offset(0.1, 0.5),
+                      offset: const Offset(0.1, 0.5),
                       color: Colors.grey.shade500),
                 ],
               ),

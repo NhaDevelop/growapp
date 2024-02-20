@@ -22,8 +22,8 @@ extension strEtx on String {
 
   String getTimeInAmPM() {
     return TimeOfDay(
-            hour: this.split(":").first.toInt(),
-            minute: this.split(":").last.toInt())
+            hour: split(":").first.toInt(),
+            minute: split(":").last.toInt())
         .format(getContext);
   }
 
@@ -71,7 +71,7 @@ extension strEtx on String {
 
   TimeOfDay getTimeOfDay() {
     return TimeOfDay(
-        hour: this.split(":").first.toInt(),
-        minute: this.split(":")[1].toInt());
+        hour: split(":").first.toInt(),
+        minute: split(":")[1].toInt());
   }
 }

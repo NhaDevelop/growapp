@@ -3,6 +3,8 @@ import 'package:lottie/lottie.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class VoiceSearchComponent extends StatefulWidget {
+  const VoiceSearchComponent({super.key});
+
   @override
   VoiceSearchComponentState createState() => VoiceSearchComponentState();
 }

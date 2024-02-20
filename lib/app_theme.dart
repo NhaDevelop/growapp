@@ -20,7 +20,7 @@ class AppTheme {
       ),
       fontFamily: GoogleFonts.lexendDeca().fontFamily,
       useMaterial3: true,
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: Colors.white),
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(backgroundColor: Colors.white),
       iconTheme: IconThemeData(color: textPrimaryColorGlobal),
       textTheme: GoogleFonts.lexendDecaTextTheme(),
       dialogBackgroundColor: Colors.white,
@@ -31,7 +31,7 @@ class AppTheme {
         backgroundColor: Colors.white,
       ),
       cardColor: cardColor,
-      appBarTheme: AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light)),
+      appBarTheme: const AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light)),
       dialogTheme: DialogTheme(shape: dialogShape()),
     );
   }
@@ -40,7 +40,7 @@ class AppTheme {
     return ThemeData(
       primarySwatch: createMaterialColor(primaryColor),
       primaryColor: primaryColor,
-      appBarTheme: AppBarTheme(
+      appBarTheme: const AppBarTheme(
         systemOverlayStyle: SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
       ),
       scaffoldBackgroundColor: scaffoldDarkColor,
@@ -50,8 +50,8 @@ class AppTheme {
         onSurface: textPrimaryColorGlobal,
       ),
       fontFamily: GoogleFonts.lexendDeca().fontFamily,
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: scaffoldSecondaryDark),
-      iconTheme: IconThemeData(color: Colors.white),
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(backgroundColor: scaffoldSecondaryDark),
+      iconTheme: const IconThemeData(color: Colors.white),
       textTheme: GoogleFonts.lexendDecaTextTheme(),
       dialogBackgroundColor: scaffoldSecondaryDark,
       unselectedWidgetColor: Colors.white60,

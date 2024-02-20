@@ -22,8 +22,8 @@ class OrderPayPalService {
     required bool isTest,
     required Function(dynamic) onComplete,
   }) {
-    this.ctx = context;
-    this.payPalClientId = paypalClientId;
+    ctx = context;
+    payPalClientId = paypalClientId;
     this.secretKey = secretKey;
     this.totalAmount = totalAmount;
     this.isTest = isTest;

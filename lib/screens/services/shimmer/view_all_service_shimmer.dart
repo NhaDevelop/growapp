@@ -4,10 +4,12 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../../components/shimmer_widget.dart';
 
 class ViewAllServiceShimmer extends StatelessWidget {
+  const ViewAllServiceShimmer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return AnimatedScrollView(
-      padding: EdgeInsets.only(top: 25, bottom: 80),
+      padding: const EdgeInsets.only(top: 25, bottom: 80),
       crossAxisAlignment: CrossAxisAlignment.start,
       listAnimationType: ListAnimationType.None,
       children: [
@@ -22,7 +24,7 @@ class ViewAllServiceShimmer extends StatelessWidget {
               itemCount: 5,
               runSpacing: 16,
               spacing: 16,
-              padding: EdgeInsets.only(left: 16, right: 16, top: 8),
+              padding: const EdgeInsets.only(left: 16, right: 16, top: 8),
               itemBuilder: (context, index) {
                 return Container(
                   width: context.width() / 3 - 20,
@@ -52,19 +54,19 @@ class ViewAllServiceShimmer extends StatelessWidget {
               itemCount: 20,
               shrinkWrap: true,
               padding: EdgeInsets.zero,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (ctx, index) {
                 return Container(
                   decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor, borderRadius: radius()),
-                  padding: EdgeInsets.only(left: 16, right: 8, top: 16, bottom: 16),
-                  margin: EdgeInsets.only(bottom: 16),
+                  padding: const EdgeInsets.only(left: 16, right: 8, top: 16, bottom: 16),
+                  margin: const EdgeInsets.only(bottom: 16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          ShimmerWidget(height: 70, width: 70),
+                          const ShimmerWidget(height: 70, width: 70),
                           8.width,
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,7 +83,7 @@ class ViewAllServiceShimmer extends StatelessWidget {
                         children: [
                           ShimmerWidget(height: 20, width: context.width() * 0.10),
                           8.width,
-                          ShimmerWidget(height: 20, width: 20),
+                          const ShimmerWidget(height: 20, width: 20),
                         ],
                       ),
                     ],

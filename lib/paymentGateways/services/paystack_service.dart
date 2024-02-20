@@ -34,9 +34,9 @@ class PayStackService {
     required Function(Map<String, dynamic>) onComplete,
   }) {
     // paystackPlugin.initialize(publicKey: paystackPaymentPublicKey);
-    this.ctx = context;
-    this.paystackPublicKey = paystackPaymentPublicKey;
-    this.userEmail = userStore.userEmail;
+    ctx = context;
+    paystackPublicKey = paystackPaymentPublicKey;
+    userEmail = userStore.userEmail;
     this.totalAmount = totalAmount;
     this.bookingId = bookingId;
     this.discountAmount = discountAmount;

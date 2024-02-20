@@ -14,14 +14,14 @@ class SlotWidget extends StatefulWidget {
   final DateTime selectedHorizontalDate;
   final bool isFromQuickBooking;
 
-  SlotWidget({
+  const SlotWidget({
     required this.slotDuration,
     required this.startTime,
     required this.endTime,
     required this.selectedHorizontalDate,
     this.isFromQuickBooking = false,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<SlotWidget> createState() => _SlotWidgetState();
@@ -112,9 +112,9 @@ class _SlotWidgetState extends State<SlotWidget> {
           }
 
           return Container(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             width: context.width(),
-            margin: EdgeInsets.only(bottom: 50),
+            margin: const EdgeInsets.only(bottom: 50),
             decoration: boxDecorationWithRoundedCorners(
                 backgroundColor: context.cardColor, borderRadius: radius()),
             child: Column(
@@ -177,7 +177,7 @@ class _SlotWidgetState extends State<SlotWidget> {
             ),
           );
         } else {
-          return snapWidgetHelper(snap, loadingWidget: Offstage());
+          return snapWidgetHelper(snap, loadingWidget: const Offstage());
         }
       },
     );

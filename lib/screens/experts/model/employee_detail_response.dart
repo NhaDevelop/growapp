@@ -20,9 +20,9 @@ class EmployeeDetailResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
-    data['status'] = this.status;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
+    data['status'] = status;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
@@ -109,10 +109,10 @@ class EmployeeData {
 
   factory EmployeeData.fromJson(Map<String, dynamic> json) {
     return EmployeeData(
-      profileImage: json['profile_image'] != null ? json['profile_image'] : null,
+      profileImage: json['profile_image'],
       createdAt: json['created_at'],
-      dateOfBirth: json['date_of_birth'] != null ? json['date_of_birth'] : null,
-      deletedAt: json['deleted_at'] != null ? json['deleted_at'] : null,
+      dateOfBirth: json['date_of_birth'],
+      deletedAt: json['deleted_at'],
       email: json['email'],
       emailVerifiedAt: json['email_verified_at'],
       firstName: json['first_name'],
@@ -123,7 +123,7 @@ class EmployeeData {
       isManager: json['is_manager'],
       lastName: json['last_name'],
       mobile: json['mobile'],
-      playerId: json['player_id'] != null ? json['player_id'] : null,
+      playerId: json['player_id'],
       showInCalender: json['show_in_calender'],
       status: json['status'],
       updatedAt: json['updated_at'],
@@ -143,50 +143,50 @@ class EmployeeData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['created_at'] = this.createdAt;
-    data['email'] = this.email;
-    data['email_verified_at'] = this.emailVerifiedAt;
-    data['first_name'] = this.firstName;
-    data['full_name'] = this.fullName;
-    data['gender'] = this.gender;
-    data['id'] = this.id;
-    data['is_banned'] = this.isBanned;
-    data['is_manager'] = this.isManager;
-    data['last_name'] = this.lastName;
-    data['mobile'] = this.mobile;
-    data['show_in_calender'] = this.showInCalender;
-    data['status'] = this.status;
-    data['updated_at'] = this.updatedAt;
-    data['expert'] = this.expert;
-    data['branches_count'] = this.branchesCount;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['created_at'] = createdAt;
+    data['email'] = email;
+    data['email_verified_at'] = emailVerifiedAt;
+    data['first_name'] = firstName;
+    data['full_name'] = fullName;
+    data['gender'] = gender;
+    data['id'] = id;
+    data['is_banned'] = isBanned;
+    data['is_manager'] = isManager;
+    data['last_name'] = lastName;
+    data['mobile'] = mobile;
+    data['show_in_calender'] = showInCalender;
+    data['status'] = status;
+    data['updated_at'] = updatedAt;
+    data['expert'] = expert;
+    data['branches_count'] = branchesCount;
 
-    data['about_self'] = this.aboutSelf;
-    data['joining_date'] = this.joiningDate;
-    data['facebook_link'] = this.facebookLink;
-    data['instagram_link'] = this.instagramLink;
-    data['twitter_link'] = this.twitterLink;
-    data['dribbble_link'] = this.dribbbleLink;
-    data['total_review'] = this.totalReview;
+    data['about_self'] = aboutSelf;
+    data['joining_date'] = joiningDate;
+    data['facebook_link'] = facebookLink;
+    data['instagram_link'] = instagramLink;
+    data['twitter_link'] = twitterLink;
+    data['dribbble_link'] = dribbbleLink;
+    data['total_review'] = totalReview;
 
-    data['service_employees_count'] = this.serviceEmployeesCount;
+    data['service_employees_count'] = serviceEmployeesCount;
 
-    data['rating_star'] = this.ratingStar;
+    data['rating_star'] = ratingStar;
 
-    if (this.profileImage != null) {
-      data['profile_image'] = this.profileImage;
+    if (profileImage != null) {
+      data['profile_image'] = profileImage;
     }
-    if (this.dateOfBirth != null) {
-      data['date_of_birth'] = this.dateOfBirth;
+    if (dateOfBirth != null) {
+      data['date_of_birth'] = dateOfBirth;
     }
-    if (this.deletedAt != null) {
-      data['deleted_at'] = this.deletedAt;
+    if (deletedAt != null) {
+      data['deleted_at'] = deletedAt;
     }
-    if (this.playerId != null) {
-      data['player_id'] = this.playerId;
+    if (playerId != null) {
+      data['player_id'] = playerId;
     }
-    if (this.reviewData != null) {
-      data['review'] = this.reviewData!.map((v) => v.toJson()).toList();
+    if (reviewData != null) {
+      data['review'] = reviewData!.map((v) => v.toJson()).toList();
     }
     return data;
   }

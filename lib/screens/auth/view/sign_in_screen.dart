@@ -25,12 +25,12 @@ class SignInScreen extends StatefulWidget {
   final bool returnExpected;
 
   const SignInScreen({
-    Key? key,
+    super.key,
     this.returnExpected = false,
     this.isRegeneratingToken = false,
     this.isFromDashboard,
     this.isFromServiceBooking,
-  }) : super(key: key);
+  });
 
   @override
   State<SignInScreen> createState() => _SignInScreenState();
@@ -109,10 +109,10 @@ class _SignInScreenState extends State<SignInScreen> {
       finish(context, true);
     } else {
       if (appStore.isBranchSelected) {
-        DashboardScreen().launch(context,
+        const DashboardScreen().launch(context,
             isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
       } else {
-        SelectBranchScreen().launch(context,
+        const SelectBranchScreen().launch(context,
             isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
       }
     }
@@ -179,14 +179,14 @@ class _SignInScreenState extends State<SignInScreen> {
                     decoration: boxDecorationWithRoundedCorners(
                       backgroundColor: context.primaryColor,
                       borderRadius: radiusOnly(bottomLeft: 20, bottomRight: 20),
-                      decorationImage: DecorationImage(
+                      decorationImage: const DecorationImage(
                           image: AssetImage(bg_pattern), fit: BoxFit.cover),
                     ),
                   ),
                   Positioned(
                     bottom: -60,
                     child: Container(
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       decoration: boxDecorationDefault(shape: BoxShape.circle),
                       child: Image.asset(app_logo,
                           height: 104, width: 104, fit: BoxFit.cover),
@@ -195,7 +195,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   Positioned(
                     top: context.statusBarHeight + 16,
                     left: 8,
-                    child: BackWidget(),
+                    child: const BackWidget(),
                   ).visible(context.canPop),
                 ],
               ),
@@ -221,7 +221,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               textFieldType: TextFieldType.EMAIL,
                               decoration:
                                   inputDecoration(context, label: locale.email),
-                              autoFillHints: [AutofillHints.email],
+                              autoFillHints: const [AutofillHints.email],
                               selectionControls:
                                   MaterialTextSelectionControls(),
                             ),
@@ -232,7 +232,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               focus: passwordFocus,
                               decoration: inputDecoration(context,
                                   label: locale.password),
-                              autoFillHints: [AutofillHints.password],
+                              autoFillHints: const [AutofillHints.password],
                               onFieldSubmitted: (s) {
                                 onSignIn();
                               },
@@ -266,7 +266,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                   showInDialog(
                                     context,
                                     contentPadding: EdgeInsets.zero,
-                                    builder: (_) => ForgotPasswordScreen(),
+                                    builder: (_) => const ForgotPasswordScreen(),
                                   );
                                 },
                                 child: Text(
@@ -285,13 +285,13 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                       16.height,
                       AppButton(
-                        child: Text(locale.signIn,
-                            style: boldTextStyle(color: white)),
                         width: context.width(),
                         color: secondaryColor,
                         onTap: () async {
                           onSignIn();
                         },
+                        child: Text(locale.signIn,
+                            style: boldTextStyle(color: white)),
                       ),
                       16.height,
                       Row(
@@ -301,7 +301,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           TextButton(
                             onPressed: () {
                               hideKeyboard(context);
-                              SignUpScreen().launch(context);
+                              const SignUpScreen().launch(context);
                             },
                             child: Text(
                               locale.signUp,
@@ -330,14 +330,15 @@ class _SignInScreenState extends State<SignInScreen> {
                           AppButton(
                             text: '',
                             color: context.cardColor,
-                            padding: EdgeInsets.all(8),
+                            padding: const EdgeInsets.all(8),
                             textStyle: boldTextStyle(),
                             width:
                                 context.width() - context.navigationBarHeight,
+                            onTap: googleSignIn,
                             child: Row(
                               children: [
                                 Container(
-                                  padding: EdgeInsets.all(12),
+                                  padding: const EdgeInsets.all(12),
                                   decoration: boxDecorationWithRoundedCorners(
                                     backgroundColor:
                                         primaryColor.withOpacity(0.1),
@@ -351,7 +352,6 @@ class _SignInScreenState extends State<SignInScreen> {
                                     .expand(),
                               ],
                             ),
-                            onTap: googleSignIn,
                           ),
                           24.height,
 
@@ -360,20 +360,21 @@ class _SignInScreenState extends State<SignInScreen> {
                             AppButton(
                               text: '',
                               color: context.cardColor,
-                              padding: EdgeInsets.all(8),
+                              padding: const EdgeInsets.all(8),
                               textStyle: boldTextStyle(),
                               width:
                                   context.width() - context.navigationBarHeight,
+                              onTap: appleSign,
                               child: Row(
                                 children: [
                                   Container(
-                                    padding: EdgeInsets.all(8),
+                                    padding: const EdgeInsets.all(8),
                                     decoration: boxDecorationWithRoundedCorners(
                                       backgroundColor:
                                           primaryColor.withOpacity(0.1),
                                       boxShape: BoxShape.circle,
                                     ),
-                                    child: Icon(Icons.apple),
+                                    child: const Icon(Icons.apple),
                                   ),
                                   Text("${locale.signInWith} ${locale.apple}",
                                           style: boldTextStyle(size: 12),
@@ -381,7 +382,6 @@ class _SignInScreenState extends State<SignInScreen> {
                                       .expand(),
                                 ],
                               ),
-                              onTap: appleSign,
                             ),
                           24.height,
                         ],

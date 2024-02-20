@@ -14,8 +14,10 @@ import '../model/category_response.dart';
 import '../shimmer/category_shimmer.dart';
 
 class CategoryScreen extends StatefulWidget {
+  const CategoryScreen({super.key});
+
   @override
-  _CategoryScreenState createState() => _CategoryScreenState();
+  State<CategoryScreen> createState() => _CategoryScreenState();
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
@@ -71,7 +73,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
           SnapHelperWidget<List<CategoryData>>(
             future: future,
             initialData: categoryListCached,
-            loadingWidget: CategoryShimmer(),
+            loadingWidget: const CategoryShimmer(),
             onSuccess: (list) {
               if (list.isEmpty) {
                 return NoDataWidget(
@@ -96,9 +98,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
                   return await 2.seconds.delay;
                 },
-                physics: AlwaysScrollableScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(),
                 listAnimationType: ListAnimationType.Scale,
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 onNextPage: () {
                   if (!isLastPage) {
                     page++;
@@ -139,7 +141,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               return NoDataWidget(
                 title: error,
                 retryText: locale.reload,
-                imageWidget: ErrorStateWidget(),
+                imageWidget: const ErrorStateWidget(),
                 onRetry: () {
                   page = 1;
                   appStore.setLoading(true);
@@ -151,7 +153,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
             },
           ),
           Observer(
-              builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+              builder: (context) =>
+                  const LoaderWidget().visible(appStore.isLoading)),
         ],
       ),
     );

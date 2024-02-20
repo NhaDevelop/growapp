@@ -23,8 +23,10 @@ import '../product_repository.dart';
 late VoidCallback onProductDashboardUpdate;
 
 class ProductScreen extends StatefulWidget {
+  const ProductScreen({super.key});
+
   @override
-  _ProductScreenState createState() => _ProductScreenState();
+  State<ProductScreen> createState() => _ProductScreenState();
 }
 
 class _ProductScreenState extends State<ProductScreen>
@@ -84,11 +86,6 @@ class _ProductScreenState extends State<ProductScreen>
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return AppScaffold(
       appBarWidget: PreferredSize(
@@ -112,15 +109,15 @@ class _ProductScreenState extends State<ProductScreen>
                 textSize: APPBAR_TEXT_SIZE,
                 actions: [
                   IconButton(
-                    icon: Icon(Icons.favorite_border_outlined,
+                    icon: const Icon(Icons.favorite_border_outlined,
                         color: Colors.white),
                     onPressed: () async {
                       doIfLoggedIn(context, () {
-                        ProductWishListScreen().launch(context);
+                        const ProductWishListScreen().launch(context);
                       });
                     },
                   ),
-                  CartIconBtnComponent(),
+                  const CartIconBtnComponent(),
                 ],
               ).cornerRadiusWithClipRRectOnly(bottomLeft: 20, bottomRight: 20),
             ),
@@ -160,7 +157,7 @@ class _ProductScreenState extends State<ProductScreen>
                 return NoDataWidget(
                   title: error,
                   retryText: locale.reload,
-                  imageWidget: ErrorStateWidget(),
+                  imageWidget: const ErrorStateWidget(),
                   onRetry: () {
                     page = 1;
                     appStore.setLoading(true);
@@ -169,7 +166,7 @@ class _ProductScreenState extends State<ProductScreen>
                   },
                 );
               },
-              loadingWidget: LoaderWidget(),
+              loadingWidget: const LoaderWidget(),
               onSuccess: (productList) {
                 if (productList.isEmpty) {
                   return NoDataWidget(
@@ -185,8 +182,8 @@ class _ProductScreenState extends State<ProductScreen>
                 }
 
                 return AnimatedScrollView(
-                  padding:
-                      EdgeInsets.only(left: 16, right: 16, top: 40, bottom: 30),
+                  padding: const EdgeInsets.only(
+                      left: 16, right: 16, top: 40, bottom: 30),
                   onSwipeRefresh: () async {
                     page = 1;
 
@@ -219,12 +216,12 @@ class _ProductScreenState extends State<ProductScreen>
           : SnapHelperWidget<ProductDashboardResponse>(
               future: future,
               initialData: productDashboardResponseCached,
-              loadingWidget: LoaderWidget(),
+              loadingWidget: const LoaderWidget(),
               errorBuilder: (error) {
                 return NoDataWidget(
                   title: error,
                   retryText: locale.reload,
-                  imageWidget: ErrorStateWidget(),
+                  imageWidget: const ErrorStateWidget(),
                   onRetry: () {
                     appStore.setLoading(true);
 
@@ -238,7 +235,7 @@ class _ProductScreenState extends State<ProductScreen>
                   return NoDataWidget(
                     title: locale.atThisTimeThere,
                     retryText: locale.reload,
-                    imageWidget: EmptyStateWidget(),
+                    imageWidget: const EmptyStateWidget(),
                     onRetry: () {
                       appStore.setLoading(true);
 
@@ -249,7 +246,7 @@ class _ProductScreenState extends State<ProductScreen>
                 }
 
                 return AnimatedScrollView(
-                  padding: EdgeInsets.only(top: 30),
+                  padding: const EdgeInsets.only(top: 30),
                   listAnimationType: ListAnimationType.FadeIn,
                   onSwipeRefresh: () async {
                     init(flag: true);

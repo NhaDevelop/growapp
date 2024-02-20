@@ -3,24 +3,26 @@ import 'package:grow_tokyo_app/components/shimmer_widget.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class BranchServiceShimmer extends StatelessWidget {
+  const BranchServiceShimmer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
+      padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
       child: AnimatedListView(
         itemCount: 20,
         shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
           return Container(
             decoration: boxDecorationWithRoundedCorners(
                 backgroundColor: context.cardColor, borderRadius: radius()),
-            margin: EdgeInsets.only(bottom: 16),
-            padding: EdgeInsets.all(16),
+            margin: const EdgeInsets.only(bottom: 16),
+            padding: const EdgeInsets.all(16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ShimmerWidget(height: 36, width: 36)
+                const ShimmerWidget(height: 36, width: 36)
                     .cornerRadiusWithClipRRect(18),
                 8.width,
                 Column(

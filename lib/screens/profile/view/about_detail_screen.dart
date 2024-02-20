@@ -9,7 +9,7 @@ class AboutDetailScreen extends StatelessWidget {
   final String title;
   final List<AboutModel> aboutModel;
 
-  const AboutDetailScreen({this.title = '', required this.aboutModel, Key? key}) : super(key: key);
+  const AboutDetailScreen({this.title = '', required this.aboutModel, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class AboutDetailScreen extends StatelessWidget {
 
           return Container(
             width: context.width() * 0.5 - 26,
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             decoration: boxDecorationWithRoundedCorners(
               borderRadius: radius(),
               backgroundColor: context.cardColor,
@@ -44,7 +44,7 @@ class AboutDetailScreen extends StatelessWidget {
                 8.height,
                 Marquee(
                   directionMarguee: DirectionMarguee.oneDirection,
-                  animationDuration: Duration(milliseconds: 500),
+                  animationDuration: const Duration(milliseconds: 500),
                   child: Text(data.title.toString(), style: boldTextStyle(size: LABEL_TEXT_SIZE)),
                 ),
               ],

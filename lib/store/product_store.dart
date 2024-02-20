@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:mobx/mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -54,7 +56,9 @@ abstract class _ProductStore with Store {
   List<String> selectedOrderStatusList = ObservableList();
 
   @computed
-  num get totalAmount => cartPriceData.totalPayableAmount.validate() + logisticZoneData.standardDeliveryCharge.validate();
+  num get totalAmount =>
+      cartPriceData.totalPayableAmount.validate() +
+      logisticZoneData.standardDeliveryCharge.validate();
 
   @action
   void setSelectedOrderStatusList(List<String> selectedOrderStatusListRequest) {

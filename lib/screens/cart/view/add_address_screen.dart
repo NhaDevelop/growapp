@@ -15,10 +15,10 @@ import '../model/state_list_response.dart';
 class AddAddressScreen extends StatefulWidget {
   final UserAddress? address;
 
-  AddAddressScreen({this.address});
+  const AddAddressScreen({super.key, this.address});
 
   @override
-  _AddAddressScreenState createState() => _AddAddressScreenState();
+  State<AddAddressScreen> createState() => _AddAddressScreenState();
 }
 
 class _AddAddressScreenState extends State<AddAddressScreen> {
@@ -93,11 +93,11 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       countryList.clear();
       countryList.addAll(value);
       setState(() {});
-      value.forEach((e) {
+      for (var e in value) {
         if (e.id == countryId) {
           selectedCountry = e;
         }
-      });
+      }
     }).catchError((e) {
       appStore.setLoading(false);
       toast(e.toString(), print: true);
@@ -110,11 +110,11 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     await getStateList(countryId: countryId).then((value) async {
       stateList.clear();
       stateList.addAll(value);
-      value.forEach((e) {
+      for (var e in value) {
         if (e.id == stateId) {
           selectedState = e;
         }
-      });
+      }
       setState(() {});
     }).catchError((e) {
       appStore.setLoading(false);
@@ -128,11 +128,11 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     await getCityList(stateId: stateId).then((value) async {
       cityList.clear();
       cityList.addAll(value);
-      value.forEach((e) {
+      for (var e in value) {
         if (e.id == cityId) {
           selectedCity = e;
         }
-      });
+      }
     }).catchError((e) {
       appStore.setLoading(false);
       toast(e.toString(), print: true);
@@ -158,7 +158,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
         children: [
           AnimatedScrollView(
             controller: scrollController,
-            padding: EdgeInsets.only(left: 16, right: 16, bottom: 60, top: 30),
+            padding:
+                const EdgeInsets.only(left: 16, right: 16, bottom: 60, top: 30),
             children: [
               Form(
                 key: formKey,
@@ -326,8 +327,6 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
             left: 16,
             right: 16,
             child: AppButton(
-              child: Text(isEdit ? locale.saveChanges : locale.save,
-                  style: boldTextStyle(color: white)),
               width: context.width(),
               color: secondaryColor,
               onTap: () async {
@@ -362,6 +361,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                   }
                 }
               },
+              child: Text(isEdit ? locale.saveChanges : locale.save,
+                  style: boldTextStyle(color: white)),
             ),
           ),
         ],

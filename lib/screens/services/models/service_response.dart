@@ -20,9 +20,9 @@ class ServiceResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
-    data['status'] = this.status;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
+    data['status'] = status;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -85,11 +85,11 @@ class ServiceListData {
     return ServiceListData(
       categoryId: json['category_id'],
       createdAt: json['created_at'],
-      createdBy: json['created_by'] != null ? json['created_by'] : null,
+      createdBy: json['created_by'],
       defaultPrice: json['default_price'],
       servicePrice: json['service_price'],
-      deletedAt: json['deleted_at'] != null ? json['deleted_at'] : null,
-      deletedBy: json['deleted_by'] != null ? json['deleted_by'] : null,
+      deletedAt: json['deleted_at'],
+      deletedBy: json['deleted_by'],
       description: json['description'],
       durationMin: json['duration_min'],
       id: json['id'],
@@ -97,50 +97,50 @@ class ServiceListData {
       serviceId: json['service_id'],
       serviceName: json['service_name'],
       serviceImage:
-          json['service_image'] != null ? json['service_image'] : null,
+          json['service_image'],
       slug: json['slug'],
       status: json['status'],
       subCategoryId:
-          json['sub_category_id'] != null ? json['sub_category_id'] : null,
+          json['sub_category_id'],
       updatedAt: json['updated_at'],
-      updatedBy: json['updated_by'] != null ? json['updated_by'] : null,
+      updatedBy: json['updated_by'],
     );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['category_id'] = this.categoryId;
-    data['created_at'] = this.createdAt;
-    data['default_price'] = this.defaultPrice;
-    data['service_price'] = this.servicePrice;
-    data['description'] = this.description;
-    data['duration_min'] = this.durationMin;
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['service_id'] = this.serviceId;
-    data['service_name'] = this.serviceName;
-    data['slug'] = this.slug;
-    data['status'] = this.status;
-    data['updated_at'] = this.updatedAt;
-    if (this.createdBy != null) {
-      data['created_by'] = this.createdBy;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['category_id'] = categoryId;
+    data['created_at'] = createdAt;
+    data['default_price'] = defaultPrice;
+    data['service_price'] = servicePrice;
+    data['description'] = description;
+    data['duration_min'] = durationMin;
+    data['id'] = id;
+    data['name'] = name;
+    data['service_id'] = serviceId;
+    data['service_name'] = serviceName;
+    data['slug'] = slug;
+    data['status'] = status;
+    data['updated_at'] = updatedAt;
+    if (createdBy != null) {
+      data['created_by'] = createdBy;
     }
-    if (this.deletedAt != null) {
-      data['deleted_at'] = this.deletedAt;
+    if (deletedAt != null) {
+      data['deleted_at'] = deletedAt;
     }
-    if (this.deletedBy != null) {
-      data['deleted_by'] = this.deletedBy;
+    if (deletedBy != null) {
+      data['deleted_by'] = deletedBy;
     }
-    if (this.serviceImage != null) {
-      data['service_image'] = this.serviceImage;
+    if (serviceImage != null) {
+      data['service_image'] = serviceImage;
     }
-    if (this.subCategoryId != null) {
-      data['sub_category_id'] = this.subCategoryId;
+    if (subCategoryId != null) {
+      data['sub_category_id'] = subCategoryId;
     }
-    if (this.updatedBy != null) {
-      data['updated_by'] = this.updatedBy;
+    if (updatedBy != null) {
+      data['updated_by'] = updatedBy;
     }
-    data['start_date_time'] = this.startDateTime;
+    data['start_date_time'] = startDateTime;
 
     return data;
   }
@@ -148,16 +148,17 @@ class ServiceListData {
   /// For Save Booking
   Map<String, dynamic> toBookingServiceJson(
       {bool isUpdate = false, bool isRescheduleBooking = false}) {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['service_id'] =
-        (isUpdate || isRescheduleBooking) ? this.serviceId : this.id;
+        (isUpdate || isRescheduleBooking) ? serviceId : id;
     data['service_price'] = (isUpdate || isRescheduleBooking)
-        ? this.servicePrice
-        : this.defaultPrice;
-    if (bookingRequestStore.employeeId != -1)
+        ? servicePrice
+        : defaultPrice;
+    if (bookingRequestStore.employeeId != -1) {
       data['employee_id'] = bookingRequestStore.employeeId;
-    data['duration_min'] = this.durationMin;
-    data['start_date_time'] = this.startDateTime;
+    }
+    data['duration_min'] = durationMin;
+    data['start_date_time'] = startDateTime;
     return data;
   }
 }

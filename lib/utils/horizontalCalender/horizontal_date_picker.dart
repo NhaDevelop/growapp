@@ -78,6 +78,7 @@ class HorizontalDatePickerWidget extends StatefulWidget {
   /// Main widget part of this library.
   /// It is a horizontal date picker that always make the selected option to center.
   HorizontalDatePickerWidget({
+    super.key,
     required this.startDate,
     required this.endDate,
     required this.selectedDate,
@@ -108,33 +109,22 @@ class HorizontalDatePickerWidget extends StatefulWidget {
     this.weekDayFontSize = 12,
   })  : assert(dateItemComponentList.isNotEmpty,
             'dateItemComponentList  cannot be empty'),
-        this.locale = locale ?? Intl.systemLocale;
+        locale = locale ?? Intl.systemLocale;
 
   @override
-  _HorizontalDatePickerWidgetState createState() =>
-      _HorizontalDatePickerWidgetState(
-          this.datePickerController,
-          this.widgetWidth,
-          this.width,
-          this.startDate,
-          this.endDate,
-          this.selectedDate);
+  State<HorizontalDatePickerWidget> createState() =>
+      _HorizontalDatePickerWidgetState();
 }
 
 class _HorizontalDatePickerWidgetState
     extends State<HorizontalDatePickerWidget> {
   int _itemCount = 0;
   double _padding = 0.0;
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
-  _HorizontalDatePickerWidgetState(
-      DatePickerController controller,
-      double ttlWidth,
-      double width,
-      DateTime startDate,
-      DateTime endDate,
-      DateTime selectedDate) {
-    _init(controller, ttlWidth, width, startDate, endDate, selectedDate);
+  _HorizontalDatePickerWidgetState() {
+    _init(widget.datePickerController, widget.widgetWidth, widget.width,
+        widget.startDate, widget.endDate, widget.selectedDate);
   }
 
   @override
@@ -148,7 +138,7 @@ class _HorizontalDatePickerWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: widget.height,
       width: widget.widgetWidth,
       child: ListView.builder(

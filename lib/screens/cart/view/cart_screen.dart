@@ -17,8 +17,10 @@ import 'select_address_screen.dart';
 late VoidCallback onCartListUpdate;
 
 class CartScreen extends StatefulWidget {
+  const CartScreen({super.key});
+
   @override
-  _CartScreenState createState() => _CartScreenState();
+  State<CartScreen> createState() => _CartScreenState();
 }
 
 class _CartScreenState extends State<CartScreen> {
@@ -69,12 +71,12 @@ class _CartScreenState extends State<CartScreen> {
           roundCornerShape: true),
       body: SnapHelperWidget(
         future: future,
-        loadingWidget: LoaderWidget(),
+        loadingWidget: const LoaderWidget(),
         errorBuilder: (error) {
           return NoDataWidget(
             title: error,
             retryText: locale.reload,
-            imageWidget: ErrorStateWidget(),
+            imageWidget: const ErrorStateWidget(),
             onRetry: () {
               page = 1;
               appStore.setLoading(true);
@@ -88,7 +90,7 @@ class _CartScreenState extends State<CartScreen> {
             return NoDataWidget(
               title: locale.yourCartIsEmpty,
               subTitle: locale.thereAreCurrentlyNoItems,
-              imageWidget: EmptyStateWidget(),
+              imageWidget: const EmptyStateWidget(),
               retryText: locale.reload,
               onRetry: () {
                 page = 1;
@@ -102,8 +104,8 @@ class _CartScreenState extends State<CartScreen> {
           return Stack(
             children: [
               AnimatedScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
-                padding: EdgeInsets.only(bottom: 225, top: 20),
+                physics: const AlwaysScrollableScrollPhysics(),
+                padding: const EdgeInsets.only(bottom: 225, top: 20),
                 onSwipeRefresh: () async {
                   page = 1;
                   init(flag: true);
@@ -121,7 +123,7 @@ class _CartScreenState extends State<CartScreen> {
                 children: [
                   AnimatedListView(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     itemCount: cartList.$1.length,
                     itemBuilder: (context, index) {
                       productStore.setCartListData(cartList.$1);
@@ -136,7 +138,8 @@ class _CartScreenState extends State<CartScreen> {
                 left: 0,
                 right: 0,
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 18, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 18, vertical: 4),
                   decoration: boxDecorationDefault(
                     color: context.cardColor,
                     borderRadius: radiusOnly(topLeft: 20, topRight: 20),
@@ -144,7 +147,7 @@ class _CartScreenState extends State<CartScreen> {
                       BoxShadow(
                           spreadRadius: 6,
                           blurRadius: 10,
-                          offset: Offset(0, -1),
+                          offset: const Offset(0, -1),
                           color: context.dividerColor),
                     ],
                   ),
@@ -207,15 +210,15 @@ class _CartScreenState extends State<CartScreen> {
                       20.height,
                       AppButton(
                         width: context.width(),
-                        child: Text(locale.next,
-                            style: boldTextStyle(color: Colors.white)),
                         color: secondaryColor,
                         onTap: () {
                           productStore
                               .setCartPriceData(cartList.$2.cartPriceData!);
-                          SelectAddressScreen().launch(context,
+                          const SelectAddressScreen().launch(context,
                               pageRouteAnimation: PageRouteAnimation.Fade);
                         },
+                        child: Text(locale.next,
+                            style: boldTextStyle(color: Colors.white)),
                       ),
                       20.height,
                     ],

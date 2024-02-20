@@ -21,15 +21,16 @@ class ProductListScreen extends StatefulWidget {
   final String isBestSeller;
   final String isBestDiscounts;
 
-  ProductListScreen(
-      {this.productCategoryID,
+  const ProductListScreen(
+      {super.key,
+      this.productCategoryID,
       this.appBarTitleText,
       this.isFeatured = '',
       this.isBestSeller = '',
       this.isBestDiscounts = ''});
 
   @override
-  _ProductListScreenState createState() => _ProductListScreenState();
+  State<ProductListScreen> createState() => _ProductListScreenState();
 }
 
 class _ProductListScreenState extends State<ProductListScreen> {
@@ -96,7 +97,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
               child: appBarWidget(
                 widget.appBarTitleText.validate(),
                 textColor: white,
-                backWidget: BackWidget(),
+                backWidget: const BackWidget(),
                 center: true,
                 color: context.primaryColor,
                 textSize: APPBAR_TEXT_SIZE,
@@ -141,7 +142,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
           return NoDataWidget(
             title: error,
             retryText: locale.reload,
-            imageWidget: ErrorStateWidget(),
+            imageWidget: const ErrorStateWidget(),
             onRetry: () {
               page = 1;
               appStore.setLoading(true);
@@ -150,7 +151,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
             },
           );
         },
-        loadingWidget: LoaderWidget(),
+        loadingWidget: const LoaderWidget(),
         onSuccess: (productList) {
           if (productList.isEmpty) {
             return NoDataWidget(
@@ -166,7 +167,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
           }
 
           return AnimatedScrollView(
-            padding: EdgeInsets.only(left: 16, right: 16, top: 40, bottom: 30),
+            padding:
+                const EdgeInsets.only(left: 16, right: 16, top: 40, bottom: 30),
             onSwipeRefresh: () async {
               page = 1;
 

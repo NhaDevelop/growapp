@@ -16,11 +16,11 @@ class EmployeeResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
-    data['status'] = this.status;
-    if (this.topExperts != null) {
-      data['data'] = this.topExperts!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
+    data['status'] = status;
+    if (topExperts != null) {
+      data['data'] = topExperts!.map((v) => v.toJson()).toList();
     }
     return data;
   }

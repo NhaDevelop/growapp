@@ -6,7 +6,7 @@ import '../../../components/shimmer_widget.dart';
 class BookingStep2Shimmer extends StatelessWidget {
   final bool isFromBookingInfoDetail;
 
-  BookingStep2Shimmer({this.isFromBookingInfoDetail = false});
+  const BookingStep2Shimmer({super.key, this.isFromBookingInfoDetail = false});
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +21,9 @@ class BookingStep2Shimmer extends StatelessWidget {
         ShimmerWidget(height: 14, width: context.width() * 0.30),
         18.height,
         Container(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           width: context.width(),
-          margin: EdgeInsets.only(bottom: 50),
+          margin: const EdgeInsets.only(bottom: 50),
           decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor, borderRadius: radius()),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

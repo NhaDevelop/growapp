@@ -14,10 +14,10 @@ import '../shimmer/branch_staff_shimmer.dart';
 class BranchStaffComponent extends StatefulWidget {
   final int branchId;
 
-  BranchStaffComponent({required this.branchId});
+  const BranchStaffComponent({super.key, required this.branchId});
 
   @override
-  _BranchStaffComponentState createState() => _BranchStaffComponentState();
+  State<BranchStaffComponent> createState() => _BranchStaffComponentState();
 }
 
 class _BranchStaffComponentState extends State<BranchStaffComponent> {
@@ -58,13 +58,13 @@ class _BranchStaffComponentState extends State<BranchStaffComponent> {
         SnapHelperWidget<List<EmployeeData>>(
           future: future,
           initialData: branchStaffListResponseCached,
-          loadingWidget: BranchStaffShimmer(),
+          loadingWidget: const BranchStaffShimmer(),
           errorBuilder: (error) {
             return SingleChildScrollView(
               child: NoDataWidget(
                 title: error,
                 retryText: locale.reload,
-                imageWidget: ErrorStateWidget(),
+                imageWidget: const ErrorStateWidget(),
                 onRetry: () {
                   page = 1;
                   appStore.setLoading(true);
@@ -79,12 +79,13 @@ class _BranchStaffComponentState extends State<BranchStaffComponent> {
             if (list.isEmpty) {
               return NoDataWidget(
                 title: locale.noStaffFound,
-                imageWidget: EmptyStateWidget(),
+                imageWidget: const EmptyStateWidget(),
               );
             }
 
             return SingleChildScrollView(
-              padding: EdgeInsets.only(top: 50, left: 16, right: 16, bottom: 16),
+              padding: const EdgeInsets.only(
+                  top: 50, left: 16, right: 16, bottom: 16),
               child: AnimatedWrap(
                 runSpacing: 36,
                 spacing: 16,
@@ -95,7 +96,10 @@ class _BranchStaffComponentState extends State<BranchStaffComponent> {
                   EmployeeData data = list[i];
 
                   return GestureDetector(
-                    onTap: () => EmployeeDetailScreen(employeeId: data.id.validate(), branchId: widget.branchId).launch(context),
+                    onTap: () => EmployeeDetailScreen(
+                            employeeId: data.id.validate(),
+                            branchId: widget.branchId)
+                        .launch(context),
                     child: EmployeeListComponent(expertData: data),
                   );
                 },
@@ -103,7 +107,9 @@ class _BranchStaffComponentState extends State<BranchStaffComponent> {
             );
           },
         ),
-        Observer(builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+        Observer(
+            builder: (context) =>
+                const LoaderWidget().visible(appStore.isLoading)),
       ],
     );
   }

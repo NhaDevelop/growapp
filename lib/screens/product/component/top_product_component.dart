@@ -16,7 +16,7 @@ import '../model/product_list_response.dart';
 class TopProductComponent extends StatefulWidget {
   final List<ProductData> relatedProductData;
 
-  TopProductComponent({required this.relatedProductData});
+  const TopProductComponent({super.key, required this.relatedProductData});
 
   @override
   State<TopProductComponent> createState() => _TopProductComponentState();
@@ -65,7 +65,7 @@ class _TopProductComponentState extends State<TopProductComponent> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.relatedProductData.isEmpty) return Offstage();
+    if (widget.relatedProductData.isEmpty) return const Offstage();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +74,7 @@ class _TopProductComponentState extends State<TopProductComponent> {
             .paddingSymmetric(horizontal: 16),
         10.height,
         HorizontalList(
-          padding: EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           runSpacing: 16,
           spacing: 16,
           itemCount: widget.relatedProductData.take(6).length,
@@ -132,7 +132,7 @@ class _TopProductComponentState extends State<TopProductComponent> {
                         right: 8,
                         top: 8,
                         child: Container(
-                          padding: EdgeInsets.all(8),
+                          padding: const EdgeInsets.all(8),
                           decoration: boxDecorationWithShadow(
                               boxShape: BoxShape.circle,
                               backgroundColor: context.cardColor),

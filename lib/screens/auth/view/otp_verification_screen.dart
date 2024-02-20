@@ -11,10 +11,10 @@ import 'package:nb_utils/nb_utils.dart';
 class OtpVerificationScreen extends StatefulWidget {
   final Function(String? otpCode)? onTap;
 
-  OtpVerificationScreen({this.onTap});
+  const OtpVerificationScreen({super.key, this.onTap});
 
   @override
-  _OtpVerificationScreenState createState() => _OtpVerificationScreenState();
+  State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
 }
 
 class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
@@ -95,7 +95,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   Future<void> onVerify() async {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
-      ChangePasswordScreen().launch(context);
+      const ChangePasswordScreen().launch(context);
     }
   }
 
@@ -116,7 +116,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
           showLeadingIcon: true),
       body: Body(
         child: SingleChildScrollView(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -149,12 +149,12 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               ).visible(currentSeconds == timerMaxSeconds),
               36.height,
               AppButton(
-                child: Text(locale.verify, style: boldTextStyle(color: white)),
                 width: context.width(),
                 color: secondaryColor,
                 onTap: () async {
                   onVerify();
                 },
+                child: Text(locale.verify, style: boldTextStyle(color: white)),
               ),
             ],
           ),

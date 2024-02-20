@@ -19,13 +19,13 @@ import '../view/booking_detail_screen.dart';
 class BookingItemComponent extends StatelessWidget {
   final BookingListData bookingData;
 
-  BookingItemComponent({required this.bookingData});
+  const BookingItemComponent({super.key, required this.bookingData});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: context.width(),
-      margin: EdgeInsets.all(8),
+      margin: const EdgeInsets.all(8),
       decoration:
           boxDecorationWithRoundedCorners(backgroundColor: context.cardColor),
       child: Column(
@@ -35,7 +35,7 @@ class BookingItemComponent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                padding: EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
                 decoration: boxDecorationWithRoundedCorners(
                   backgroundColor:
                       bookingData.status == BookingStatusConst.COMPLETED
@@ -53,7 +53,7 @@ class BookingItemComponent extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: EdgeInsets.symmetric(vertical: 3, horizontal: 16),
+                padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 16),
                 decoration: boxDecorationWithRoundedCorners(
                   backgroundColor:
                       bookingData.status == BookingStatusConst.COMPLETED
@@ -120,7 +120,7 @@ class BookingItemComponent extends StatelessWidget {
                             width: 20,
                             fit: BoxFit.cover,
                             circle: true,
-                            child: DefaultUserImagePlaceholder(size: 12),
+                            child: const DefaultUserImagePlaceholder(size: 12),
                           ).paddingRight(4),
                           if (bookingData.employeeName.validate().isNotEmpty)
                             Marquee(
@@ -186,7 +186,7 @@ class BookingItemComponent extends StatelessWidget {
                     8.height,
                     AppButton(
                       text: locale.reschedule,
-                      padding: EdgeInsets.symmetric(vertical: 12),
+                      padding: const EdgeInsets.symmetric(vertical: 12),
                       width: context.width(),
                       textColor: secondaryColor,
                       color: territoryButtonColor,
@@ -207,7 +207,7 @@ class BookingItemComponent extends StatelessWidget {
                           bookingData.payment!.paymentStatus != 1)))
                 AppButton(
                   text: locale.cancelAppointment,
-                  padding: EdgeInsets.symmetric(vertical: 12),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
                   width: context.width(),
                   textColor: secondaryColor,
                   color: quaternaryButtonColor,
@@ -240,7 +240,7 @@ class BookingItemComponent extends StatelessWidget {
                   },
                 ).paddingSymmetric(horizontal: 16, vertical: 8)
               else
-                Offstage(),
+                const Offstage(),
               8.height,
             ],
           ),

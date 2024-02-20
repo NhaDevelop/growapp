@@ -8,8 +8,10 @@ import '../../../components/view_all_label_component.dart';
 import '../../../utils/colors.dart';
 
 class FilterProductBrandComponent extends StatefulWidget {
+  const FilterProductBrandComponent({super.key});
+
   @override
-  _FilterProductBrandComponentState createState() =>
+  State<FilterProductBrandComponent> createState() =>
       _FilterProductBrandComponentState();
 }
 
@@ -60,8 +62,8 @@ class _FilterProductBrandComponentState
                 isShowAll: false)
             .paddingSymmetric(horizontal: 16),
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 16),
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          margin: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           decoration: boxDecorationDefault(color: context.cardColor),
           child: Column(
             children: [
@@ -76,7 +78,7 @@ class _FilterProductBrandComponentState
                     prefixIcon:
                         Icon(Icons.search, color: textSecondaryColorGlobal),
                     prefixIconConstraints:
-                        BoxConstraints.loose(Size.fromWidth(22))),
+                        BoxConstraints.loose(const Size.fromWidth(22))),
                 suffix: CloseButton(
                   onPressed: () {
                     hideKeyboard(context);
@@ -96,7 +98,7 @@ class _FilterProductBrandComponentState
                   if (index == 8) {
                     return TextButton(
                         onPressed: () {},
-                        style: ButtonStyle(
+                        style: const ButtonStyle(
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             visualDensity: VisualDensity.compact),
                         child: Text('+36 ${locale.more}',
@@ -104,7 +106,7 @@ class _FilterProductBrandComponentState
                                 color: primaryColor,
                                 decoration: TextDecoration.underline)));
                   } else if (index >= 9) {
-                    return Offstage();
+                    return const Offstage();
                   } else {
                     return Container(
                       width: context.width() / 3 - 32,

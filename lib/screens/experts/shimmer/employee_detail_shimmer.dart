@@ -3,6 +3,8 @@ import 'package:grow_tokyo_app/components/shimmer_widget.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class EmployeeDetailShimmer extends StatelessWidget {
+  const EmployeeDetailShimmer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -17,14 +19,14 @@ class EmployeeDetailShimmer extends StatelessWidget {
                   child: AppBar(
                     backgroundColor: context.cardColor,
                     elevation: 0,
-                    shape: RoundedRectangleBorder(
+                    shape: const RoundedRectangleBorder(
                       borderRadius:
                           BorderRadius.vertical(bottom: Radius.circular(20)),
                     ),
                   ),
                 ),
                 16.height,
-                ShimmerWidget(height: 98, width: 98)
+                const ShimmerWidget(height: 98, width: 98)
                     .cornerRadiusWithClipRRect(150),
                 Column(
                   children: [
@@ -38,13 +40,13 @@ class EmployeeDetailShimmer extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        ShimmerWidget(height: 40, width: 40),
+                        const ShimmerWidget(height: 40, width: 40),
                         16.width,
-                        ShimmerWidget(height: 40, width: 40),
+                        const ShimmerWidget(height: 40, width: 40),
                         16.width,
-                        ShimmerWidget(height: 40, width: 40),
+                        const ShimmerWidget(height: 40, width: 40),
                         16.width,
-                        ShimmerWidget(height: 40, width: 40),
+                        const ShimmerWidget(height: 40, width: 40),
                       ],
                     ),
                     20.height,
@@ -55,7 +57,7 @@ class EmployeeDetailShimmer extends StatelessWidget {
           ),
           10.height,
           Padding(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -77,7 +79,7 @@ class EmployeeDetailShimmer extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        ShimmerWidget(height: 35, width: 35),
+                        const ShimmerWidget(height: 35, width: 35),
                         16.width,
                         ShimmerWidget(
                             height: 14, width: context.width() * 0.25),
@@ -90,7 +92,7 @@ class EmployeeDetailShimmer extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        ShimmerWidget(height: 35, width: 35),
+                        const ShimmerWidget(height: 35, width: 35),
                         16.width,
                         ShimmerWidget(
                             height: 14, width: context.width() * 0.25),
@@ -103,7 +105,7 @@ class EmployeeDetailShimmer extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        ShimmerWidget(height: 35, width: 35),
+                        const ShimmerWidget(height: 35, width: 35),
                         16.width,
                         ShimmerWidget(
                             height: 14, width: context.width() * 0.25),
@@ -135,12 +137,12 @@ class EmployeeDetailShimmer extends StatelessWidget {
                   itemCount: 10,
                   shrinkWrap: true,
                   padding: EdgeInsets.zero,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   listAnimationType: ListAnimationType.None,
                   itemBuilder: (p0, index) {
                     return Container(
-                      padding: EdgeInsets.all(16),
-                      margin: EdgeInsets.symmetric(vertical: 8),
+                      padding: const EdgeInsets.all(16),
+                      margin: const EdgeInsets.symmetric(vertical: 8),
                       width: context.width(),
                       decoration: boxDecorationWithRoundedCorners(
                           backgroundColor: context.cardColor),
@@ -152,7 +154,7 @@ class EmployeeDetailShimmer extends StatelessWidget {
                             children: [
                               Row(
                                 children: [
-                                  ShimmerWidget(height: 22, width: 35),
+                                  const ShimmerWidget(height: 22, width: 35),
                                   8.width,
                                   ShimmerWidget(
                                       height: 16,

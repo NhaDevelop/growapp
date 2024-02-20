@@ -29,9 +29,9 @@ class BookingListResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
-    data['status'] = this.status;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
+    data['status'] = status;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -134,7 +134,7 @@ class BookingListData {
       employeeName: json['employee_name'],
       employeeImage: json['employee_image'],
       id: json['id'],
-      note: json['note'] != null ? json['note'] : null,
+      note: json['note'],
       startDateTime: json['start_date_time'],
       status: json['status'],
       updatedAt: json['updated_at'],
@@ -179,64 +179,63 @@ class BookingListData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['branch_name'] = this.branchName;
-    data['created_at'] = this.createdAt;
-    data['created_by_name'] = this.createdByName;
-    data['employee_image'] = this.employeeImage;
-    data['id'] = this.id;
-    data['start_date_time'] = this.startDateTime;
-    data['status'] = this.status;
-    data['updated_at'] = this.updatedAt;
-    data['updated_by_name'] = this.updatedByName;
-    data['user_created'] = this.userCreated;
-    data['user_name'] = this.userName;
-    data['user_profile_image'] = this.userProfileImage;
-    data['address_line_1'] = this.addressLine1;
-    data['address_line_2'] = this.addressLine2;
-    data['branch_id'] = this.branchId;
-    data['employee_id'] = this.employeeId;
-    data['phone'] = this.phone;
-    data['user_id'] = this.userId;
-    data['discount'] = this.discount;
-    data['tip'] = this.tip;
-    data['sumOfServicePrices'] = this.sumOfServicePrices;
-    data['sumOfProductPrices'] = this.sumOfProductPrices;
-    data['discout_amount'] = this.discoutAmount;
-    data['tax_amount'] = this.taxAmount;
-    data['total_amount'] = this.totalAmount;
-    if (this.note != null) {
-      data['note'] = this.note;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['branch_name'] = branchName;
+    data['created_at'] = createdAt;
+    data['created_by_name'] = createdByName;
+    data['employee_image'] = employeeImage;
+    data['id'] = id;
+    data['start_date_time'] = startDateTime;
+    data['status'] = status;
+    data['updated_at'] = updatedAt;
+    data['updated_by_name'] = updatedByName;
+    data['user_created'] = userCreated;
+    data['user_name'] = userName;
+    data['user_profile_image'] = userProfileImage;
+    data['address_line_1'] = addressLine1;
+    data['address_line_2'] = addressLine2;
+    data['branch_id'] = branchId;
+    data['employee_id'] = employeeId;
+    data['phone'] = phone;
+    data['user_id'] = userId;
+    data['discount'] = discount;
+    data['tip'] = tip;
+    data['sumOfServicePrices'] = sumOfServicePrices;
+    data['sumOfProductPrices'] = sumOfProductPrices;
+    data['discout_amount'] = discoutAmount;
+    data['tax_amount'] = taxAmount;
+    data['total_amount'] = totalAmount;
+    if (note != null) {
+      data['note'] = note;
     }
-    if (this.customerReview != null) {
-      data['customer_review'] = this.customerReview!.toJson();
+    if (customerReview != null) {
+      data['customer_review'] = customerReview!.toJson();
     }
-    if (this.payment != null) {
-      data['payment'] = this.payment!.toJson();
+    if (payment != null) {
+      data['payment'] = payment!.toJson();
     }
-    if (this.serviceList != null) {
-      data['services'] = this.serviceList!.map((v) => v.toJson()).toList();
+    if (serviceList != null) {
+      data['services'] = serviceList!.map((v) => v.toJson()).toList();
     }
-    if (this.productsInfo != null) {
-      data['products'] = this.productsInfo!.map((v) => v.toJson()).toList();
+    if (productsInfo != null) {
+      data['products'] = productsInfo!.map((v) => v.toJson()).toList();
     }
-    if (this.taxDetails != null) {
-      data['tax_data'] = this.taxDetails!.map((v) => v.toJson()).toList();
+    if (taxDetails != null) {
+      data['tax_data'] = taxDetails!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 
   /// For Save Booking
   Map<String, dynamic> toBookingJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (employeeId != null) data['employee_id'] = this.employeeId;
-    if (date != null) data['date'] = this.date;
-    if (time != null) data['time'] = this.time.validate();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (employeeId != null) data['employee_id'] = employeeId;
+    if (date != null) data['date'] = date;
+    if (time != null) data['time'] = time.validate();
     data['branch_id'] = appStore.branchId;
 
-    if (this.selectedServiceList != null) {
-      data['services'] = this
-          .selectedServiceList
+    if (selectedServiceList != null) {
+      data['services'] = selectedServiceList
           .validate()
           .map((e) => e.toBookingServiceJson())
           .toList();

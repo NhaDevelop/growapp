@@ -19,14 +19,14 @@ class CartListResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
-    data['status'] = this.status;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
+    data['status'] = status;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    if (this.cartPriceData != null) {
-      data['price'] = this.cartPriceData!.toJson();
+    if (cartPriceData != null) {
+      data['price'] = cartPriceData!.toJson();
     }
     return data;
   }
@@ -89,7 +89,7 @@ class CartListData {
   factory CartListData.fromJson(Map<String, dynamic> json) {
     return CartListData(
       createdAt: json['created_at'],
-      deletedAt: json['deleted_at'] != null ? json['deleted_at'] : null,
+      deletedAt: json['deleted_at'],
       id: json['id'],
       productDescription: json['product_description'],
       productVariationType: json['product_variation_type'],
@@ -114,32 +114,32 @@ class CartListData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['created_at'] = this.createdAt;
-    data['id'] = this.id;
-    data['product_description'] = this.productDescription;
-    data['product_variation_type'] = this.productVariationType;
-    data['product_variation_name'] = this.productVariationName;
-    data['product_variation_value'] = this.productVariationValue;
-    data['product_id'] = this.productId;
-    data['product_image'] = this.productImage;
-    data['product_name'] = this.productName;
-    data['product_variation_id'] = this.productVariationId;
-    data['qty'] = this.qty;
-    data['unit_name'] = this.unitName;
-    data['updated_at'] = this.updatedAt;
-    data['deleted_at'] = this.deletedAt;
-    data['user_id'] = this.userId;
-    data['discount_value'] = this.discountValue;
-    data['discount_type'] = this.discountType;
-    data['tax_include_product_price'] = this.taxIncludeProductPrice;
-    data['get_product_price'] = this.getProductPrice;
-    data['product_amount'] = this.productAmount;
-    if (this.productVariation != null) {
-      data['product_variation'] = this.productVariation!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['created_at'] = createdAt;
+    data['id'] = id;
+    data['product_description'] = productDescription;
+    data['product_variation_type'] = productVariationType;
+    data['product_variation_name'] = productVariationName;
+    data['product_variation_value'] = productVariationValue;
+    data['product_id'] = productId;
+    data['product_image'] = productImage;
+    data['product_name'] = productName;
+    data['product_variation_id'] = productVariationId;
+    data['qty'] = qty;
+    data['unit_name'] = unitName;
+    data['updated_at'] = updatedAt;
+    data['deleted_at'] = deletedAt;
+    data['user_id'] = userId;
+    data['discount_value'] = discountValue;
+    data['discount_type'] = discountType;
+    data['tax_include_product_price'] = taxIncludeProductPrice;
+    data['get_product_price'] = getProductPrice;
+    data['product_amount'] = productAmount;
+    if (productVariation != null) {
+      data['product_variation'] = productVariation!.toJson();
     }
-    if (this.productReviewData != null) {
-      data['product_review'] = this.productReviewData!.toJson();
+    if (productReviewData != null) {
+      data['product_review'] = productReviewData!.toJson();
     }
     return data;
   }
@@ -174,14 +174,14 @@ class CartPriceData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['discount_amount'] = this.discountAmount;
-    data['tax_included_amount'] = this.taxIncludedAmount;
-    data['total_amount'] = this.totalAmount;
-    data['tax_amount'] = this.taxAmount;
-    data['total_payable_amount'] = this.totalPayableAmount;
-    if (this.taxData != null) {
-      data['tax_data'] = this.taxData!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['discount_amount'] = discountAmount;
+    data['tax_included_amount'] = taxIncludedAmount;
+    data['total_amount'] = totalAmount;
+    data['tax_amount'] = taxAmount;
+    data['total_payable_amount'] = totalPayableAmount;
+    if (taxData != null) {
+      data['tax_data'] = taxData!.toJson();
     }
     return data;
   }
@@ -201,10 +201,10 @@ class CartTaxData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['total_tax_amount'] = this.totalTaxAmount;
-    if (this.taxDetails != null) {
-      data['tax_details'] = this.taxDetails!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['total_tax_amount'] = totalTaxAmount;
+    if (taxDetails != null) {
+      data['tax_details'] = taxDetails!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -228,11 +228,11 @@ class TaxDetail {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['tax_amount'] = this.taxAmount;
-    data['tax_name'] = this.taxName;
-    data['tax_type'] = this.taxType;
-    data['tax_value'] = this.taxValue;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['tax_amount'] = taxAmount;
+    data['tax_name'] = taxName;
+    data['tax_type'] = taxType;
+    data['tax_value'] = taxValue;
     return data;
   }
 }

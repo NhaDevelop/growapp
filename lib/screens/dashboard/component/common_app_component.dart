@@ -14,7 +14,7 @@ class CommonAppComponent extends StatefulWidget {
   final RefreshCallback? onSwipeRefresh;
   final VoidCallback? onNextPage;
 
-  CommonAppComponent({
+  const CommonAppComponent({super.key, 
     this.subTitle,
     this.innerWidget,
     this.cardWidget,
@@ -34,8 +34,8 @@ class _CommonAppComponentState extends State<CommonAppComponent> {
   @override
   Widget build(BuildContext context) {
     return AnimatedScrollView(
-      physics: AlwaysScrollableScrollPhysics(),
-      padding: EdgeInsets.only(bottom: 24),
+      physics: const AlwaysScrollableScrollPhysics(),
+      padding: const EdgeInsets.only(bottom: 24),
       onSwipeRefresh: widget.onSwipeRefresh,
       onNextPage: widget.onNextPage,
       listAnimationType: ListAnimationType.None,
@@ -70,7 +70,7 @@ class _CommonAppComponentState extends State<CommonAppComponent> {
                                     spreadRadius: 0.4,
                                     blurRadius: 3,
                                     color: gray.withOpacity(0.1),
-                                    offset: Offset(1, 6)),
+                                    offset: const Offset(1, 6)),
                               ],
                             ),
                       child: widget.cardWidget.validate(),

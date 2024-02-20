@@ -20,9 +20,9 @@ class OrderDetailResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
-    data['status'] = this.status;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
+    data['status'] = status;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
@@ -59,7 +59,7 @@ class OrderListData {
 
   // local
   DateTime get orderingDateTime => DateTime.parse(orderDate.validate());
-  DateTime? get deliveringDateTime => DateTime.tryParse(expectedDeliveryDate.validate()) ?? null;
+  DateTime? get deliveringDateTime => DateTime.tryParse(expectedDeliveryDate.validate());
 
   String get orderingDate => formatDate(orderingDateTime.toString(), format: DateFormatConst.BOOK_DATE_FORMAT);
   String get deliveringDate => deliveringDateTime != null ? formatDate(deliveringDateTime.toString(), format: DateFormatConst.BOOK_DATE_FORMAT) : '';
@@ -96,7 +96,7 @@ class OrderListData {
     return OrderListData(
       addressLine1: json['address_line_1'],
       addressLine2: json['address_line_2'],
-      alternativePhoneNo: json['alternative_phone_no'] != null ? json['alternative_phone_no'] : null,
+      alternativePhoneNo: json['alternative_phone_no'],
       city: json['city'],
       country: json['country'],
       deliveryStatus: json['delivery_status'],
@@ -104,7 +104,7 @@ class OrderListData {
       orderCode: json['order_code'],
       logisticName: json['logistic_name'],
       paymentStatus: json['payment_status'],
-      phoneNo: json['phone_no'] != null ? json['phone_no'] : null,
+      phoneNo: json['phone_no'],
       postalCode: json['postal_code'],
       productDetails: json['product_details'] != null ? (json['product_details'] as List).map((i) => CartListData.fromJson(i)).toList() : null,
       state: json['state'],
@@ -123,37 +123,37 @@ class OrderListData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['address_line_1'] = this.addressLine1;
-    data['address_line_2'] = this.addressLine2;
-    data['city'] = this.city;
-    data['country'] = this.country;
-    data['delivery_status'] = this.deliveryStatus;
-    data['id'] = this.id;
-    data['order_code'] = this.orderCode;
-    data['logistic_name'] = this.logisticName;
-    data['payment_status'] = this.paymentStatus;
-    data['postal_code'] = this.postalCode;
-    data['state'] = this.state;
-    data['total_amount'] = this.totalAmount;
-    data['user_id'] = this.userId;
-    data['user_name'] = this.userName;
-    data['order_date'] = this.orderDate;
-    data['expected_delivery_date'] = this.expectedDeliveryDate;
-    data['delivery_days'] = this.deliveryDays;
-    data['delivery_time'] = this.deliveryTime;
-    data['logistic_charge'] = this.logisticCharge;
-    data['payment_method'] = this.paymentMethod;
-    data['sub_total_amount'] = this.subTotalAmount;
-    data['total_tax_amount'] = this.totalTaxAmount;
-    if (this.alternativePhoneNo != null) {
-      data['alternative_phone_no'] = this.alternativePhoneNo;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['address_line_1'] = addressLine1;
+    data['address_line_2'] = addressLine2;
+    data['city'] = city;
+    data['country'] = country;
+    data['delivery_status'] = deliveryStatus;
+    data['id'] = id;
+    data['order_code'] = orderCode;
+    data['logistic_name'] = logisticName;
+    data['payment_status'] = paymentStatus;
+    data['postal_code'] = postalCode;
+    data['state'] = state;
+    data['total_amount'] = totalAmount;
+    data['user_id'] = userId;
+    data['user_name'] = userName;
+    data['order_date'] = orderDate;
+    data['expected_delivery_date'] = expectedDeliveryDate;
+    data['delivery_days'] = deliveryDays;
+    data['delivery_time'] = deliveryTime;
+    data['logistic_charge'] = logisticCharge;
+    data['payment_method'] = paymentMethod;
+    data['sub_total_amount'] = subTotalAmount;
+    data['total_tax_amount'] = totalTaxAmount;
+    if (alternativePhoneNo != null) {
+      data['alternative_phone_no'] = alternativePhoneNo;
     }
-    if (this.phoneNo != null) {
-      data['phone_no'] = this.phoneNo;
+    if (phoneNo != null) {
+      data['phone_no'] = phoneNo;
     }
-    if (this.productDetails != null) {
-      data['product_details'] = this.productDetails!.map((v) => v.toJson()).toList();
+    if (productDetails != null) {
+      data['product_details'] = productDetails!.map((v) => v.toJson()).toList();
     }
     return data;
   }

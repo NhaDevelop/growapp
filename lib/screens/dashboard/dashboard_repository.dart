@@ -17,6 +17,6 @@ Future<DashboardResponse> userDashboard({required int branchId}) async {
     return dashboardResponseCached!;
   } catch (e) {
     appStore.setLoading(false);
-    throw e;
+    rethrow;
   }
 }

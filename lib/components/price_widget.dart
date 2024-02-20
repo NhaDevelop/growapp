@@ -19,7 +19,7 @@ class PriceWidget extends StatelessWidget {
   final int? decimalPoint;
   final String? seperator;
 
-  PriceWidget({
+  const PriceWidget({super.key, 
     required this.price,
     this.size = 16.0,
     this.color,
@@ -38,16 +38,16 @@ class PriceWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     TextDecoration? textDecoration() => isLineThroughEnabled ? TextDecoration.lineThrough : null;
 
-    TextStyle _textStyle({int? aSize}) {
+    TextStyle textStyle({int? aSize}) {
       return isBoldText
           ? boldTextStyle(
               size: aSize ?? size!.toInt(),
-              color: color != null ? color : context.primaryColor,
+              color: color ?? context.primaryColor,
               decoration: textDecoration(),
             )
           : secondaryTextStyle(
               size: aSize ?? size!.toInt(),
-              color: color != null ? color : context.primaryColor,
+              color: color ?? context.primaryColor,
               decoration: textDecoration(),
             );
     }
@@ -57,12 +57,12 @@ class PriceWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Text(
-          "${isDiscountedPrice ? ' -' : ''}",
-          style: _textStyle(),
+          isDiscountedPrice ? ' -' : '',
+          style: textStyle(),
         ),
         Text(
         priceText ?? "${leftCurrencyFormat()}${price.validate().toStringAsFixed(decimalPoint ?? getIntAsync(ConfigurationKeyConst.NO_OF_DECIMAL, defaultValue: DECIMAL_POINT)).formatNumberWithComma(seperator: getStringAsync(seperator ?? ConfigurationKeyConst.DECIMAL_SEPARATOR))}${rightCurrencyFormat()}",
-          style: _textStyle(),
+          style: textStyle(),
         ),
       ],
     );

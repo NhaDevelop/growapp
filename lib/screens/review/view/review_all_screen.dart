@@ -17,7 +17,7 @@ class ReviewAllScreen extends StatefulWidget {
   final int? employeeId;
   final int? branchId;
 
-  ReviewAllScreen({this.employeeId, this.branchId});
+  const ReviewAllScreen({super.key, this.employeeId, this.branchId});
 
   @override
   State<ReviewAllScreen> createState() => _ReviewAllScreenState();
@@ -65,17 +65,17 @@ class _ReviewAllScreenState extends State<ReviewAllScreen> {
         textSize: APPBAR_TEXT_SIZE,
         elevation: 0.0,
         color: context.primaryColor,
-        backWidget: BackWidget(),
+        backWidget: const BackWidget(),
       ),
       body: Stack(
         children: [
           SnapHelperWidget<List<ReviewData>>(
             future: future,
-            loadingWidget: ReviewAllShimmer(),
+            loadingWidget: const ReviewAllShimmer(),
             errorBuilder: (error) {
               return NoDataWidget(
                 title: error,
-                imageWidget: ErrorStateWidget(),
+                imageWidget: const ErrorStateWidget(),
                 retryText: locale.reload,
                 onRetry: () {
                   page = 1;
@@ -95,12 +95,12 @@ class _ReviewAllScreenState extends State<ReviewAllScreen> {
                 shrinkWrap: true,
                 listAnimationType: ListAnimationType.FadeIn,
                 fadeInConfiguration: FadeInConfiguration(duration: 2.seconds),
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 itemCount: data.length,
-                physics: AlwaysScrollableScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(),
                 emptyWidget: NoDataWidget(
                   title: locale.noReviewsFound,
-                  imageWidget: EmptyStateWidget(),
+                  imageWidget: const EmptyStateWidget(),
                 ),
                 onNextPage: () {
                   if (!isLastPage) {
@@ -123,7 +123,7 @@ class _ReviewAllScreenState extends State<ReviewAllScreen> {
             },
           ),
           Observer(
-              builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+              builder: (context) => const LoaderWidget().visible(appStore.isLoading)),
         ],
       ),
     );

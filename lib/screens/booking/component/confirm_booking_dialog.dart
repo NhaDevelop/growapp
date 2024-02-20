@@ -10,10 +10,10 @@ class ConfirmBookingDialog extends StatefulWidget {
   final String? title;
   final String? subTitle;
 
-  ConfirmBookingDialog({this.title, this.subTitle});
+  const ConfirmBookingDialog({super.key, this.title, this.subTitle});
 
   @override
-  _ConfirmBookingDialog createState() => _ConfirmBookingDialog();
+  State<ConfirmBookingDialog> createState() => _ConfirmBookingDialog();
 }
 
 class _ConfirmBookingDialog extends State<ConfirmBookingDialog> {
@@ -36,7 +36,7 @@ class _ConfirmBookingDialog extends State<ConfirmBookingDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: context.width(),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -67,16 +67,15 @@ class _ConfirmBookingDialog extends State<ConfirmBookingDialog> {
           Row(
             children: [
               AppButton(
-                child: Text(locale.cancel, style: boldTextStyle()),
                 color: context.cardColor,
                 width: context.width(),
                 onTap: () {
                   finish(context);
                 },
+                child: Text(locale.cancel, style: boldTextStyle()),
               ).expand(),
               16.width,
               AppButton(
-                child: Text(locale.confirm, style: boldTextStyle(color: white)),
                 color: secondaryColor,
                 width: context.width(),
                 onTap: () {
@@ -86,6 +85,7 @@ class _ConfirmBookingDialog extends State<ConfirmBookingDialog> {
                     toast(locale.pleaseAcceptTermsAndConditions);
                   }
                 },
+                child: Text(locale.confirm, style: boldTextStyle(color: white)),
               ).expand(),
             ],
           ),

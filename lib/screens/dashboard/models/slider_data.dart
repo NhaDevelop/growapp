@@ -22,14 +22,14 @@ class SliderData {
     }
 
     Map<String, dynamic> toJson() {
-        final Map<String, dynamic> data = new Map<String, dynamic>();
-        data['id'] = this.id;
-        data['link'] = this.link;
-        data['link_id'] = this.linkId;
-        data['name'] = this.name;
-        data['status'] = this.status;
-        data['type'] = this.type;
-        data['slider_image'] = this.sliderImage;
+        final Map<String, dynamic> data = <String, dynamic>{};
+        data['id'] = id;
+        data['link'] = link;
+        data['link_id'] = linkId;
+        data['name'] = name;
+        data['status'] = status;
+        data['type'] = type;
+        data['slider_image'] = sliderImage;
         return data;
     }
 }

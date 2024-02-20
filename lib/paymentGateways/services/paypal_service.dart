@@ -37,8 +37,8 @@ class PayPalService {
     required List<TaxPercentage> taxData,
     required Function(Map<String, dynamic>) onComplete,
   }) {
-    this.ctx = context;
-    this.payPalClientId = paypalClientId;
+    ctx = context;
+    payPalClientId = paypalClientId;
     this.secretKey = secretKey;
     this.totalAmount = totalAmount;
     this.bookingId = bookingId;

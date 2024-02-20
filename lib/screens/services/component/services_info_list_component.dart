@@ -12,11 +12,11 @@ class ServicesInfoListComponent extends StatefulWidget {
   final ServiceListData serviceInfo;
   final Function() onPressed;
 
-  ServicesInfoListComponent(
-      {required this.serviceInfo, required this.onPressed});
+  const ServicesInfoListComponent(
+      {super.key, required this.serviceInfo, required this.onPressed});
 
   @override
-  _ServicesInfoListComponentState createState() =>
+  State<ServicesInfoListComponent> createState() =>
       _ServicesInfoListComponentState();
 }
 
@@ -45,8 +45,8 @@ class _ServicesInfoListComponentState extends State<ServicesInfoListComponent> {
       child: Container(
         decoration: boxDecorationWithRoundedCorners(
             backgroundColor: context.cardColor, borderRadius: radius()),
-        padding: EdgeInsets.only(left: 16, right: 8, top: 16, bottom: 16),
-        margin: EdgeInsets.only(bottom: 16),
+        padding: const EdgeInsets.only(left: 16, right: 8, top: 16, bottom: 16),
+        margin: const EdgeInsets.only(bottom: 16),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -65,11 +65,12 @@ class _ServicesInfoListComponentState extends State<ServicesInfoListComponent> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Marquee(
-                        child: Text('${widget.serviceInfo.name.validate()}',
+                        child: Text(widget.serviceInfo.name.validate(),
                             style: boldTextStyle())),
                     Marquee(
                         child: Text(
-                            '${durationToString(widget.serviceInfo.durationMin.validate())}',
+                            durationToString(
+                                widget.serviceInfo.durationMin.validate()),
                             style: secondaryTextStyle())),
                   ],
                 ).expand(),

@@ -11,6 +11,8 @@ import '../utils/constants.dart';
 import '../utils/images.dart';
 
 class NewUpdateDialog extends StatelessWidget {
+  const NewUpdateDialog({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -32,11 +34,9 @@ class NewUpdateDialog extends StatelessWidget {
               Row(
                 children: [
                   AppButton(
-                    child: Text(locale.closeApp,
-                        style: boldTextStyle(color: primaryColor)),
                     shapeBorder: RoundedRectangleBorder(
                         borderRadius: radius(),
-                        side: BorderSide(color: primaryColor)),
+                        side: const BorderSide(color: primaryColor)),
                     elevation: 0,
                     onTap: () async {
                       if (getIntAsync(ConfigurationKeyConst.IS_FORCE_UPDATE) ==
@@ -48,11 +48,11 @@ class NewUpdateDialog extends StatelessWidget {
                         finish(context);
                       }
                     },
+                    child: Text(locale.closeApp,
+                        style: boldTextStyle(color: primaryColor)),
                   ).expand(),
                   16.width,
                   AppButton(
-                    child:
-                        Text(locale.update, style: boldTextStyle(color: white)),
                     shapeBorder: RoundedRectangleBorder(borderRadius: radius()),
                     color: primaryColor,
                     elevation: 0,
@@ -75,6 +75,8 @@ class NewUpdateDialog extends StatelessWidget {
                         }
                       });
                     },
+                    child:
+                        Text(locale.update, style: boldTextStyle(color: white)),
                   ).expand(),
                 ],
               ),

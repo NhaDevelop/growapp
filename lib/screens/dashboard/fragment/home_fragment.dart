@@ -21,8 +21,10 @@ import '../models/dashboard_model.dart';
 import '../shimmer/dashboard_shimmer.dart';
 
 class HomeFragment extends StatefulWidget {
+  const HomeFragment({super.key});
+
   @override
-  _HomeFragmentState createState() => _HomeFragmentState();
+  State<HomeFragment> createState() => _HomeFragmentState();
 }
 
 class _HomeFragmentState extends State<HomeFragment> {
@@ -72,7 +74,7 @@ class _HomeFragmentState extends State<HomeFragment> {
               return NoDataWidget(
                 title: error,
                 retryText: locale.reload,
-                imageWidget: ErrorStateWidget(),
+                imageWidget: const ErrorStateWidget(),
                 onRetry: () {
                   appStore.setLoading(true);
 
@@ -83,7 +85,7 @@ class _HomeFragmentState extends State<HomeFragment> {
                 },
               );
             },
-            loadingWidget: DashboardShimmer(),
+            loadingWidget: const DashboardShimmer(),
             onSuccess: (snap) {
               return CommonAppComponent(
                 innerWidget: DashboardAppBarComponent(
@@ -130,7 +132,8 @@ class _HomeFragmentState extends State<HomeFragment> {
             },
           ),
           Observer(
-              builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+              builder: (context) =>
+                  const LoaderWidget().visible(appStore.isLoading)),
         ],
       ),
     );

@@ -10,10 +10,10 @@ class ZoomImageScreen extends StatefulWidget {
   final int index;
   final List<String>? galleryImages;
 
-  ZoomImageScreen({required this.index, this.galleryImages});
+  const ZoomImageScreen({super.key, required this.index, this.galleryImages});
 
   @override
-  _ZoomImageScreenState createState() => _ZoomImageScreenState();
+  State<ZoomImageScreen> createState() => _ZoomImageScreenState();
 }
 
 class _ZoomImageScreenState extends State<ZoomImageScreen> {
@@ -37,35 +37,37 @@ class _ZoomImageScreenState extends State<ZoomImageScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () {
-        exitFullScreen();
-
-        return Future.value(true);
-      },
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (_) => exitFullScreen(),
       child: Scaffold(
         backgroundColor: scaffoldDarkColor,
         body: Stack(
           children: [
             PhotoViewGallery.builder(
-              scrollPhysics: BouncingScrollPhysics(),
+              scrollPhysics: const BouncingScrollPhysics(),
               enableRotation: false,
-              backgroundDecoration: BoxDecoration(color: scaffoldDarkColor),
+              backgroundDecoration:
+                  const BoxDecoration(color: scaffoldDarkColor),
               pageController: PageController(initialPage: widget.index),
               builder: (BuildContext context, int index) {
                 return PhotoViewGalleryPageOptions(
-                  imageProvider: Image.network(widget.galleryImages![index], errorBuilder: (context, error, stackTrace) => PlaceHolderWidget()).image,
+                  imageProvider: Image.network(widget.galleryImages![index],
+                      errorBuilder: (context, error, stackTrace) =>
+                          PlaceHolderWidget()).image,
                   initialScale: PhotoViewComputedScale.contained,
                   minScale: PhotoViewComputedScale.contained,
                   maxScale: PhotoViewComputedScale.covered,
-                  errorBuilder: (context, error, stackTrace) => PlaceHolderWidget(),
+                  errorBuilder: (context, error, stackTrace) =>
+                      PlaceHolderWidget(),
                   heroAttributes: PhotoViewHeroAttributes(
                     tag: widget.galleryImages![index],
                   ),
                 );
               },
               itemCount: widget.galleryImages!.length,
-              loadingBuilder: (context, event) => LoaderWidget(color: Colors.white),
+              loadingBuilder: (context, event) =>
+                  const LoaderWidget(color: Colors.white),
             ),
             Positioned(
               top: context.statusBarHeight + 16,

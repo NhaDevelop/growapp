@@ -18,10 +18,11 @@ class OrderDetailScreen extends StatefulWidget {
   final int orderId;
   final String orderCode;
 
-  OrderDetailScreen({required this.orderId, required this.orderCode});
+  const OrderDetailScreen(
+      {super.key, required this.orderId, required this.orderCode});
 
   @override
-  _OrderDetailScreenState createState() => _OrderDetailScreenState();
+  State<OrderDetailScreen> createState() => _OrderDetailScreenState();
 }
 
 class _OrderDetailScreenState extends State<OrderDetailScreen> {
@@ -72,12 +73,12 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
       body: SnapHelperWidget<OrderDetailResponse>(
         future: future,
         initialData: getInitialData(),
-        loadingWidget: LoaderWidget(),
+        loadingWidget: const LoaderWidget(),
         errorBuilder: (error) {
           return NoDataWidget(
             title: error,
             retryText: locale.reload,
-            imageWidget: ErrorStateWidget(),
+            imageWidget: const ErrorStateWidget(),
             onRetry: () {
               appStore.setLoading(true);
 
@@ -99,9 +100,9 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
           }
 
           return AnimatedScrollView(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             listAnimationType: ListAnimationType.FadeIn,
-            physics: AlwaysScrollableScrollPhysics(),
+            physics: const AlwaysScrollableScrollPhysics(),
             children: [
               OrderInformationComponent(orderData: snap.data!),
               16.height,

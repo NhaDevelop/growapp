@@ -56,7 +56,7 @@ Future<(List<CartListData>, CartListResponse)> getCartList({
     return cartList;
   } catch (e) {
     appStore.setLoading(false);
-    throw e;
+    rethrow;
   }
 }
 
@@ -69,7 +69,7 @@ Future<List<UserAddress>> getAddressList({
   try {
     var res = AddressListResponse.fromJson(await handleResponse(
         await buildHttpResponse(
-            APIEndPoints.getAddressList + "?per_page=$perPage&page=$page",
+            "${APIEndPoints.getAddressList}?per_page=$perPage&page=$page",
             method: HttpMethodType.GET)));
 
     if (page == 1) addressList.clear();
@@ -82,7 +82,7 @@ Future<List<UserAddress>> getAddressList({
     return addressList;
   } catch (e) {
     appStore.setLoading(false);
-    throw e;
+    rethrow;
   }
 }
 
@@ -139,6 +139,6 @@ Future<List<LogisticZoneData>> getLogisticZone({required int addressId}) async {
     return res.data.validate();
   } catch (e) {
     appStore.setLoading(false);
-    throw e;
+    rethrow;
   }
 }

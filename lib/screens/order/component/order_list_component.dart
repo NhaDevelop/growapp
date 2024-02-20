@@ -11,8 +11,10 @@ import 'order_item_component.dart';
 late Function(String) onOrderListUpdate;
 
 class OrderListComponent extends StatefulWidget {
+  const OrderListComponent({super.key});
+
   @override
-  _OrderListComponentState createState() => _OrderListComponentState();
+  State<OrderListComponent> createState() => _OrderListComponentState();
 }
 
 class _OrderListComponentState extends State<OrderListComponent> {
@@ -55,12 +57,12 @@ class _OrderListComponentState extends State<OrderListComponent> {
   Widget build(BuildContext context) {
     return SnapHelperWidget<List<OrderListData>>(
       future: future,
-      loadingWidget: LoaderWidget(),
+      loadingWidget: const LoaderWidget(),
       errorBuilder: (error) {
         return NoDataWidget(
           title: error,
           retryText: locale.reload,
-          imageWidget: ErrorStateWidget(),
+          imageWidget: const ErrorStateWidget(),
           onRetry: () {
             page = 1;
             appStore.setLoading(true);
@@ -71,14 +73,15 @@ class _OrderListComponentState extends State<OrderListComponent> {
       },
       onSuccess: (orderList) {
         return AnimatedListView(
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           itemCount: orderList.length,
-          padding: EdgeInsets.only(left: 16, right: 16, top: 40, bottom: 16),
+          padding:
+              const EdgeInsets.only(left: 16, right: 16, top: 40, bottom: 16),
           shrinkWrap: true,
           emptyWidget: NoDataWidget(
             title: locale.noOrdersFound,
             subTitle: locale.thereAreNoOrders,
-            imageWidget: EmptyStateWidget(),
+            imageWidget: const EmptyStateWidget(),
             retryText: locale.reload,
             onRetry: () {
               page = 1;

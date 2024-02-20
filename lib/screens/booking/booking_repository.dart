@@ -20,7 +20,7 @@ Future<List<BookingStatusData>> getBookingStatus() async {
     return res.data.validate();
   } catch (e) {
     appStore.setLoading(false);
-    throw e;
+    rethrow;
   }
 }
 
@@ -39,7 +39,7 @@ Future<BookingDetailResponse> getBookingDetail({required int bookingId}) async {
     return res;
   } catch (e) {
     appStore.setLoading(false);
-    throw e;
+    rethrow;
   }
 }
 
@@ -95,6 +95,6 @@ Future<List<BookingListData>> getBookingList({
   } catch (e) {
     appStore.setLoading(false);
 
-    throw e;
+    rethrow;
   }
 }

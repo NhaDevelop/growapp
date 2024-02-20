@@ -17,8 +17,10 @@ import '../../booking/model/booking_status_response.dart';
 import '../component/booking_list_component.dart';
 
 class BookingFragment extends StatefulWidget {
+  const BookingFragment({super.key});
+
   @override
-  _BookingFragmentState createState() => _BookingFragmentState();
+  State<BookingFragment> createState() => _BookingFragmentState();
 }
 
 class _BookingFragmentState extends State<BookingFragment> {
@@ -68,7 +70,7 @@ class _BookingFragmentState extends State<BookingFragment> {
               width: context.width(),
               height: 150,
               decoration: boxDecorationWithRoundedCorners(
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(20),
                     bottomRight: Radius.circular(20)),
                 backgroundColor: context.primaryColor,
@@ -114,9 +116,9 @@ class _BookingFragmentState extends State<BookingFragment> {
                   ).expand(),
                   16.width,
                   Container(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     decoration: boxDecorationDefault(color: secondaryColor),
-                    child: CachedImageWidget(
+                    child: const CachedImageWidget(
                       url: ic_filter,
                       height: 26,
                       width: 26,
@@ -133,9 +135,10 @@ class _BookingFragmentState extends State<BookingFragment> {
       ),
       body: Stack(
         children: [
-          BookingListComponent(),
+          const BookingListComponent(),
           Observer(
-              builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+              builder: (context) =>
+                  const LoaderWidget().visible(appStore.isLoading)),
         ],
       ),
     );
@@ -152,19 +155,19 @@ class _BookingFragmentState extends State<BookingFragment> {
               maxHeight: context.height() * 0.45),
           decoration: BoxDecoration(
             color: context.scaffoldBackgroundColor,
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(30.0),
                 topRight: Radius.circular(30.0)),
           ),
           child: SnapHelperWidget<List<BookingStatusData>>(
             future: fetchBookingStatusApi(),
             initialData: bookingStatusListCached,
-            loadingWidget: LoaderWidget(),
+            loadingWidget: const LoaderWidget(),
             errorBuilder: (error) {
               return NoDataWidget(
                 title: error,
                 retryText: locale.reload,
-                imageWidget: ErrorStateWidget(),
+                imageWidget: const ErrorStateWidget(),
                 onRetry: () {
                   appStore.setLoading(true);
 
@@ -238,7 +241,8 @@ class _BookingFragmentState extends State<BookingFragment> {
                               child: Container(
                                 width: context.width() / 3.7,
                                 alignment: Alignment.center,
-                                padding: EdgeInsets.symmetric(vertical: 12),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 12),
                                 decoration: boxDecorationDefault(
                                   color: bookingRequestStore
                                           .selectedBookingStatusList
@@ -253,7 +257,7 @@ class _BookingFragmentState extends State<BookingFragment> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(
+                                    const Icon(
                                       Icons.check,
                                       size: 14,
                                       color: Colors.white,

@@ -11,7 +11,7 @@ class ShimmerWidget extends StatelessWidget {
   final Color? baseColor;
   final Color? highlightColor;
 
-  ShimmerWidget({this.height, this.width, this.child, this.backgroundColor, this.baseColor, this.highlightColor});
+  const ShimmerWidget({super.key, this.height, this.width, this.child, this.backgroundColor, this.baseColor, this.highlightColor});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class ShimmerWidget extends StatelessWidget {
       highlightColor: highlightColor ?? Colors.transparent,
       enabled: true,
       direction: ShimmerDirection.ltr,
-      period: Duration(seconds: 1),
+      period: const Duration(seconds: 1),
       child: child ??
           Container(
             height: height?.validate(),

@@ -19,20 +19,20 @@ class LogoutConfirmationDialog extends StatelessWidget {
         Row(
           children: [
             AppButton(
-              child: Text(locale.no, style: boldTextStyle()),
               elevation: 0,
               onTap: () {
                 finish(context);
               },
+              child: Text(locale.no, style: boldTextStyle()),
             ).expand(),
             16.width,
             AppButton(
-              child: Text(locale.yes, style: boldTextStyle(color: white)),
               color: primaryColor,
               elevation: 0,
               onTap: () async {
                 finish(context, true);
               },
+              child: Text(locale.yes, style: boldTextStyle(color: white)),
             ).expand(),
           ],
         ),

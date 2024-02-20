@@ -16,12 +16,12 @@ class NotificationListResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['all_unread_count'] = this.allUnreadCount;
-    data['message'] = this.message;
-    data['status'] = this.status;
-    if (this.notificationData != null) {
-      data['notification_data'] = this.notificationData!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['all_unread_count'] = allUnreadCount;
+    data['message'] = message;
+    data['status'] = status;
+    if (notificationData != null) {
+      data['notification_data'] = notificationData!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -46,25 +46,25 @@ class NotificationData {
       id: json['id'],
       notifiableId: json['notifiable_id'],
       notifiableType: json['notifiable_type'],
-      readAt: json['read_at'] != null ? json['read_at'] : null,
+      readAt: json['read_at'],
       type: json['type'],
       updatedAt: json['updated_at'],
     );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['created_at'] = this.createdAt;
-    data['id'] = this.id;
-    data['notifiable_id'] = this.notifiableId;
-    data['notifiable_type'] = this.notifiableType;
-    data['type'] = this.type;
-    data['updated_at'] = this.updatedAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['created_at'] = createdAt;
+    data['id'] = id;
+    data['notifiable_id'] = notifiableId;
+    data['notifiable_type'] = notifiableType;
+    data['type'] = type;
+    data['updated_at'] = updatedAt;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
-    if (this.readAt != null) {
-      data['read_at'] = this.readAt;
+    if (readAt != null) {
+      data['read_at'] = readAt;
     }
     return data;
   }
@@ -84,10 +84,10 @@ class NotificationModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['subject'] = this.subject;
-    if (this.notificationDetail != null) {
-      data['data'] = this.notificationDetail!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['subject'] = subject;
+    if (notificationDetail != null) {
+      data['data'] = notificationDetail!.toJson();
     }
     return data;
   }
@@ -170,29 +170,29 @@ class NotificationDetail {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['booking_date'] = this.bookingDate;
-    data['order_date'] = this.orderDate;
-    data['booking_duration'] = this.bookingDuration;
-    data['booking_services_names'] = this.bookingServicesNames;
-    data['booking_time'] = this.bookingTime;
-    data['order_time'] = this.orderTime;
-    data['company_contact_info'] = this.companyContactInfo;
-    data['company_name'] = this.companyName;
-    data['description'] = this.description;
-    data['employee_id'] = this.employeeId;
-    data['employee_name'] = this.employeeName;
-    data['id'] = this.id;
-    data['logged_in_user_fullname'] = this.loggedInUserFullName;
-    data['logged_in_user_role'] = this.loggedInUserRole;
-    data['notification_group'] = this.notificationGroup;
-    data['notification_type'] = this.notificationType;
-    data['site_url'] = this.siteUrl;
-    data['type'] = this.type;
-    data['user_id'] = this.userId;
-    data['user_name'] = this.userName;
-    data['venue_address'] = this.venueAddress;
-    data['order_code'] = this.orderCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['booking_date'] = bookingDate;
+    data['order_date'] = orderDate;
+    data['booking_duration'] = bookingDuration;
+    data['booking_services_names'] = bookingServicesNames;
+    data['booking_time'] = bookingTime;
+    data['order_time'] = orderTime;
+    data['company_contact_info'] = companyContactInfo;
+    data['company_name'] = companyName;
+    data['description'] = description;
+    data['employee_id'] = employeeId;
+    data['employee_name'] = employeeName;
+    data['id'] = id;
+    data['logged_in_user_fullname'] = loggedInUserFullName;
+    data['logged_in_user_role'] = loggedInUserRole;
+    data['notification_group'] = notificationGroup;
+    data['notification_type'] = notificationType;
+    data['site_url'] = siteUrl;
+    data['type'] = type;
+    data['user_id'] = userId;
+    data['user_name'] = userName;
+    data['venue_address'] = venueAddress;
+    data['order_code'] = orderCode;
     return data;
   }
 }

@@ -10,8 +10,7 @@ class GenderSelectionComponent extends StatefulWidget {
   final String? type;
   final Function(String value) onTap;
 
-  GenderSelectionComponent({Key? key, this.type, required this.onTap})
-      : super(key: key);
+  const GenderSelectionComponent({super.key, this.type, required this.onTap});
 
   @override
   State<GenderSelectionComponent> createState() =>
@@ -51,7 +50,7 @@ class _GenderSelectionComponentState extends State<GenderSelectionComponent> {
   Widget build(BuildContext context) {
     return Container(
       decoration: boxDecorationDefault(color: context.cardColor),
-      padding: EdgeInsets.only(left: 16, top: 8, bottom: 8),
+      padding: const EdgeInsets.only(left: 16, top: 8, bottom: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -72,7 +71,7 @@ class _GenderSelectionComponentState extends State<GenderSelectionComponent> {
                     children: [
                       Container(
                         padding:
-                            isSelected ? EdgeInsets.all(2) : EdgeInsets.all(1),
+                            isSelected ? const EdgeInsets.all(2) : const EdgeInsets.all(1),
                         decoration: boxDecorationDefault(
                           shape: BoxShape.circle,
                           border: Border.all(
@@ -92,7 +91,7 @@ class _GenderSelectionComponentState extends State<GenderSelectionComponent> {
                       8.width,
                       Marquee(
                               child: Text(
-                                  "${genderList[index].name.validate()}",
+                                  genderList[index].name.validate(),
                                   style: primaryTextStyle(size: 14),
                                   textAlign: TextAlign.center))
                           .flexible(),

@@ -63,28 +63,28 @@ class ConfigurationResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['app_name'] = this.appName;
-    data['apple_login_status'] = this.appleLoginStatus;
-    data['application_language'] = this.applicationLanguage;
-    data['copyright'] = this.copyright;
-    data['customer_app_app_store'] = this.customerAppAppStore;
-    data['customer_app_play_store'] = this.customerAppPlayStore;
-    data['footer_text'] = this.footerText;
-    data['google_login_status'] = this.googleLoginStatus;
-    data['google_maps_key'] = this.googleMapsKey;
-    data['helpline_number'] = this.helplineNumber;
-    data['inquriy_email'] = this.inquiryEmail;
-    data['otp_login_status'] = this.otpLoginStatus;
-    data['primary'] = this.primaryColor;
-    data['site_description'] = this.siteDescription;
-    data['isForceUpdate'] = this.isForceUpdate;
-    data['version_code'] = this.versionCode;
-    if (this.currency != null) {
-      data['currency'] = this.currency!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['app_name'] = appName;
+    data['apple_login_status'] = appleLoginStatus;
+    data['application_language'] = applicationLanguage;
+    data['copyright'] = copyright;
+    data['customer_app_app_store'] = customerAppAppStore;
+    data['customer_app_play_store'] = customerAppPlayStore;
+    data['footer_text'] = footerText;
+    data['google_login_status'] = googleLoginStatus;
+    data['google_maps_key'] = googleMapsKey;
+    data['helpline_number'] = helplineNumber;
+    data['inquriy_email'] = inquiryEmail;
+    data['otp_login_status'] = otpLoginStatus;
+    data['primary'] = primaryColor;
+    data['site_description'] = siteDescription;
+    data['isForceUpdate'] = isForceUpdate;
+    data['version_code'] = versionCode;
+    if (currency != null) {
+      data['currency'] = currency!.toJson();
     }
-    if (this.onesignalCustomerApp != null) {
-      data['onesignal_customer_app'] = this.onesignalCustomerApp!.toJson();
+    if (onesignalCustomerApp != null) {
+      data['onesignal_customer_app'] = onesignalCustomerApp!.toJson();
     }
     return data;
   }
@@ -114,14 +114,14 @@ class Currency {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['currency_code'] = this.currencyCode;
-    data['currency_name'] = this.currencyName;
-    data['currency_position'] = this.currencyPosition;
-    data['currency_symbol'] = this.currencySymbol;
-    data['decimal_separator'] = this.decimalSeparator;
-    data['no_of_decimal'] = this.noOfDecimal;
-    data['thousand_separator'] = this.thousandSeparator;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['currency_code'] = currencyCode;
+    data['currency_name'] = currencyName;
+    data['currency_position'] = currencyPosition;
+    data['currency_symbol'] = currencySymbol;
+    data['decimal_separator'] = decimalSeparator;
+    data['no_of_decimal'] = noOfDecimal;
+    data['thousand_separator'] = thousandSeparator;
     return data;
   }
 }
@@ -142,10 +142,10 @@ class OnesignalModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['onesignal_app_id'] = this.onesignalAppId;
-    data['onesignal_channel_id'] = this.onesignalChannelId;
-    data['onesignal_rest_api_key'] = this.onesignalRestApiKey;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['onesignal_app_id'] = onesignalAppId;
+    data['onesignal_channel_id'] = onesignalChannelId;
+    data['onesignal_rest_api_key'] = onesignalRestApiKey;
     return data;
   }
 }

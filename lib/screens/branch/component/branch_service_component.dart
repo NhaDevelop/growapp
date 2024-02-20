@@ -15,10 +15,10 @@ import '../shimmer/branch_service_shimmer.dart';
 class BranchServiceComponent extends StatefulWidget {
   final int branchId;
 
-  BranchServiceComponent({required this.branchId});
+  const BranchServiceComponent({super.key, required this.branchId});
 
   @override
-  _BranchServiceComponentState createState() => _BranchServiceComponentState();
+  State<BranchServiceComponent> createState() => _BranchServiceComponentState();
 }
 
 class _BranchServiceComponentState extends State<BranchServiceComponent> {
@@ -59,13 +59,13 @@ class _BranchServiceComponentState extends State<BranchServiceComponent> {
         SnapHelperWidget<List<ServiceListData>>(
           future: future,
           initialData: branchServiceListResponseCached,
-          loadingWidget: BranchServiceShimmer(),
+          loadingWidget: const BranchServiceShimmer(),
           errorBuilder: (error) {
             return SingleChildScrollView(
               child: NoDataWidget(
                 title: error,
                 retryText: locale.reload,
-                imageWidget: ErrorStateWidget(),
+                imageWidget: const ErrorStateWidget(),
                 onRetry: () {
                   page = 1;
                   appStore.setLoading(true);
@@ -78,15 +78,15 @@ class _BranchServiceComponentState extends State<BranchServiceComponent> {
           },
           onSuccess: (list) {
             return SingleChildScrollView(
-              padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
+              padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
               child: AnimatedListView(
                 itemCount: list.length,
                 shrinkWrap: true,
                 listAnimationType: ListAnimationType.FadeIn,
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 emptyWidget: NoDataWidget(
                   title: locale.noServicesFound,
-                  imageWidget: EmptyStateWidget(),
+                  imageWidget: const EmptyStateWidget(),
                 ),
                 itemBuilder: (ctx, index) {
                   ServiceListData serviceListData = list[index];
@@ -95,8 +95,8 @@ class _BranchServiceComponentState extends State<BranchServiceComponent> {
                     decoration: boxDecorationWithRoundedCorners(
                         backgroundColor: context.cardColor,
                         borderRadius: radius()),
-                    margin: EdgeInsets.only(bottom: 16),
-                    padding: EdgeInsets.all(16),
+                    margin: const EdgeInsets.only(bottom: 16),
+                    padding: const EdgeInsets.all(16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -113,7 +113,8 @@ class _BranchServiceComponentState extends State<BranchServiceComponent> {
                                 child: Text(serviceListData.name.validate(),
                                     style: boldTextStyle(size: 14))),
                             Text(
-                                '${durationToString(serviceListData.durationMin.validate())}',
+                                durationToString(
+                                    serviceListData.durationMin.validate()),
                                 style: secondaryTextStyle(size: 12)),
                           ],
                         ).expand(),
@@ -131,7 +132,8 @@ class _BranchServiceComponentState extends State<BranchServiceComponent> {
           },
         ),
         Observer(
-            builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+            builder: (context) =>
+                const LoaderWidget().visible(appStore.isLoading)),
       ],
     );
   }

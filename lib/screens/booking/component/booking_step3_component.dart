@@ -27,10 +27,10 @@ import '../booking_repository.dart';
 class BookingStep3Component extends StatefulWidget {
   final bool isReschedule;
 
-  BookingStep3Component({this.isReschedule = false});
+  const BookingStep3Component({super.key, this.isReschedule = false});
 
   @override
-  _BookingStep3ComponentState createState() => _BookingStep3ComponentState();
+  State<BookingStep3Component> createState() => _BookingStep3ComponentState();
 }
 
 class _BookingStep3ComponentState extends State<BookingStep3Component> {
@@ -74,7 +74,7 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
     if (bookingRequestStore.bookingId == null) {
       appStore.setLoading(true);
 
-      String dateString = tempDate + " " + tempTime;
+      String dateString = "$tempDate $tempTime";
 
       try {
         initialDateTime = DateTime.parse(dateString);
@@ -280,13 +280,13 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
       context: context,
       useSafeArea: false,
       builder: (BuildContext context) => CommonAppDialog(
-        title: '${locale.bookingSuccessful}',
+        title: locale.bookingSuccessful,
         subTitle:
             '${locale.yourBookingFor} ${bookingRequestStore.selectedServiceList.validate().map((e) => e.name.validate()).toList().join(', ')} has been successfully booked',
         buttonText: locale.goToBookings,
         onTap: () {
           finish(context);
-          DashboardScreen(pageIndex: 1).launch(context, isNewTask: true);
+          const DashboardScreen(pageIndex: 1).launch(context, isNewTask: true);
         },
       ),
     );
@@ -305,7 +305,8 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
         children: [
           SingleChildScrollView(
             controller: scrollController,
-            padding: EdgeInsets.only(left: 20, right: 20, top: 60, bottom: 200),
+            padding: const EdgeInsets.only(
+                left: 20, right: 20, top: 60, bottom: 200),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -320,11 +321,11 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
                       decoration: boxDecorationWithRoundedCorners(
                           borderRadius: radius(),
                           backgroundColor: context.cardColor),
-                      margin: EdgeInsets.only(bottom: 16),
+                      margin: const EdgeInsets.only(bottom: 16),
                       child: SettingItemWidget(
                         title: payments[index].paymentMethod.validate(),
                         titleTextStyle: boldTextStyle(size: 14),
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                             left: 16, bottom: 10, top: 10, right: 10),
                         leading: CachedImageWidget(
                             url: payments[index].icon.validate(),
@@ -414,7 +415,7 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
                   doIfLoggedIn(context, () async {
                     bool? res = await showInDialog(
                       context,
-                      builder: (context) => ConfirmBookingDialog(),
+                      builder: (context) => const ConfirmBookingDialog(),
                     );
 
                     if (res ?? false) {
@@ -426,7 +427,8 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
             ),
           ),
           Observer(
-              builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+              builder: (context) =>
+                  const LoaderWidget().visible(appStore.isLoading)),
         ],
       ),
     );

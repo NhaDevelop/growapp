@@ -9,7 +9,7 @@ import '../model/booking_list_response.dart';
 class LocationInformationComponent extends StatefulWidget {
   final BookingListData booking;
 
-  LocationInformationComponent({required this.booking});
+  const LocationInformationComponent({super.key, required this.booking});
 
   @override
   State<LocationInformationComponent> createState() =>
@@ -30,7 +30,7 @@ class _LocationInformationComponentState
         ),
         Container(
           decoration: boxDecorationDefault(color: context.cardColor),
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,

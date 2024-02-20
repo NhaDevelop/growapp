@@ -8,8 +8,10 @@ import '../../../utils/constants.dart';
 import '../../auth/model/gender_model.dart';
 
 class FilterGenderComponent extends StatefulWidget {
+  const FilterGenderComponent({super.key});
+
   @override
-  _FilterGenderComponentState createState() => _FilterGenderComponentState();
+  State<FilterGenderComponent> createState() => _FilterGenderComponentState();
 }
 
 class _FilterGenderComponentState extends State<FilterGenderComponent> {
@@ -41,11 +43,15 @@ class _FilterGenderComponentState extends State<FilterGenderComponent> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ViewAllLabel(label: '${locale.gender}', labelTextStyle: boldTextStyle(), isShowAll: false).paddingSymmetric(horizontal: 16),
+        ViewAllLabel(
+                label: locale.gender,
+                labelTextStyle: boldTextStyle(),
+                isShowAll: false)
+            .paddingSymmetric(horizontal: 16),
         HorizontalList(
           spacing: 16,
           itemCount: genderList.length,
-          padding: EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           itemBuilder: (context, index) {
             return InkWell(
               borderRadius: radius(),
@@ -54,9 +60,18 @@ class _FilterGenderComponentState extends State<FilterGenderComponent> {
                 setState(() {});
               },
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                decoration: boxDecorationDefault(color: genderSelectIndex == index ? indicatorColor : context.cardColor),
-                child: Text('${genderList[index].name}', style: boldTextStyle(color: genderSelectIndex == index ? Colors.black : textSecondaryColorGlobal, size: 12)),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                decoration: boxDecorationDefault(
+                    color: genderSelectIndex == index
+                        ? indicatorColor
+                        : context.cardColor),
+                child: Text('${genderList[index].name}',
+                    style: boldTextStyle(
+                        color: genderSelectIndex == index
+                            ? Colors.black
+                            : textSecondaryColorGlobal,
+                        size: 12)),
               ),
             );
           },

@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class HorizontalAdsSliderComponent extends StatefulWidget {
+  const HorizontalAdsSliderComponent({super.key});
+
   @override
-  _HorizontalAdsSliderComponentState createState() =>
+  State<HorizontalAdsSliderComponent> createState() =>
       _HorizontalAdsSliderComponentState();
 }
 
@@ -44,8 +46,8 @@ class _HorizontalAdsSliderComponentState
         Container(
           height: 210,
           width: context.width(),
-          padding: EdgeInsets.symmetric(vertical: 16),
-          margin: EdgeInsets.only(top: 16),
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          margin: const EdgeInsets.only(top: 16),
           decoration: boxDecorationDefault(
               color: context.cardColor, borderRadius: radius(0)),
           child: PageView.builder(
@@ -54,7 +56,7 @@ class _HorizontalAdsSliderComponentState
             itemCount: sliderList.length,
             itemBuilder: (_, i) {
               return Container(
-                margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 decoration: boxDecorationWithRoundedCorners(
                     backgroundColor: context.primaryColor,
                     borderRadius: radius(defaultRadius)),
@@ -72,24 +74,24 @@ class _HorizontalAdsSliderComponentState
                           children: [
                             Text('Starting At ',
                                 style: boldTextStyle(color: white, size: 20)),
-                            PriceWidget(
+                            const PriceWidget(
                                 price: 29, color: Colors.white, size: 20),
                           ],
                         ),
                         16.height,
                         AppButton(
                           color: Colors.white,
+                          padding: EdgeInsets.zero,
+                          onTap: () {},
                           child: Text('Book Now',
                               style: boldTextStyle(
                                   size: 14, color: secondaryColor)),
-                          padding: EdgeInsets.zero,
-                          onTap: () {},
                         ),
                       ],
                     )
                         .paddingOnly(left: 16, top: 16, right: 8, bottom: 16)
                         .expand(),
-                    CachedImageWidget(
+                    const CachedImageWidget(
                       url: Slider_img2,
                       height: 200,
                       width: 100,

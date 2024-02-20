@@ -19,7 +19,7 @@ class ProductReviewDialog extends StatefulWidget {
   final int? productId;
   final int? productVariationId;
 
-  ProductReviewDialog({this.productReview, this.productId, this.productVariationId});
+  const ProductReviewDialog({super.key, this.productReview, this.productId, this.productVariationId});
 
   @override
   State<ProductReviewDialog> createState() => _ProductReviewDialogState();
@@ -136,7 +136,7 @@ class _ProductReviewDialogState extends State<ProductReviewDialog> {
             children: [
               Container(
                 width: context.width(),
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                 decoration: boxDecorationDefault(
                   color: primaryColor,
                   borderRadius: radiusOnly(topRight: 8, topLeft: 8),
@@ -145,7 +145,7 @@ class _ProductReviewDialogState extends State<ProductReviewDialog> {
                   children: [
                     Text(locale.yourReview, style: boldTextStyle(color: Colors.white)).expand(),
                     IconButton(
-                      icon: Icon(Icons.clear, color: Colors.white, size: 16),
+                      icon: const Icon(Icons.clear, color: Colors.white, size: 16),
                       onPressed: () {
                         finish(context);
                       },
@@ -157,7 +157,7 @@ class _ProductReviewDialogState extends State<ProductReviewDialog> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     decoration: boxDecorationDefault(color: context.cardColor),
                     child: Row(
                       children: [
@@ -195,7 +195,7 @@ class _ProductReviewDialogState extends State<ProductReviewDialog> {
                       return Stack(
                         clipBehavior: Clip.none,
                         children: [
-                          Container(height: 50, width: 50, alignment: Alignment.center, padding: EdgeInsets.all(12), child: CircularProgressIndicator(color: primaryColor)),
+                          Container(height: 50, width: 50, alignment: Alignment.center, padding: const EdgeInsets.all(12), child: const CircularProgressIndicator(color: primaryColor)),
                           Image.file(File(pickedFile[index].path), width: 50, height: 50, fit: BoxFit.cover).cornerRadiusWithClipRRect(defaultRadius),
                           Positioned(
                             right: -5,
@@ -205,7 +205,7 @@ class _ProductReviewDialogState extends State<ProductReviewDialog> {
                               width: 18,
                               alignment: Alignment.center,
                               decoration: boxDecorationDefault(border: Border.all(color: primaryColor), shape: BoxShape.circle),
-                              child: Icon(Icons.close, color: primaryColor, size: 10),
+                              child: const Icon(Icons.close, color: primaryColor, size: 10),
                             ).onTap(() {
                               showConfirmDialogCustom(
                                 context,
@@ -225,12 +225,12 @@ class _ProductReviewDialogState extends State<ProductReviewDialog> {
                     },
                   ).paddingTop(16).visible(pickedFile.isNotEmpty),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     decoration: boxDecorationDefault(border: Border.all(color: primaryColor)),
                     child: TextIcon(
                       text: locale.addPhoto,
                       textStyle: boldTextStyle(),
-                      prefix: Icon(Icons.camera_alt_outlined, color: primaryColor, size: 16),
+                      prefix: const Icon(Icons.camera_alt_outlined, color: primaryColor, size: 16),
                       edgeInsets: EdgeInsets.zero,
                       onTap: () {
                         hideKeyboard(context);
@@ -269,7 +269,7 @@ class _ProductReviewDialogState extends State<ProductReviewDialog> {
             ],
           ),
         ),
-        Observer(builder: (context) => LoaderWidget().visible(appStore.isLoading).withSize(height: 110, width: 110))
+        Observer(builder: (context) => const LoaderWidget().visible(appStore.isLoading).withSize(height: 110, width: 110))
       ],
     );
   }

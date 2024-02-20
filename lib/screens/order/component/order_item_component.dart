@@ -16,7 +16,7 @@ import '../view/order_detail_screen.dart';
 class OrderItemComponent extends StatelessWidget {
   final OrderListData getOrderData;
 
-  OrderItemComponent({required this.getOrderData});
+  const OrderItemComponent({super.key, required this.getOrderData});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class OrderItemComponent extends StatelessWidget {
             children: [
               if (getOrderData.orderCode != null)
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+                  padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
                   decoration: boxDecorationWithRoundedCorners(
                     backgroundColor: getOrderData.deliveryStatus ==
                             OrderStatusConst.DELIVERED
@@ -53,7 +53,7 @@ class OrderItemComponent extends StatelessWidget {
                   ),
                 ),
               Container(
-                padding: EdgeInsets.symmetric(vertical: 3, horizontal: 16),
+                padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 16),
                 decoration: boxDecorationWithRoundedCorners(
                   backgroundColor:
                       getOrderData.deliveryStatus == OrderStatusConst.DELIVERED
@@ -160,7 +160,7 @@ class OrderItemComponent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(locale.payment, style: secondaryTextStyle()),
-              Text('${getOrderData.paymentStatus.capitalizeFirstLetter()}',
+              Text(getOrderData.paymentStatus.capitalizeFirstLetter(),
                   style: boldTextStyle(color: Colors.green)),
             ],
           ).paddingSymmetric(horizontal: 16),
@@ -170,7 +170,7 @@ class OrderItemComponent extends StatelessWidget {
             children: [
               Text(locale.deliveryStatus, style: secondaryTextStyle()),
               Text(
-                  '${getOrderBookingStatus(status: getOrderData.deliveryStatus.validate()).capitalizeFirstLetter()}',
+                  getOrderBookingStatus(status: getOrderData.deliveryStatus.validate()).capitalizeFirstLetter(),
                   style: boldTextStyle(color: Colors.green)),
             ],
           ).paddingSymmetric(horizontal: 16),
@@ -181,7 +181,7 @@ class OrderItemComponent extends StatelessWidget {
               getOrderData.paymentStatus == SERVICE_PAYMENT_STATUS_UNPAID)
             AppButton(
               text: locale.cancelOrder,
-              padding: EdgeInsets.symmetric(vertical: 12),
+              padding: const EdgeInsets.symmetric(vertical: 12),
               width: context.width(),
               textColor: secondaryColor,
               color: quaternaryButtonColor,
@@ -211,7 +211,7 @@ class OrderItemComponent extends StatelessWidget {
               },
             ).paddingSymmetric(horizontal: 16, vertical: 8)
           else
-            Offstage(),
+            const Offstage(),
           16.height,
         ],
       ),

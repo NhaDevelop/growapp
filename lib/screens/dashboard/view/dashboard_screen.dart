@@ -23,7 +23,7 @@ class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key, this.pageIndex = 0});
 
   @override
-  _DashboardScreenState createState() => _DashboardScreenState();
+  State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
 class _DashboardScreenState extends State<DashboardScreen>
@@ -31,13 +31,13 @@ class _DashboardScreenState extends State<DashboardScreen>
   int currentPosition = 0;
 
   List<Widget> fragmentList = [
-    HomeFragment(),
+    const HomeFragment(),
     Observer(
         builder: (context) => appStore.isLoggedIn
-            ? BookingFragment()
-            : SignInScreen(isFromDashboard: true)),
-    ProductScreen(),
-    ProfileFragment(),
+            ? const BookingFragment()
+            : const SignInScreen(isFromDashboard: true)),
+    const ProductScreen(),
+    const ProfileFragment(),
   ];
 
   @override
@@ -68,10 +68,11 @@ class _DashboardScreenState extends State<DashboardScreen>
 
     /// ForceUpdate Dialog
     await 3.seconds.delay;
+    if (!mounted) return;
     showForceUpdateDialog(context);
 
     if (!appStore.isBranchSelected) {
-      SelectBranchScreen().launch(context, isNewTask: true);
+      const SelectBranchScreen().launch(context, isNewTask: true);
     }
   }
 
@@ -175,7 +176,8 @@ class _DashboardScreenState extends State<DashboardScreen>
           ),
         ),
         bottomSheet: Observer(builder: (context) {
-          return VoiceSearchComponent().visible(appStore.isSpeechActivated);
+          return const VoiceSearchComponent()
+              .visible(appStore.isSpeechActivated);
         }),
       ),
     );

@@ -12,7 +12,7 @@ class AboutProductComponent extends StatelessWidget {
   final List<CartListData> orderList;
   final String? deliveryStatus;
 
-  AboutProductComponent({required this.orderList, this.deliveryStatus});
+  const AboutProductComponent({super.key, required this.orderList, this.deliveryStatus});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class AboutProductComponent extends StatelessWidget {
 
             return Container(
               decoration: boxDecorationDefault(color: context.cardColor),
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,

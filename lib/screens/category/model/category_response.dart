@@ -14,11 +14,11 @@ class CategoryResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
-    data['status'] = this.status;
-    if (this.category != null) {
-      data['data'] = this.category!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
+    data['status'] = status;
+    if (category != null) {
+      data['data'] = category!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -60,36 +60,36 @@ class CategoryData {
   factory CategoryData.fromJson(Map<String, dynamic> json) {
     return CategoryData(
       createdAt: json['created_at'],
-      createdBy: json['created_by'] != null ? json['created_by'] : null,
-      deletedAt: json['deleted_at'] != null ? json['deleted_at'] : null,
-      deletedBy: json['deleted_by'] != null ? json['deleted_by'] : null,
+      createdBy: json['created_by'],
+      deletedAt: json['deleted_at'],
+      deletedBy: json['deleted_by'],
       id: json['id'],
       name: json['name'],
-      parentId: json['parent_id'] != null ? json['parent_id'] : null,
+      parentId: json['parent_id'],
       slug: json['slug'],
       status: json['status'],
       updatedAt: json['updated_at'],
-      updatedBy: json['updated_by'] != null ? json['updated_by'] : null,
+      updatedBy: json['updated_by'],
       categoryImage: json['category_image'],
-      brandId: json['brand_id'] != null ? json['brand_id'] : null,
+      brandId: json['brand_id'],
     );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['created_at'] = this.createdAt;
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['slug'] = this.slug;
-    data['status'] = this.status;
-    data['updated_at'] = this.updatedAt;
-    data['created_by'] = this.createdBy;
-    data['deleted_at'] = this.deletedAt;
-    data['deleted_by'] = this.deletedBy;
-    data['parent_id'] = this.parentId;
-    data['updated_by'] = this.updatedBy;
-    data['category_image'] = this.categoryImage;
-    data['brand_id'] = this.brandId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['created_at'] = createdAt;
+    data['id'] = id;
+    data['name'] = name;
+    data['slug'] = slug;
+    data['status'] = status;
+    data['updated_at'] = updatedAt;
+    data['created_by'] = createdBy;
+    data['deleted_at'] = deletedAt;
+    data['deleted_by'] = deletedBy;
+    data['parent_id'] = parentId;
+    data['updated_by'] = updatedBy;
+    data['category_image'] = categoryImage;
+    data['brand_id'] = brandId;
     return data;
   }
 }

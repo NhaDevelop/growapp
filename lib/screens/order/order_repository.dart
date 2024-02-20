@@ -26,7 +26,7 @@ Future<List<OrderStatusData>> getOrderStatus() async {
     return res.data.validate();
   } catch (e) {
     appStore.setLoading(false);
-    throw e;
+    rethrow;
   }
 }
 
@@ -41,15 +41,18 @@ Future<dynamic> updateOrderReview({
 }) async {
   if (appStore.isLoggedIn) {
     MultipartRequest multiPartRequest = await getMultiPartRequest(
-        '${reviewId.isNotEmpty ? APIEndPoints.updateReview : APIEndPoints.addReview}');
+        reviewId.isNotEmpty ? APIEndPoints.updateReview : APIEndPoints.addReview);
 
-    if (reviewId.isNotEmpty)
+    if (reviewId.isNotEmpty) {
       multiPartRequest.fields[ProductModelKey.reviewId] = reviewId;
-    if (productId.isNotEmpty)
+    }
+    if (productId.isNotEmpty) {
       multiPartRequest.fields[ProductModelKey.productId] = productId;
-    if (productVariationId.isNotEmpty)
+    }
+    if (productVariationId.isNotEmpty) {
       multiPartRequest.fields[ProductModelKey.productVariationId] =
           productVariationId;
+    }
     if (rating.isNotEmpty) multiPartRequest.fields["rating"] = rating;
     if (reviewMsg.isNotEmpty) multiPartRequest.fields["review_msg"] = reviewMsg;
 
@@ -111,7 +114,7 @@ Future<OrderDetailResponse> getOrderDetail({required int orderId}) async {
     return res;
   } catch (e) {
     appStore.setLoading(false);
-    throw e;
+    rethrow;
   }
 }
 
@@ -148,6 +151,6 @@ Future<List<OrderListData>> getOrderList({
   } catch (e) {
     appStore.setLoading(false);
 
-    throw e;
+    rethrow;
   }
 }

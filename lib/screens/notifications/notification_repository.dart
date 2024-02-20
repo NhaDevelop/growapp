@@ -22,7 +22,7 @@ Future<List<NotificationData>> getNotification(
     return res.notificationData.validate();
   } catch (e) {
     appStore.setLoading(false);
-    throw e;
+    rethrow;
   }
 }
 //endregion

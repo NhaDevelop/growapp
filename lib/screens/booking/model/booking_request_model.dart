@@ -47,22 +47,21 @@ class BookingRequestModel {
   });
 
   Map<String, dynamic> toJson({String? dateTime}) {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (dateTime != null) data['start_date_time'] = dateTime;
-    if (note != null) data['note'] = this.note.validate();
+    if (note != null) data['note'] = note.validate();
     data['branch_id'] = appStore.branchId;
 
-    if (this.selectedServiceList != null) {
-      data['services'] = this
-          .selectedServiceList
+    if (selectedServiceList != null) {
+      data['services'] = selectedServiceList
           .validate()
           .map((e) => e.toBookingServiceJson())
           .toList();
     }
 
-    if (this.taxPercentage != null) {
+    if (taxPercentage != null) {
       data['tax_percentage'] =
-          this.taxPercentage.validate().map((e) => e.toJson()).toList();
+          taxPercentage.validate().map((e) => e.toJson()).toList();
     }
 
     return data;

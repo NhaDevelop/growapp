@@ -13,7 +13,7 @@ import 'branch/branch_repository.dart';
 import 'walkThrough/view/walk_through_screen.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -58,12 +58,13 @@ class _SplashScreenState extends State<SplashScreen> {
       log(e);
     });
 
+    if (!mounted) return;
     if (getBoolAsync(SharedPreferenceConst.IS_FIRST_TIME, defaultValue: true)) {
-      WalkThroughScreen().launch(context, isNewTask: true);
+      const WalkThroughScreen().launch(context, isNewTask: true);
     } else if (appStore.isBranchSelected) {
-      DashboardScreen().launch(context, isNewTask: true);
+      const DashboardScreen().launch(context, isNewTask: true);
     } else {
-      SelectBranchScreen(isFromDashboard: true)
+      const SelectBranchScreen(isFromDashboard: true)
           .launch(context, isNewTask: true);
     }
   }
@@ -76,7 +77,7 @@ class _SplashScreenState extends State<SplashScreen> {
         height: context.height(),
         width: context.width(),
         child: Container(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           decoration: boxDecorationDefault(shape: BoxShape.circle),
           child:
               Image.asset(logo_gif, height: 150, width: 150, fit: BoxFit.cover),

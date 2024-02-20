@@ -12,10 +12,10 @@ import '../../zoom_image_screen.dart';
 class ProductSliderComponent extends StatefulWidget {
   final List<String> productGallaryData;
 
-  ProductSliderComponent({required this.productGallaryData});
+  const ProductSliderComponent({super.key, required this.productGallaryData});
 
   @override
-  _ProductSliderComponentState createState() => _ProductSliderComponentState();
+  State<ProductSliderComponent> createState() => _ProductSliderComponentState();
 }
 
 class _ProductSliderComponentState extends State<ProductSliderComponent> {
@@ -32,14 +32,19 @@ class _ProductSliderComponentState extends State<ProductSliderComponent> {
   }
 
   void init() async {
-    if (getBoolAsync(SharedPreferenceConst.AUTO_SLIDER_STATUS, defaultValue: true) && widget.productGallaryData.validate().length >= 2) {
-      timer = Timer.periodic(Duration(seconds: DASHBOARD_AUTO_SLIDER_SECOND), (Timer timer) {
+    if (getBoolAsync(SharedPreferenceConst.AUTO_SLIDER_STATUS,
+            defaultValue: true) &&
+        widget.productGallaryData.validate().length >= 2) {
+      timer = Timer.periodic(
+          const Duration(seconds: DASHBOARD_AUTO_SLIDER_SECOND), (Timer timer) {
         if (currentPage < widget.productGallaryData.validate().length - 1) {
           currentPage++;
         } else {
           currentPage = 0;
         }
-        controller.animateToPage(currentPage, duration: Duration(milliseconds: 950), curve: Curves.easeOutQuart);
+        controller.animateToPage(currentPage,
+            duration: const Duration(milliseconds: 950),
+            curve: Curves.easeOutQuart);
       });
 
       controller.addListener(() {
@@ -71,14 +76,24 @@ class _ProductSliderComponentState extends State<ProductSliderComponent> {
             reverse: false,
             itemCount: widget.productGallaryData.validate().length,
             itemBuilder: (_, i) {
-              String productGallaryData = widget.productGallaryData.validate()[i];
+              String productGallaryData =
+                  widget.productGallaryData.validate()[i];
 
-              return CachedImageWidget(url: productGallaryData.validate(), height: 330, width: context.width(), fit: BoxFit.cover).onTap(() {
-                if (productGallaryData.validate().isNotEmpty)
+              return CachedImageWidget(
+                      url: productGallaryData.validate(),
+                      height: 330,
+                      width: context.width(),
+                      fit: BoxFit.cover)
+                  .onTap(() {
+                if (productGallaryData.validate().isNotEmpty) {
                   ZoomImageScreen(
-                    galleryImages: widget.productGallaryData.validate().map((e) => e.validate()).toList(),
+                    galleryImages: widget.productGallaryData
+                        .validate()
+                        .map((e) => e.validate())
+                        .toList(),
                     index: i,
                   ).launch(context);
+                }
               });
             },
           ),

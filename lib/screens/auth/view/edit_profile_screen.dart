@@ -18,6 +18,8 @@ import '../auth_repository.dart';
 import '../component/gender_selection_component.dart';
 
 class EditProfileScreen extends StatefulWidget {
+  const EditProfileScreen({super.key});
+
   @override
   EditProfileScreenState createState() => EditProfileScreenState();
 }
@@ -177,7 +179,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
         body: Stack(
           children: [
             SingleChildScrollView(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Form(
                 key: formKey,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -200,7 +202,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                                       height: 100,
                                       fit: BoxFit.cover,
                                       radius: 64,
-                                      child: DefaultUserImagePlaceholder(),
+                                      child: const DefaultUserImagePlaceholder(),
                                     ),
                                   ),
                           ),
@@ -214,7 +216,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                                 backgroundColor: primaryColor,
                                 border: Border.all(color: Colors.white),
                               ),
-                              child: Icon(Icons.camera, color: Colors.white, size: 16).paddingAll(4.0),
+                              child: const Icon(Icons.camera, color: Colors.white, size: 16).paddingAll(4.0),
                             ).onTap(
                               () async {
                                 _showBottomSheet(context);
@@ -295,7 +297,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                 ),
               ),
             ),
-            Observer(builder: (_) => LoaderWidget().visible(appStore.isLoading)),
+            Observer(builder: (_) => const LoaderWidget().visible(appStore.isLoading)),
           ],
         ),
       ),

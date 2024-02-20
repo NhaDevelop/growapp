@@ -14,9 +14,9 @@ class ProductReviewsResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
-    data['status'] = this.status;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
+    data['status'] = status;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -80,7 +80,7 @@ class ProductReviewDataModel {
       userName: json['user_name'],
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
-      deletedAt: json['deleted_at'] != null ? json['deleted_at'] : null,
+      deletedAt: json['deleted_at'],
       featureImage: json['feature_image'],
       gallery: json['gallery'] != null ? (json['gallery'] as List).map((i) => ReviewGallaryData.fromJson(i)).toList() : null,
       productVariationId: json['product_variation_id'],
@@ -88,24 +88,24 @@ class ProductReviewDataModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['product_id'] = this.productId;
-    data['rating'] = this.rating;
-    data['review_dislikes'] = this.reviewDislikes;
-    data['is_user_like'] = this.isUserLike;
-    data['is_user_dislike'] = this.isUserDislike;
-    data['review_likes'] = this.reviewLikes;
-    data['review_msg'] = this.reviewMsg;
-    data['user_id'] = this.userId;
-    data['user_name'] = this.userName;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    if (this.reviewGallary != null) {
-      data['review_gallary'] = this.reviewGallary!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['product_id'] = productId;
+    data['rating'] = rating;
+    data['review_dislikes'] = reviewDislikes;
+    data['is_user_like'] = isUserLike;
+    data['is_user_dislike'] = isUserDislike;
+    data['review_likes'] = reviewLikes;
+    data['review_msg'] = reviewMsg;
+    data['user_id'] = userId;
+    data['user_name'] = userName;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    if (reviewGallary != null) {
+      data['review_gallary'] = reviewGallary!.map((v) => v.toJson()).toList();
     }
-    if (this.deletedAt != null) {
-      data['deleted_at'] = this.deletedAt;
+    if (deletedAt != null) {
+      data['deleted_at'] = deletedAt;
     }
     return data;
   }
@@ -129,8 +129,8 @@ class ReviewGallaryData {
     return ReviewGallaryData(
       createdAt: json['created_at'],
       createdBy: json['created_by'],
-      deletedAt: json['deleted_at'] != null ? json['deleted_at'] : null,
-      deletedBy: json['deleted_by'] != null ? json['deleted_by'] : null,
+      deletedAt: json['deleted_at'],
+      deletedBy: json['deleted_by'],
       fullUrl: json['full_url'],
       id: json['id'],
       reviewId: json['review_id'],
@@ -141,20 +141,20 @@ class ReviewGallaryData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['created_at'] = this.createdAt;
-    data['created_by'] = this.createdBy;
-    data['full_url'] = this.fullUrl;
-    data['id'] = this.id;
-    data['review_id'] = this.reviewId;
-    data['status'] = this.status;
-    data['updated_at'] = this.updatedAt;
-    data['updated_by'] = this.updatedBy;
-    if (this.deletedAt != null) {
-      data['deleted_at'] = this.deletedAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['created_at'] = createdAt;
+    data['created_by'] = createdBy;
+    data['full_url'] = fullUrl;
+    data['id'] = id;
+    data['review_id'] = reviewId;
+    data['status'] = status;
+    data['updated_at'] = updatedAt;
+    data['updated_by'] = updatedBy;
+    if (deletedAt != null) {
+      data['deleted_at'] = deletedAt;
     }
-    if (this.deletedBy != null) {
-      data['deleted_by'] = this.deletedBy;
+    if (deletedBy != null) {
+      data['deleted_by'] = deletedBy;
     }
     return data;
   }
@@ -178,11 +178,11 @@ class ProductReviewLikeDislikeModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['dislike_count'] = this.dislikeCount;
-    data['like_count'] = this.likeCount;
-    data['message'] = this.message;
-    data['status'] = this.status;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['dislike_count'] = dislikeCount;
+    data['like_count'] = likeCount;
+    data['message'] = message;
+    data['status'] = status;
     return data;
   }
 }

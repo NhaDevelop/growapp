@@ -16,7 +16,7 @@ class ViewAllLabel extends StatelessWidget {
   final Color? trailingTextColor;
   final Widget? labelWidget;
 
-  ViewAllLabel({
+  const ViewAllLabel({super.key, 
     this.label,
     this.onTap,
     this.labelSize,
@@ -49,7 +49,7 @@ class ViewAllLabel extends StatelessWidget {
                       color: trailingTextColor ?? context.primaryColor,
                       size: 12,
                     ))
-                : SizedBox(),
+                : const SizedBox(),
           )
         else
           46.height,

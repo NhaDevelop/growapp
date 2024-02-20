@@ -3,10 +3,12 @@ import 'package:grow_tokyo_app/components/shimmer_widget.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class BranchGalleryShimmer extends StatelessWidget {
+  const BranchGalleryShimmer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: EdgeInsets.only(top: 40, left: 16, right: 16, bottom: 16),
+      padding: const EdgeInsets.only(top: 40, left: 16, right: 16, bottom: 16),
       child: AnimatedWrap(
         runSpacing: 16,
         spacing: 16,

@@ -7,8 +7,10 @@ import '../../../utils/colors.dart';
 import '../../../utils/common_base.dart';
 
 class FilterRatingComponent extends StatefulWidget {
+  const FilterRatingComponent({super.key});
+
   @override
-  _FilterRatingComponentState createState() => _FilterRatingComponentState();
+  State<FilterRatingComponent> createState() => _FilterRatingComponentState();
 }
 
 class _FilterRatingComponentState extends State<FilterRatingComponent> {
@@ -34,15 +36,19 @@ class _FilterRatingComponentState extends State<FilterRatingComponent> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ViewAllLabel(label: locale.rating, labelTextStyle: boldTextStyle(), isShowAll: false).paddingSymmetric(horizontal: 16),
+        ViewAllLabel(
+                label: locale.rating,
+                labelTextStyle: boldTextStyle(),
+                isShowAll: false)
+            .paddingSymmetric(horizontal: 16),
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 16),
-          padding: EdgeInsets.symmetric(vertical: 8),
+          margin: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(vertical: 8),
           decoration: boxDecorationDefault(color: context.cardColor),
           child: AnimatedListView(
             itemCount: 3,
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               return CheckboxListTile(
                 value: isRatingChecked,
@@ -56,14 +62,17 @@ class _FilterRatingComponentState extends State<FilterRatingComponent> {
                   rating: 3.5,
                   size: 16,
                 ),
-                contentPadding: EdgeInsets.only(left: 6, top: 0, bottom: 0, right: 16),
+                contentPadding: const EdgeInsets.only(
+                    left: 6, top: 0, bottom: 0, right: 16),
                 controlAffinity: ListTileControlAffinity.leading,
-                secondary: Text('18', style: boldTextStyle(color: textSecondaryColorGlobal)),
+                secondary: Text('18',
+                    style: boldTextStyle(color: textSecondaryColorGlobal)),
                 checkboxShape: RoundedRectangleBorder(borderRadius: radius(5)),
                 side: BorderSide(color: textSecondaryColorGlobal),
                 visualDensity: VisualDensity.compact,
                 dense: true,
-                activeColor: appStore.isDarkMode ? primaryColor : secondaryColor,
+                activeColor:
+                    appStore.isDarkMode ? primaryColor : secondaryColor,
                 onChanged: (value) {
                   isRatingChecked = !isRatingChecked;
                   setState(() {});

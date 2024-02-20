@@ -13,10 +13,10 @@ import '../../../utils/constants.dart';
 class HorizontalSliderComponent extends StatefulWidget {
   final List<SliderData> sliderList;
 
-  HorizontalSliderComponent({required this.sliderList});
+  const HorizontalSliderComponent({super.key, required this.sliderList});
 
   @override
-  _HorizontalSliderComponentState createState() =>
+  State<HorizontalSliderComponent> createState() =>
       _HorizontalSliderComponentState();
 }
 
@@ -32,15 +32,16 @@ class _HorizontalSliderComponentState extends State<HorizontalSliderComponent> {
     if (getBoolAsync(SharedPreferenceConst.AUTO_SLIDER_STATUS,
             defaultValue: true) &&
         widget.sliderList.length >= 2) {
-      timer = Timer.periodic(Duration(seconds: DASHBOARD_AUTO_SLIDER_SECOND),
-          (Timer timer) {
+      timer = Timer.periodic(
+          const Duration(seconds: DASHBOARD_AUTO_SLIDER_SECOND), (Timer timer) {
         if (currentPage < widget.sliderList.length - 1) {
           currentPage++;
         } else {
           currentPage = 0;
         }
         controller.animateToPage(currentPage,
-            duration: Duration(milliseconds: 950), curve: Curves.easeOutQuart);
+            duration: const Duration(milliseconds: 950),
+            curve: Curves.easeOutQuart);
       });
 
       controller.addListener(() {
@@ -67,7 +68,7 @@ class _HorizontalSliderComponentState extends State<HorizontalSliderComponent> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.sliderList.isEmpty) return Offstage();
+    if (widget.sliderList.isEmpty) return const Offstage();
 
     return SizedBox(
       height: 200,

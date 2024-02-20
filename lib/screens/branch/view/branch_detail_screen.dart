@@ -23,10 +23,10 @@ import '../shimmer/branch_detail_shimmer.dart';
 class BranchDetailScreen extends StatefulWidget {
   final int branchId;
 
-  BranchDetailScreen({required this.branchId});
+  const BranchDetailScreen({super.key, required this.branchId});
 
   @override
-  _BranchDetailScreenState createState() => _BranchDetailScreenState();
+  State<BranchDetailScreen> createState() => _BranchDetailScreenState();
 }
 
 class _BranchDetailScreenState extends State<BranchDetailScreen>
@@ -92,7 +92,7 @@ class _BranchDetailScreenState extends State<BranchDetailScreen>
           SnapHelperWidget<BranchDetailResponse>(
             future: future,
             initialData: getBranchInitialData(),
-            loadingWidget: BranchDetailShimmer(),
+            loadingWidget: const BranchDetailShimmer(),
             onSuccess: (snap) {
               if (snap.data == null) {
                 return NoDataWidget(
@@ -119,10 +119,10 @@ class _BranchDetailScreenState extends State<BranchDetailScreen>
                       leading: BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
                         child: Container(
-                          child: BackWidget(iconColor: context.iconColor),
                           decoration: boxDecorationDefault(
                               shape: BoxShape.circle,
                               color: context.cardColor.withOpacity(0.6)),
+                          child: BackWidget(iconColor: context.iconColor),
                         ),
                       ).cornerRadiusWithClipRRect(30).paddingLeft(6),
                       titleTextStyle:
@@ -146,44 +146,42 @@ class _BranchDetailScreenState extends State<BranchDetailScreen>
                     children: [
                       Container(
                         color: context.scaffoldBackgroundColor,
-                        child: Container(
-                          child: TabBar(
-                            isScrollable: true,
-                            indicatorColor: Colors.transparent,
-                            dividerColor: Colors.transparent,
-                            labelPadding: EdgeInsets.symmetric(),
-                            onTap: (i) {
-                              selectedIndex = i;
-                              setState(() {});
-                            },
-                            tabs: sectionList.map((e) {
-                              int index = sectionList.indexOf(e);
+                        child: TabBar(
+                          isScrollable: true,
+                          indicatorColor: Colors.transparent,
+                          dividerColor: Colors.transparent,
+                          labelPadding: const EdgeInsets.symmetric(),
+                          onTap: (i) {
+                            selectedIndex = i;
+                            setState(() {});
+                          },
+                          tabs: sectionList.map((e) {
+                            int index = sectionList.indexOf(e);
 
-                              return Tab(
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 4),
-                                  margin: EdgeInsets.only(
-                                      left: index == 0 ? 16 : 0, right: 16),
-                                  decoration: boxDecorationWithRoundedCorners(
-                                    backgroundColor: index == selectedIndex
-                                        ? secondaryColor
-                                        : context.cardColor,
-                                  ),
-                                  child: Text(e.toString(),
-                                          style: boldTextStyle(
-                                              color: index == selectedIndex
-                                                  ? white
-                                                  : textPrimaryColorGlobal))
-                                      .center(),
+                            return Tab(
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 4),
+                                margin: EdgeInsets.only(
+                                    left: index == 0 ? 16 : 0, right: 16),
+                                decoration: boxDecorationWithRoundedCorners(
+                                  backgroundColor: index == selectedIndex
+                                      ? secondaryColor
+                                      : context.cardColor,
                                 ),
-                              );
-                            }).toList(),
-                          ),
+                                child: Text(e.toString(),
+                                        style: boldTextStyle(
+                                            color: index == selectedIndex
+                                                ? white
+                                                : textPrimaryColorGlobal))
+                                    .center(),
+                              ),
+                            );
+                          }).toList(),
                         ),
                       ),
                       TabBarView(
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         key: ValueKey(selectedIndex),
                         children: sectionList.map((e) {
                           if (selectedIndex == 0) {
@@ -207,7 +205,7 @@ class _BranchDetailScreenState extends State<BranchDetailScreen>
                             return BranchGalleryComponent(
                                 branchId: widget.branchId);
                           } else {
-                            return Offstage();
+                            return const Offstage();
                           }
                         }).toList(),
                       ).expand(),
@@ -220,7 +218,7 @@ class _BranchDetailScreenState extends State<BranchDetailScreen>
               return NoDataWidget(
                 title: error,
                 retryText: locale.reload,
-                imageWidget: ErrorStateWidget(),
+                imageWidget: const ErrorStateWidget(),
                 onRetry: () {
                   appStore.setLoading(true);
 
@@ -231,7 +229,8 @@ class _BranchDetailScreenState extends State<BranchDetailScreen>
             },
           ),
           Observer(
-              builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+              builder: (context) =>
+                  const LoaderWidget().visible(appStore.isLoading)),
         ],
       ),
     );

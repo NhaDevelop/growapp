@@ -14,9 +14,9 @@ class OrderStatusResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
-    data['status'] = this.status;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
+    data['status'] = status;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -58,45 +58,45 @@ class OrderStatusData {
   factory OrderStatusData.fromJson(Map<String, dynamic> json) {
     return OrderStatusData(
       createdAt: json['created_at'],
-      createdBy: json['created_by'] != null ? json['created_by'] : null,
-      deletedAt: json['deleted_at'] != null ? json['deleted_at'] : null,
-      deletedBy: json['deleted_by'] != null ? json['deleted_by'] : null,
+      createdBy: json['created_by'],
+      deletedAt: json['deleted_at'],
+      deletedBy: json['deleted_by'],
       id: json['id'],
       name: json['name'],
       sequence: json['sequence'],
       status: json['status'],
-      subType: json['sub_type'] != null ? json['sub_type'] : null,
+      subType: json['sub_type'],
       type: json['type'],
       updatedAt: json['updated_at'],
-      updatedBy: json['updated_by'] != null ? json['updated_by'] : null,
+      updatedBy: json['updated_by'],
       value: json['value'],
     );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['created_at'] = this.createdAt;
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['sequence'] = this.sequence;
-    data['status'] = this.status;
-    data['type'] = this.type;
-    data['updated_at'] = this.updatedAt;
-    data['value'] = this.value;
-    if (this.createdBy != null) {
-      data['created_by'] = this.createdBy;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['created_at'] = createdAt;
+    data['id'] = id;
+    data['name'] = name;
+    data['sequence'] = sequence;
+    data['status'] = status;
+    data['type'] = type;
+    data['updated_at'] = updatedAt;
+    data['value'] = value;
+    if (createdBy != null) {
+      data['created_by'] = createdBy;
     }
-    if (this.deletedAt != null) {
-      data['deleted_at'] = this.deletedAt;
+    if (deletedAt != null) {
+      data['deleted_at'] = deletedAt;
     }
-    if (this.deletedBy != null) {
-      data['deleted_by'] = this.deletedBy;
+    if (deletedBy != null) {
+      data['deleted_by'] = deletedBy;
     }
-    if (this.subType != null) {
-      data['sub_type'] = this.subType;
+    if (subType != null) {
+      data['sub_type'] = subType;
     }
-    if (this.updatedBy != null) {
-      data['updated_by'] = this.updatedBy;
+    if (updatedBy != null) {
+      data['updated_by'] = updatedBy;
     }
     return data;
   }

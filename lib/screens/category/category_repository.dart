@@ -39,7 +39,7 @@ Future<List<CategoryData>> getCategoryList(
     appStore.setLoading(false);
   } catch (e) {
     appStore.setLoading(false);
-    throw e;
+    rethrow;
   }
   return list;
 }

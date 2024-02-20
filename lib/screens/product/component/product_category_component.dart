@@ -12,16 +12,17 @@ import '../view/product_category_screen.dart';
 class ProductCategoryComponent extends StatelessWidget {
   final List<CategoryData> productCategoryList;
 
-  ProductCategoryComponent({required this.productCategoryList});
+  const ProductCategoryComponent({super.key, required this.productCategoryList});
 
   @override
   Widget build(BuildContext context) {
-    if (productCategoryList.isEmpty)
+    if (productCategoryList.isEmpty) {
       return Container(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 32),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
         child: NoDataWidget(
-            title: locale.noCategoryFound, imageWidget: EmptyStateWidget()),
+            title: locale.noCategoryFound, imageWidget: const EmptyStateWidget()),
       );
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,7 +31,7 @@ class ProductCategoryComponent extends StatelessWidget {
           label: locale.category,
           list: productCategoryList,
           onTap: () {
-            ProductCategoryScreen().launch(context).then((value) {
+            const ProductCategoryScreen().launch(context).then((value) {
               setStatusBarColor(Colors.transparent);
             });
           },

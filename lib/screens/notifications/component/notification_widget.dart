@@ -9,7 +9,7 @@ import '../model/notification_model.dart';
 class NotificationWidget extends StatelessWidget {
   final NotificationData notificationData;
 
-  NotificationWidget({required this.notificationData});
+  const NotificationWidget({super.key, required this.notificationData});
 
   Color _getBGColor(BuildContext context) {
     if (notificationData.readAt != null) {
@@ -23,7 +23,7 @@ class NotificationWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: context.width(),
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
       decoration: boxDecorationDefault(
         color: _getBGColor(context),
         borderRadius: radius(0),
@@ -31,7 +31,7 @@ class NotificationWidget extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CachedImageWidget(url: ic_notification_user, height: 40),
+          const CachedImageWidget(url: ic_notification_user, height: 40),
           16.width,
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,

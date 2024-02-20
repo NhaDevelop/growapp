@@ -11,7 +11,7 @@ import '../../../utils/common_base.dart';
 class OrderPaymentInfoComponent extends StatelessWidget {
   final OrderListData orderData;
 
-  OrderPaymentInfoComponent({required this.orderData});
+  const OrderPaymentInfoComponent({super.key, required this.orderData});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class OrderPaymentInfoComponent extends StatelessWidget {
             label: locale.priceDetails, isShowAll: false, labelSize: 14),
         Container(
           decoration: boxDecorationDefault(color: context.cardColor),
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -102,7 +102,7 @@ class OrderPaymentInfoComponent extends StatelessWidget {
         Container(
           width: context.width(),
           decoration: boxDecorationDefault(color: context.cardColor),
-          padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
+          padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

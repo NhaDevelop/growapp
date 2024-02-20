@@ -12,8 +12,8 @@ class SlotItemComponent extends StatefulWidget {
 
   final VoidCallback? onTap;
 
-  SlotItemComponent(
-      {required this.timeSlot,
+  const SlotItemComponent(
+      {super.key, required this.timeSlot,
       required this.isSelected,
       this.onTap,
       required this.selectedHorizontalDate});
@@ -31,7 +31,7 @@ class _SlotItemComponentState extends State<SlotItemComponent> {
       },
       child: Container(
         width: context.width() / 3 - 35,
-        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
         alignment: Alignment.center,
         decoration: boxDecorationWithRoundedCorners(
           borderRadius: radius(),

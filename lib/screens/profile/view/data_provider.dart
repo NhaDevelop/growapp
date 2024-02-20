@@ -51,7 +51,7 @@ List<AboutModel> getAboutDataModel({required BuildContext context}) {
     title: locale.about,
     icon: ic_about,
     onTap: () {
-      AboutScreen().launch(context);
+      const AboutScreen().launch(context);
     },
   ));
 

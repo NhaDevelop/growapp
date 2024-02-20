@@ -36,10 +36,12 @@ class GoogleSignInAuthService {
 
       String firstName = '';
       String lastName = '';
-      if (currentUser.displayName.validate().split(' ').length >= 1)
+      if (currentUser.displayName.validate().split(' ').isNotEmpty) {
         firstName = currentUser.displayName.splitBefore(' ');
-      if (currentUser.displayName.validate().split(' ').length >= 2)
+      }
+      if (currentUser.displayName.validate().split(' ').length >= 2) {
         lastName = currentUser.displayName.splitAfter(' ');
+      }
 
       /// Create a temporary request to send
       UserData tempUserData = UserData()

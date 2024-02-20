@@ -25,7 +25,7 @@ Future<ProductDashboardResponse> productDashboard({int? userId}) async {
     return productDashboardResponseCached!;
   } catch (e) {
     appStore.setLoading(false);
-    throw e;
+    rethrow;
   }
 }
 
@@ -45,7 +45,7 @@ Future<List<CategoryData>> getProductCategory({int? categoryId, bool isStoreCach
     appStore.setLoading(false);
   } catch (e) {
     appStore.setLoading(false);
-    throw e;
+    rethrow;
   }
 
   return list;
@@ -70,7 +70,7 @@ Future<ProductDetailResponse> getProductDetail({required int productId, int? use
     return res;
   } catch (e) {
     appStore.setLoading(false);
-    throw e;
+    rethrow;
   }
 }
 
@@ -111,12 +111,12 @@ Future<List<ProductData>> getProductList({
   } catch (e) {
     appStore.setLoading(false);
 
-    throw e;
+    rethrow;
   }
 }
 
 Future<WishListResponse> addWishList(request) async {
-  return WishListResponse.fromJson(await handleResponse(await buildHttpResponse('${APIEndPoints.addToWishList}', method: HttpMethodType.POST, request: request)));
+  return WishListResponse.fromJson(await handleResponse(await buildHttpResponse(APIEndPoints.addToWishList, method: HttpMethodType.POST, request: request)));
 }
 
 Future<WishListResponse> removeWishList({int? wishListId, int? productId}) async {
@@ -127,7 +127,7 @@ Future<WishListResponse> removeWishList({int? wishListId, int? productId}) async
 }
 
 Future<ProductReviewLikeDislikeModel> addReviewLikeOrDislike(request) async {
-  return ProductReviewLikeDislikeModel.fromJson(await handleResponse(await buildHttpResponse('${APIEndPoints.reviewLike}', method: HttpMethodType.POST, request: request)));
+  return ProductReviewLikeDislikeModel.fromJson(await handleResponse(await buildHttpResponse(APIEndPoints.reviewLike, method: HttpMethodType.POST, request: request)));
 }
 
 Future<List<ProductData>> getWishList({
@@ -150,7 +150,7 @@ Future<List<ProductData>> getWishList({
     appStore.setLoading(false);
   } catch (e) {
     appStore.setLoading(false);
-    throw e;
+    rethrow;
   }
   return list;
 }
@@ -180,6 +180,6 @@ Future<List<ProductReviewDataModel>> productAllReviews({
     return list;
   } catch (e) {
     appStore.setLoading(false);
-    throw e;
+    rethrow;
   }
 }

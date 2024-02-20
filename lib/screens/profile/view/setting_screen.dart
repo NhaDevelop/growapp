@@ -15,6 +15,8 @@ import '../../dashboard/view/dashboard_screen.dart';
 import '../components/theme_selection_dialog.dart';
 
 class SettingScreen extends StatefulWidget {
+  const SettingScreen({super.key});
+
   @override
   State<SettingScreen> createState() => _SettingScreenState();
 }
@@ -31,7 +33,7 @@ class _SettingScreenState extends State<SettingScreen> {
         roundCornerShape: true,
       ),
       body: AnimatedScrollView(
-        padding: EdgeInsets.symmetric(vertical: 8),
+        padding: const EdgeInsets.symmetric(vertical: 8),
         listAnimationType: ListAnimationType.None,
         children: [
           SettingItemWidget(
@@ -40,7 +42,7 @@ class _SettingScreenState extends State<SettingScreen> {
             trailing: ic_arrow_right.iconImage(size: 16),
             splashColor: Colors.transparent,
             onTap: () {
-              AppLanguageScreen().launch(context).then((value) {
+              const AppLanguageScreen().launch(context).then((value) {
                 setState(() {});
               });
             },
@@ -52,7 +54,7 @@ class _SettingScreenState extends State<SettingScreen> {
             onTap: () async {
               await showInDialog(
                 context,
-                builder: (context) => ThemeSelectionDaiLog(),
+                builder: (context) => const ThemeSelectionDaiLog(),
                 contentPadding: EdgeInsets.zero,
               );
             },
@@ -66,7 +68,7 @@ class _SettingScreenState extends State<SettingScreen> {
               onTap: () {
                 doIfLoggedIn(context, () {
                   setState(() {});
-                  ChangePasswordScreen().launch(context);
+                  const ChangePasswordScreen().launch(context);
                 });
               },
             ),
@@ -91,7 +93,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
                         toast(value.message);
 
-                        push(DashboardScreen(),
+                        push(const DashboardScreen(),
                             isNewTask: true,
                             pageRouteAnimation: PageRouteAnimation.Fade);
                       }).catchError((e) {

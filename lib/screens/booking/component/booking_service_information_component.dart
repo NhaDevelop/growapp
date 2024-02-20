@@ -14,8 +14,8 @@ class BookingServiceInformationComponent extends StatelessWidget {
   final List<ProductsInfo>? productList;
   final String? bookingStatus;
 
-  BookingServiceInformationComponent(
-      {required this.serviceList, this.bookingStatus, this.productList});
+  const BookingServiceInformationComponent(
+      {super.key, required this.serviceList, this.bookingStatus, this.productList});
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +25,8 @@ class BookingServiceInformationComponent extends StatelessWidget {
         Text(locale.services, style: boldTextStyle(size: LABEL_TEXT_SIZE)),
         Container(
           decoration: boxDecorationDefault(color: context.cardColor),
-          padding: EdgeInsets.all(16),
-          margin: EdgeInsets.only(top: 12),
+          padding: const EdgeInsets.all(16),
+          margin: const EdgeInsets.only(top: 12),
           child: AnimatedWrap(
             runSpacing: 10,
             itemCount: serviceList.length,
@@ -68,7 +68,7 @@ class BookingServiceInformationComponent extends StatelessWidget {
 
               return Container(
                 decoration: boxDecorationDefault(color: context.cardColor),
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,

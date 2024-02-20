@@ -16,8 +16,8 @@ class ProductItemComponent extends StatefulWidget {
   final bool isFromWishList;
   final bool isFromProductDetail;
 
-  ProductItemComponent(
-      {required this.productListData,
+  const ProductItemComponent(
+      {super.key, required this.productListData,
       this.isFromWishList = false,
       this.isFromProductDetail = false});
 
@@ -99,7 +99,7 @@ class _ProductItemComponentState extends State<ProductItemComponent> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      padding: EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(8),
                       decoration: boxDecorationWithShadow(
                           boxShape: BoxShape.rectangle,
                           backgroundColor: context.cardColor,
@@ -110,7 +110,7 @@ class _ProductItemComponentState extends State<ProductItemComponent> {
                                   size: 12, color: context.primaryColor))),
                     ).visible(widget.productListData.stockQty == 0),
                     Container(
-                      padding: EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(8),
                       decoration: boxDecorationWithShadow(
                           boxShape: BoxShape.circle,
                           backgroundColor: context.cardColor),

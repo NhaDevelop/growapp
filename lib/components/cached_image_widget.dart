@@ -16,7 +16,7 @@ class CachedImageWidget extends StatelessWidget {
 
   final Widget? child;
 
-  CachedImageWidget({
+  const CachedImageWidget({super.key, 
     required this.url,
     required this.height,
     this.width,
@@ -48,7 +48,7 @@ class CachedImageWidget extends StatelessWidget {
               width: width,
               alignment: alignment ?? Alignment.center,
             ).cornerRadiusWithClipRRect(radius ?? (circle ? (height / 2) : 0)),
-            child ?? Offstage(),
+            child ?? const Offstage(),
           ],
         ),
       ).cornerRadiusWithClipRRect(radius ?? (circle ? (height / 2) : 0));
@@ -63,7 +63,7 @@ class CachedImageWidget extends StatelessWidget {
                 width: width,
                 alignment: alignment ?? Alignment.center,
               ).cornerRadiusWithClipRRect(radius ?? (circle ? (height / 2) : 0)),
-              child ?? Offstage(),
+              child ?? const Offstage(),
             ],
           );
         },
@@ -82,7 +82,7 @@ class CachedImageWidget extends StatelessWidget {
                 width: width,
                 alignment: alignment ?? Alignment.center,
               ).cornerRadiusWithClipRRect(radius ?? (circle ? (height / 2) : 0)),
-              child ?? Offstage(),
+              child ?? const Offstage(),
             ],
           );
         },
@@ -104,7 +104,7 @@ class CachedImageWidget extends StatelessWidget {
                 width: width,
                 alignment: alignment ?? Alignment.center,
               ).cornerRadiusWithClipRRect(radius ?? (circle ? (height / 2) : 0)),
-              child ?? Offstage(),
+              child ?? const Offstage(),
             ],
           );
         },

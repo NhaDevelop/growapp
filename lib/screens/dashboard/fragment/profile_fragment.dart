@@ -24,8 +24,10 @@ import '../../order/view/order_list_screen.dart';
 import '../../profile/view/data_provider.dart';
 
 class ProfileFragment extends StatefulWidget {
+  const ProfileFragment({super.key});
+
   @override
-  _ProfileFragmentState createState() => _ProfileFragmentState();
+  State<ProfileFragment> createState() => _ProfileFragmentState();
 }
 
 class _ProfileFragmentState extends State<ProfileFragment> {
@@ -71,7 +73,7 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                       children: [
                         Container(
                           alignment: Alignment.bottomCenter,
-                          margin: EdgeInsets.only(top: 100),
+                          margin: const EdgeInsets.only(top: 100),
                           width: 100,
                           height: 100,
                           decoration: boxDecorationWithRoundedCorners(
@@ -85,7 +87,7 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                               fit: BoxFit.cover,
                               width: 120,
                               radius: 150,
-                              child: DefaultUserImagePlaceholder(),
+                              child: const DefaultUserImagePlaceholder(),
                             );
                           }),
                         ),
@@ -94,17 +96,18 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                           right: -8,
                           child: Container(
                             alignment: Alignment.center,
-                            padding: EdgeInsets.all(6),
+                            padding: const EdgeInsets.all(6),
                             decoration: boxDecorationDefault(
                               shape: BoxShape.circle,
                               color: primaryColor,
                               border: Border.all(
                                   color: context.cardColor, width: 2),
                             ),
-                            child: Icon(Icons.edit, color: white, size: 18),
+                            child:
+                                const Icon(Icons.edit, color: white, size: 18),
                           ).onTap(
                             () {
-                              EditProfileScreen().launch(context,
+                              const EditProfileScreen().launch(context,
                                   pageRouteAnimation: PageRouteAnimation.Fade);
                             },
                             highlightColor: Colors.transparent,
@@ -114,7 +117,7 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                       ],
                     ),
                   )
-                : SizedBox(height: 120, width: 100),
+                : const SizedBox(height: 120, width: 100),
             subWidget: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -145,10 +148,10 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                       leading: ic_order.iconImage(fit: BoxFit.cover, size: 16),
                       decoration: boxDecorationWithRoundedCorners(
                           backgroundColor: context.cardColor),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 12),
                       onTap: () {
-                        OrderListScreen().launch(context,
+                        const OrderListScreen().launch(context,
                             pageRouteAnimation: PageRouteAnimation.Fade);
                       },
                       hoverColor: Colors.transparent,
@@ -164,10 +167,11 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                           ic_location.iconImage(fit: BoxFit.cover, size: 16),
                       decoration: boxDecorationWithRoundedCorners(
                           backgroundColor: context.cardColor),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 12),
                       onTap: () {
-                        SelectAddressScreen(isFromProfile: true).launch(context,
+                        const SelectAddressScreen(isFromProfile: true).launch(
+                            context,
                             pageRouteAnimation: PageRouteAnimation.Fade);
                       },
                       hoverColor: Colors.transparent,
@@ -185,10 +189,10 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                           ic_setting.iconImage(fit: BoxFit.cover, size: 16),
                       decoration: boxDecorationWithRoundedCorners(
                           backgroundColor: context.cardColor),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 12),
                       onTap: () {
-                        SettingScreen().launch(context);
+                        const SettingScreen().launch(context);
                       },
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
@@ -203,8 +207,8 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                       leading: ic_about.iconImage(fit: BoxFit.cover, size: 18),
                       decoration: boxDecorationWithRoundedCorners(
                           backgroundColor: context.cardColor),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 12),
                       onTap: () {
                         AboutDetailScreen(
                                 aboutModel: aboutAppList,
@@ -224,8 +228,8 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                       leading: ic_help.iconImage(fit: BoxFit.cover, size: 16),
                       decoration: boxDecorationWithRoundedCorners(
                           backgroundColor: context.cardColor),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 12),
                       onTap: () {
                         AboutDetailScreen(
                                 aboutModel: helpList, title: locale.help)
@@ -243,11 +247,11 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                       leading: ic_logout.iconImage(fit: BoxFit.cover, size: 14),
                       decoration: boxDecorationWithRoundedCorners(
                           backgroundColor: context.cardColor),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 12),
                       onTap: () {
                         doIfLoggedIn(context, () {
-                          DashboardScreen(pageIndex: 3)
+                          const DashboardScreen(pageIndex: 3)
                               .launch(context, isNewTask: true);
                         });
                       },
@@ -262,15 +266,15 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                       leading: ic_logout.iconImage(fit: BoxFit.cover, size: 14),
                       decoration: boxDecorationWithRoundedCorners(
                           backgroundColor: context.cardColor),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 12),
                       onTap: () async {
                         bool? res = await showInDialog(
                           context,
                           contentPadding: EdgeInsets.zero,
                           transitionDuration: 100.milliseconds,
                           builder: (p0) {
-                            return LogoutConfirmationDialog();
+                            return const LogoutConfirmationDialog();
                           },
                         );
 
@@ -298,9 +302,11 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                           await appStore
                               .setBranchContactNumber(branchContactNumber);
 
-                          DashboardScreen().launch(context,
-                              isNewTask: true,
-                              pageRouteAnimation: PageRouteAnimation.Fade);
+                          if (context.mounted) {
+                            const DashboardScreen().launch(context,
+                                isNewTask: true,
+                                pageRouteAnimation: PageRouteAnimation.Fade);
+                          }
                         }
                       },
                       hoverColor: Colors.transparent,
@@ -322,7 +328,8 @@ class _ProfileFragmentState extends State<ProfileFragment> {
             ),
           ),
           Observer(
-              builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+              builder: (context) =>
+                  const LoaderWidget().visible(appStore.isLoading)),
         ],
       ),
     );

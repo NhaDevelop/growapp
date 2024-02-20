@@ -7,7 +7,7 @@ class LoaderWidget extends StatelessWidget {
   final double? width;
   final Color? color;
 
-  LoaderWidget({this.height, this.width, this.color});
+  const LoaderWidget({super.key, this.height, this.width, this.color});
 
   @override
   Widget build(BuildContext context) {

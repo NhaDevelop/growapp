@@ -36,10 +36,11 @@ class ProductDetailScreen extends StatefulWidget {
   final ProductData productData;
   final bool isFromWishList;
 
-  ProductDetailScreen({required this.productData, this.isFromWishList = false});
+  const ProductDetailScreen(
+      {super.key, required this.productData, this.isFromWishList = false});
 
   @override
-  _ProductDetailScreenState createState() => _ProductDetailScreenState();
+  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
 }
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
@@ -112,7 +113,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   Widget actionsWidget({required Widget widget, VoidCallback? onTap}) {
     return Container(
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       decoration: boxDecorationWithShadow(
           boxShape: BoxShape.circle, backgroundColor: context.cardColor),
       child: widget,
@@ -142,7 +143,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
       init(flag: true);
 
-      CartScreen().launch(context);
+      const CartScreen().launch(context);
     }).catchError((error) {
       appStore.setLoading(false);
       toast(error.toString());
@@ -151,21 +152,21 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (_) {
         finish(context, productDetailRes.data!.inWishlist.validate());
-        return Future(() => false);
       },
       child: AppScaffold(
         showAppBar: false,
         body: SnapHelperWidget<ProductDetailResponse>(
           future: future,
-          loadingWidget: LoaderWidget(),
+          loadingWidget: const LoaderWidget(),
           errorBuilder: (error) {
             return NoDataWidget(
               title: error,
               retryText: locale.reload,
-              imageWidget: ErrorStateWidget(),
+              imageWidget: const ErrorStateWidget(),
               onRetry: () {
                 appStore.setLoading(true);
 
@@ -190,7 +191,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               children: [
                 AnimatedScrollView(
                   listAnimationType: ListAnimationType.FadeIn,
-                  padding: EdgeInsets.only(bottom: 85),
+                  padding: const EdgeInsets.only(bottom: 85),
                   children: [
                     ProductSliderComponent(
                         productGallaryData:
@@ -199,7 +200,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     ProductInfoComponent(productData: snap.data!),
                     ProductPacketComponent(productData: snap.data!),
                     if (productStore.selectedVariationData.productStockQty != 0)
-                      ProductQuantityComponent(),
+                      const ProductQuantityComponent(),
                     16.height,
                     ProductDescriptionComponent(productData: snap.data!),
                     20.height,
@@ -221,6 +222,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   top: context.statusBarHeight + 8,
                   left: 16,
                   child: Container(
+                    decoration: const BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.white),
                     child: BackWidget(
                       iconColor: context.iconColor,
                       onPressed: () {
@@ -229,8 +232,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         return Future(() => false);
                       },
                     ),
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.white),
                   ).scale(scale: 0.86),
                 ),
                 Positioned(
@@ -243,7 +244,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             size: 25, color: textSecondaryColorGlobal),
                         onTap: () {
                           doIfLoggedIn(context, () async {
-                            ProductWishListScreen(isFromProductDetail: true)
+                            const ProductWishListScreen(
+                                    isFromProductDetail: true)
                                 .launch(context);
                           });
                         },
@@ -320,7 +322,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               doIfLoggedIn(context, () async {
                                 if (productStore.selectedVariationData.inCart ==
                                     IN_CART) {
-                                  CartScreen().launch(context);
+                                  const CartScreen().launch(context);
                                 } else {
                                   /// Add To Cart Api
                                   await addProductToCart();

@@ -9,8 +9,10 @@ import 'auth/view/sign_in_screen.dart';
 import 'auth/view/sign_up_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
+  const WelcomeScreen({super.key});
+
   @override
-  _WelcomeScreenState createState() => _WelcomeScreenState();
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
@@ -47,14 +49,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   decoration: boxDecorationWithRoundedCorners(
                     backgroundColor: primaryColor,
                     borderRadius: radiusOnly(bottomLeft: 20, bottomRight: 20),
-                    decorationImage: DecorationImage(
+                    decorationImage: const DecorationImage(
                         image: AssetImage(bg_pattern), fit: BoxFit.cover),
                   ),
                 ),
                 Positioned(
                   bottom: -70,
                   child: Container(
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     decoration: boxDecorationDefault(shape: BoxShape.circle),
                     child: Image.asset(app_logo,
                         height: 134, width: 134, fit: BoxFit.cover),
@@ -81,23 +83,23 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       AppButton(
-                        child: Text(locale.signIn, style: boldTextStyle()),
                         elevation: 0,
                         width: 150,
                         onTap: () async {
-                          SignInScreen().launch(context);
+                          const SignInScreen().launch(context);
                         },
+                        child: Text(locale.signIn, style: boldTextStyle()),
                       ),
                       16.width,
                       AppButton(
-                        child: Text(locale.createAccount,
-                            style: boldTextStyle(color: white)),
                         elevation: 0,
                         color: secondaryColor,
                         width: 150,
                         onTap: () async {
-                          SignUpScreen().launch(context);
+                          const SignUpScreen().launch(context);
                         },
+                        child: Text(locale.createAccount,
+                            style: boldTextStyle(color: white)),
                       ),
                     ],
                   ),

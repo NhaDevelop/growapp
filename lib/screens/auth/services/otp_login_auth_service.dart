@@ -54,8 +54,9 @@ class OtpLoginAuthService {
 
                     /// Register
 
-                    if (loginResponse.userData != null)
+                    if (loginResponse.userData != null) {
                       await saveUserData(loginResponse.userData!);
+                    }
 
                     if (loginResponse.userData!.status == 0) {
                       toast(locale.pleaseContactWithAdmin);
@@ -70,9 +71,11 @@ class OtpLoginAuthService {
                         toast(e.toString());
                       });
 
-                      DashboardScreen().launch(context,
-                          isNewTask: true,
-                          pageRouteAnimation: PageRouteAnimation.Fade);
+                      if (context.mounted) {
+                        const DashboardScreen().launch(context,
+                            isNewTask: true,
+                            pageRouteAnimation: PageRouteAnimation.Fade);
+                      }
                     }
                   } else {
                     ///Not Register

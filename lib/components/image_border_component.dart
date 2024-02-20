@@ -9,7 +9,7 @@ class ImageBorder extends StatelessWidget {
   final double height;
   final double? width;
 
-  ImageBorder({required this.src, required this.height, this.width});
+  const ImageBorder({super.key, required this.src, required this.height, this.width});
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +25,9 @@ class ImageBorder extends StatelessWidget {
         width: width,
         fit: BoxFit.cover,
       ).onTap(() {
-        if (src.isNotEmpty)
+        if (src.isNotEmpty) {
           ZoomImageScreen(galleryImages: [src], index: 0).launch(context);
+        }
       }),
     );
   }

@@ -29,14 +29,14 @@ class ReviewData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['employee_id'] = this.staffId;
-    data['user_id'] = this.userId;
-    data['review_msg'] = this.reviewMsg;
-    data['rating'] = this.rating;
-    data['username'] = this.username;
-    data['created_at'] = this.createdAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['employee_id'] = staffId;
+    data['user_id'] = userId;
+    data['review_msg'] = reviewMsg;
+    data['rating'] = rating;
+    data['username'] = username;
+    data['created_at'] = createdAt;
     return data;
   }
 }

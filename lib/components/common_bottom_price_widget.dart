@@ -12,13 +12,13 @@ class CommonBottomPriceWidget extends StatelessWidget {
   final String? buttonText;
   final Function? onTap;
 
-  CommonBottomPriceWidget(
-      {this.title, this.price, this.buttonText, this.onTap});
+  const CommonBottomPriceWidget(
+      {super.key, this.title, this.price, this.buttonText, this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       decoration: boxDecorationWithRoundedCorners(
           backgroundColor: secondaryColor,
           borderRadius:
@@ -46,7 +46,7 @@ class CommonBottomPriceWidget extends StatelessWidget {
                             style: primaryTextStyle(color: Colors.white70),
                           ),
                         ).expand()
-                      : Offstage(),
+                      : const Offstage(),
                 ],
               ),
             ],
@@ -54,10 +54,10 @@ class CommonBottomPriceWidget extends StatelessWidget {
           16.width,
           AppButton(
             color: Colors.white,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            onTap: onTap,
             child: Text(buttonText.validate(),
                 style: boldTextStyle(color: Colors.black)),
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            onTap: onTap,
           ),
         ],
       ),

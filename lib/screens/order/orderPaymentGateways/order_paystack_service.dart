@@ -21,9 +21,9 @@ class OrderPayStackService {
     required Function(dynamic) onComplete,
   }) {
     // paystackPlugin.initialize(publicKey: paystackPaymentPublicKey);
-    this.ctx = context;
-    this.paystackPublicKey = paystackPaymentPublicKey;
-    this.userEmail = productStore.customerEmail;
+    ctx = context;
+    paystackPublicKey = paystackPaymentPublicKey;
+    userEmail = productStore.customerEmail;
     this.totalAmount = totalAmount;
     this.onComplete = onComplete;
   }

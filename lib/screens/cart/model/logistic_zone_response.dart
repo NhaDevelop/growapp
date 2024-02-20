@@ -14,9 +14,9 @@ class LogisticZoneResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
-    data['status'] = this.status;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
+    data['status'] = status;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -58,35 +58,35 @@ class LogisticZoneData {
       cities: json['cities'] != null ? (json['cities'] as List).map((i) => CityData.fromJson(i)).toList() : null,
       countryId: json['country_id'],
       expressDeliveryCharge: json['express_delivery_charge'],
-      expressDeliveryTime: json['express_delivery_time'] != null ? json['express_delivery_time'] : null,
+      expressDeliveryTime: json['express_delivery_time'],
       id: json['id'],
       logisticId: json['logistic_id'],
       logisticName: json['logistic_name'],
       name: json['name'],
       standardDeliveryCharge: json['standard_delivery_charge'],
-      standardDeliveryTime: json['standard_delivery_time'] != null ? json['standard_delivery_time'] : null,
+      standardDeliveryTime: json['standard_delivery_time'],
       stateId: json['state_id'],
     );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['country_id'] = this.countryId;
-    data['express_delivery_charge'] = this.expressDeliveryCharge;
-    data['id'] = this.id;
-    data['logistic_id'] = this.logisticId;
-    data['logistic_name'] = this.logisticName;
-    data['name'] = this.name;
-    data['standard_delivery_charge'] = this.standardDeliveryCharge;
-    data['state_id'] = this.stateId;
-    if (this.cities != null) {
-      data['cities'] = this.cities!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['country_id'] = countryId;
+    data['express_delivery_charge'] = expressDeliveryCharge;
+    data['id'] = id;
+    data['logistic_id'] = logisticId;
+    data['logistic_name'] = logisticName;
+    data['name'] = name;
+    data['standard_delivery_charge'] = standardDeliveryCharge;
+    data['state_id'] = stateId;
+    if (cities != null) {
+      data['cities'] = cities!.map((v) => v.toJson()).toList();
     }
-    if (this.expressDeliveryTime != null) {
-      data['express_delivery_time'] = this.expressDeliveryTime;
+    if (expressDeliveryTime != null) {
+      data['express_delivery_time'] = expressDeliveryTime;
     }
-    if (this.standardDeliveryTime != null) {
-      data['standard_delivery_time'] = this.standardDeliveryTime;
+    if (standardDeliveryTime != null) {
+      data['standard_delivery_time'] = standardDeliveryTime;
     }
     return data;
   }
@@ -110,41 +110,41 @@ class CityData {
   factory CityData.fromJson(Map<String, dynamic> json) {
     return CityData(
       createdAt: json['created_at'],
-      createdBy: json['created_by'] != null ? json['created_by'] : null,
-      deletedAt: json['deleted_at'] != null ? json['deleted_at'] : null,
-      deletedBy: json['deleted_by'] != null ? json['deleted_by'] : null,
+      createdBy: json['created_by'],
+      deletedAt: json['deleted_at'],
+      deletedBy: json['deleted_by'],
       id: json['id'],
       name: json['name'],
       pivot: json['pivot'] != null ? Pivot.fromJson(json['pivot']) : null,
       stateId: json['state_id'],
       status: json['status'],
       updatedAt: json['updated_at'],
-      updatedBy: json['updated_by'] != null ? json['updated_by'] : null,
+      updatedBy: json['updated_by'],
     );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['created_at'] = this.createdAt;
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['state_id'] = this.stateId;
-    data['status'] = this.status;
-    data['updated_at'] = this.updatedAt;
-    if (this.createdBy != null) {
-      data['created_by'] = this.createdBy;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['created_at'] = createdAt;
+    data['id'] = id;
+    data['name'] = name;
+    data['state_id'] = stateId;
+    data['status'] = status;
+    data['updated_at'] = updatedAt;
+    if (createdBy != null) {
+      data['created_by'] = createdBy;
     }
-    if (this.deletedAt != null) {
-      data['deleted_at'] = this.deletedAt;
+    if (deletedAt != null) {
+      data['deleted_at'] = deletedAt;
     }
-    if (this.deletedBy != null) {
-      data['deleted_by'] = this.deletedBy;
+    if (deletedBy != null) {
+      data['deleted_by'] = deletedBy;
     }
-    if (this.pivot != null) {
-      data['pivot'] = this.pivot;
+    if (pivot != null) {
+      data['pivot'] = pivot;
     }
-    if (this.updatedBy != null) {
-      data['updated_by'] = this.updatedBy;
+    if (updatedBy != null) {
+      data['updated_by'] = updatedBy;
     }
     return data;
   }
@@ -164,9 +164,9 @@ class Pivot {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['city_id'] = this.cityId;
-    data['logistic_zone_id'] = this.logisticZoneId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['city_id'] = cityId;
+    data['logistic_zone_id'] = logisticZoneId;
     return data;
   }
 }

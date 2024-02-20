@@ -5,6 +5,7 @@ import '../utils/constants.dart';
 
 part 'user_store.g.dart';
 
+// ignore: library_private_types_in_public_api
 class UserStore = _UserStore with _$UserStore;
 
 abstract class _UserStore with Store {
@@ -65,7 +66,9 @@ abstract class _UserStore with Store {
   @action
   Future<void> setUserProfile(String val, {bool isInitializing = false}) async {
     userProfileImage = val;
-    if (!isInitializing) await setValue(SharedPreferenceConst.PROFILE_IMAGE, val);
+    if (!isInitializing) {
+      await setValue(SharedPreferenceConst.PROFILE_IMAGE, val);
+    }
   }
 
   @action
@@ -105,9 +108,12 @@ abstract class _UserStore with Store {
   }
 
   @action
-  Future<void> setContactNumber(String val, {bool isInitializing = false}) async {
+  Future<void> setContactNumber(String val,
+      {bool isInitializing = false}) async {
     userContactNumber = val;
-    if (!isInitializing) await setValue(SharedPreferenceConst.CONTACT_NUMBER, val);
+    if (!isInitializing) {
+      await setValue(SharedPreferenceConst.CONTACT_NUMBER, val);
+    }
   }
 
   @action

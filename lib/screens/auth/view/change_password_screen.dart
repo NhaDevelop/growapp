@@ -14,6 +14,8 @@ import '../auth_repository.dart';
 import '../component/successfully_change_password_dialog.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
+  const ChangePasswordScreen({super.key});
+
   @override
   ChangePasswordScreenState createState() => ChangePasswordScreenState();
 }
@@ -66,14 +68,14 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
         userStore.setToken(res.data!.apiToken.validate());
         await setValue(
             SharedPreferenceConst.USER_PASSWORD, newPasswordCont.text);
-        showDialog(
-          context: context,
-          useSafeArea: false,
-          builder: (BuildContext context) => SuccessfullyChangePasswordDialog(),
-        );
       }).catchError((e) {
         toast(e.toString(), print: true);
-      });
+      }).then((value) => showDialog(
+            context: context,
+            useSafeArea: false,
+            builder: (BuildContext context) =>
+                const SuccessfullyChangePasswordDialog(),
+          ));
       appStore.setLoading(false);
     }
   }
@@ -89,7 +91,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
         roundCornerShape: true,
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Form(
           key: formKey,
           autovalidateMode: AutovalidateMode.onUserInteraction,

@@ -111,7 +111,7 @@ Future<ConfigurationResponse> getAppConfigurations(
     return appConfigurationResponseCached!;
   } catch (e) {
     log(e);
-    throw e;
+    rethrow;
   }
 }
 //endregion

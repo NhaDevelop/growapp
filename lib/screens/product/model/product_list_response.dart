@@ -20,9 +20,9 @@ class ProductListResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
-    data['status'] = this.status;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
+    data['status'] = status;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -143,8 +143,8 @@ class ProductData {
           : null,
       createdAt: json['created_at'],
       createdBy: json['created_by'],
-      deletedAt: json['deleted_at'] != null ? json['deleted_at'] : null,
-      deletedBy: json['deleted_by'] != null ? json['deleted_by'] : null,
+      deletedAt: json['deleted_at'],
+      deletedBy: json['deleted_by'],
       description: json['description'],
       discountEndDate: json['discount_end_date'],
       discountStartDate: json['discount_start_date'],
@@ -186,7 +186,7 @@ class ProductData {
               .toList()
           : null,
       productGallaryData: json['product_gallary'] != null
-          ? new List<String>.from(json['product_gallary'])
+          ? List<String>.from(json['product_gallary'])
           : null,
       productReview: json['product_review'] != null
           ? (json['product_review'] as List)
@@ -197,61 +197,61 @@ class ProductData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['brand_id'] = this.brandId;
-    data['brand_name'] = this.brandName;
-    data['created_at'] = this.createdAt;
-    data['created_by'] = this.createdBy;
-    data['description'] = this.description;
-    data['discount_end_date'] = this.discountEndDate;
-    data['discount_start_date'] = this.discountStartDate;
-    data['discount_type'] = this.discountType;
-    data['discount_value'] = this.discountValue;
-    data['id'] = this.id;
-    data['in_wishlist'] = this.inWishlist;
-    data['max_price'] = this.maxPrice;
-    data['min_price'] = this.minPrice;
-    data['name'] = this.name;
-    data['product_image'] = this.productImage;
-    data['sell_target'] = this.sellTarget;
-    data['short_description'] = this.shortDescription;
-    data['slug'] = this.slug;
-    data['stock_qty'] = this.stockQty;
-    data['unit_id'] = this.unitId;
-    data['unit_name'] = this.unitName;
-    data['updated_at'] = this.updatedAt;
-    data['updated_by'] = this.updatedBy;
-    data['tax_include_min_price'] = this.taxIncludeMinPrice;
-    data['tax_include_max_price'] = this.taxIncludeMaxPrice;
-    data['min_discounted_product_amount'] = this.minDiscountedProductAmount;
-    data['max_discounted_product_amount'] = this.maxDiscountedProductAmount;
-    data['is_published'] = this.isPublished;
-    data['min_purchase_qty'] = this.minPurchaseQty;
-    data['max_purchase_qty'] = this.maxPurchaseQty;
-    data['has_variation'] = this.hasVariation;
-    data['has_warranty'] = this.hasWarranty;
-    data['deleted_at'] = this.deletedAt;
-    data['deleted_by'] = this.deletedBy;
-    data['status'] = this.status;
-    data['rating_count'] = this.ratingCount;
-    data['rating'] = this.rating;
-    data['user_id'] = this.userId;
-    data['product_id'] = this.productId;
-    data['product_name'] = this.productName;
-    data['product_description'] = this.productDescription;
-    if (this.category != null) {
-      data['category'] = this.category!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['brand_id'] = brandId;
+    data['brand_name'] = brandName;
+    data['created_at'] = createdAt;
+    data['created_by'] = createdBy;
+    data['description'] = description;
+    data['discount_end_date'] = discountEndDate;
+    data['discount_start_date'] = discountStartDate;
+    data['discount_type'] = discountType;
+    data['discount_value'] = discountValue;
+    data['id'] = id;
+    data['in_wishlist'] = inWishlist;
+    data['max_price'] = maxPrice;
+    data['min_price'] = minPrice;
+    data['name'] = name;
+    data['product_image'] = productImage;
+    data['sell_target'] = sellTarget;
+    data['short_description'] = shortDescription;
+    data['slug'] = slug;
+    data['stock_qty'] = stockQty;
+    data['unit_id'] = unitId;
+    data['unit_name'] = unitName;
+    data['updated_at'] = updatedAt;
+    data['updated_by'] = updatedBy;
+    data['tax_include_min_price'] = taxIncludeMinPrice;
+    data['tax_include_max_price'] = taxIncludeMaxPrice;
+    data['min_discounted_product_amount'] = minDiscountedProductAmount;
+    data['max_discounted_product_amount'] = maxDiscountedProductAmount;
+    data['is_published'] = isPublished;
+    data['min_purchase_qty'] = minPurchaseQty;
+    data['max_purchase_qty'] = maxPurchaseQty;
+    data['has_variation'] = hasVariation;
+    data['has_warranty'] = hasWarranty;
+    data['deleted_at'] = deletedAt;
+    data['deleted_by'] = deletedBy;
+    data['status'] = status;
+    data['rating_count'] = ratingCount;
+    data['rating'] = rating;
+    data['user_id'] = userId;
+    data['product_id'] = productId;
+    data['product_name'] = productName;
+    data['product_description'] = productDescription;
+    if (category != null) {
+      data['category'] = category!.map((v) => v.toJson()).toList();
     }
-    if (this.variationData != null) {
+    if (variationData != null) {
       data['variation_data'] =
-          this.variationData!.map((v) => v.toJson()).toList();
+          variationData!.map((v) => v.toJson()).toList();
     }
-    if (this.productGallaryData != null) {
-      data['product_gallary'] = this.productGallaryData;
+    if (productGallaryData != null) {
+      data['product_gallary'] = productGallaryData;
     }
-    if (this.productReview != null) {
+    if (productReview != null) {
       data['product_review'] =
-          this.productReview!.map((v) => v.toJson()).toList();
+          productReview!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -307,19 +307,19 @@ class VariationData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['code'] = this.code;
-    data['discounted_product_price'] = this.discountedProductPrice;
-    data['id'] = this.id;
-    data['product_amount'] = this.productAmount;
-    data['sku'] = this.sku;
-    data['tax_include_product_price'] = this.taxIncludeProductPrice;
-    data['variation_key'] = this.variationKey;
-    data['in_cart'] = this.inCart;
-    data['location_id'] = this.locationId;
-    data['product_stock_qty'] = this.productStockQty;
-    if (this.combination != null) {
-      data['combination'] = this.combination!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['code'] = code;
+    data['discounted_product_price'] = discountedProductPrice;
+    data['id'] = id;
+    data['product_amount'] = productAmount;
+    data['sku'] = sku;
+    data['tax_include_product_price'] = taxIncludeProductPrice;
+    data['variation_key'] = variationKey;
+    data['in_cart'] = inCart;
+    data['location_id'] = locationId;
+    data['product_stock_qty'] = productStockQty;
+    if (combination != null) {
+      data['combination'] = combination!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -347,11 +347,11 @@ class ProductCombinationData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['product_variation_name'] = this.productVariationName;
-    data['product_variation_type'] = this.productVariationType;
-    data['product_variation_value'] = this.productVariationValue;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['product_variation_name'] = productVariationName;
+    data['product_variation_type'] = productVariationType;
+    data['product_variation_value'] = productVariationValue;
     return data;
   }
 }

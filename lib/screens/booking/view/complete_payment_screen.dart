@@ -25,7 +25,7 @@ import '../model/booking_list_response.dart';
 class CompletePaymentScreen extends StatefulWidget {
   final BookingListData booking;
 
-  CompletePaymentScreen(this.booking);
+  const CompletePaymentScreen(this.booking, {super.key});
 
   @override
   CompletePaymentScreenState createState() => CompletePaymentScreenState();
@@ -205,7 +205,7 @@ class CompletePaymentScreenState extends State<CompletePaymentScreen> {
       context: context,
       useSafeArea: false,
       builder: (BuildContext context) => CommonAppDialog(
-        title: '${locale.paymentSuccessful}',
+        title: locale.paymentSuccessful,
         subTitle:
             '${locale.yourPaymentIsPaidSuccessfullyMessage} $paymentMethod',
         buttonText: locale.goToBookingDetail,
@@ -242,7 +242,7 @@ class CompletePaymentScreenState extends State<CompletePaymentScreen> {
         fit: StackFit.expand,
         children: [
           SingleChildScrollView(
-            padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 120),
+            padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 120),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -257,11 +257,11 @@ class CompletePaymentScreenState extends State<CompletePaymentScreen> {
                       decoration: boxDecorationWithRoundedCorners(
                           borderRadius: radius(),
                           backgroundColor: context.cardColor),
-                      margin: EdgeInsets.only(bottom: 16),
+                      margin: const EdgeInsets.only(bottom: 16),
                       child: SettingItemWidget(
                         title: payments[index].paymentMethod.validate(),
                         titleTextStyle: boldTextStyle(size: 14),
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                             left: 16, bottom: 10, top: 10, right: 10),
                         leading: CachedImageWidget(
                             url: payments[index].icon.validate(),

@@ -10,11 +10,11 @@ import '../../../components/view_all_label_component.dart';
 class BestSellerProductComponent extends StatelessWidget {
   final List<ProductData> bestSellerProductList;
 
-  BestSellerProductComponent({required this.bestSellerProductList});
+  const BestSellerProductComponent({super.key, required this.bestSellerProductList});
 
   @override
   Widget build(BuildContext context) {
-    if (bestSellerProductList.isEmpty) return Offstage();
+    if (bestSellerProductList.isEmpty) return const Offstage();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

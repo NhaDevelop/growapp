@@ -12,10 +12,10 @@ import '../../category/model/category_response.dart';
 class CategoryComponent extends StatefulWidget {
   final List<CategoryData>? categoryList;
 
-  CategoryComponent({this.categoryList});
+  const CategoryComponent({super.key, this.categoryList});
 
   @override
-  _CategoryComponentState createState() => _CategoryComponentState();
+  State<CategoryComponent> createState() => _CategoryComponentState();
 }
 
 class _CategoryComponentState extends State<CategoryComponent> {
@@ -36,7 +36,7 @@ class _CategoryComponentState extends State<CategoryComponent> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.categoryList.validate().isEmpty) return Offstage();
+    if (widget.categoryList.validate().isEmpty) return const Offstage();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,7 +45,7 @@ class _CategoryComponentState extends State<CategoryComponent> {
           label: locale.category,
           list: widget.categoryList,
           onTap: () {
-            CategoryScreen().launch(context).then((value) {
+            const CategoryScreen().launch(context).then((value) {
               setStatusBarColor(Colors.transparent);
             });
           },

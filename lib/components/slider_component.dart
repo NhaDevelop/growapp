@@ -8,10 +8,10 @@ import '../screens/branch/model/branch_detail_response.dart';
 class SliderComponent extends StatefulWidget {
   final BranchDetailResponse branchData;
 
-  SliderComponent({required this.branchData});
+  const SliderComponent({super.key, required this.branchData});
 
   @override
-  _SliderComponentState createState() => _SliderComponentState();
+  State<SliderComponent> createState() => _SliderComponentState();
 }
 
 class _SliderComponentState extends State<SliderComponent> {
@@ -39,7 +39,7 @@ class _SliderComponentState extends State<SliderComponent> {
           color: context.scaffoldBackgroundColor,
           borderRadius: BorderRadius.circular(0)),
       child: AnimatedScrollView(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         listAnimationType: ListAnimationType.None,
         children: [
           Column(

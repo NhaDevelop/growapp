@@ -25,11 +25,14 @@ class ViewAllServiceScreen extends StatefulWidget {
   final String search;
   final int? categoryId;
 
-  ViewAllServiceScreen(
-      {required this.serviceTitle, this.categoryId, this.search = ""});
+  const ViewAllServiceScreen(
+      {super.key,
+      required this.serviceTitle,
+      this.categoryId,
+      this.search = ""});
 
   @override
-  _ViewAllServiceScreenState createState() => _ViewAllServiceScreenState();
+  State<ViewAllServiceScreen> createState() => _ViewAllServiceScreenState();
 }
 
 class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
@@ -157,14 +160,14 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
                 center: true,
                 color: context.primaryColor,
                 textColor: white,
-                backWidget: BackWidget(),
+                backWidget: const BackWidget(),
               )
                   .cornerRadiusWithClipRRectOnly(
                       bottomLeft: 20, bottomRight: 20)
                   .paddingTop(10),
             ),
             mainWidgetHeight: 135,
-            onSwipeRefresh: () {
+            onSwipeRefresh: () async {
               page = 1;
 
               appStore.setLoading(true);
@@ -172,8 +175,6 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
               bookingRequestStore
                   .setSelectedServiceListInRequest(selectedService);
               fetchAllServiceData(isClear: true, flag: true);
-
-              return Future.value(false);
             },
             onNextPage: () {
               if (!isLastPage) {
@@ -184,16 +185,16 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
               }
             },
             subWidget: AnimatedScrollView(
-              padding: EdgeInsets.only(top: 25, bottom: 80),
+              padding: const EdgeInsets.only(top: 25, bottom: 80),
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 /// Subcategory List Api
                 if (widget.categoryId != null)
                   SnapHelperWidget<List<CategoryData>>(
                     future: futureCategory,
-                    loadingWidget: ViewAllServiceShimmer(),
+                    loadingWidget: const ViewAllServiceShimmer(),
                     onSuccess: (list) {
-                      if (list.isEmpty) return Offstage();
+                      if (list.isEmpty) return const Offstage();
 
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -249,10 +250,10 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
                                       top: 0,
                                       right: 0,
                                       child: Container(
-                                        padding: EdgeInsets.all(2),
+                                        padding: const EdgeInsets.all(2),
                                         decoration: boxDecorationDefault(
                                             color: context.primaryColor),
-                                        child: Icon(Icons.done,
+                                        child: const Icon(Icons.done,
                                             size: 16, color: Colors.white),
                                       ).cornerRadiusWithClipRRect(16).visible(
                                           selectedSubCategoryIndex == i),
@@ -270,12 +271,12 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
                 /// Service List Api
                 SnapHelperWidget<List<ServiceListData>>(
                   future: futureService,
-                  loadingWidget: Offstage(),
+                  loadingWidget: const Offstage(),
                   errorBuilder: (error) {
                     return NoDataWidget(
                       title: error,
                       retryText: locale.reload,
-                      imageWidget: ErrorStateWidget(),
+                      imageWidget: const ErrorStateWidget(),
                       onRetry: () {
                         page = 1;
                         appStore.setLoading(true);
@@ -295,10 +296,10 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
                           itemCount: servicesInfoListData.length,
                           shrinkWrap: true,
                           padding: EdgeInsets.zero,
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           emptyWidget: NoDataWidget(
                             title: locale.noServicesFound,
-                            imageWidget: EmptyStateWidget(),
+                            imageWidget: const EmptyStateWidget(),
                           ).paddingTop(
                               searchServiceCont.text.isNotEmpty ? 0 : 120),
                           itemBuilder: (context, index) {

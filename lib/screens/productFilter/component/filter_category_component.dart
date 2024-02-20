@@ -6,8 +6,10 @@ import '../../../components/view_all_label_component.dart';
 import '../../../utils/colors.dart';
 
 class FilterCategoryComponent extends StatefulWidget {
+  const FilterCategoryComponent({super.key});
+
   @override
-  _FilterCategoryComponentState createState() =>
+  State<FilterCategoryComponent> createState() =>
       _FilterCategoryComponentState();
 }
 
@@ -37,14 +39,14 @@ class _FilterCategoryComponentState extends State<FilterCategoryComponent> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ViewAllLabel(
-                label: '${locale.category}',
+                label: locale.category,
                 labelTextStyle: boldTextStyle(),
                 isShowAll: false)
             .paddingSymmetric(horizontal: 16),
         HorizontalList(
           spacing: 16,
           itemCount: categoryList.length,
-          padding: EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           itemBuilder: (context, index) {
             return InkWell(
               borderRadius: radius(),
@@ -53,7 +55,8 @@ class _FilterCategoryComponentState extends State<FilterCategoryComponent> {
                 setState(() {});
               },
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                 decoration: boxDecorationDefault(
                     color: categorySelectIndex == index
                         ? indicatorColor

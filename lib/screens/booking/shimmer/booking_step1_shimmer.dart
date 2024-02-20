@@ -4,10 +4,12 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../../components/shimmer_widget.dart';
 
 class BookingStep1Shimmer extends StatelessWidget {
+  const BookingStep1Shimmer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return AnimatedScrollView(
-      padding: EdgeInsets.only(left: 20, right: 20, top: 80, bottom: 20),
+      padding: const EdgeInsets.only(left: 20, right: 20, top: 80, bottom: 20),
       listAnimationType: ListAnimationType.None,
       children: [
         Column(
@@ -28,7 +30,7 @@ class BookingStep1Shimmer extends StatelessWidget {
                     ShimmerWidget(
                       child: Container(
                         width: context.width() / 2 - 30,
-                        padding: EdgeInsets.only(top: 48, left: 16, right: 16),
+                        padding: const EdgeInsets.only(top: 48, left: 16, right: 16),
                         decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor),
                         child: ShimmerWidget(height: 68, width: context.width() * 0.25),
                       ),
@@ -40,7 +42,7 @@ class BookingStep1Shimmer extends StatelessWidget {
                         child: Container(
                           width: 62,
                           height: 62,
-                          padding: EdgeInsets.all(8),
+                          padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(color: context.cardColor, shape: BoxShape.circle),
                         ),
                       ),

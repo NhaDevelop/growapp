@@ -6,8 +6,10 @@ import '../../../components/view_all_label_component.dart';
 import '../../../utils/colors.dart';
 
 class FilterWeightComponent extends StatefulWidget {
+  const FilterWeightComponent({super.key});
+
   @override
-  _FilterWeightComponentState createState() => _FilterWeightComponentState();
+  State<FilterWeightComponent> createState() => _FilterWeightComponentState();
 }
 
 class _FilterWeightComponentState extends State<FilterWeightComponent> {
@@ -43,7 +45,7 @@ class _FilterWeightComponentState extends State<FilterWeightComponent> {
         HorizontalList(
           spacing: 16,
           itemCount: weightList.length,
-          padding: EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           itemBuilder: (context, index) {
             return InkWell(
               borderRadius: radius(),
@@ -52,7 +54,8 @@ class _FilterWeightComponentState extends State<FilterWeightComponent> {
                 setState(() {});
               },
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                 decoration: boxDecorationDefault(
                     color: weightSelectIndex == index
                         ? indicatorColor

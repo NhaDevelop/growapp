@@ -11,8 +11,10 @@ import '../../../utils/common_base.dart';
 import 'order_summary_screen.dart';
 
 class AdditionalDetailScreen extends StatefulWidget {
+  const AdditionalDetailScreen({super.key});
+
   @override
-  _AdditionalDetailScreenState createState() => _AdditionalDetailScreenState();
+  State<AdditionalDetailScreen> createState() => _AdditionalDetailScreenState();
 }
 
 class _AdditionalDetailScreenState extends State<AdditionalDetailScreen> {
@@ -59,7 +61,8 @@ class _AdditionalDetailScreenState extends State<AdditionalDetailScreen> {
       body: Stack(
         children: [
           AnimatedScrollView(
-            padding: EdgeInsets.only(left: 16, right: 16, bottom: 60, top: 30),
+            padding:
+                const EdgeInsets.only(left: 16, right: 16, bottom: 60, top: 30),
             children: [
               Form(
                 key: _additionalFormKey,
@@ -118,8 +121,6 @@ class _AdditionalDetailScreenState extends State<AdditionalDetailScreen> {
             right: 16,
             child: AppButton(
               width: context.width(),
-              child: Text(locale.confirm,
-                  style: boldTextStyle(color: Colors.white)),
               color: secondaryColor,
               onTap: () async {
                 appStore.setLoading(true);
@@ -132,9 +133,15 @@ class _AdditionalDetailScreenState extends State<AdditionalDetailScreen> {
                     alternateMobileCont.text);
 
                 appStore.setLoading(false);
-                OrderSummaryScreen().launch(context,
-                    pageRouteAnimation: PageRouteAnimation.Fade);
+                if (context.mounted) {
+                  const OrderSummaryScreen().launch(
+                    context,
+                    pageRouteAnimation: PageRouteAnimation.Fade,
+                  );
+                }
               },
+              child: Text(locale.confirm,
+                  style: boldTextStyle(color: Colors.white)),
             ),
           ),
         ],

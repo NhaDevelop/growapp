@@ -34,19 +34,20 @@ class BookingStep2Component extends StatefulWidget {
   final int? employeeId;
   final List<ServiceListData>? serviceList;
 
-  BookingStep2Component(
-      {this.isFromBookingInfoDetail = false,
+  const BookingStep2Component(
+      {super.key,
+      this.isFromBookingInfoDetail = false,
       this.bookingId,
       this.serviceList,
       this.employeeId,
       this.isReschedule = false});
 
   @override
-  _BookingStep2ComponentState createState() => _BookingStep2ComponentState();
+  State<BookingStep2Component> createState() => _BookingStep2ComponentState();
 }
 
 class _BookingStep2ComponentState extends State<BookingStep2Component> {
-  DatePickerController _datePickerController = DatePickerController();
+  final DatePickerController _datePickerController = DatePickerController();
 
   UniqueKey keyForSlotWidget = UniqueKey();
 
@@ -114,7 +115,7 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
                   return NoDataWidget(
                     title: error,
                     retryText: locale.reload,
-                    imageWidget: ErrorStateWidget(),
+                    imageWidget: const ErrorStateWidget(),
                     onRetry: () {
                       appStore.setLoading(true);
 
@@ -235,7 +236,7 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
                               widgetWidth: context.width(),
                               selectedColor: indicatorColor,
                               selectedTextColor: Colors.black,
-                              dateItemComponentList: [
+                              dateItemComponentList: const [
                                 DateItem.Month,
                                 DateItem.WeekDay,
                                 DateItem.Day
@@ -296,7 +297,7 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
               ),
               Observer(
                   builder: (context) =>
-                      LoaderWidget().visible(appStore.isLoading)),
+                      const LoaderWidget().visible(appStore.isLoading)),
             ],
           ),
           Positioned(
@@ -370,7 +371,7 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
               String tempDate = bookingRequestStore.date.validate();
               String tempTime = bookingRequestStore.time.validate();
 
-              String dateString = tempDate + " " + tempTime;
+              String dateString = "$tempDate $tempTime";
 
               DateTime initialDateTime = DateTime.parse(dateString);
 

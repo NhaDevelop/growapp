@@ -20,10 +20,10 @@ import '../view/product_detail_screen.dart';
 class AllReviewProductComponent extends StatefulWidget {
   final int? productId;
 
-  AllReviewProductComponent({this.productId});
+  const AllReviewProductComponent({super.key, this.productId});
 
   @override
-  _AllReviewProductComponentState createState() =>
+  State<AllReviewProductComponent> createState() =>
       _AllReviewProductComponentState();
 }
 
@@ -73,11 +73,11 @@ class _AllReviewProductComponentState extends State<AllReviewProductComponent> {
       ),
       body: SnapHelperWidget<List<ProductReviewDataModel>>(
         future: future,
-        loadingWidget: LoaderWidget(),
+        loadingWidget: const LoaderWidget(),
         errorBuilder: (error) {
           return NoDataWidget(
             title: error,
-            imageWidget: ErrorStateWidget(),
+            imageWidget: const ErrorStateWidget(),
             retryText: locale.reload,
             onRetry: () {
               page = 1;
@@ -94,19 +94,19 @@ class _AllReviewProductComponentState extends State<AllReviewProductComponent> {
             shrinkWrap: true,
             listAnimationType: ListAnimationType.FadeIn,
             fadeInConfiguration: FadeInConfiguration(duration: 2.seconds),
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             itemCount: reviewListData.length,
-            physics: AlwaysScrollableScrollPhysics(),
+            physics: const AlwaysScrollableScrollPhysics(),
             emptyWidget: NoDataWidget(
               title: locale.noReviewsFound,
-              imageWidget: EmptyStateWidget(),
+              imageWidget: const EmptyStateWidget(),
             ),
             itemBuilder: (context, index) {
               ProductReviewDataModel reviewData = reviewListData[index];
 
               return Container(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                margin: EdgeInsets.symmetric(vertical: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                margin: const EdgeInsets.symmetric(vertical: 8),
                 width: context.width(),
                 decoration: boxDecorationWithRoundedCorners(
                     backgroundColor: context.cardColor),
@@ -121,7 +121,7 @@ class _AllReviewProductComponentState extends State<AllReviewProductComponent> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Container(
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   horizontal: 8, vertical: 4),
                               alignment: Alignment.center,
                               decoration: boxDecorationWithRoundedCorners(
@@ -129,7 +129,7 @@ class _AllReviewProductComponentState extends State<AllReviewProductComponent> {
                                       context.scaffoldBackgroundColor),
                               child: TextIcon(
                                 text: reviewData.rating.validate().toString(),
-                                edgeInsets: EdgeInsets.only(left: 0),
+                                edgeInsets: const EdgeInsets.only(left: 0),
                                 textStyle: boldTextStyle(
                                     size: 14, color: primaryColor),
                                 prefix: Icon(Icons.star,
@@ -151,7 +151,7 @@ class _AllReviewProductComponentState extends State<AllReviewProductComponent> {
                                 formatDate(reviewData.createdAt.validate(),
                                     format: DateFormatConst.DATE_FORMAT_4),
                                 style: secondaryTextStyle())
-                            : SizedBox(),
+                            : const SizedBox(),
                       ],
                     ),
                     14.height,
@@ -173,13 +173,13 @@ class _AllReviewProductComponentState extends State<AllReviewProductComponent> {
                                 reviewData.reviewGallary.validate()[index];
 
                             return CachedImageWidget(
-                              url: '${galleryData.fullUrl.validate()}',
+                              url: galleryData.fullUrl.validate(),
                               width: 45,
                               height: 45,
                               fit: BoxFit.cover,
                               radius: defaultRadius,
                             ).onTap(() {
-                              if (galleryData.fullUrl.validate().isNotEmpty)
+                              if (galleryData.fullUrl.validate().isNotEmpty) {
                                 ZoomImageScreen(
                                   galleryImages: reviewData.reviewGallary
                                       .validate()
@@ -187,6 +187,7 @@ class _AllReviewProductComponentState extends State<AllReviewProductComponent> {
                                       .toList(),
                                   index: index,
                                 ).launch(context);
+                              }
                             });
                           },
                         ),

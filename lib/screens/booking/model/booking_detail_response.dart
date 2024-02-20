@@ -17,9 +17,9 @@ class BookingDetailResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
-    data['status'] = this.status;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
+    data['status'] = status;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
@@ -74,10 +74,10 @@ class Payment {
     return Payment(
       bookingId: json['booking_id'],
       createdAt: json['created_at'],
-      createdBy: json['created_by'] != null ? json['created_by'] : null,
+      createdBy: json['created_by'],
       createdGuard: json['created_guard'],
-      deletedAt: json['deleted_at'] != null ? json['deleted_at'] : null,
-      deletedBy: json['deleted_by'] != null ? json['deleted_by'] : null,
+      deletedAt: json['deleted_at'],
+      deletedBy: json['deleted_by'],
       deletedGuard: json['deleted_guard'],
       discountAmount: json['discount_amount'],
       discountPercentage: json['discount_percentage'],
@@ -85,7 +85,7 @@ class Payment {
       id: json['id'],
       paymentStatus: json['payment_status'],
       requestToken:
-          json['request_token'] != null ? json['request_token'] : null,
+          json['request_token'],
       taxPercentage: json['tax_percentage'] != null
           ? (json['tax_percentage'] as List)
               .map((i) => TaxPercentage.fromJson(i))
@@ -94,44 +94,44 @@ class Payment {
       tipAmount: json['tip_amount'],
       transactionType: json['transaction_type'],
       updatedAt: json['updated_at'],
-      updatedBy: json['updated_by'] != null ? json['updated_by'] : null,
+      updatedBy: json['updated_by'],
       updatedGuard: json['updated_guard'],
     );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['booking_id'] = this.bookingId;
-    data['created_at'] = this.createdAt;
-    data['created_guard'] = this.createdGuard;
-    data['deleted_guard'] = this.deletedGuard;
-    data['discount_amount'] = this.discountAmount;
-    data['discount_percentage'] = this.discountPercentage;
-    data['external_transaction_id'] = this.externalTransactionId;
-    data['id'] = this.id;
-    data['payment_status'] = this.paymentStatus;
-    data['tip_amount'] = this.tipAmount;
-    data['transaction_type'] = this.transactionType;
-    data['updated_at'] = this.updatedAt;
-    data['updated_guard'] = this.updatedGuard;
-    if (this.createdBy != null) {
-      data['created_by'] = this.createdBy;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['booking_id'] = bookingId;
+    data['created_at'] = createdAt;
+    data['created_guard'] = createdGuard;
+    data['deleted_guard'] = deletedGuard;
+    data['discount_amount'] = discountAmount;
+    data['discount_percentage'] = discountPercentage;
+    data['external_transaction_id'] = externalTransactionId;
+    data['id'] = id;
+    data['payment_status'] = paymentStatus;
+    data['tip_amount'] = tipAmount;
+    data['transaction_type'] = transactionType;
+    data['updated_at'] = updatedAt;
+    data['updated_guard'] = updatedGuard;
+    if (createdBy != null) {
+      data['created_by'] = createdBy;
     }
-    if (this.deletedAt != null) {
-      data['deleted_at'] = this.deletedAt;
+    if (deletedAt != null) {
+      data['deleted_at'] = deletedAt;
     }
-    if (this.deletedBy != null) {
-      data['deleted_by'] = this.deletedBy;
+    if (deletedBy != null) {
+      data['deleted_by'] = deletedBy;
     }
-    if (this.requestToken != null) {
-      data['request_token'] = this.requestToken;
+    if (requestToken != null) {
+      data['request_token'] = requestToken;
     }
-    if (this.taxPercentage != null) {
+    if (taxPercentage != null) {
       data['tax_percentage'] =
-          this.taxPercentage!.map((v) => v.toJson()).toList();
+          taxPercentage!.map((v) => v.toJson()).toList();
     }
-    if (this.updatedBy != null) {
-      data['updated_by'] = this.updatedBy;
+    if (updatedBy != null) {
+      data['updated_by'] = updatedBy;
     }
     return data;
   }
@@ -157,12 +157,12 @@ class TaxPercentage {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['percent'] = this.percent;
-    data['tax_amount'] = this.taxAmount;
-    data['type'] = this.type;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['percent'] = percent;
+    data['tax_amount'] = taxAmount;
+    data['type'] = type;
     return data;
   }
 }
@@ -220,21 +220,21 @@ class ProductsInfo {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['booking_id'] = this.bookingId;
-    data['discount_type'] = this.discountType;
-    data['discount_value'] = this.discountValue;
-    data['discounted_price'] = this.discountedPrice;
-    data['employee_id'] = this.employeeId;
-    data['id'] = this.id;
-    data['order_id'] = this.orderId;
-    data['product_id'] = this.productId;
-    data['product_name'] = this.productName;
-    data['product_price'] = this.productPrice;
-    data['product_qty'] = this.productQty;
-    data['product_variation_id'] = this.productVariationId;
-    data['variation_name'] = this.variationName;
-    data['product_image'] = this.productImage;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['booking_id'] = bookingId;
+    data['discount_type'] = discountType;
+    data['discount_value'] = discountValue;
+    data['discounted_price'] = discountedPrice;
+    data['employee_id'] = employeeId;
+    data['id'] = id;
+    data['order_id'] = orderId;
+    data['product_id'] = productId;
+    data['product_name'] = productName;
+    data['product_price'] = productPrice;
+    data['product_qty'] = productQty;
+    data['product_variation_id'] = productVariationId;
+    data['variation_name'] = variationName;
+    data['product_image'] = productImage;
     return data;
   }
 }

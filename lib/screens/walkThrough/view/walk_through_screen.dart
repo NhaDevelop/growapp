@@ -10,8 +10,10 @@ import '../../branch/view/select_branch_screen.dart';
 import '../model/walk_through_model.dart';
 
 class WalkThroughScreen extends StatefulWidget {
+  const WalkThroughScreen({super.key});
+
   @override
-  _WalkThroughScreenState createState() => _WalkThroughScreenState();
+  State<WalkThroughScreen> createState() => _WalkThroughScreenState();
 }
 
 class _WalkThroughScreenState extends State<WalkThroughScreen> {
@@ -51,7 +53,7 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        padding: EdgeInsets.only(top: 16),
+        padding: const EdgeInsets.only(top: 16),
         child: Stack(
           children: [
             Container(
@@ -60,7 +62,7 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
               decoration: boxDecorationWithRoundedCorners(
                 backgroundColor: primaryColor,
                 borderRadius: radiusOnly(bottomLeft: 20, bottomRight: 20),
-                decorationImage: DecorationImage(
+                decorationImage: const DecorationImage(
                     image: AssetImage(bg_pattern), fit: BoxFit.cover),
               ),
             ),
@@ -70,7 +72,7 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Spacer(),
+                    const Spacer(),
                     Text(APP_NAME, style: boldTextStyle(size: 20, color: white))
                         .expand(),
                     Align(
@@ -79,7 +81,9 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
                         onPressed: () async {
                           await setValue(
                               SharedPreferenceConst.IS_FIRST_TIME, false);
-                          SelectBranchScreen().launch(context,
+
+                          if (!context.mounted) return;
+                          const SelectBranchScreen().launch(context,
                               isNewTask: true,
                               pageRouteAnimation: PageRouteAnimation.Fade);
                         },
@@ -118,9 +122,6 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
                     .paddingSymmetric(horizontal: 16),
                 24.height,
                 AppButton(
-                  child: Text(
-                      currentPosition == 2 ? locale.getStarted : locale.next,
-                      style: boldTextStyle(color: white)),
                   width: 230,
                   elevation: 0,
                   color: secondaryColor,
@@ -128,7 +129,8 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
                     if (currentPosition == 2) {
                       await setValue(
                           SharedPreferenceConst.IS_FIRST_TIME, false);
-                      SelectBranchScreen().launch(context,
+                      if (!context.mounted) return;
+                      const SelectBranchScreen().launch(context,
                           isNewTask: true,
                           pageRouteAnimation: PageRouteAnimation.Fade);
                     } else {
@@ -137,6 +139,9 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
                           curve: Curves.linearToEaseOut);
                     }
                   },
+                  child: Text(
+                      currentPosition == 2 ? locale.getStarted : locale.next,
+                      style: boldTextStyle(color: white)),
                 ),
                 16.height,
               ],
@@ -144,7 +149,7 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: Container(
+      bottomNavigationBar: SizedBox(
         height: 40,
         child: Column(
           children: [

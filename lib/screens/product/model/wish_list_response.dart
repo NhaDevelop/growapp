@@ -18,11 +18,11 @@ class WishListResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
-    data['status'] = this.status;
-    if (this.wishlist != null) {
-      data['wishlist'] = this.wishlist!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
+    data['status'] = status;
+    if (wishlist != null) {
+      data['wishlist'] = wishlist!.toJson();
     }
     return data;
   }

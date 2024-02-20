@@ -13,10 +13,10 @@ class CustomStepper extends StatefulWidget {
   final List<CustomStep> stepsList;
   final Function(int)? onChange;
 
-  CustomStepper({required this.stepsList, this.onChange});
+  const CustomStepper({super.key, required this.stepsList, this.onChange});
 
   @override
-  _CustomStepperState createState() => _CustomStepperState();
+  State<CustomStepper> createState() => _CustomStepperState();
 }
 
 class _CustomStepperState extends State<CustomStepper> {
@@ -111,7 +111,7 @@ class _CustomStepperState extends State<CustomStepper> {
       children: List.generate(
         widget.stepsList.length,
         (index) {
-          if (index < widget.stepsList.length - 1)
+          if (index < widget.stepsList.length - 1) {
             return Row(
               children: [
                 buildStep(index),
@@ -120,8 +120,9 @@ class _CustomStepperState extends State<CustomStepper> {
                 16.width,
               ],
             );
-          else
+          } else {
             return buildStep(index);
+          }
         },
       ),
     ).paddingOnly(left: 18, right: 16).fit();
@@ -139,7 +140,7 @@ class _CustomStepperState extends State<CustomStepper> {
       children: [
         PageView.builder(
           controller: customStepperController,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           itemCount: widget.stepsList.length,
           itemBuilder: (context, index) => widget.stepsList[index].page,
           onPageChanged: (index) {
@@ -159,7 +160,7 @@ class _CustomStepperState extends State<CustomStepper> {
             clipBehavior: Clip.none,
             alignment: Alignment.bottomCenter,
             children: [
-              Container(
+              SizedBox(
                 width: context.width(),
                 height: 130,
                 child: appBarWidget(locale.booking,

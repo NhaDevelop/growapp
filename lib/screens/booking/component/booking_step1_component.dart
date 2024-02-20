@@ -18,10 +18,10 @@ import '../shimmer/booking_step1_shimmer.dart';
 class BookingStep1Component extends StatefulWidget {
   final bool isReschedule;
 
-  BookingStep1Component({this.isReschedule = false});
+  const BookingStep1Component({super.key, this.isReschedule = false});
 
   @override
-  _BookingStep1ComponentState createState() => _BookingStep1ComponentState();
+  State<BookingStep1Component> createState() => _BookingStep1ComponentState();
 }
 
 class _BookingStep1ComponentState extends State<BookingStep1Component> {
@@ -81,12 +81,12 @@ class _BookingStep1ComponentState extends State<BookingStep1Component> {
         children: [
           SnapHelperWidget<List<EmployeeData>>(
             future: future,
-            loadingWidget: BookingStep1Shimmer(),
+            loadingWidget: const BookingStep1Shimmer(),
             onSuccess: (list) {
               if (list.isEmpty) {
                 return NoDataWidget(
                   title: locale.noStaffFound,
-                  imageWidget: EmptyStateWidget(),
+                  imageWidget: const EmptyStateWidget(),
                   subTitle:
                       '${locale.noStaffAvailableForBranchMessage}\n${locale.tryToChangeYourService}',
                   retryText: locale.goBack,
@@ -100,9 +100,9 @@ class _BookingStep1ComponentState extends State<BookingStep1Component> {
                 fit: StackFit.expand,
                 children: [
                   AnimatedScrollView(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                         left: 20, right: 20, top: 60, bottom: 100),
-                    physics: AlwaysScrollableScrollPhysics(),
+                    physics: const AlwaysScrollableScrollPhysics(),
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -203,7 +203,7 @@ class _BookingStep1ComponentState extends State<BookingStep1Component> {
               return NoDataWidget(
                 title: error,
                 retryText: locale.reload,
-                imageWidget: ErrorStateWidget(),
+                imageWidget: const ErrorStateWidget(),
                 onRetry: () {
                   page = 1;
                   appStore.setLoading(true);
@@ -215,7 +215,8 @@ class _BookingStep1ComponentState extends State<BookingStep1Component> {
             },
           ),
           Observer(
-              builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+              builder: (context) =>
+                  const LoaderWidget().visible(appStore.isLoading)),
         ],
       ),
     );

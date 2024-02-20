@@ -37,8 +37,9 @@ Future<LoginResponse> loginUser(Map request,
   if (isRegenerateToken) {
     await userStore.setToken(res.userData!.apiToken.validate());
   } else {
-    if (!isSocialLogin)
+    if (!isSocialLogin) {
       await userStore.setLoginType(LoginTypeConst.LOGIN_TYPE_USER);
+    }
 
     if (res.userData != null) {
       appStore.setLoading(false);
@@ -56,8 +57,9 @@ Future<LoginResponse> loginUser(Map request,
 Future<void> saveUserData(UserData data) async {
   appStore.setLoggedIn(true);
 
-  if (data.apiToken.validate().isNotEmpty)
+  if (data.apiToken.validate().isNotEmpty) {
     await userStore.setToken(data.apiToken.validate());
+  }
 
   await userStore.setUserId(data.id.validate());
   await userStore.setFirstName(data.firstName.validate());
@@ -134,16 +136,19 @@ Future<dynamic> updateProfile(
     Function(dynamic)? onSuccess}) async {
   if (appStore.isLoggedIn) {
     MultipartRequest multiPartRequest =
-        await getMultiPartRequest('${APIEndPoints.updateProfile}');
+        await getMultiPartRequest(APIEndPoints.updateProfile);
 
-    if (firstName.isNotEmpty)
+    if (firstName.isNotEmpty) {
       multiPartRequest.fields[UserKeys.firstName] = firstName;
-    if (lastName.isNotEmpty)
+    }
+    if (lastName.isNotEmpty) {
       multiPartRequest.fields[UserKeys.lastName] = lastName;
+    }
     if (mobile.isNotEmpty) multiPartRequest.fields[UserKeys.mobile] = mobile;
     if (gender.isNotEmpty) multiPartRequest.fields[UserKeys.gender] = gender;
-    if (appStore.playerId.isNotEmpty)
+    if (appStore.playerId.isNotEmpty) {
       multiPartRequest.fields[UserKeys.playerId] = appStore.playerId;
+    }
 
     if (imageFile != null) {
       multiPartRequest.files.add(

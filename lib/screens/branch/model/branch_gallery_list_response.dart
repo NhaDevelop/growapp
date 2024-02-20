@@ -14,9 +14,9 @@ class BranchGalleryListResponse {
     }
 
     Map<String, dynamic> toJson() {
-        final Map<String, dynamic> data = new Map<String, dynamic>();
-        data['message'] = this.message;
-        data['status'] = this.status;
+        final Map<String, dynamic> data = <String, dynamic>{};
+        data['message'] = message;
+        data['status'] = status;
         if (this.data != null) {
             data['data'] = this.data!.map((v) => v.toJson()).toList();
         }
@@ -43,8 +43,8 @@ class BranchGalleryData {
             branchId: json['branch_id'], 
             createdAt: json['created_at'], 
             createdBy: json['created_by'], 
-            deletedAt: json['deleted_at'] != null ? json['deleted_at'] : null,
-            deletedBy: json['deleted_by'] != null ? json['deleted_by'] : null,
+            deletedAt: json['deleted_at'],
+            deletedBy: json['deleted_by'],
             fullUrl: json['full_url'], 
             id: json['id'], 
             status: json['status'], 
@@ -54,20 +54,20 @@ class BranchGalleryData {
     }
 
     Map<String, dynamic> toJson() {
-        final Map<String, dynamic> data = new Map<String, dynamic>();
-        data['branch_id'] = this.branchId;
-        data['created_at'] = this.createdAt;
-        data['created_by'] = this.createdBy;
-        data['full_url'] = this.fullUrl;
-        data['id'] = this.id;
-        data['status'] = this.status;
-        data['updated_at'] = this.updatedAt;
-        data['updated_by'] = this.updatedBy;
-        if (this.deletedAt != null) {
-            data['deleted_at'] = this.deletedAt;
+        final Map<String, dynamic> data = <String, dynamic>{};
+        data['branch_id'] = branchId;
+        data['created_at'] = createdAt;
+        data['created_by'] = createdBy;
+        data['full_url'] = fullUrl;
+        data['id'] = id;
+        data['status'] = status;
+        data['updated_at'] = updatedAt;
+        data['updated_by'] = updatedBy;
+        if (deletedAt != null) {
+            data['deleted_at'] = deletedAt;
         }
-        if (this.deletedBy != null) {
-            data['deleted_by'] = this.deletedBy;
+        if (deletedBy != null) {
+            data['deleted_by'] = deletedBy;
         }
         return data;
     }

@@ -21,8 +21,8 @@ class OrderReviewComponent extends StatelessWidget {
   final int? productVariationId;
   final ProductReviewDataModel? productReview;
 
-  OrderReviewComponent(
-      {this.deliveryStatus,
+  const OrderReviewComponent(
+      {super.key, this.deliveryStatus,
       this.productId,
       this.productVariationId,
       this.productReview});
@@ -66,7 +66,7 @@ class OrderReviewComponent extends StatelessWidget {
                                     productReview!.rating.validate().toInt()),
                                 size: 14),
                           ),
-                          Spacer(),
+                          const Spacer(),
                           TextButton(
                             onPressed: () {
                               showInDialog(
@@ -140,13 +140,13 @@ class OrderReviewComponent extends StatelessWidget {
                             productReview!.gallery.validate()[index];
 
                         return CachedImageWidget(
-                          url: '${galleryData.fullUrl.validate()}',
+                          url: galleryData.fullUrl.validate(),
                           width: 45,
                           height: 45,
                           fit: BoxFit.cover,
                           radius: defaultRadius,
                         ).onTap(() {
-                          if (galleryData.fullUrl.validate().isNotEmpty)
+                          if (galleryData.fullUrl.validate().isNotEmpty) {
                             ZoomImageScreen(
                               galleryImages: productReview!.gallery
                                   .validate()
@@ -154,6 +154,7 @@ class OrderReviewComponent extends StatelessWidget {
                                   .toList(),
                               index: index,
                             ).launch(context);
+                          }
                         });
                       },
                     ),
@@ -161,12 +162,10 @@ class OrderReviewComponent extends StatelessWidget {
                 )
               else
                 AppButton(
-                  child: Text(locale.addReview,
-                      style: boldTextStyle(color: Colors.white)),
                   color: context.primaryColor,
                   width: context.width(),
                   elevation: 0,
-                  margin: EdgeInsets.only(top: 16),
+                  margin: const EdgeInsets.only(top: 16),
                   onTap: () {
                     showInDialog(
                       context,
@@ -178,6 +177,8 @@ class OrderReviewComponent extends StatelessWidget {
                       },
                     );
                   },
+                  child: Text(locale.addReview,
+                      style: boldTextStyle(color: Colors.white)),
                 ),
               8.height,
             ],

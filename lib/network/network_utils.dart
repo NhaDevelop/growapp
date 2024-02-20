@@ -159,24 +159,24 @@ Future handleResponse(Response response,
     }
   } else if (response.statusCode == 401) {
     await clearData(clearBranchData: false);
-    push(SignInScreen(), isNewTask: true);
-    throw '${locale.tokenExpired}';
+    push(const SignInScreen(), isNewTask: true);
+    throw locale.tokenExpired;
   } else if (response.statusCode == 400) {
-    throw '${locale.badRequest}';
+    throw locale.badRequest;
   } else if (response.statusCode == 403) {
-    throw '${locale.forbidden}';
+    throw locale.forbidden;
   } else if (response.statusCode == 404) {
-    throw '${locale.pageNotFound}';
+    throw locale.pageNotFound;
   } else if (response.statusCode == 429) {
-    throw '${locale.tooManyRequests}';
+    throw locale.tooManyRequests;
   } else if (response.statusCode == 500) {
-    throw '${locale.internalServerError}';
+    throw locale.internalServerError;
   } else if (response.statusCode == 502) {
-    throw '${locale.badGateway}';
+    throw locale.badGateway;
   } else if (response.statusCode == 503) {
-    throw '${locale.serviceUnavailable}';
+    throw locale.serviceUnavailable;
   } else if (response.statusCode == 504) {
-    throw '${locale.gatewayTimeout}';
+    throw locale.gatewayTimeout;
   } else {
     if (response.body.isJson()) {
       Map body = jsonDecode(response.body);
@@ -222,7 +222,7 @@ Future<void> reGenerateToken() async {
 
 Future<MultipartRequest> getMultiPartRequest(String endPoint,
     {String? baseUrl}) async {
-  String url = '${baseUrl ?? buildBaseUrl(endPoint).toString()}';
+  String url = baseUrl ?? buildBaseUrl(endPoint).toString();
   log(url);
   return MultipartRequest('POST', Uri.parse(url));
 }
@@ -291,7 +291,7 @@ void apiPrint({
   if (hasRequest) {
     log('\u001b[93m Request: \u001B[39m \u001b[95m$request\u001B[39m');
   }
-  log("${statusCode.isSuccessful() ? "\u001b[32m" : "\u001b[31m"}");
+  log(statusCode.isSuccessful() ? "\u001b[32m" : "\u001b[31m");
   log('Response ($methodtype) $statusCode: $responseBody');
   log("\u001B[0m");
   log("└───────────────────────────────────────────────────────────────────────────────────────────────────────");

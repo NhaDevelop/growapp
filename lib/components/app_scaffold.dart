@@ -13,7 +13,7 @@ class AppScaffold extends StatelessWidget {
   final Widget? floatingActionButton;
   final Color? scaffoldBackgroundColor;
 
-  AppScaffold({
+  const AppScaffold({super.key, 
     this.appBarTitle,
     required this.body,
     this.actions,

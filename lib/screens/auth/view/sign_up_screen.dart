@@ -18,13 +18,12 @@ class SignUpScreen extends StatefulWidget {
   final bool isOTPLogin;
   final String? uid;
 
-  SignUpScreen(
-      {Key? key,
+  const SignUpScreen(
+      {super.key,
       this.phoneNumber,
       this.isOTPLogin = false,
       this.countryCode,
-      this.uid})
-      : super(key: key);
+      this.uid});
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -141,14 +140,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     decoration: boxDecorationWithRoundedCorners(
                       backgroundColor: primaryColor,
                       borderRadius: radiusOnly(bottomLeft: 20, bottomRight: 20),
-                      decorationImage: DecorationImage(
+                      decorationImage: const DecorationImage(
                           image: AssetImage(bg_pattern), fit: BoxFit.cover),
                     ),
                   ),
                   Positioned(
                     bottom: -60,
                     child: Container(
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       decoration: boxDecorationDefault(shape: BoxShape.circle),
                       child: Image.asset(app_logo,
                           height: 104, width: 104, fit: BoxFit.cover),
@@ -215,7 +214,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   : false,
                               decoration: inputDecoration(context,
                                   label: locale.password),
-                              autoFillHints: [AutofillHints.password],
+                              autoFillHints: const [AutofillHints.password],
                               onFieldSubmitted: (s) {
                                 if (widget.isOTPLogin) {
                                   registerWithOTP();
@@ -248,8 +247,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       16.height,
                       AppButton(
-                        child: Text(locale.signUp,
-                            style: boldTextStyle(color: white)),
                         width: context.width(),
                         color: secondaryColor,
                         onTap: () async {
@@ -259,6 +256,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             registerUser();
                           }
                         },
+                        child: Text(locale.signUp,
+                            style: boldTextStyle(color: white)),
                       ),
                       16.height,
                       Row(

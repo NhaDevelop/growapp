@@ -34,10 +34,10 @@ VoidCallback? onQuickBookingDataUpdate;
 class QuickBookingComponent extends StatefulWidget {
   final List<ServiceListData> serviceListData;
 
-  QuickBookingComponent({required this.serviceListData});
+  const QuickBookingComponent({super.key, required this.serviceListData});
 
   @override
-  _QuickBookingComponentState createState() => _QuickBookingComponentState();
+  State<QuickBookingComponent> createState() => _QuickBookingComponentState();
 }
 
 class _QuickBookingComponentState extends State<QuickBookingComponent> {
@@ -111,7 +111,7 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
   Widget serviceListWidget({required ServiceListData services}) {
     return CheckboxListTile(
       value: services.isServiceChecked,
-      title: Text('${services.name.validate()}',
+      title: Text(services.name.validate(),
           style: boldTextStyle(
               color:
                   appStore.isDarkMode ? textPrimaryColorGlobal : secondaryColor,
@@ -152,7 +152,7 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
   Widget selectedServiceWidget({ServiceListData? selectedServiceText}) {
     return Container(
       width: context.width() / 3 - 30,
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       decoration: boxDecorationWithRoundedCorners(
         borderRadius: radius(),
         backgroundColor: appStore.isDarkMode
@@ -186,14 +186,14 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
                           (element) => element.name == selectedServiceText.name)
                       .isServiceChecked = false;
                 } catch (e) {
-                  print(e);
+                  log(e);
                 }
                 selectedService.remove(selectedServiceText);
                 calculateTotalAmount();
 
                 setState(() {});
               },
-              icon: Icon(Icons.close, color: cardColor, size: 14),
+              icon: const Icon(Icons.close, color: cardColor, size: 14),
             ),
           ),
         ],
@@ -210,7 +210,7 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
           .where((element) => element.isServiceChecked.validate())
           .toList();
 
-      String dateString = selectDateCont.text + " " + selectTimeCont.text;
+      String dateString = "${selectDateCont.text} ${selectTimeCont.text}";
 
       DateFormat inputFormat = DateFormat("dd/MM/yyyy h:mm a");
       DateFormat outputFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
@@ -254,39 +254,39 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
             .then((value) async {
           saveBookingAPI(req.toJson(dateTime: selectDateTime))
               .then((value) async {
-            appStore.setLoading(true);
+                appStore.setLoading(true);
 
-            await savePay(
-              bookingId: value[CommonKey.bookingId],
-              externalTransactionId: '',
-              transactionType: PaymentMethods.PAYMENT_METHOD_CASH,
-              discountPercentage: 0,
-              discountAmount: 0,
-              taxData: req.taxPercentage.validate(),
-              paymentStatus: '0',
-              totalAmount: req.totalAmount,
-            );
-            appStore.setLoading(false);
-
-            showDialog(
-              context: context,
-              useSafeArea: false,
-              builder: (BuildContext context) => CommonAppDialog(
-                title: locale.bookingSuccessful,
-                subTitle: locale.yourBookingForHairBookingMessage,
-                buttonText: locale.goToBookings,
-                onTap: () {
-                  finish(context);
-                  DashboardScreen(pageIndex: 1).launch(context,
-                      isNewTask: true,
-                      pageRouteAnimation: PageRouteAnimation.Fade);
-                },
-              ),
-            );
-          }).catchError((e) {
-            appStore.setLoading(false);
-            toast(e.toString(), print: true);
-          });
+                await savePay(
+                  bookingId: value[CommonKey.bookingId],
+                  externalTransactionId: '',
+                  transactionType: PaymentMethods.PAYMENT_METHOD_CASH,
+                  discountPercentage: 0,
+                  discountAmount: 0,
+                  taxData: req.taxPercentage.validate(),
+                  paymentStatus: '0',
+                  totalAmount: req.totalAmount,
+                );
+                appStore.setLoading(false);
+              })
+              .then((_) => showDialog(
+                    context: context,
+                    useSafeArea: false,
+                    builder: (BuildContext context) => CommonAppDialog(
+                      title: locale.bookingSuccessful,
+                      subTitle: locale.yourBookingForHairBookingMessage,
+                      buttonText: locale.goToBookings,
+                      onTap: () {
+                        finish(context);
+                        const DashboardScreen(pageIndex: 1).launch(context,
+                            isNewTask: true,
+                            pageRouteAnimation: PageRouteAnimation.Fade);
+                      },
+                    ),
+                  ))
+              .catchError((e) {
+                appStore.setLoading(false);
+                toast(e.toString(), print: true);
+              });
         }).catchError((e) {
           appStore.setLoading(false);
           toast(e.toString());
@@ -309,7 +309,7 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
   }
 
   Widget totalAmountWidget() {
-    if (totalAmount != 0)
+    if (totalAmount != 0) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -329,13 +329,14 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
                         style: secondaryTextStyle(),
                       ),
                     )
-                  : Offstage(),
+                  : const Offstage(),
             ],
           ),
         ],
       ).paddingSymmetric(vertical: 16);
+    }
 
-    return Offstage();
+    return const Offstage();
   }
 
   @override
@@ -355,12 +356,12 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
       builder: (context) {
         return SnapHelperWidget(
           future: fetchBranchConfigurationApi(),
-          loadingWidget: LoaderWidget(),
+          loadingWidget: const LoaderWidget(),
           errorBuilder: (error) {
             return NoDataWidget(
               title: error,
               retryText: locale.reload,
-              imageWidget: ErrorStateWidget(),
+              imageWidget: const ErrorStateWidget(),
               onRetry: () {
                 appStore.setLoading(true);
 
@@ -402,7 +403,7 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
             }
 
             return Container(
-              padding: EdgeInsets.only(left: 16, right: 16, top: 16),
+              padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
               child: Column(
                 children: [
                   SettingItemWidget(
@@ -454,7 +455,7 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
       key: formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -503,10 +504,10 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
                       keyForSlotWidget = UniqueKey();
 
                       /// Show BottomSheet only when date is not empty
-                      if (selectDateCont.text.isNotEmpty) {
+                      if (context.mounted && selectDateCont.text.isNotEmpty) {
                         String? time = await _showTimeSlotBottomSheet(context);
 
-                        if (time != null) {
+                        if (context.mounted && time != null) {
                           selectTimeCont.text =
                               formatOnlyTime(context, startTime: time);
                           timeFocus.nextFocus();
@@ -535,7 +536,7 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
                     if (selectDateCont.text.isNotEmpty) {
                       String? time = await _showTimeSlotBottomSheet(context);
 
-                      if (time != null) {
+                      if (context.mounted && time != null) {
                         selectTimeCont.text =
                             formatOnlyTime(context, startTime: time);
                         setState(() {});
@@ -574,7 +575,7 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
                     iconColor: context.iconColor,
                     collapsedIconColor: context.iconColor,
                     childrenPadding:
-                        EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
                     children: [
                       SizedBox(
                         height: containerHeight,
@@ -635,14 +636,15 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
                   ),
                   child: SnapHelperWidget<List<EmployeeData>>(
                     future: futureEmployeeList,
-                    loadingWidget: LoaderWidget(),
+                    loadingWidget: const LoaderWidget(),
                     useConnectionStateForLoader: true,
                     onSuccess: (employeeList) {
-                      if (employeeList.isEmpty)
+                      if (employeeList.isEmpty) {
                         return Text(locale.noStaffFound,
                                 style: primaryTextStyle())
                             .center()
                             .paddingSymmetric(vertical: 50);
+                      }
 
                       return ExpansionTile(
                         title: Text(locale.specialist,
@@ -651,8 +653,8 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
                         iconColor: context.iconColor,
                         collapsedIconColor: context.iconColor,
                         initiallyExpanded: true,
-                        childrenPadding:
-                            EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                        childrenPadding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 0),
                         children: [
                           SizedBox(
                             height: employeeList.length >= 6 ? 300 : null,
@@ -709,7 +711,7 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
                     errorBuilder: (error) {
                       return NoDataWidget(
                         title: error,
-                        imageWidget: ErrorStateWidget(),
+                        imageWidget: const ErrorStateWidget(),
                         retryText: locale.reload,
                         onRetry: () {
                           appStore.setLoading(true);
@@ -727,8 +729,6 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
               children: [
                 AppButton(
                   width: context.width(),
-                  child: Text(locale.back,
-                      style: boldTextStyle(color: Colors.black)),
                   color: context.cardColor,
                   shapeBorder: RoundedRectangleBorder(borderRadius: radius()),
                   onTap: () {
@@ -736,11 +736,11 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
                     selectedEmployee = null;
                     setState(() {});
                   },
+                  child: Text(locale.back,
+                      style: boldTextStyle(color: Colors.black)),
                 ).flexible(flex: 3).visible(showEmployeeList),
                 AppButton(
                   width: context.width(),
-                  child: Text(locale.bookNow,
-                      style: boldTextStyle(color: Colors.white)),
                   color: secondaryColor,
                   shapeBorder: RoundedRectangleBorder(borderRadius: radius()),
                   margin: EdgeInsets.only(left: showEmployeeList ? 16 : 0),
@@ -786,6 +786,8 @@ class _QuickBookingComponentState extends State<QuickBookingComponent> {
                       }
                     }
                   },
+                  child: Text(locale.bookNow,
+                      style: boldTextStyle(color: Colors.white)),
                 ).flexible(flex: showEmployeeList ? 7 : 1),
               ],
             ),

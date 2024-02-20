@@ -11,7 +11,7 @@ import '../model/product_list_response.dart';
 class ProductPacketComponent extends StatefulWidget {
   final ProductData productData;
 
-  ProductPacketComponent({required this.productData});
+  const ProductPacketComponent({super.key, required this.productData});
 
   @override
   State<ProductPacketComponent> createState() => _ProductPacketComponentState();
@@ -35,7 +35,7 @@ class _ProductPacketComponentState extends State<ProductPacketComponent> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.productData.hasVariation != 0)
+    if (widget.productData.hasVariation != 0) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -46,7 +46,7 @@ class _ProductPacketComponentState extends State<ProductPacketComponent> {
             crossAxisAlignment: WrapCrossAlignment.start,
             spacing: 16,
             itemCount: widget.productData.variationData.validate().length,
-            padding: EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             itemBuilder: (context, index) {
               VariationData variationData =
                   widget.productData.variationData.validate()[index];
@@ -63,7 +63,7 @@ class _ProductPacketComponentState extends State<ProductPacketComponent> {
                     setState(() {});
                   },
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                     decoration: boxDecorationDefault(
                         color: productStore.selectedVariationData.id ==
                                 variationData.id
@@ -92,7 +92,8 @@ class _ProductPacketComponentState extends State<ProductPacketComponent> {
           ),
         ],
       ).paddingBottom(16);
-    else
-      return Offstage();
+    } else {
+      return const Offstage();
+    }
   }
 }

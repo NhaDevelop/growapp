@@ -9,7 +9,7 @@ class CategoryItemWidget extends StatelessWidget {
   final double? width;
   final CategoryData categoryData;
 
-  CategoryItemWidget({this.width, required this.categoryData});
+  const CategoryItemWidget({super.key, this.width, required this.categoryData});
 
   @override
   Widget build(BuildContext context) {

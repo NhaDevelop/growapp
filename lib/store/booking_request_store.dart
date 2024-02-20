@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:mobx/mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -42,13 +44,23 @@ abstract class _BookingRequestStore with Store {
   num tipAmount = 0;
 
   @computed
-  num get selectedServiceTotalAmount => selectedServiceList.validate().sumByDouble((p0) => isReschedule.validate() ? p0.servicePrice.validate() : p0.defaultPrice.validate());
+  num get selectedServiceTotalAmount =>
+      selectedServiceList.validate().sumByDouble((p0) => isReschedule.validate()
+          ? p0.servicePrice.validate()
+          : p0.defaultPrice.validate());
 
   @computed
-  double get fixedTaxAmount => taxPercentage.validate().where((element) => element.type == TaxType.FIXED).sumByDouble((p0) => p0.taxAmount.validate());
+  double get fixedTaxAmount => taxPercentage
+      .validate()
+      .where((element) => element.type == TaxType.FIXED)
+      .sumByDouble((p0) => p0.taxAmount.validate());
 
   @computed
-  double get percentTaxAmount => taxPercentage.validate().where((element) => element.type == TaxType.PERCENT).sumByDouble((p0) => ((selectedServiceTotalAmount * p0.percent.validate()) / 100));
+  double get percentTaxAmount => taxPercentage
+      .validate()
+      .where((element) => element.type == TaxType.PERCENT)
+      .sumByDouble(
+          (p0) => ((selectedServiceTotalAmount * p0.percent.validate()) / 100));
 
   @computed
   num get totalTax => fixedTaxAmount + percentTaxAmount;
@@ -56,20 +68,30 @@ abstract class _BookingRequestStore with Store {
   @computed
   num get totalAmount => selectedServiceTotalAmount + totalTax + tipAmount;
 
-  Map<String, dynamic> toJson({String? dateTime, int? bookingId, String? bookingStatus, bool isUpdate = false, bool isRescheduleBooking = false}) {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+  Map<String, dynamic> toJson(
+      {String? dateTime,
+      int? bookingId,
+      String? bookingStatus,
+      bool isUpdate = false,
+      bool isRescheduleBooking = false}) {
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (bookingId != null) data['id'] = bookingId;
     if (bookingStatus != null) data['status'] = bookingStatus;
     if (dateTime != null) data['start_date_time'] = dateTime;
-    if (note.isNotEmpty) data['note'] = this.note.validate();
+    if (note.isNotEmpty) data['note'] = note.validate();
     data['branch_id'] = appStore.branchId;
 
-    if (this.selectedServiceList.isNotEmpty) {
-      data['services'] = this.selectedServiceList.validate().map((e) => e.toBookingServiceJson(isUpdate: isUpdate, isRescheduleBooking: isRescheduleBooking)).toList();
+    if (selectedServiceList.isNotEmpty) {
+      data['services'] = selectedServiceList
+          .validate()
+          .map((e) => e.toBookingServiceJson(
+              isUpdate: isUpdate, isRescheduleBooking: isRescheduleBooking))
+          .toList();
     }
 
-    if (this.taxPercentage.isNotEmpty) {
-      data['tax_percentage'] = this.taxPercentage.validate().map((e) => e.toJson()).toList();
+    if (taxPercentage.isNotEmpty) {
+      data['tax_percentage'] =
+          taxPercentage.validate().map((e) => e.toJson()).toList();
     }
 
     return data;
@@ -106,15 +128,19 @@ abstract class _BookingRequestStore with Store {
   }
 
   @action
-  void setSelectedServiceListInRequest(List<ServiceListData> selectedServiceListRequest, {bool isRescheduleInRequest = false}) {
+  void setSelectedServiceListInRequest(
+      List<ServiceListData> selectedServiceListRequest,
+      {bool isRescheduleInRequest = false}) {
     isReschedule = isRescheduleInRequest;
 
     selectedServiceList = ObservableList.of(selectedServiceListRequest);
   }
 
   @action
-  void setSelectedBookingStatusList(List<String> selectedBookingStatusListRequest) {
-    selectedBookingStatusList = ObservableList.of(selectedBookingStatusListRequest);
+  void setSelectedBookingStatusList(
+      List<String> selectedBookingStatusListRequest) {
+    selectedBookingStatusList =
+        ObservableList.of(selectedBookingStatusListRequest);
   }
 
   @action

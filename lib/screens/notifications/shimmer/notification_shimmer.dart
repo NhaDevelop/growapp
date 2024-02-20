@@ -3,13 +3,15 @@ import 'package:grow_tokyo_app/components/shimmer_widget.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class NotificationShimmer extends StatelessWidget {
+  const NotificationShimmer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return AnimatedListView(
       shrinkWrap: true,
       itemCount: 20,
-      padding: EdgeInsets.only(top: 8),
-      physics: AlwaysScrollableScrollPhysics(),
+      padding: const EdgeInsets.only(top: 8),
+      physics: const AlwaysScrollableScrollPhysics(),
       listAnimationType: ListAnimationType.None,
       itemBuilder: (ctx, index) {
         return Row(

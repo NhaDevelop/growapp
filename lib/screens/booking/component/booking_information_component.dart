@@ -16,8 +16,8 @@ class BookingInformationComponent extends StatefulWidget {
   final String? bookingStatus;
   final List<ServiceListData> serviceList;
 
-  BookingInformationComponent(
-      {required this.booking, this.bookingStatus, required this.serviceList});
+  const BookingInformationComponent(
+      {super.key, required this.booking, this.bookingStatus, required this.serviceList});
 
   @override
   State<BookingInformationComponent> createState() =>
@@ -48,7 +48,7 @@ class _BookingInformationComponentState
         ),
         Container(
           decoration: boxDecorationDefault(color: context.cardColor),
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -77,7 +77,7 @@ class _BookingInformationComponentState
               8.height,
               Container(
                 decoration: boxDecorationDefault(color: context.cardColor),
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 width: context.width(),
                 child: ReadMoreText(widget.booking.note.validate(),
                     style: primaryTextStyle(),

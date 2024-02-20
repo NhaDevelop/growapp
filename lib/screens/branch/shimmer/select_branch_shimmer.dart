@@ -3,6 +3,8 @@ import 'package:grow_tokyo_app/components/shimmer_widget.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class SelectBranchShimmer extends StatelessWidget {
+  const SelectBranchShimmer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return AnimatedListView(
@@ -10,7 +12,7 @@ class SelectBranchShimmer extends StatelessWidget {
       shrinkWrap: true,
       itemBuilder: (ctx, index) {
         return Container(
-          margin: EdgeInsets.only(bottom: 16),
+          margin: const EdgeInsets.only(bottom: 16),
           decoration: boxDecorationWithRoundedCorners(
               backgroundColor: context.cardColor, borderRadius: radius()),
           child: Column(
@@ -25,7 +27,7 @@ class SelectBranchShimmer extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      ShimmerWidget(height: 16, width: 16),
+                      const ShimmerWidget(height: 16, width: 16),
                       12.width,
                       ShimmerWidget(height: 10, width: context.width() * 0.16),
                     ],
@@ -34,7 +36,7 @@ class SelectBranchShimmer extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      ShimmerWidget(height: 16, width: 16),
+                      const ShimmerWidget(height: 16, width: 16),
                       12.width,
                       ShimmerWidget(height: 10, width: context.width() * 0.40),
                     ],
@@ -44,7 +46,7 @@ class SelectBranchShimmer extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          ShimmerWidget(height: 16, width: 16),
+                          const ShimmerWidget(height: 16, width: 16),
                           10.width,
                           ShimmerWidget(
                               height: 10, width: context.width() * 0.30),

@@ -9,8 +9,10 @@ import '../../../components/view_all_label_component.dart';
 import '../../../utils/constants.dart';
 
 class ProductQuantityComponent extends StatefulWidget {
+  const ProductQuantityComponent({super.key});
+
   @override
-  _ProductQuantityComponentState createState() =>
+  State<ProductQuantityComponent> createState() =>
       _ProductQuantityComponentState();
 }
 

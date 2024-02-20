@@ -20,9 +20,9 @@ class DashboardResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
-    data['status'] = this.status;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
+    data['status'] = status;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
@@ -63,18 +63,18 @@ class DashboardData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.category != null) {
-      data['category'] = this.category!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (category != null) {
+      data['category'] = category!.map((v) => v.toJson()).toList();
     }
-    if (this.service != null) {
-      data['service'] = this.service!.map((v) => v.toJson()).toList();
+    if (service != null) {
+      data['service'] = service!.map((v) => v.toJson()).toList();
     }
-    if (this.topExperts != null) {
-      data['topExperts'] = this.topExperts!.map((v) => v.toJson()).toList();
+    if (topExperts != null) {
+      data['topExperts'] = topExperts!.map((v) => v.toJson()).toList();
     }
-    if (this.topExperts != null) {
-      data['slider'] = this.topExperts!.map((v) => v.toJson()).toList();
+    if (topExperts != null) {
+      data['slider'] = topExperts!.map((v) => v.toJson()).toList();
     }
     return data;
   }

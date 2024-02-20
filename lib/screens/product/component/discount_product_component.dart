@@ -10,11 +10,11 @@ import '../../../components/view_all_label_component.dart';
 class DiscountProductComponent extends StatelessWidget {
   final List<ProductData> discountProductList;
 
-  DiscountProductComponent({required this.discountProductList});
+  const DiscountProductComponent({super.key, required this.discountProductList});
 
   @override
   Widget build(BuildContext context) {
-    if (discountProductList.isEmpty) return Offstage();
+    if (discountProductList.isEmpty) return const Offstage();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,7 +30,7 @@ class DiscountProductComponent extends StatelessWidget {
         ).paddingOnly(left: 16, right: 8),
         HorizontalList(
           itemCount: discountProductList.length,
-          padding: EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 30),
+          padding: const EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 30),
           crossAxisAlignment: WrapCrossAlignment.start,
           itemBuilder: (context, i) {
             return ProductItemComponent(productListData: discountProductList[i])

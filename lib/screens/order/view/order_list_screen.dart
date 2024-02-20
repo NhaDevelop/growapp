@@ -17,8 +17,10 @@ import '../component/order_list_component.dart';
 import '../model/order_status_response.dart';
 
 class OrderListScreen extends StatefulWidget {
+  const OrderListScreen({super.key});
+
   @override
-  _OrderListScreenState createState() => _OrderListScreenState();
+  State<OrderListScreen> createState() => _OrderListScreenState();
 }
 
 class _OrderListScreenState extends State<OrderListScreen> {
@@ -68,7 +70,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
               width: context.width(),
               height: 150,
               decoration: boxDecorationWithRoundedCorners(
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(20),
                     bottomRight: Radius.circular(20)),
                 backgroundColor: context.primaryColor,
@@ -114,9 +116,9 @@ class _OrderListScreenState extends State<OrderListScreen> {
                   ).expand(),
                   16.width,
                   Container(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     decoration: boxDecorationDefault(color: secondaryColor),
-                    child: CachedImageWidget(
+                    child: const CachedImageWidget(
                       url: ic_filter,
                       height: 26,
                       width: 26,
@@ -133,9 +135,10 @@ class _OrderListScreenState extends State<OrderListScreen> {
       ),
       body: Stack(
         children: [
-          OrderListComponent(),
+          const OrderListComponent(),
           Observer(
-              builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+              builder: (context) =>
+                  const LoaderWidget().visible(appStore.isLoading)),
         ],
       ),
     );
@@ -152,19 +155,19 @@ class _OrderListScreenState extends State<OrderListScreen> {
               maxHeight: context.height() * 0.45),
           decoration: BoxDecoration(
             color: context.scaffoldBackgroundColor,
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(30.0),
                 topRight: Radius.circular(30.0)),
           ),
           child: SnapHelperWidget<List<OrderStatusData>>(
             future: fetchOrderStatusApi(),
             initialData: orderStatusListCached,
-            loadingWidget: LoaderWidget(),
+            loadingWidget: const LoaderWidget(),
             errorBuilder: (error) {
               return NoDataWidget(
                 title: error,
                 retryText: locale.reload,
-                imageWidget: ErrorStateWidget(),
+                imageWidget: const ErrorStateWidget(),
                 onRetry: () {
                   appStore.setLoading(true);
 
@@ -237,7 +240,8 @@ class _OrderListScreenState extends State<OrderListScreen> {
                               child: Container(
                                 width: context.width() / 3.7,
                                 alignment: Alignment.center,
-                                padding: EdgeInsets.symmetric(vertical: 12),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 12),
                                 decoration: boxDecorationDefault(
                                   color: productStore.selectedOrderStatusList
                                           .contains(statusData.name)
@@ -251,7 +255,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(
+                                    const Icon(
                                       Icons.check,
                                       size: 14,
                                       color: Colors.white,

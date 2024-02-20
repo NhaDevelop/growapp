@@ -14,10 +14,10 @@ import '../view/cart_screen.dart';
 class CartItemComponent extends StatefulWidget {
   final CartListData cartListData;
 
-  CartItemComponent({required this.cartListData});
+  const CartItemComponent({super.key, required this.cartListData});
 
   @override
-  _CartItemComponentState createState() => _CartItemComponentState();
+  State<CartItemComponent> createState() => _CartItemComponentState();
 }
 
 class _CartItemComponentState extends State<CartItemComponent> {
@@ -90,8 +90,8 @@ class _CartItemComponentState extends State<CartItemComponent> {
   Widget build(BuildContext context) {
     return Container(
       width: context.width(),
-      padding: EdgeInsets.all(16),
-      margin: EdgeInsets.only(left: 16, right: 16, bottom: 16),
+      padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
       decoration:
           boxDecorationWithRoundedCorners(backgroundColor: context.cardColor),
       child: Column(

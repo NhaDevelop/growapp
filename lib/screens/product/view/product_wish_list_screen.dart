@@ -16,10 +16,10 @@ late VoidCallback onWishListUpdate;
 class ProductWishListScreen extends StatefulWidget {
   final bool isFromProductDetail;
 
-  ProductWishListScreen({this.isFromProductDetail = false});
+  const ProductWishListScreen({super.key, this.isFromProductDetail = false});
 
   @override
-  _ProductWishListScreenState createState() => _ProductWishListScreenState();
+  State<ProductWishListScreen> createState() => _ProductWishListScreenState();
 }
 
 class _ProductWishListScreenState extends State<ProductWishListScreen> {
@@ -60,13 +60,9 @@ class _ProductWishListScreenState extends State<ProductWishListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () {
-        finish(
-          context,
-        );
-        return Future(() => false);
-      },
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (_) => finish(context),
       child: AppScaffold(
         appBarWidget: commonAppBarWidget(
           context,
@@ -75,17 +71,17 @@ class _ProductWishListScreenState extends State<ProductWishListScreen> {
           roundCornerShape: true,
           showLeadingIcon: true,
           actions: [
-            CartIconBtnComponent(),
+            const CartIconBtnComponent(),
           ],
         ),
         body: SnapHelperWidget<List<ProductData>>(
           future: future,
-          loadingWidget: LoaderWidget(),
+          loadingWidget: const LoaderWidget(),
           errorBuilder: (error) {
             return NoDataWidget(
               title: error,
               retryText: locale.reload,
-              imageWidget: ErrorStateWidget(),
+              imageWidget: const ErrorStateWidget(),
               onRetry: () {
                 page = 1;
                 appStore.setLoading(true);
@@ -98,7 +94,7 @@ class _ProductWishListScreenState extends State<ProductWishListScreen> {
             if (wishlist.isEmpty) {
               return NoDataWidget(
                 title: locale.noProductsFound,
-                imageWidget: EmptyStateWidget(),
+                imageWidget: const EmptyStateWidget(),
                 subTitle: locale.thereAreCurrentlyNoItemsInYourWishlist,
                 retryText: locale.reload,
                 onRetry: () {
@@ -111,10 +107,10 @@ class _ProductWishListScreenState extends State<ProductWishListScreen> {
             }
 
             return AnimatedScrollView(
-              padding:
-                  EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 30),
+              padding: const EdgeInsets.only(
+                  left: 16, right: 16, top: 16, bottom: 30),
               crossAxisAlignment: CrossAxisAlignment.start,
-              physics: AlwaysScrollableScrollPhysics(),
+              physics: const AlwaysScrollableScrollPhysics(),
               onSwipeRefresh: () async {
                 page = 1;
                 init(flag: true);

@@ -36,7 +36,7 @@ Future<List<EmployeeData>> getEmployeeList({
     appStore.setLoading(false);
   } catch (e) {
     appStore.setLoading(false);
-    throw e;
+    rethrow;
   }
   return list;
 }
@@ -62,6 +62,6 @@ Future<EmployeeDetailResponse> getEmployeeDetail(
     return res;
   } catch (e) {
     appStore.setLoading(false);
-    throw e;
+    rethrow;
   }
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:grow_tokyo_app/screens/branch/branch_repository.dart';
@@ -82,8 +84,9 @@ abstract class _AppStore with Store {
   Future<void> setBranchAddress(String val,
       {bool isInitializing = false}) async {
     branchAddress = val;
-    if (!isInitializing)
+    if (!isInitializing) {
       await setValue(SharedPreferenceConst.BRANCH_ADDRESS, val);
+    }
   }
 
   @action
@@ -96,8 +99,9 @@ abstract class _AppStore with Store {
   Future<void> setBranchContactNumber(String val,
       {bool isInitializing = false}) async {
     branchContactNumber = val;
-    if (!isInitializing)
+    if (!isInitializing) {
       await setValue(SharedPreferenceConst.BRANCH_CONTACT_NUMBER, val);
+    }
   }
 
   @action
@@ -114,48 +118,54 @@ abstract class _AppStore with Store {
   Future<void> setHelplineNumber(String val,
       {bool isInitializing = false}) async {
     helplineNumber = val;
-    if (!isInitializing)
+    if (!isInitializing) {
       await setValue(SharedPreferenceConst.HELPLINE_NUMBER, val);
+    }
   }
 
   @action
   Future<void> setInquiryEmail(String val,
       {bool isInitializing = false}) async {
     inquiryEmail = val;
-    if (!isInitializing)
+    if (!isInitializing) {
       await setValue(SharedPreferenceConst.INQUIRY_EMAIL, val);
+    }
   }
 
   @action
   Future<void> setTermConditions(String val,
       {bool isInitializing = false}) async {
     termConditions = val;
-    if (!isInitializing)
+    if (!isInitializing) {
       await setValue(SharedPreferenceConst.TERM_CONDITIONS, val);
+    }
   }
 
   @action
   Future<void> setPrivacyPolicy(String val,
       {bool isInitializing = false}) async {
     privacyPolicy = val;
-    if (!isInitializing)
+    if (!isInitializing) {
       await setValue(SharedPreferenceConst.PRIVACY_POLICY, val);
+    }
   }
 
   @action
   Future<void> setCurrencySymbol(String val,
       {bool isInitializing = false}) async {
     currencySymbol = val;
-    if (!isInitializing)
+    if (!isInitializing) {
       await setValue(ConfigurationKeyConst.CURRENCY_COUNTRY_SYMBOL, val);
+    }
   }
 
   @action
   Future<void> setCurrencyCountryId(String val,
       {bool isInitializing = false}) async {
     currencyCountryId = val;
-    if (!isInitializing)
+    if (!isInitializing) {
       await setValue(ConfigurationKeyConst.CURRENCY_COUNTRY_ID, val);
+    }
   }
 
   @action
@@ -180,15 +190,17 @@ abstract class _AppStore with Store {
   Future<void> setCurrencyCode(String val,
       {bool isInitializing = false}) async {
     currencyCode = val;
-    if (!isInitializing)
+    if (!isInitializing) {
       await setValue(ConfigurationKeyConst.CURRENCY_COUNTRY_CODE, val);
+    }
   }
 
   @action
   Future<void> setLoggedIn(bool val, {bool isInitializing = false}) async {
     isLoggedIn = val;
-    if (!isInitializing)
+    if (!isInitializing) {
       await setValue(SharedPreferenceConst.IS_LOGGED_IN, val);
+    }
   }
 
   @action
@@ -217,7 +229,7 @@ abstract class _AppStore with Store {
       defaultLoaderBgColorGlobal = scaffoldDarkColor;
       appButtonBackgroundColorGlobal = appButtonColorDark;
       shadowColorGlobal = Colors.white12;
-      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
         systemNavigationBarColor: cardDarkColor,
         systemNavigationBarDividerColor: Colors.transparent,
         systemNavigationBarIconBrightness: Brightness.dark,
@@ -228,7 +240,7 @@ abstract class _AppStore with Store {
       defaultLoaderBgColorGlobal = Colors.white;
       appButtonBackgroundColorGlobal = Colors.white;
       shadowColorGlobal = Colors.black12;
-      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
         systemNavigationBarColor: cardColor,
         systemNavigationBarDividerColor: Colors.transparent,
         systemNavigationBarIconBrightness: Brightness.light,
@@ -243,7 +255,7 @@ abstract class _AppStore with Store {
 
     await setValue(SELECTED_LANGUAGE_CODE, selectedLanguageCode);
 
-    locale = await AppLocalizations().load(Locale(selectedLanguageCode));
+    locale = await const AppLocalizations().load(Locale(selectedLanguageCode));
 
     errorMessage = locale.pleaseTryAgain;
     errorSomethingWentWrong = locale.somethingWentWrong;

@@ -8,10 +8,10 @@ import '../../../utils/constants.dart';
 class ReviewItemComponent extends StatefulWidget {
   final ReviewData reviewData;
 
-  ReviewItemComponent({required this.reviewData});
+  const ReviewItemComponent({super.key, required this.reviewData});
 
   @override
-  _ReviewItemComponentState createState() => _ReviewItemComponentState();
+  State<ReviewItemComponent> createState() => _ReviewItemComponentState();
 }
 
 class _ReviewItemComponentState extends State<ReviewItemComponent> {
@@ -33,8 +33,8 @@ class _ReviewItemComponentState extends State<ReviewItemComponent> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16),
-      margin: EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.symmetric(vertical: 8),
       width: context.width(),
       decoration:
           boxDecorationWithRoundedCorners(backgroundColor: context.cardColor),
@@ -47,14 +47,15 @@ class _ReviewItemComponentState extends State<ReviewItemComponent> {
               Row(
                 children: [
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     alignment: Alignment.center,
                     decoration: boxDecorationWithRoundedCorners(
                         backgroundColor: context.scaffoldBackgroundColor),
                     child: TextIcon(
                       text: widget.reviewData.rating.validate().toString(),
                       spacing: 8,
-                      edgeInsets: EdgeInsets.only(left: 0),
+                      edgeInsets: const EdgeInsets.only(left: 0),
                       textStyle: boldTextStyle(),
                       prefix: Icon(Icons.star,
                           size: 12, color: widget.reviewData.ratingColor),
@@ -73,7 +74,7 @@ class _ReviewItemComponentState extends State<ReviewItemComponent> {
                       formatDate(widget.reviewData.createdAt.validate(),
                           format: DateFormatConst.DATE_FORMAT_4),
                       style: secondaryTextStyle())
-                  : SizedBox(),
+                  : const SizedBox(),
             ],
           ),
           if (widget.reviewData.reviewMsg.validate().isNotEmpty)

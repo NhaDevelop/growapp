@@ -14,9 +14,9 @@ class CategoryDetailResponse {
     }
 
     Map<String, dynamic> toJson() {
-        final Map<String, dynamic> data = new Map<String, dynamic>();
-        data['message'] = this.message;
-        data['status'] = this.status;
+        final Map<String, dynamic> data = <String, dynamic>{};
+        data['message'] = message;
+        data['status'] = status;
         if (this.data != null) {
             data['data'] = this.data!.toJson();
         }
@@ -42,41 +42,41 @@ class CategoryDetail {
     factory CategoryDetail.fromJson(Map<String, dynamic> json) {
         return CategoryDetail(
             createdAt: json['created_at'],
-            createdBy: json['created_by'] != null ? json['created_by'] : null,
-            deletedAt: json['deleted_at'] != null ? json['deleted_at'] : null,
-            deletedBy: json['deleted_by'] != null ? json['deleted_by'] : null,
+            createdBy: json['created_by'],
+            deletedAt: json['deleted_at'],
+            deletedBy: json['deleted_by'],
             id: json['id'], 
             name: json['name'], 
-            parentId: json['parent_id'] != null ? json['parent_id'] : null,
+            parentId: json['parent_id'],
             slug: json['slug'], 
             status: json['status'], 
             updatedAt: json['updated_at'],
-            updatedBy: json['updated_by'] != null ? json['updated_by'] : null,
+            updatedBy: json['updated_by'],
         );
     }
 
     Map<String, dynamic> toJson() {
-        final Map<String, dynamic> data = new Map<String, dynamic>();
-        data['created_at'] = this.createdAt;
-        data['id'] = this.id;
-        data['name'] = this.name;
-        data['slug'] = this.slug;
-        data['status'] = this.status;
-        data['updated_at'] = this.updatedAt;
-        if (this.createdBy != null) {
-            data['created_by'] = this.createdBy;
+        final Map<String, dynamic> data = <String, dynamic>{};
+        data['created_at'] = createdAt;
+        data['id'] = id;
+        data['name'] = name;
+        data['slug'] = slug;
+        data['status'] = status;
+        data['updated_at'] = updatedAt;
+        if (createdBy != null) {
+            data['created_by'] = createdBy;
         }
-        if (this.deletedAt != null) {
-            data['deleted_at'] = this.deletedAt;
+        if (deletedAt != null) {
+            data['deleted_at'] = deletedAt;
         }
-        if (this.deletedBy != null) {
-            data['deleted_by'] = this.deletedBy;
+        if (deletedBy != null) {
+            data['deleted_by'] = deletedBy;
         }
-        if (this.parentId != null) {
-            data['parent_id'] = this.parentId;
+        if (parentId != null) {
+            data['parent_id'] = parentId;
         }
-        if (this.updatedBy != null) {
-            data['updated_by'] = this.updatedBy;
+        if (updatedBy != null) {
+            data['updated_by'] = updatedBy;
         }
         return data;
     }

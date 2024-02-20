@@ -10,7 +10,7 @@ import '../model/product_list_response.dart';
 class ProductDescriptionComponent extends StatelessWidget {
   final ProductData productData;
 
-  ProductDescriptionComponent({required this.productData});
+  const ProductDescriptionComponent({super.key, required this.productData});
 
   @override
   Widget build(BuildContext context) {

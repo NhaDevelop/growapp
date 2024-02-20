@@ -71,7 +71,7 @@ class StripeService {
       'amount': '${(totalAmount.toInt() * 100)}',
       'currency': await isIqonicProduct
           ? STRIPE_CURRENCY_CODE
-          : '${appStore.currencyCode}',
+          : appStore.currencyCode,
       'description':
           'Name: ${userStore.userFullName} - Email: ${userStore.userEmail}',
     };

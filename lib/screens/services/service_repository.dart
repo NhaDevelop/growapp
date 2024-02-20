@@ -40,7 +40,7 @@ Future<List<ServiceListData>> getServiceList({
     appStore.setLoading(false);
   } catch (e) {
     appStore.setLoading(false);
-    throw e;
+    rethrow;
   }
   return list;
 }

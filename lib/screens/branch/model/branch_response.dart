@@ -22,9 +22,9 @@ class BranchResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
-    data['status'] = this.status;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
+    data['status'] = status;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -100,25 +100,25 @@ class BranchData {
       contactEmail: json['contact_email'],
       contactNumber: json['contact_number'],
       createdAt: json['created_at'],
-      createdBy: json['created_by'] != null ? json['created_by'] : null,
-      deletedAt: json['deleted_at'] != null ? json['deleted_at'] : null,
-      deletedBy: json['deleted_by'] != null ? json['deleted_by'] : null,
+      createdBy: json['created_by'],
+      deletedAt: json['deleted_at'],
+      deletedBy: json['deleted_by'],
       id: json['id'],
       latitude: json['latitude'],
       longitude: json['longitude'],
       managerId: json['manager_id'],
       name: json['name'],
       paymentMethod: json['payment_method'] != null
-          ? new List<String>.from(json['payment_method'])
+          ? List<String>.from(json['payment_method'])
           : null,
-      ratingStar: json['rating_star'] != null ? json['rating_star'] : null,
+      ratingStar: json['rating_star'],
       slug: json['slug'],
       status: json['status'],
       updatedAt: json['updated_at'],
       totalReview: json['total_review'],
-      updatedBy: json['updated_by'] != null ? json['updated_by'] : null,
-      branchImg: json['branch_image'] != null ? json['branch_image'] : null,
-      description: json['description'] != null ? json['description'] : null,
+      updatedBy: json['updated_by'],
+      branchImg: json['branch_image'],
+      description: json['description'],
       workingHourList: json['working_days'] != null
           ? (json['working_days'] as List)
               .map((e) => WorkingHourList.fromJson(e))
@@ -128,45 +128,45 @@ class BranchData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['address_line_1'] = this.addressLine1;
-    data['branch_for'] = this.branchFor;
-    data['contact_email'] = this.contactEmail;
-    data['contact_number'] = this.contactNumber;
-    data['created_at'] = this.createdAt;
-    data['id'] = this.id;
-    data['latitude'] = this.latitude;
-    data['longitude'] = this.longitude;
-    data['manager_id'] = this.managerId;
-    data['name'] = this.name;
-    data['slug'] = this.slug;
-    data['status'] = this.status;
-    data['updated_at'] = this.updatedAt;
-    data['total_review'] = this.totalReview;
-    data['description'] = this.description;
-    if (this.createdBy != null) {
-      data['created_by'] = this.createdBy;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['address_line_1'] = addressLine1;
+    data['branch_for'] = branchFor;
+    data['contact_email'] = contactEmail;
+    data['contact_number'] = contactNumber;
+    data['created_at'] = createdAt;
+    data['id'] = id;
+    data['latitude'] = latitude;
+    data['longitude'] = longitude;
+    data['manager_id'] = managerId;
+    data['name'] = name;
+    data['slug'] = slug;
+    data['status'] = status;
+    data['updated_at'] = updatedAt;
+    data['total_review'] = totalReview;
+    data['description'] = description;
+    if (createdBy != null) {
+      data['created_by'] = createdBy;
     }
-    if (this.deletedAt != null) {
-      data['deleted_at'] = this.deletedAt;
+    if (deletedAt != null) {
+      data['deleted_at'] = deletedAt;
     }
-    if (this.deletedBy != null) {
-      data['deleted_by'] = this.deletedBy;
+    if (deletedBy != null) {
+      data['deleted_by'] = deletedBy;
     }
-    if (this.paymentMethod != null) {
-      data['payment_method'] = this.paymentMethod;
+    if (paymentMethod != null) {
+      data['payment_method'] = paymentMethod;
     }
-    if (this.ratingStar != null) {
-      data['rating_start'] = this.ratingStar;
+    if (ratingStar != null) {
+      data['rating_start'] = ratingStar;
     }
-    if (this.updatedBy != null) {
-      data['updated_by'] = this.updatedBy;
+    if (updatedBy != null) {
+      data['updated_by'] = updatedBy;
     }
-    if (this.branchImg != null) {
-      data['branch_image'] = this.branchImg;
+    if (branchImg != null) {
+      data['branch_image'] = branchImg;
     }
-    if (this.workingHourList != null) {
-      data['working_days'] = this.workingHourList;
+    if (workingHourList != null) {
+      data['working_days'] = workingHourList;
     }
     return data;
   }
@@ -201,14 +201,14 @@ class WorkingHourList {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['day'] = this.day;
-    data['end_time'] = this.endTime;
-    data['is_holiday'] = this.isHoliday;
-    data['start_time'] = this.startTime;
-    if (this.branchBreaks != null) {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['day'] = day;
+    data['end_time'] = endTime;
+    data['is_holiday'] = isHoliday;
+    data['start_time'] = startTime;
+    if (branchBreaks != null) {
       data['breaks'] =
-          data['breaks'] = this.branchBreaks!.map((v) => v.toJson()).toList();
+          data['breaks'] = branchBreaks!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -228,9 +228,9 @@ class BranchBreaks {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['start_break'] = this.startBreak;
-    data['end_break'] = this.endBreak;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['start_break'] = startBreak;
+    data['end_break'] = endBreak;
     return data;
   }
 }

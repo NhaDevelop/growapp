@@ -11,7 +11,7 @@ class AppleLoginAuthService {
   Future<void> appleSignIn() async {
     if (await TheAppleSignIn.isAvailable()) {
       AuthorizationResult result = await TheAppleSignIn.performRequests([
-        AppleIdRequest(requestedScopes: [Scope.email, Scope.fullName])
+        const AppleIdRequest(requestedScopes: [Scope.email, Scope.fullName])
       ]);
 
       switch (result.status) {
@@ -28,7 +28,7 @@ class AppleLoginAuthService {
           final user = authResult.user!;
 
           log('User:- $user');
-          print('result :- ${result.credential!.email}');
+          log('result :- ${result.credential!.email}');
           if (result.credential!.email != null) {
             appStore.setLoading(true);
 
@@ -76,7 +76,7 @@ class AppleLoginAuthService {
     var req = {
       'email': getStringAsync(SharedPreferenceConst.APPLE_EMAIL).isNotEmpty
           ? getStringAsync(SharedPreferenceConst.APPLE_EMAIL)
-          : getStringAsync(SharedPreferenceConst.APPLE_UID) + '@gmail.com',
+          : '${getStringAsync(SharedPreferenceConst.APPLE_UID)}@gmail.com',
       'first_name':
           getStringAsync(SharedPreferenceConst.APPLE_GIVE_NAME).isNotEmpty
               ? getStringAsync(SharedPreferenceConst.APPLE_GIVE_NAME)
@@ -87,7 +87,7 @@ class AppleLoginAuthService {
               : '',
       "username": getStringAsync(SharedPreferenceConst.APPLE_EMAIL).isNotEmpty
           ? getStringAsync(SharedPreferenceConst.APPLE_EMAIL)
-          : getStringAsync(SharedPreferenceConst.APPLE_UID) + '@gmail.com',
+          : '${getStringAsync(SharedPreferenceConst.APPLE_UID)}@gmail.com',
       "profile_image": '',
       "social_image": '',
       'accessToken': '12345678',
@@ -95,7 +95,7 @@ class AppleLoginAuthService {
       "user_type": LoginTypeConst.LOGIN_TYPE_USER,
     };
 
-    log("Apple Login Json" + jsonEncode(req));
+    log("Apple Login Json${jsonEncode(req)}");
 
     if (!getStringAsync(SharedPreferenceConst.APPLE_EMAIL).isEmptyOrNull) {
       await loginUser(req, isSocialLogin: true).then((value) async {

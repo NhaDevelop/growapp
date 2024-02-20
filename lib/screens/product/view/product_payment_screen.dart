@@ -22,8 +22,10 @@ import '../../order/orderPaymentGateways/order_stripe_service.dart';
 import '../../order/order_repository.dart';
 
 class ProductPaymentScreen extends StatefulWidget {
+  const ProductPaymentScreen({super.key});
+
   @override
-  _ProductPaymentScreenState createState() => _ProductPaymentScreenState();
+  State<ProductPaymentScreen> createState() => _ProductPaymentScreenState();
 }
 
 class _ProductPaymentScreenState extends State<ProductPaymentScreen> {
@@ -222,8 +224,8 @@ class _ProductPaymentScreenState extends State<ProductPaymentScreen> {
         buttonText: locale.goToOrderList,
         onTap: () {
           finish(context);
-          DashboardScreen(pageIndex: 3).launch(context, isNewTask: true);
-          OrderListScreen().launch(context);
+          const DashboardScreen(pageIndex: 3).launch(context, isNewTask: true);
+          const OrderListScreen().launch(context);
         },
       ),
     );
@@ -242,7 +244,8 @@ class _ProductPaymentScreenState extends State<ProductPaymentScreen> {
       body: Stack(
         children: [
           SingleChildScrollView(
-            padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 120),
+            padding: const EdgeInsets.only(
+                left: 16, right: 16, top: 16, bottom: 120),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -262,11 +265,11 @@ class _ProductPaymentScreenState extends State<ProductPaymentScreen> {
                       decoration: boxDecorationWithRoundedCorners(
                           borderRadius: radius(),
                           backgroundColor: context.cardColor),
-                      margin: EdgeInsets.only(bottom: 16),
+                      margin: const EdgeInsets.only(bottom: 16),
                       child: SettingItemWidget(
                         title: payments[index].paymentMethod.validate(),
                         titleTextStyle: boldTextStyle(size: 14),
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                             left: 16, bottom: 10, top: 10, right: 10),
                         leading: CachedImageWidget(
                             url: payments[index].icon.validate(),
@@ -300,8 +303,6 @@ class _ProductPaymentScreenState extends State<ProductPaymentScreen> {
             right: 16,
             child: AppButton(
               width: context.width(),
-              child: Text(locale.placeOrder,
-                  style: boldTextStyle(color: Colors.white)),
               color: secondaryColor,
               onTap: () {
                 doIfLoggedIn(context, () async {
@@ -318,6 +319,8 @@ class _ProductPaymentScreenState extends State<ProductPaymentScreen> {
                   }
                 });
               },
+              child: Text(locale.placeOrder,
+                  style: boldTextStyle(color: Colors.white)),
             ),
           ),
         ],

@@ -53,7 +53,7 @@ class OrderStripeService {
       'amount': '${(totalAmount.toInt() * 100)}',
       'currency': await isIqonicProduct
           ? STRIPE_CURRENCY_CODE
-          : '${appStore.currencyCode}',
+          : appStore.currencyCode,
       'description':
           'Name: ${productStore.fullName} - Email: ${productStore.customerEmail}',
     };

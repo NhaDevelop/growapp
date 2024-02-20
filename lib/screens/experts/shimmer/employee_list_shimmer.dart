@@ -4,10 +4,12 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../../components/shimmer_widget.dart';
 
 class EmployeeListShimmer extends StatelessWidget {
+  const EmployeeListShimmer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return AnimatedScrollView(
-      padding: EdgeInsets.only(top: 50, left: 16, right: 16, bottom: 16),
+      padding: const EdgeInsets.only(top: 50, left: 16, right: 16, bottom: 16),
       listAnimationType: ListAnimationType.None,
       children: [
         AnimatedWrap(
@@ -23,7 +25,7 @@ class EmployeeListShimmer extends StatelessWidget {
                 ShimmerWidget(
                   child: Container(
                     width: (context.width() - 48) / 2,
-                    padding: EdgeInsets.only(top: 48, left: 16, right: 16),
+                    padding: const EdgeInsets.only(top: 48, left: 16, right: 16),
                     decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor),
                     child: ShimmerWidget(height: 68, width: context.width() * 0.25),
                   ),
@@ -35,7 +37,7 @@ class EmployeeListShimmer extends StatelessWidget {
                     child: Container(
                       width: 62,
                       height: 62,
-                      padding: EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(color: context.cardColor, shape: BoxShape.circle),
                     ),
                   ),

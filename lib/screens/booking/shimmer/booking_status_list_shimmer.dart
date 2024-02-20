@@ -6,6 +6,8 @@ import '../../../components/shimmer_widget.dart';
 import '../../../utils/colors.dart';
 
 class BookingStatusListShimmer extends StatelessWidget {
+  const BookingStatusListShimmer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -14,8 +16,8 @@ class BookingStatusListShimmer extends StatelessWidget {
         children: [
           Container(
             color: context.scaffoldBackgroundColor,
-            margin: EdgeInsets.only(top: 30),
-            padding: EdgeInsets.symmetric(horizontal: 16),
+            margin: const EdgeInsets.only(top: 30),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: TabBar(
               isScrollable: true,
               indicatorSize: TabBarIndicatorSize.tab,
@@ -29,7 +31,7 @@ class BookingStatusListShimmer extends StatelessWidget {
           ),
           TabBarView(
             children: List.generate(6, (index) {
-              return BookingListShimmer();
+              return const BookingListShimmer();
             }),
           ).expand(),
         ],

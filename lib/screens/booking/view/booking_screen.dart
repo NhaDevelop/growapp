@@ -25,7 +25,7 @@ class BookingScreen extends StatefulWidget {
       {super.key, required this.services, this.isReschedule = false});
 
   @override
-  _BookingScreenState createState() => _BookingScreenState();
+  State<BookingScreen> createState() => _BookingScreenState();
 }
 
 class _BookingScreenState extends State<BookingScreen> {
@@ -73,18 +73,15 @@ class _BookingScreenState extends State<BookingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () {
-        if (currentStep == 0) {
-          return Future.value(true);
-        } else {
-          bookingRequestStore.time = '';
-          customStepperController.previousPage(
-              duration: 300.milliseconds, curve: Curves.linear);
-          LiveStream()
-              .emit(LiveStreamKeyConst.LIVESTREAM_CHANGE_STEP, currentStep);
-          return Future.value(false);
-        }
+    return PopScope(
+      canPop: currentStep == 0,
+      onPopInvoked: (canPop) {
+        if (canPop) return;
+        bookingRequestStore.time = '';
+        customStepperController.previousPage(
+            duration: 300.milliseconds, curve: Curves.linear);
+        LiveStream()
+            .emit(LiveStreamKeyConst.LIVESTREAM_CHANGE_STEP, currentStep);
       },
       child: Scaffold(
         body: CustomStepper(

@@ -9,9 +9,9 @@ class Body extends StatelessWidget {
   final Widget child;
 
   const Body({
-    Key? key,
+    super.key,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class Body extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           child,
-          Observer(builder: (_) => LoaderWidget().visible(appStore.isLoading)),
+          Observer(builder: (_) => const LoaderWidget().visible(appStore.isLoading)),
         ],
       ),
     );

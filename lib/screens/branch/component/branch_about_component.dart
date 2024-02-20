@@ -11,12 +11,12 @@ class BranchAboutComponent extends StatelessWidget {
   final String branchDescription;
   final List<WorkingHourList> workingList;
 
-  BranchAboutComponent({required this.branchDescription, required this.workingList});
+  const BranchAboutComponent({super.key, required this.branchDescription, required this.workingList});
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -47,9 +47,9 @@ String formatDate(String? dateTime,
 String formatOnlyTime(BuildContext context,
     {String? startTime, String? endTime}) {
   if (startTime != null && endTime == null) {
-    return '${TimeOfDay(hour: startTime.validate().split(':')[0].toInt(), minute: startTime.validate().split(':')[1].toInt()).format(context)}';
+    return TimeOfDay(hour: startTime.validate().split(':')[0].toInt(), minute: startTime.validate().split(':')[1].toInt()).format(context);
   } else if (endTime != null && startTime == null) {
-    return '${TimeOfDay(hour: endTime.validate().split(':')[0].toInt(), minute: endTime.validate().split(':')[1].toInt()).format(context)}';
+    return TimeOfDay(hour: endTime.validate().split(':')[0].toInt(), minute: endTime.validate().split(':')[1].toInt()).format(context);
   } else {
     return '${TimeOfDay(hour: startTime.validate().split(':')[0].toInt(), minute: startTime.validate().split(':')[1].toInt()).format(context)} - ${TimeOfDay(hour: endTime.validate().split(':')[0].toInt(), minute: endTime.validate().split(':')[1].toInt()).format(context)}';
   }
@@ -167,7 +167,7 @@ InputDecoration inputDecoration(
   String? prefixText,
 }) {
   return InputDecoration(
-    contentPadding: EdgeInsets.only(left: 12, bottom: 10, top: 10, right: 10),
+    contentPadding: const EdgeInsets.only(left: 12, bottom: 10, top: 10, right: 10),
     hintText: hint,
     hintStyle: secondaryTextStyle(),
     labelText: label,
@@ -181,29 +181,29 @@ InputDecoration inputDecoration(
     suffixIcon: suffixIcon,
     enabledBorder: OutlineInputBorder(
       borderRadius: radius(borderRadius ?? defaultRadius),
-      borderSide: BorderSide(color: Colors.transparent, width: 0.0),
+      borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
     ),
     focusedErrorBorder: OutlineInputBorder(
       borderRadius: radius(borderRadius ?? defaultRadius),
-      borderSide: BorderSide(color: Colors.red, width: 0.0),
+      borderSide: const BorderSide(color: Colors.red, width: 0.0),
     ),
     errorBorder: OutlineInputBorder(
       borderRadius: radius(borderRadius ?? defaultRadius),
-      borderSide: BorderSide(color: Colors.red, width: 1.0),
+      borderSide: const BorderSide(color: Colors.red, width: 1.0),
     ),
     errorMaxLines: 2,
     border: OutlineInputBorder(
       borderRadius: radius(borderRadius ?? defaultRadius),
-      borderSide: BorderSide(color: Colors.transparent, width: 0.0),
+      borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
     ),
     disabledBorder: OutlineInputBorder(
       borderRadius: radius(borderRadius ?? defaultRadius),
-      borderSide: BorderSide(color: Colors.transparent, width: 0.0),
+      borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
     ),
     errorStyle: primaryTextStyle(color: Colors.red, size: 12),
     focusedBorder: OutlineInputBorder(
       borderRadius: radius(borderRadius ?? defaultRadius),
-      borderSide: BorderSide(color: primaryColor, width: 0.0),
+      borderSide: const BorderSide(color: primaryColor, width: 0.0),
     ),
     filled: true,
     fillColor: fillColor ?? context.cardColor,
@@ -225,9 +225,9 @@ Color getRatingBarColor(int rating) {
   if (rating == 1 || rating == 2) {
     return ratingBarColor;
   } else if (rating == 3) {
-    return Color(0xFFff6200);
+    return const Color(0xFFff6200);
   } else if (rating == 4 || rating == 5) {
-    return Color(0xFF73CB92);
+    return const Color(0xFF73CB92);
   } else {
     return ratingBarColor;
   }
@@ -281,7 +281,7 @@ Future<String?> timePicker(BuildContext context) async {
 
 String durationToString(int minutes) {
   var d = Duration(minutes: minutes);
-  var hour, minute;
+  String hour, minute;
 
   List<String> parts = d.toString().split(':');
 
@@ -304,7 +304,7 @@ void doIfLoggedIn(BuildContext context, VoidCallback callback) async {
   if (appStore.isLoggedIn) {
     callback.call();
   } else {
-    bool? res = await SignInScreen(returnExpected: true).launch(context);
+    bool? res = await const SignInScreen(returnExpected: true).launch(context);
 
     if (res ?? false) {
       callback.call();
@@ -349,7 +349,7 @@ void showNewUpdateDialog(BuildContext context) async {
             ? true
             : false),
     builder: (_) {
-      return NewUpdateDialog();
+      return const NewUpdateDialog();
     },
   );
 }
