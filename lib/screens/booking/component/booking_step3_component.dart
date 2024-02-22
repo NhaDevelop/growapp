@@ -11,7 +11,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/common_app_dialog.dart';
 import '../../../components/loader_widget.dart';
-import '../../../configs.dart';
+// import '../../../configs.dart';
 import '../../../main.dart';
 import '../../../paymentGateways/models/payment_list_model.dart';
 import '../../../paymentGateways/services/flutter_wave_service.dart';
@@ -150,22 +150,22 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
     } else if (selectedPayment.id == PaymentMethods.PAYMENT_METHOD_RAZORPAY) {
       appStore.setLoading(true);
 
-      razorPayService.init(
-        razorKey: RAZORPAY_TEST_KEY,
-        totalAmount: bookingRequestStore.totalAmount,
-        bookingId: bookingRequestStore.bookingId.validate(),
-        discountAmount: 0,
-        discountPercentage: 0,
-        serviceTip: tipController.text.toDouble(),
-        taxData: bookingRequestStore.taxPercentage.validate(),
-        onComplete: (res) {
-          log(res);
+      // razorPayService.init(
+      //   razorKey: RAZORPAY_TEST_KEY,
+      //   totalAmount: bookingRequestStore.totalAmount,
+      //   bookingId: bookingRequestStore.bookingId.validate(),
+      //   discountAmount: 0,
+      //   discountPercentage: 0,
+      //   serviceTip: tipController.text.toDouble(),
+      //   taxData: bookingRequestStore.taxPercentage.validate(),
+      //   onComplete: (res) {
+      //     log(res);
 
-          finish(context);
-          finish(context);
-          showBookingCompleteDialog();
-        },
-      );
+      //     finish(context);
+      //     finish(context);
+      //     showBookingCompleteDialog();
+      //   },
+      // );
 
       await 1.seconds.delay;
       appStore.setLoading(false);
@@ -174,23 +174,23 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
     } else if (selectedPayment.id == PaymentMethods.PAYMENT_METHOD_STRIPE) {
       appStore.setLoading(true);
 
-      await stripeServices.init(
-        stripePaymentPublishKey: STRIPE_TEST_PUBLIC_KEY,
-        totalAmount: bookingRequestStore.totalAmount,
-        bookingId: bookingRequestStore.bookingId.validate(),
-        stripeURL: STRIPE_URL,
-        stripePaymentKey: STRIPE_TEST_SECRET_KEY,
-        isTest: true,
-        discountAmount: 0,
-        discountPercentage: 0,
-        serviceTip: tipController.text.toDouble(),
-        taxData: bookingRequestStore.taxPercentage.validate(),
-        onComplete: (res) {
-          finish(context);
-          finish(context);
-          showBookingCompleteDialog();
-        },
-      );
+      // await stripeServices.init(
+      //   stripePaymentPublishKey: STRIPE_TEST_PUBLIC_KEY,
+      //   totalAmount: bookingRequestStore.totalAmount,
+      //   bookingId: bookingRequestStore.bookingId.validate(),
+      //   stripeURL: STRIPE_URL,
+      //   stripePaymentKey: STRIPE_TEST_SECRET_KEY,
+      //   isTest: true,
+      //   discountAmount: 0,
+      //   discountPercentage: 0,
+      //   serviceTip: tipController.text.toDouble(),
+      //   taxData: bookingRequestStore.taxPercentage.validate(),
+      //   onComplete: (res) {
+      //     finish(context);
+      //     finish(context);
+      //     showBookingCompleteDialog();
+      //   },
+      // );
 
       await 1.seconds.delay;
       stripeServices.stripePay().then((value) {
@@ -203,23 +203,23 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
     } else if (selectedPayment.id == PaymentMethods.PAYMENT_METHOD_PAYSTACK) {
       appStore.setLoading(true);
 
-      await paystackServices.init(
-        context: context,
-        paystackPaymentPublicKey: PAYSTACK_TEST_PUBLIC_KEY,
-        totalAmount: bookingRequestStore.totalAmount,
-        bookingId: bookingRequestStore.bookingId.validate(),
-        discountAmount: 0,
-        discountPercentage: 0,
-        taxData: bookingRequestStore.taxPercentage.validate(),
-        serviceTip: tipController.text.toDouble(),
-        onComplete: (p0) {
-          log(p0);
+      // await paystackServices.init(
+      //   context: context,
+      //   paystackPaymentPublicKey: PAYSTACK_TEST_PUBLIC_KEY,
+      //   totalAmount: bookingRequestStore.totalAmount,
+      //   bookingId: bookingRequestStore.bookingId.validate(),
+      //   discountAmount: 0,
+      //   discountPercentage: 0,
+      //   taxData: bookingRequestStore.taxPercentage.validate(),
+      //   serviceTip: tipController.text.toDouble(),
+      //   onComplete: (p0) {
+      //     log(p0);
 
-          finish(context);
-          finish(context);
-          showBookingCompleteDialog();
-        },
-      );
+      //     finish(context);
+      //     finish(context);
+      //     showBookingCompleteDialog();
+      //   },
+      // );
 
       await 1.seconds.delay;
       appStore.setLoading(false);
@@ -228,23 +228,23 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
     } else if (selectedPayment.id == PaymentMethods.PAYMENT_METHOD_PAYPAL) {
       appStore.setLoading(true);
 
-      await payPalServices.init(
-        context: context,
-        isTest: true,
-        paypalClientId: PAYPAL_CLIENT_ID,
-        secretKey: PAYPAL_TEST_SECRET_KEY,
-        totalAmount: bookingRequestStore.totalAmount,
-        bookingId: bookingRequestStore.bookingId.validate(),
-        discountAmount: 0,
-        discountPercentage: 0,
-        taxData: bookingRequestStore.taxPercentage.validate(),
-        serviceTip: tipController.text.toDouble(),
-        onComplete: (p0) {
-          finish(context);
-          finish(context);
-          showBookingCompleteDialog();
-        },
-      );
+      // await payPalServices.init(
+      //   context: context,
+      //   isTest: true,
+      //   paypalClientId: PAYPAL_CLIENT_ID,
+      //   secretKey: PAYPAL_TEST_SECRET_KEY,
+      //   totalAmount: bookingRequestStore.totalAmount,
+      //   bookingId: bookingRequestStore.bookingId.validate(),
+      //   discountAmount: 0,
+      //   discountPercentage: 0,
+      //   taxData: bookingRequestStore.taxPercentage.validate(),
+      //   serviceTip: tipController.text.toDouble(),
+      //   onComplete: (p0) {
+      //     finish(context);
+      //     finish(context);
+      //     showBookingCompleteDialog();
+      //   },
+      // );
 
       await 1.seconds.delay;
       appStore.setLoading(false);
@@ -254,21 +254,21 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
         PaymentMethods.PAYMENT_METHOD_FLUTTER_WAVE) {
       appStore.setLoading(true);
 
-      flutterWaveServices.checkout(
-        flutterWavePublicKey: FLUTTER_WAVE_TEST_PUBLIC_KEY,
-        flutterWaveSecretKey: FLUTTER_WAVE_TEST_SECRET_KEY,
-        totalAmount: bookingRequestStore.totalAmount,
-        bookingId: bookingRequestStore.bookingId.validate(),
-        discountAmount: 0,
-        discountPercentage: 0,
-        isTestMode: true,
-        taxData: bookingRequestStore.taxPercentage.validate(),
-        onComplete: (p0) {
-          finish(context);
-          finish(context);
-          showBookingCompleteDialog();
-        },
-      );
+      // flutterWaveServices.checkout(
+      //   flutterWavePublicKey: FLUTTER_WAVE_TEST_PUBLIC_KEY,
+      //   flutterWaveSecretKey: FLUTTER_WAVE_TEST_SECRET_KEY,
+      //   totalAmount: bookingRequestStore.totalAmount,
+      //   bookingId: bookingRequestStore.bookingId.validate(),
+      //   discountAmount: 0,
+      //   discountPercentage: 0,
+      //   isTestMode: true,
+      //   taxData: bookingRequestStore.taxPercentage.validate(),
+      //   onComplete: (p0) {
+      //     finish(context);
+      //     finish(context);
+      //     showBookingCompleteDialog();
+      //   },
+      // );
 
       await 1.seconds.delay;
       appStore.setLoading(false);

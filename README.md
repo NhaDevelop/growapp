@@ -1,4 +1,4 @@
-# Frezka Customer App
+# growTokyo Customer App
 
 
 

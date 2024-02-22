@@ -5,7 +5,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/cached_image_widget.dart';
 import '../../../components/common_app_dialog.dart';
-import '../../../configs.dart';
+// import '../../../configs.dart';
 import '../../../main.dart';
 import '../../../paymentGateways/models/payment_list_model.dart';
 import '../../../utils/app_common.dart';
@@ -97,19 +97,19 @@ class _ProductPaymentScreenState extends State<ProductPaymentScreen> {
     } else if (selectedPayment.id == PaymentMethods.PAYMENT_METHOD_RAZORPAY) {
       appStore.setLoading(true);
 
-      razorPayService.init(
-        razorKey: RAZORPAY_TEST_KEY,
-        totalAmount: productStore.totalAmount,
-        onComplete: (res) {
-          log(res);
+      // razorPayService.init(
+      //   razorKey: RAZORPAY_TEST_KEY,
+      //   totalAmount: productStore.totalAmount,
+      //   onComplete: (res) {
+      //     log(res);
 
-          placeOrder(
-            txnId: res,
-            paymentType: PaymentMethods.PAYMENT_METHOD_RAZORPAY,
-            paymentStatus: SERVICE_PAYMENT_STATUS_PAID,
-          );
-        },
-      );
+      //     placeOrder(
+      //       txnId: res,
+      //       paymentType: PaymentMethods.PAYMENT_METHOD_RAZORPAY,
+      //       paymentStatus: SERVICE_PAYMENT_STATUS_PAID,
+      //     );
+      //   },
+      // );
 
       await 1.seconds.delay;
       appStore.setLoading(false);
@@ -118,22 +118,22 @@ class _ProductPaymentScreenState extends State<ProductPaymentScreen> {
     } else if (selectedPayment.id == PaymentMethods.PAYMENT_METHOD_STRIPE) {
       appStore.setLoading(true);
 
-      await stripeServices.init(
-        stripePaymentPublishKey: STRIPE_TEST_PUBLIC_KEY,
-        totalAmount: productStore.totalAmount,
-        stripeURL: STRIPE_URL,
-        stripePaymentKey: STRIPE_TEST_SECRET_KEY,
-        isTest: true,
-        onComplete: (res) {
-          log(res);
+      // await stripeServices.init(
+      //   stripePaymentPublishKey: STRIPE_TEST_PUBLIC_KEY,
+      //   totalAmount: productStore.totalAmount,
+      //   stripeURL: STRIPE_URL,
+      //   stripePaymentKey: STRIPE_TEST_SECRET_KEY,
+      //   isTest: true,
+      //   onComplete: (res) {
+      //     log(res);
 
-          placeOrder(
-            txnId: res,
-            paymentType: PaymentMethods.PAYMENT_METHOD_STRIPE,
-            paymentStatus: SERVICE_PAYMENT_STATUS_PAID,
-          );
-        },
-      );
+      //     placeOrder(
+      //       txnId: res,
+      //       paymentType: PaymentMethods.PAYMENT_METHOD_STRIPE,
+      //       paymentStatus: SERVICE_PAYMENT_STATUS_PAID,
+      //     );
+      //   },
+      // );
 
       await 1.seconds.delay;
       stripeServices.stripePay().then((value) {
@@ -146,20 +146,20 @@ class _ProductPaymentScreenState extends State<ProductPaymentScreen> {
     } else if (selectedPayment.id == PaymentMethods.PAYMENT_METHOD_PAYSTACK) {
       appStore.setLoading(true);
 
-      await paystackServices.init(
-        context: context,
-        paystackPaymentPublicKey: PAYSTACK_TEST_PUBLIC_KEY,
-        totalAmount: productStore.totalAmount,
-        onComplete: (response) {
-          log(response);
+      // await paystackServices.init(
+      //   context: context,
+      //   paystackPaymentPublicKey: PAYSTACK_TEST_PUBLIC_KEY,
+      //   totalAmount: productStore.totalAmount,
+      //   onComplete: (response) {
+      //     log(response);
 
-          placeOrder(
-            txnId: response,
-            paymentType: PaymentMethods.PAYMENT_METHOD_PAYSTACK,
-            paymentStatus: SERVICE_PAYMENT_STATUS_PAID,
-          );
-        },
-      );
+      //     placeOrder(
+      //       txnId: response,
+      //       paymentType: PaymentMethods.PAYMENT_METHOD_PAYSTACK,
+      //       paymentStatus: SERVICE_PAYMENT_STATUS_PAID,
+      //     );
+      //   },
+      // );
 
       await 1.seconds.delay;
       appStore.setLoading(false);
@@ -168,22 +168,22 @@ class _ProductPaymentScreenState extends State<ProductPaymentScreen> {
     } else if (selectedPayment.id == PaymentMethods.PAYMENT_METHOD_PAYPAL) {
       appStore.setLoading(true);
 
-      await payPalServices.init(
-        context: context,
-        isTest: true,
-        paypalClientId: PAYPAL_CLIENT_ID,
-        secretKey: PAYPAL_TEST_SECRET_KEY,
-        totalAmount: productStore.totalAmount,
-        onComplete: (response) {
-          log(response);
+      // await payPalServices.init(
+      //   context: context,
+      //   isTest: true,
+      //   paypalClientId: PAYPAL_CLIENT_ID,
+      //   secretKey: PAYPAL_TEST_SECRET_KEY,
+      //   totalAmount: productStore.totalAmount,
+      //   onComplete: (response) {
+      //     log(response);
 
-          placeOrder(
-            txnId: response,
-            paymentType: PaymentMethods.PAYMENT_METHOD_PAYPAL,
-            paymentStatus: SERVICE_PAYMENT_STATUS_PAID,
-          );
-        },
-      );
+      //     placeOrder(
+      //       txnId: response,
+      //       paymentType: PaymentMethods.PAYMENT_METHOD_PAYPAL,
+      //       paymentStatus: SERVICE_PAYMENT_STATUS_PAID,
+      //     );
+      //   },
+      // );
 
       await 1.seconds.delay;
       appStore.setLoading(false);
@@ -193,21 +193,21 @@ class _ProductPaymentScreenState extends State<ProductPaymentScreen> {
         PaymentMethods.PAYMENT_METHOD_FLUTTER_WAVE) {
       appStore.setLoading(true);
 
-      flutterWaveServices.checkout(
-        flutterWavePublicKey: FLUTTER_WAVE_TEST_PUBLIC_KEY,
-        flutterWaveSecretKey: FLUTTER_WAVE_TEST_SECRET_KEY,
-        totalAmount: productStore.totalAmount,
-        isTestMode: true,
-        onComplete: (res) {
-          log(res);
+      // flutterWaveServices.checkout(
+      //   flutterWavePublicKey: FLUTTER_WAVE_TEST_PUBLIC_KEY,
+      //   flutterWaveSecretKey: FLUTTER_WAVE_TEST_SECRET_KEY,
+      //   totalAmount: productStore.totalAmount,
+      //   isTestMode: true,
+      //   onComplete: (res) {
+      //     log(res);
 
-          placeOrder(
-            txnId: res,
-            paymentType: PaymentMethods.PAYMENT_METHOD_FLUTTER_WAVE,
-            paymentStatus: SERVICE_PAYMENT_STATUS_PAID,
-          );
-        },
-      );
+      //     placeOrder(
+      //       txnId: res,
+      //       paymentType: PaymentMethods.PAYMENT_METHOD_FLUTTER_WAVE,
+      //       paymentStatus: SERVICE_PAYMENT_STATUS_PAID,
+      //     );
+      //   },
+      // );
 
       await 1.seconds.delay;
       appStore.setLoading(false);

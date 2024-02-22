@@ -5,11 +5,11 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../../configs.dart';
+// import '../../../configs.dart';
 import '../../../main.dart';
 import '../../../network/network_utils.dart';
 // import '../../../paymentGateways/models/stripe_pay_model.dart';
-import '../../../utils/app_common.dart';
+// import '../../../utils/app_common.dart';
 // import '../../../utils/colors.dart';
 // import '../../../utils/common_base.dart';
 
@@ -49,14 +49,14 @@ class OrderStripeService {
     Request request =
         http.Request(HttpMethodType.POST.name, Uri.parse(stripeURL));
 
-    request.bodyFields = {
-      'amount': '${(totalAmount.toInt() * 100)}',
-      'currency': await isIqonicProduct
-          ? STRIPE_CURRENCY_CODE
-          : appStore.currencyCode,
-      'description':
-          'Name: ${productStore.fullName} - Email: ${productStore.customerEmail}',
-    };
+    // request.bodyFields = {
+    //   'amount': '${(totalAmount.toInt() * 100)}',
+    //   'currency': await isIqonicProduct
+    //       ? STRIPE_CURRENCY_CODE
+    //       : appStore.currencyCode,
+    //   'description':
+    //       'Name: ${productStore.fullName} - Email: ${productStore.customerEmail}',
+    // };
 
     request.headers.addAll(buildHeaderTokens(extraKeys: {
       'isStripePayment': true,

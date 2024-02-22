@@ -2,14 +2,14 @@
 
 // import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:grow_tokyo_app/screens/booking/model/booking_detail_response.dart';
-import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
-import 'package:nb_utils/nb_utils.dart';
+// import 'package:http/http.dart' as http;
+// import 'package:http/http.dart';
+// import 'package:nb_utils/nb_utils.dart';
 
-import '../../configs.dart';
-import '../../main.dart';
-import '../../network/network_utils.dart';
-import '../../utils/app_common.dart';
+// import '../../configs.dart';
+// import '../../main.dart';
+// import '../../network/network_utils.dart';
+// import '../../utils/app_common.dart';
 // import '../../utils/colors.dart';
 // import '../../utils/common_base.dart';
 // import '../../utils/constants.dart';
@@ -64,78 +64,78 @@ class StripeService {
 
   //StripPayment
   Future<dynamic> stripePay() async {
-    Request request =
-        http.Request(HttpMethodType.POST.name, Uri.parse(stripeURL));
+    // Request request =
+    //     http.Request(HttpMethodType.POST.name, Uri.parse(stripeURL));
 
-    request.bodyFields = {
-      'amount': '${(totalAmount.toInt() * 100)}',
-      'currency': await isIqonicProduct
-          ? STRIPE_CURRENCY_CODE
-          : appStore.currencyCode,
-      'description':
-          'Name: ${userStore.userFullName} - Email: ${userStore.userEmail}',
-    };
+    // request.bodyFields = {
+    //   'amount': '${(totalAmount.toInt() * 100)}',
+    //   'currency': await isIqonicProduct
+    //       ? STRIPE_CURRENCY_CODE
+    //       : appStore.currencyCode,
+    //   'description':
+    //       'Name: ${userStore.userFullName} - Email: ${userStore.userEmail}',
+    // };
 
-    request.headers.addAll(buildHeaderTokens(extraKeys: {
-      'isStripePayment': true,
-      'stripeKeyPayment': stripePaymentKey
-    }));
+    // request.headers.addAll(buildHeaderTokens(extraKeys: {
+    //   'isStripePayment': true,
+    //   'stripeKeyPayment': stripePaymentKey
+    // }));
 
-    log('URL: ${request.url}');
-    log('Header: ${request.headers}');
-    log('Request: ${request.bodyFields}');
+    // log('URL: ${request.url}');
+    // log('Header: ${request.headers}');
+    // log('Request: ${request.bodyFields}');
 
-    await request.send().then((value) {
-      http.Response.fromStream(value).then((response) async {
-        if (response.statusCode.isSuccessful()) {
-          // StripePayModel res = StripePayModel.fromJson(jsonDecode(response.body));
-          appStore.setLoading(true);
+    // await request.send().then((value) {
+    //   http.Response.fromStream(value).then((response) async {
+    //     if (response.statusCode.isSuccessful()) {
+    //       // StripePayModel res = StripePayModel.fromJson(jsonDecode(response.body));
+    //       appStore.setLoading(true);
 
-          // SetupPaymentSheetParameters setupPaymentSheetParameters = SetupPaymentSheetParameters(
-          //   paymentIntentClientSecret: res.clientSecret.validate(),
-          //   style: appThemeMode,
-          //   appearance: PaymentSheetAppearance(colors: PaymentSheetAppearanceColors(primary: primaryColor)),
-          //   applePay: PaymentSheetApplePay(merchantCountryCode: STRIPE_MERCHANT_COUNTRY_CODE),
-          //   googlePay: PaymentSheetGooglePay(merchantCountryCode: STRIPE_MERCHANT_COUNTRY_CODE, testEnv: isTest),
-          //   merchantDisplayName: APP_NAME,
-          //   customerId: userStore.userId.toString(),
-          //   customerEphemeralKeySecret: isAndroid ? res.clientSecret.validate() : null,
-          //   setupIntentClientSecret: res.clientSecret.validate(),
-          //   billingDetails: BillingDetails(name: userStore.userFullName, email: userStore.userEmail),
-          // );
+    //       // SetupPaymentSheetParameters setupPaymentSheetParameters = SetupPaymentSheetParameters(
+    //       //   paymentIntentClientSecret: res.clientSecret.validate(),
+    //       //   style: appThemeMode,
+    //       //   appearance: PaymentSheetAppearance(colors: PaymentSheetAppearanceColors(primary: primaryColor)),
+    //       //   applePay: PaymentSheetApplePay(merchantCountryCode: STRIPE_MERCHANT_COUNTRY_CODE),
+    //       //   googlePay: PaymentSheetGooglePay(merchantCountryCode: STRIPE_MERCHANT_COUNTRY_CODE, testEnv: isTest),
+    //       //   merchantDisplayName: APP_NAME,
+    //       //   customerId: userStore.userId.toString(),
+    //       //   customerEphemeralKeySecret: isAndroid ? res.clientSecret.validate() : null,
+    //       //   setupIntentClientSecret: res.clientSecret.validate(),
+    //       //   billingDetails: BillingDetails(name: userStore.userFullName, email: userStore.userEmail),
+    //       // );
 
-          // await Stripe.instance.initPaymentSheet(paymentSheetParameters: setupPaymentSheetParameters).then((value) async {
-          //   await Stripe.instance.presentPaymentSheet().then((value) async {
-          //     onComplete.call(await savePay(
-          //       bookingId: bookingId,
-          //       discountAmount: discountAmount,
-          //       discountPercentage: discountPercentage,
-          //       externalTransactionId: res.id!,
-          //       taxData: taxData,
-          //       transactionType: PaymentMethods.PAYMENT_METHOD_STRIPE,
-          //       paymentStatus: SERVICE_PAYMENT_STATUS_PAID,
-          //       totalAmount: totalAmount,
-          //       serviceTip: serviceTip,
-          //     ));
-          //     appStore.setLoading(false);
-          //   });
-          // }).catchError((e) {
-          //   appStore.setLoading(false);
-          //   throw errorSomethingWentWrong;
-          // });
-        } else if (response.statusCode == 400) {
-          appStore.setLoading(false);
-          throw errorSomethingWentWrong;
-        }
-      }).catchError((e) {
-        appStore.setLoading(false);
-        throw errorSomethingWentWrong;
-      });
-    }).catchError((e) {
-      appStore.setLoading(false);
-      toast(e.toString(), print: true);
+    //       // await Stripe.instance.initPaymentSheet(paymentSheetParameters: setupPaymentSheetParameters).then((value) async {
+    //       //   await Stripe.instance.presentPaymentSheet().then((value) async {
+    //       //     onComplete.call(await savePay(
+    //       //       bookingId: bookingId,
+    //       //       discountAmount: discountAmount,
+    //       //       discountPercentage: discountPercentage,
+    //       //       externalTransactionId: res.id!,
+    //       //       taxData: taxData,
+    //       //       transactionType: PaymentMethods.PAYMENT_METHOD_STRIPE,
+    //       //       paymentStatus: SERVICE_PAYMENT_STATUS_PAID,
+    //       //       totalAmount: totalAmount,
+    //       //       serviceTip: serviceTip,
+    //       //     ));
+    //       //     appStore.setLoading(false);
+    //       //   });
+    //       // }).catchError((e) {
+    //       //   appStore.setLoading(false);
+    //       //   throw errorSomethingWentWrong;
+    //       // });
+    //     } else if (response.statusCode == 400) {
+    //       appStore.setLoading(false);
+    //       throw errorSomethingWentWrong;
+    //     }
+    //   }).catchError((e) {
+    //     appStore.setLoading(false);
+    //     throw errorSomethingWentWrong;
+    //   });
+    // }).catchError((e) {
+    //   appStore.setLoading(false);
+    //   toast(e.toString(), print: true);
 
-      throw e.toString();
-    });
+    //   throw e.toString();
+    // });
   }
 }
