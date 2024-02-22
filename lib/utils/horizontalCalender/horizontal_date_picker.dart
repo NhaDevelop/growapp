@@ -122,14 +122,11 @@ class _HorizontalDatePickerWidgetState
   double _padding = 0.0;
   final ScrollController _scrollController = ScrollController();
 
-  _HorizontalDatePickerWidgetState() {
-    _init(widget.datePickerController, widget.widgetWidth, widget.width,
-        widget.startDate, widget.endDate, widget.selectedDate);
-  }
-
   @override
   void initState() {
     super.initState();
+    _init(widget.datePickerController, widget.widgetWidth, widget.width,
+        widget.startDate, widget.endDate, widget.selectedDate);
     initializeDateFormatting(widget.locale, null);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.datePickerController.scrollToSelectedItem();
