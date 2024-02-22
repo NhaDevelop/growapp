@@ -15,7 +15,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>frezka_customer</string>
+	<string>grow_tokyo_app</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -48,13 +48,13 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>growTokyo app requires address permission access to get the current location of the user instead of typing address manually. </string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>growTokyo app requires access to microphone when you will be used to record your speech at time of  press the &quot;Mic&quot; button.</string>
+	<string>growTokyo app requires access to microphone when you will be used to record your speech at time of  press the "Mic" button.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>growTokyo app requires access to the photo library to upload your profile photo.</string>
-	<key>Privacy-Location Usage Description</key>
-	<string>growTokyo app requires address permission access to get the current location of the user instead of typing address manually. </string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>growTokyo app requires access to Speech recognition  when you will be used to determine which words you speak into this device microphone.</string>
+	<key>Privacy-Location Usage Description</key>
+	<string>growTokyo app requires address permission access to get the current location of the user instead of typing address manually. </string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>

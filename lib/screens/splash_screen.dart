@@ -46,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
           isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
     });
 
-    int themeModeIndex = getIntAsync(THEME_MODE_INDEX); //TODO
+    int themeModeIndex = getIntAsync(THEME_MODE_INDEX);
     if (themeModeIndex == ThemeConst.THEME_MODE_LIGHT) {
       appStore.setDarkMode(false);
     } else if (themeModeIndex == ThemeConst.THEME_MODE_DARK) {

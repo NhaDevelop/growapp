@@ -56,12 +56,10 @@ android {
         stag {
             dimension "default"
             applicationId "com.growtokyo.staging"
-            resValue "string", "app_name", "growTokyo-stag"
         }
         prod {
             dimension "default"
             applicationId "com.growtokyo"
-            resValue "string", "app_name", "growTokyo"
         }
     }
 
