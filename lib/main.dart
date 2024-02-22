@@ -102,7 +102,8 @@ void main() async {
 
   await appStore.setLanguage(
       getStringAsync(SELECTED_LANGUAGE_CODE, defaultValue: DEFAULT_LANGUAGE));
-  locale = await const AppLocalizations().load(Locale(appStore.selectedLanguageCode));
+  locale = await const AppLocalizations()
+      .load(Locale(appStore.selectedLanguageCode));
 
   Firebase.initializeApp().then((value) {
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;

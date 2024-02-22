@@ -1,4 +1,4 @@
-package com.growtokyo.app
+package com.growtokyo
 
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.android.FlutterFragmentActivity

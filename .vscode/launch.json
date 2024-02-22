@@ -5,9 +5,18 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "grow_tokyo_app",
+      "name": "staging",
+      "program": "lib/main_stag.dart",
       "request": "launch",
-      "type": "dart"
-    }
+      "type": "dart",
+      "args": ["--flavor", "stag"]
+    },
+    {
+      "name": "production",
+      "program": "lib/main_prod.dart",
+      "request": "launch",
+      "type": "dart",
+      "args": ["--flavor", "prod"]
+    },
   ]
 }

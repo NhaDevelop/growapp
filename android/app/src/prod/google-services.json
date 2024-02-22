@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "766983345198",
+    "project_id": "growtokyo-fd8ae",
+    "storage_bucket": "growtokyo-fd8ae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:766983345198:android:f29c106ff1dfd43a9e7bbf",
+        "android_client_info": {
+          "package_name": "com.growtokyo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCelDk0zZzNdAkVsbburRy_IaBMH2cNI2Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

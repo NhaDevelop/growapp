@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "944139196011",
+    "project_id": "growtokyo-staging",
+    "storage_bucket": "growtokyo-staging.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:944139196011:android:a01061174df405f329c32e",
+        "android_client_info": {
+          "package_name": "com.growtokyo.staging"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLNWWwTX8AOS6zCMbKVl7lwDEDtffzsQw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
