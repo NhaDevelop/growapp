@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-const primaryColor = Color(0xFFA82D86);
-const secondaryColor = Color(0xFF19235A);
-const indicatorColor = Color(0xFFFFE5BE);
+const primaryColor = Color(0xFF000000);
+const secondaryColor = Color(0xFF000000);
+const indicatorColor = Color(0xFF000000);
 
 const ratingBarColor = Color(0xfff5c609);
 const wishListColor = Color(0xffEE4235);
@@ -16,4 +16,4 @@ const appTextSecondaryColor = Color(0xff6C757D);
 const cardColor = Color(0xFFFFFFFF);
 const borderColor = Color(0xFFEBEBEB);
 const appButtonColorDark = Color(0xFF282828);
-const lightPrimaryColor = Color(0xFFB9579E);
+const lightPrimaryColor = Color(0xFF000000);

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 abstract class BaseLanguage {
-  static BaseLanguage of(BuildContext context) => Localizations.of<BaseLanguage>(context, BaseLanguage)!;
+  static BaseLanguage of(BuildContext context) =>
+      Localizations.of<BaseLanguage>(context, BaseLanguage)!;
 
   String get tokenExpired;
 
@@ -401,15 +402,15 @@ abstract class BaseLanguage {
 
   String get timeIsRequired;
 
-  String get findYourNearestSalon;
+  String get bookAndManageYourBookings;
 
   String get walkThrough1subTitle;
 
-  String get pickAService;
+  String get getCouponForDiscount;
 
   String get walkThrough2subTitle;
 
-  String get quickBooking;
+  String get earnPointsByCompletingServices;
 
   String get walkThrough3subTitle;
 

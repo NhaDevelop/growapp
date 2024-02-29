@@ -31,15 +31,15 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
   void init() async {
     setStatusBarColor(primaryColor);
     pages.add(WalkThroughModel(
-        title: locale.findYourNearestSalon,
+        title: locale.bookAndManageYourBookings,
         subTitle: locale.walkThrough1subTitle,
         img: walk_img1));
     pages.add(WalkThroughModel(
-        title: locale.pickAService,
+        title: locale.getCouponForDiscount,
         subTitle: locale.walkThrough2subTitle,
         img: walk_img2));
     pages.add(WalkThroughModel(
-        title: locale.quickBooking,
+        title: locale.earnPointsByCompletingServices,
         subTitle: '${locale.walkThrough3subTitle} $APP_NAME',
         img: walk_img3));
   }
@@ -69,28 +69,28 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
             Column(
               children: [
                 24.height,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                Stack(
+                  alignment: Alignment.center,
                   children: [
-                    const Spacer(),
-                    Text(APP_NAME, style: boldTextStyle(size: 20, color: white))
-                        .expand(),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: () async {
-                          await setValue(
-                              SharedPreferenceConst.IS_FIRST_TIME, false);
+                    Image.asset(logo_long, height: 40),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          onPressed: () async {
+                            await setValue(
+                                SharedPreferenceConst.IS_FIRST_TIME, false);
 
-                          if (!context.mounted) return;
-                          const SelectBranchScreen().launch(context,
-                              isNewTask: true,
-                              pageRouteAnimation: PageRouteAnimation.Fade);
-                        },
-                        child: Text(locale.skip,
-                            style: boldTextStyle(color: white)),
-                      ),
-                    )
+                            if (!context.mounted) return;
+                            const SelectBranchScreen().launch(context,
+                                isNewTask: true,
+                                pageRouteAnimation: PageRouteAnimation.Fade);
+                          },
+                          child: Text(locale.skip,
+                              style: boldTextStyle(color: white)),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
                 8.height,

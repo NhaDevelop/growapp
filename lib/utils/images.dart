@@ -1,4 +1,6 @@
 const app_logo = "assets/app_logo.png";
+const logo_long = "assets/logo_long.png";
+const splash_screen_logo = "assets/splash_screen_logo.png";
 const walk_img1 = 'assets/images/walk_img_1.png';
 const walk_img2 = 'assets/images/walk_img_2.png';
 const walk_img3 = 'assets/images/walk_img_3.png';
@@ -10,7 +12,6 @@ const paypal_logo = 'assets/images/paypal_logo.png';
 const paystack_logo = 'assets/images/paystack_logo.png';
 const flutter_wave_logo = 'assets/images/flutter_wave_logo.png';
 const paytm_logo = 'assets/images/paytm_logo.png';
-const logo_gif = 'assets/images/logo_gif.gif';
 const imgForceUpdate = 'assets/images/force_update.png';
 const product_1 = 'assets/images/product_1.png';
 const product_2 = 'assets/images/product_2.png';

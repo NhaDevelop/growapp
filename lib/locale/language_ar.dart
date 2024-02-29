@@ -105,13 +105,15 @@ class LanguageAr extends BaseLanguage {
   String get enterYourEmailAddress => 'أدخل عنوان بريدك الالكتروني';
 
   @override
-  String get aResetPasswordLink => 'سيتم إرسال رابط كلمة مرور إعادة تعيين إلى عنوان البريد الإلكتروني الذي تم إدخاله أعلاه';
+  String get aResetPasswordLink =>
+      'سيتم إرسال رابط كلمة مرور إعادة تعيين إلى عنوان البريد الإلكتروني الذي تم إدخاله أعلاه';
 
   @override
   String get resetPassword => 'إعادة تعيين كلمة المرور';
 
   @override
-  String get areYouSureWantToPerformThisAction => 'هل أنت متأكد من أن تنفيذ هذا الإجراء؟';
+  String get areYouSureWantToPerformThisAction =>
+      'هل أنت متأكد من أن تنفيذ هذا الإجراء؟';
 
   @override
   String get yes => 'نعم';
@@ -135,7 +137,8 @@ class LanguageAr extends BaseLanguage {
   String get changePassword => 'تغيير كلمة المرور';
 
   @override
-  String get newPasswordsMustBeDifferent => 'يجب أن تكون كلمات المرور الجديدة مختلفة عن تلك السابقة';
+  String get newPasswordsMustBeDifferent =>
+      'يجب أن تكون كلمات المرور الجديدة مختلفة عن تلك السابقة';
 
   @override
   String get oldPassword => 'كلمة المرور القديمة';
@@ -162,7 +165,8 @@ class LanguageAr extends BaseLanguage {
   String get noUserFound => 'لم يتم العثور على المستخدم';
 
   @override
-  String get otpInvalidMessage => 'الرمز الذي تم إدخاله غير صالح ، يرجى المحاولة مرة أخرى';
+  String get otpInvalidMessage =>
+      'الرمز الذي تم إدخاله غير صالح ، يرجى المحاولة مرة أخرى';
 
   @override
   String get pleaseContactWithAdmin => 'يرجى الاتصال مع المسؤول';
@@ -180,16 +184,19 @@ class LanguageAr extends BaseLanguage {
   String get appleSigInIsNotAvailable => 'علامة Apple غير متوفرة لجهازك';
 
   @override
-  String get emailAddressIsRequiredUpdateAppleAccount => 'عنوان البريد الإلكتروني مطلوب. يرجى تحديث البريد الإلكتروني في حساب Apple الخاص بك';
+  String get emailAddressIsRequiredUpdateAppleAccount =>
+      'عنوان البريد الإلكتروني مطلوب. يرجى تحديث البريد الإلكتروني في حساب Apple الخاص بك';
 
   @override
   String get yourPasswordReset => 'إعادة تعيين كلمة المرور الخاصة بك';
 
   @override
-  String get yourAccountIsReady => 'حسابك جاهز للاستخدام. استمتع بأخصائينا وخدماتنا';
+  String get yourAccountIsReady =>
+      'حسابك جاهز للاستخدام. استمتع بأخصائينا وخدماتنا';
 
   @override
-  String get yourPassWorResetSuccessfully => 'إعادة تعيين كلمة المرور الخاصة بك بنجاح!';
+  String get yourPassWorResetSuccessfully =>
+      'إعادة تعيين كلمة المرور الخاصة بك بنجاح!';
 
   @override
   String get done => 'منتهي';
@@ -453,7 +460,8 @@ class LanguageAr extends BaseLanguage {
   String get topExperts => 'كبار الخبراء';
 
   @override
-  String get theUserHasDeniedSpeechRecognition => 'نفى المستخدم استخدام التعرف على الكلام';
+  String get theUserHasDeniedSpeechRecognition =>
+      'نفى المستخدم استخدام التعرف على الكلام';
 
   @override
   String get category => 'فئة';
@@ -600,22 +608,25 @@ class LanguageAr extends BaseLanguage {
   String get timeIsRequired => 'الوقت مطلوب';
 
   @override
-  String get findYourNearestSalon => 'ابحث عن أقرب صالون';
+  String get bookAndManageYourBookings => 'ابحث عن أقرب صالون';
 
   @override
-  String get walkThrough1subTitle => 'يمكنك أن تجد بسهولة بالقرب منك أفضل حلاق وصالون والاستمتاع بأفضل تجربة خدمة';
+  String get walkThrough1subTitle =>
+      'يمكنك أن تجد بسهولة بالقرب منك أفضل حلاق وصالون والاستمتاع بأفضل تجربة خدمة';
 
   @override
-  String get pickAService => 'اختر خدمة';
+  String get getCouponForDiscount => 'اختر خدمة';
 
   @override
-  String get walkThrough2subTitle => 'يمكنك اختيار خدمتك واختيار أخصائيك والحصول على الحجز السريع';
+  String get walkThrough2subTitle =>
+      'يمكنك اختيار خدمتك واختيار أخصائيك والحصول على الحجز السريع';
 
   @override
-  String get quickBooking => 'الحجز السريع';
+  String get earnPointsByCompletingServices => 'الحجز السريع';
 
   @override
-  String get walkThrough3subTitle => 'تحصل على أفضل الخدمات وأفضل أخصائي لخدماتك';
+  String get walkThrough3subTitle =>
+      'تحصل على أفضل الخدمات وأفضل أخصائي لخدماتك';
 
   @override
   String get skip => 'يتخطى';
@@ -633,7 +644,8 @@ class LanguageAr extends BaseLanguage {
   String get signInYourAccount => 'تسجيل الدخول في حسابك';
 
   @override
-  String get deleteAccountConfirmation => 'سيتم حذف حسابك بشكل دائم. لن تتم استعادة بياناتك مرة أخرى.';
+  String get deleteAccountConfirmation =>
+      'سيتم حذف حسابك بشكل دائم. لن تتم استعادة بياناتك مرة أخرى.';
 
   @override
   String get dangerZone => 'منطقة الخطر';
@@ -651,7 +663,8 @@ class LanguageAr extends BaseLanguage {
   String get apple => 'تفاحة';
 
   @override
-  String get termsConditionsMessage => 'لقد قرأت إخلاء المسئولية وأتفق على الشروط والأحكام';
+  String get termsConditionsMessage =>
+      'لقد قرأت إخلاء المسئولية وأتفق على الشروط والأحكام';
 
   @override
   String get pleaseAcceptTermsAndConditions => 'يرجى قبول الشروط والأحكام';
@@ -687,7 +700,8 @@ class LanguageAr extends BaseLanguage {
   String get goBack => 'عُد';
 
   @override
-  String get noStaffAvailableForBranchMessage => 'لا يوجد موظفون متاحون للخدمة المختارة!';
+  String get noStaffAvailableForBranchMessage =>
+      'لا يوجد موظفون متاحون للخدمة المختارة!';
 
   @override
   String get tryToChangeYourService => 'حاول تغيير خدمتك';
@@ -714,7 +728,8 @@ class LanguageAr extends BaseLanguage {
   String get taxIncluded => 'شامل الضريبة';
 
   @override
-  String get demoUserCannotBeGrantedForThis => 'لا يمكن منح المستخدم التجريبي لهذا الإجراء';
+  String get demoUserCannotBeGrantedForThis =>
+      'لا يمكن منح المستخدم التجريبي لهذا الإجراء';
 
   @override
   String get payNow => 'ادفع الآن';
@@ -747,7 +762,8 @@ class LanguageAr extends BaseLanguage {
   String get edit => 'يحرر';
 
   @override
-  String get bookingTimeSlotChangeMessage => 'هل تريد تغيير الفتحة الزمنية لهذا الحجز؟';
+  String get bookingTimeSlotChangeMessage =>
+      'هل تريد تغيير الفتحة الزمنية لهذا الحجز؟';
 
   @override
   String get change => 'يتغير';
@@ -756,7 +772,8 @@ class LanguageAr extends BaseLanguage {
   String get profileUpdatedSuccessfully => 'تم تحديث الملف الشخصي بنجاح';
 
   @override
-  String get oldPasswordDoesNotMatchMessage => 'كلمة المرور القديمة الخاصة بك غير صحيحة!';
+  String get oldPasswordDoesNotMatchMessage =>
+      'كلمة المرور القديمة الخاصة بك غير صحيحة!';
 
   @override
   String get bookingSuccessfullyUpdateMessage => 'تم تحديث الحجز بنجاح';
@@ -765,7 +782,8 @@ class LanguageAr extends BaseLanguage {
   String get newUpdate => 'تحديث جديد';
 
   @override
-  String get anUpdateToIs => ' يتوفر تحديث إلى $APP_NAME. انتقل إلى المتجر وتنزيل الإصدار الجديد من التطبيق.';
+  String get anUpdateToIs =>
+      ' يتوفر تحديث إلى $APP_NAME. انتقل إلى المتجر وتنزيل الإصدار الجديد من التطبيق.';
 
   @override
   String get closeApp => 'أغلق التطبيق';
@@ -792,7 +810,8 @@ class LanguageAr extends BaseLanguage {
   String get pleaseSelectTheDateFirst => 'الرجاء تحديد التاريخ أولاً';
 
   @override
-  String get thereAreNoBookings => 'لا توجد حجوزات مدرجة في الوقت الحالي. تتبع حجوزاتك هنا.';
+  String get thereAreNoBookings =>
+      'لا توجد حجوزات مدرجة في الوقت الحالي. تتبع حجوزاتك هنا.';
 
   @override
   String get payWithFlutterwave => 'دفع مع Flutterwave';
@@ -810,7 +829,8 @@ class LanguageAr extends BaseLanguage {
   String get paytm => 'Paytm';
 
   @override
-  String get areYouSureYouWantToRemove => 'هل أنت متأكد أنك تريد إزالة هذا العنصر';
+  String get areYouSureYouWantToRemove =>
+      'هل أنت متأكد أنك تريد إزالة هذا العنصر';
 
   @override
   String get remove => 'يزيل';
@@ -864,7 +884,8 @@ class LanguageAr extends BaseLanguage {
   String get yourCartIsEmpty => 'عربة التسوق فارغة';
 
   @override
-  String get thereAreCurrentlyNoItems => 'لا يوجد حاليا أي عناصر في سلة التسوق الخاصة بك. ابدأ التسوق وإضافة عناصر إلى عربة التسوق الخاصة بك.';
+  String get thereAreCurrentlyNoItems =>
+      'لا يوجد حاليا أي عناصر في سلة التسوق الخاصة بك. ابدأ التسوق وإضافة عناصر إلى عربة التسوق الخاصة بك.';
 
   @override
   String get productPriceDetails => 'تفاصيل سعر المنتج';
@@ -888,7 +909,8 @@ class LanguageAr extends BaseLanguage {
   String get deliverHere => 'تسليم هنا';
 
   @override
-  String get areYouSureYouWantToDelete => 'هل أنت متأكد أنك تريد حذف هذا العنوان';
+  String get areYouSureYouWantToDelete =>
+      'هل أنت متأكد أنك تريد حذف هذا العنوان';
 
   @override
   String get addressDeleteSuccessfully => 'العنوان حذف بنجاح';
@@ -945,7 +967,8 @@ class LanguageAr extends BaseLanguage {
   String get noOrdersFound => 'لم يتم العثور على أية طلبات';
 
   @override
-  String get thereAreNoOrders => 'لا توجد أوامر مدرجة في الوقت الحالي. تتبع طلباتك هنا.';
+  String get thereAreNoOrders =>
+      'لا توجد أوامر مدرجة في الوقت الحالي. تتبع طلباتك هنا.';
 
   @override
   String get tax => 'ضريبة';
@@ -1050,7 +1073,8 @@ class LanguageAr extends BaseLanguage {
   String get allCategories => 'جميع الفئات';
 
   @override
-  String get thereAreNoCategories => 'لا توجد فئات في الوقت الحالي. تتبع فئاتك هنا.';
+  String get thereAreNoCategories =>
+      'لا توجد فئات في الوقت الحالي. تتبع فئاتك هنا.';
 
   @override
   String get searchForProduct => 'ابحث عن المنتج';
@@ -1092,7 +1116,8 @@ class LanguageAr extends BaseLanguage {
   String get wishlist => 'قائمة الرغبات';
 
   @override
-  String get thereAreCurrentlyNoItemsInYourWishlist => 'لا توجد حاليًا أي عناصر في قائمة الأمنيات الخاصة بك. ابدأ في إضافة عناصر تحب حفظها في وقت لاحق.';
+  String get thereAreCurrentlyNoItemsInYourWishlist =>
+      'لا توجد حاليًا أي عناصر في قائمة الأمنيات الخاصة بك. ابدأ في إضافة عناصر تحب حفظها في وقت لاحق.';
 
   @override
   String get price => 'سعر';
