@@ -12,7 +12,7 @@ import '../../../main.dart';
 import '../../../utils/common_base.dart';
 import '../../../utils/constants.dart';
 import '../../branch/view/select_branch_screen.dart';
-import '../../product/view/product_dashboard_screen.dart';
+// import '../../product/view/product_dashboard_screen.dart';
 import '../fragment/booking_fragment.dart';
 import '../fragment/home_fragment.dart';
 import '../fragment/profile_fragment.dart';
@@ -36,7 +36,7 @@ class _DashboardScreenState extends State<DashboardScreen>
         builder: (context) => appStore.isLoggedIn
             ? const BookingFragment()
             : const SignInScreen(isFromDashboard: true)),
-    const ProductScreen(),
+    // const ProductScreen(),
     const ProfileFragment(),
   ];
 
@@ -135,13 +135,13 @@ class _DashboardScreenState extends State<DashboardScreen>
                       color: context.primaryColor, size: 18),
                   tabName: locale.booking,
                 ),
-                bottomTab(
-                  iconData: ic_unselected_shop.iconImage(
-                      color: appTextSecondaryColor, size: 20),
-                  activeIconData: ic_selected_shop.iconImage(
-                      color: context.primaryColor, size: 20),
-                  tabName: locale.shop,
-                ),
+                // bottomTab(
+                //   iconData: ic_unselected_shop.iconImage(
+                //       color: appTextSecondaryColor, size: 20),
+                //   activeIconData: ic_selected_shop.iconImage(
+                //       color: context.primaryColor, size: 20),
+                //   tabName: locale.shop,
+                // ),
                 Observer(builder: (context) {
                   return bottomTab(
                     iconData: appStore.isLoggedIn

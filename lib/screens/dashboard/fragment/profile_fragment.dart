@@ -251,7 +251,7 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                           horizontal: 16, vertical: 12),
                       onTap: () {
                         doIfLoggedIn(context, () {
-                          const DashboardScreen(pageIndex: 3)
+                          const DashboardScreen(pageIndex: 2)
                               .launch(context, isNewTask: true);
                         });
                       },

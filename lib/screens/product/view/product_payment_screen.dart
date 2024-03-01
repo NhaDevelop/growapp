@@ -224,7 +224,7 @@ class _ProductPaymentScreenState extends State<ProductPaymentScreen> {
         buttonText: locale.goToOrderList,
         onTap: () {
           finish(context);
-          const DashboardScreen(pageIndex: 3).launch(context, isNewTask: true);
+          const DashboardScreen(pageIndex: 2).launch(context, isNewTask: true);
           const OrderListScreen().launch(context);
         },
       ),
