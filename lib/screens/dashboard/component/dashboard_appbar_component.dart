@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:grow_tokyo_app/components/dotted_line.dart';
 import 'package:grow_tokyo_app/utils/colors.dart';
 import 'package:grow_tokyo_app/utils/common_base.dart';
 import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
 import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:speech_to_text/speech_recognition_error.dart';
-import 'package:speech_to_text/speech_recognition_result.dart';
-import 'package:speech_to_text/speech_to_text.dart';
 
 import '../../../main.dart';
-import '../../branch/view/select_branch_screen.dart';
-import '../../services/view/view_all_service_screen.dart';
 import '../fragment/notification_fragment.dart';
 
 class DashboardAppBarComponent extends StatefulWidget {
@@ -20,6 +14,7 @@ class DashboardAppBarComponent extends StatefulWidget {
   final String? hintText;
   final Widget? positionWidget;
   final double? positionWidgetHeight;
+  final double? positionBottom;
   final VoidCallback? onTapSearch;
 
   const DashboardAppBarComponent(
@@ -28,6 +23,7 @@ class DashboardAppBarComponent extends StatefulWidget {
       this.hintText,
       this.positionWidget,
       this.positionWidgetHeight,
+      this.positionBottom,
       this.onTapSearch});
 
   @override
@@ -36,11 +32,6 @@ class DashboardAppBarComponent extends StatefulWidget {
 }
 
 class _DashboardAppBarComponentState extends State<DashboardAppBarComponent> {
-  SpeechToText speech = SpeechToText();
-  String lastWords = '';
-  String lastError = '';
-  String lastStatus = '';
-
   @override
   void initState() {
     super.initState();
@@ -51,71 +42,6 @@ class _DashboardAppBarComponentState extends State<DashboardAppBarComponent> {
     //
   }
 
-  void startListening() async {
-    bool available = await speech.initialize(
-        onStatus: statusListener, onError: errorListener);
-
-    if (available) {
-      speech.listen(onResult: resultListener);
-
-      appStore.setSpeechStatus(true);
-      lastWords = '';
-      lastError = '';
-      speech.listen(
-        onResult: resultListener,
-        listenFor: const Duration(seconds: 30),
-        pauseFor: const Duration(seconds: 10),
-        listenOptions: SpeechListenOptions(
-          partialResults: true,
-          cancelOnError: true,
-          listenMode: ListenMode.deviceDefault,
-        ),
-      );
-      setState(() {});
-    } else {
-      appStore.setSpeechStatus(false);
-      toast(locale.theUserHasDeniedSpeechRecognition);
-    }
-  }
-
-  void stopListening() {
-    appStore.setSpeechStatus(false);
-    speech.stop();
-  }
-
-  void cancelListening() {
-    appStore.setSpeechStatus(false);
-    speech.cancel();
-  }
-
-  void resultListener(SpeechRecognitionResult result) {
-    appStore.setSpeechStatus(false);
-    if (result.finalResult) {
-      lastWords = result.recognizedWords;
-      ViewAllServiceScreen(
-              search: lastWords, serviceTitle: locale.searchServices)
-          .launch(context);
-    }
-    log("LastWords: $lastWords");
-  }
-
-  void errorListener(SpeechRecognitionError error) {
-    appStore.setSpeechStatus(false);
-    lastError = '${error.errorMsg} - ${error.permanent}';
-    log("lastError: $lastError");
-  }
-
-  void statusListener(String status) {
-    setState(() {
-      lastStatus = status;
-      log("lastStatus: $lastStatus");
-    });
-
-    if (status == 'done') {
-      appStore.setSpeechStatus(false);
-    }
-  }
-
   @override
   void setState(fn) {
     if (mounted) super.setState(fn);
@@ -123,9 +49,6 @@ class _DashboardAppBarComponentState extends State<DashboardAppBarComponent> {
 
   @override
   void dispose() {
-    appStore.setSpeechStatus(false);
-    speech.stop();
-
     super.dispose();
   }
 
@@ -174,33 +97,11 @@ class _DashboardAppBarComponentState extends State<DashboardAppBarComponent> {
                     ),
                   ],
                 ),
-                10.height,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Image.asset(ic_location,
-                        height: 16, fit: BoxFit.cover, color: Colors.white),
-                    8.width,
-                    Marquee(
-                            child: Text(
-                                '${appStore.branchName}, ${appStore.branchAddress}',
-                                style: primaryTextStyle(color: Colors.white)))
-                        .expand(),
-                    8.width,
-                    const Icon(Icons.keyboard_arrow_down, color: Colors.white),
-                  ],
-                ).paddingOnly(right: 12).onTap(() {
-                  const SelectBranchScreen(isFromDashboard: true)
-                      .launch(context);
-                }),
-                16.height,
-                const DottedLine(dashColor: lightPrimaryColor, dashGapLength: 0)
-                    .paddingOnly(right: 10),
               ],
             ),
           ),
         Positioned(
-          bottom: -25,
+          bottom: widget.positionBottom ?? -25,
           left: 20,
           right: 20,
           child: Container(
@@ -208,33 +109,7 @@ class _DashboardAppBarComponentState extends State<DashboardAppBarComponent> {
             width: context.width(),
             decoration: boxDecorationWithRoundedCorners(
                 backgroundColor: context.cardColor),
-            child: widget.positionWidget ??
-                Stack(
-                  clipBehavior: Clip.hardEdge,
-                  children: [
-                    AppTextField(
-                      textFieldType: TextFieldType.NAME,
-                      onTap: widget.onTapSearch,
-                      decoration: inputDecoration(
-                        context,
-                        label: widget.hintText ?? '',
-                        prefixIcon:
-                            Icon(Icons.search, color: textSecondaryColorGlobal),
-                      ),
-                    ),
-                    Positioned(
-                      left: isRTL ? 16 : null,
-                      right: isRTL ? null : 16,
-                      child: IconButton(
-                        icon: const Icon(Icons.mic_none_outlined),
-                        color: textSecondaryColorGlobal,
-                        onPressed: () async {
-                          startListening();
-                        },
-                      ),
-                    ),
-                  ],
-                ),
+            child: widget.positionWidget,
           ),
         )
       ],

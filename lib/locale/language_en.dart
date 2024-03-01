@@ -230,7 +230,25 @@ class LanguageEn extends BaseLanguage {
   String get address => 'Address';
 
   @override
-  String get quickBookAppointment => 'Quick Book Appointment';
+  String get bookAppointment => 'Book Appointment';
+
+  @override
+  String get points => 'Points';
+
+  @override
+  String get referral => 'Referral';
+
+  @override
+  String get coupon => 'Coupon';
+
+  @override
+  String get fbEcSite => 'FB EC Site';
+
+  @override
+  String get inquiry => 'Inquiry';
+
+  @override
+  String get blog => 'Blog';
 
   @override
   String get service => 'Service';

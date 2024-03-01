@@ -3,19 +3,17 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:grow_tokyo_app/components/app_scaffold.dart';
 import 'package:grow_tokyo_app/components/loader_widget.dart';
 import 'package:grow_tokyo_app/network/rest_apis.dart';
-import 'package:grow_tokyo_app/screens/booking/component/quick_book_component.dart';
-import 'package:grow_tokyo_app/screens/dashboard/component/category_component.dart';
+import 'package:grow_tokyo_app/screens/dashboard/component/blog_component.dart';
 import 'package:grow_tokyo_app/screens/dashboard/component/common_app_component.dart';
 import 'package:grow_tokyo_app/screens/dashboard/component/dashboard_appbar_component.dart';
+import 'package:grow_tokyo_app/screens/dashboard/component/dashboard_menu_component.dart';
 import 'package:grow_tokyo_app/screens/dashboard/component/horizontal_slider_component.dart';
-import 'package:grow_tokyo_app/screens/dashboard/component/near_you_component.dart';
-import 'package:grow_tokyo_app/screens/dashboard/component/top_experts_component.dart';
+import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/empty_error_state_widget.dart';
 import '../../../main.dart';
 import '../../auth/auth_repository.dart';
-import '../../services/view/view_all_service_screen.dart';
 import '../dashboard_repository.dart';
 import '../models/dashboard_model.dart';
 import '../shimmer/dashboard_shimmer.dart';
@@ -79,7 +77,6 @@ class _HomeFragmentState extends State<HomeFragment> {
                   appStore.setLoading(true);
 
                   init();
-                  onQuickBookingDataUpdate?.call();
                   keyForBranchList = UniqueKey();
                   setState(() {});
                 },
@@ -90,44 +87,47 @@ class _HomeFragmentState extends State<HomeFragment> {
               return CommonAppComponent(
                 innerWidget: DashboardAppBarComponent(
                   hintText: locale.searchForServices,
-                  onTapSearch: () {
-                    hideKeyboard(context);
-                    ViewAllServiceScreen(serviceTitle: locale.searchServices)
-                        .launch(context);
-                  },
+                  positionWidgetHeight: 200,
+                  positionWidget: HorizontalSliderComponent(
+                    sliderList: snap.data!.sliderData.validate(),
+                  ),
+                  positionBottom: -145,
                 ),
                 mainWidgetHeight: 190,
                 onSwipeRefresh: () async {
                   init();
-                  onQuickBookingDataUpdate?.call();
                   keyForBranchList = UniqueKey();
                   setState(() {});
 
                   return await 2.seconds.delay;
                 },
                 subWidget: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    /// Quick Book Appointment
-                    QuickBookingComponent(
-                        serviceListData: snap.data!.service.validate()),
-
-                    ///Category List
-                    CategoryComponent(categoryList: snap.data!.category),
-
-                    /// Horizontal
-                    HorizontalSliderComponent(
-                        sliderList: snap.data!.sliderData.validate()),
-
-                    /// Experts
-                    TopExpertsComponent(
-                        topExpertList: snap.data!.topExperts.validate()),
-
-                    /// Near You
-                    NearYouComponent(
-                        title: locale.nearbyBranches, key: keyForBranchList),
+                    AppButton(
+                      color: context.primaryColor,
+                      textColor: white,
+                      onTap: () {},
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(calendar_add, height: 24, width: 24),
+                          8.width,
+                          Text(
+                            locale.bookAppointment,
+                            style: boldTextStyle(size: 16, color: white),
+                          ),
+                        ],
+                      ),
+                    ).paddingSymmetric(horizontal: 20),
+                    24.height,
+                    const DashboardMenuComponent()
+                        .paddingSymmetric(horizontal: 20),
+                    16.height,
+                    const BlogComponent(),
                   ],
-                ).paddingOnly(top: context.statusBarHeight + 24),
+                )
+                    .paddingOnly(top: context.statusBarHeight + 150)
+                    .withWidth(context.width()),
               );
             },
           ),

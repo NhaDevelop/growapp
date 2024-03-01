@@ -150,7 +150,19 @@ abstract class BaseLanguage {
 
   String get address;
 
-  String get quickBookAppointment;
+  String get bookAppointment;
+
+  String get points;
+
+  String get referral;
+
+  String get coupon;
+
+  String get fbEcSite;
+
+  String get inquiry;
+
+  String get blog;
 
   String get service;
 

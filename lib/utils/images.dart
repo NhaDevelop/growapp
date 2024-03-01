@@ -31,6 +31,14 @@ const brand_6 = 'assets/images/brand_6.png';
 const brand_7 = 'assets/images/brand_7.png';
 const brand_8 = 'assets/images/brand_8.png';
 
+const calendar_add = 'assets/icons/calendar-add.png';
+const dashboard_menu_points = 'assets/icons/dashboard_menu_points.png';
+const dashboard_menu_referral = 'assets/icons/dashboard_menu_referral.png';
+const dashboard_menu_coupon = 'assets/icons/dashboard_menu_coupon.png';
+const dashboard_menu_fbecsite = 'assets/icons/dashboard_menu_fbecsite.png';
+const dashboard_menu_inquiry = 'assets/icons/dashboard_menu_inquiry.png';
+const dashboard_menu_notifications =
+    'assets/icons/dashboard_menu_notifications.png';
 const ic_us = 'assets/flags/ic_us.png';
 const ic_india = 'assets/flags/ic_india.png';
 const ic_ar = 'assets/flags/ic_ar.png';

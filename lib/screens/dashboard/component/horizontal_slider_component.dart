@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:grow_tokyo_app/components/cached_image_widget.dart';
 import 'package:grow_tokyo_app/screens/dashboard/models/slider_data.dart';
 import 'package:grow_tokyo_app/screens/services/view/view_all_service_screen.dart';
@@ -74,31 +75,34 @@ class _HorizontalSliderComponentState extends State<HorizontalSliderComponent> {
       height: 200,
       child: Stack(
         children: [
-          PageView.builder(
-            controller: controller,
-            reverse: false,
-            itemCount: widget.sliderList.length,
-            itemBuilder: (_, i) {
-              SliderData data = widget.sliderList[i];
+          ClipRRect(
+            borderRadius: BorderRadius.circular(defaultRadius),
+            child: PageView.builder(
+              controller: controller,
+              reverse: false,
+              itemCount: widget.sliderList.length,
+              itemBuilder: (_, i) {
+                SliderData data = widget.sliderList[i];
 
-              return CachedImageWidget(
-                      url: data.sliderImage.validate(),
-                      height: 200,
-                      width: context.width(),
-                      fit: BoxFit.cover,
-                      radius: defaultRadius)
-                  .onTap(() {
-                if (data.type == SLIDER_TYPE_CATEGORY) {
-                  ViewAllServiceScreen(
-                          serviceTitle: data.name.validate(),
-                          categoryId: data.linkId)
-                      .launch(context);
-                } else if (data.type == SLIDER_TYPE_SERVICE) {
-                  ViewAllServiceScreen(serviceTitle: data.name.validate())
-                      .launch(context);
-                }
-              }).paddingSymmetric(horizontal: 16);
-            },
+                return CachedImageWidget(
+                        url: data.sliderImage.validate(),
+                        height: 200,
+                        width: context.width(),
+                        fit: BoxFit.cover,
+                        radius: defaultRadius)
+                    .onTap(() {
+                  if (data.type == SLIDER_TYPE_CATEGORY) {
+                    ViewAllServiceScreen(
+                            serviceTitle: data.name.validate(),
+                            categoryId: data.linkId)
+                        .launch(context);
+                  } else if (data.type == SLIDER_TYPE_SERVICE) {
+                    ViewAllServiceScreen(serviceTitle: data.name.validate())
+                        .launch(context);
+                  }
+                });
+              },
+            ),
           ),
           Positioned(
             bottom: 8,
