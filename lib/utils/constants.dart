@@ -208,10 +208,6 @@ class SharedPreferenceConst {
   static const LINKEDIN_URL = 'LINKEDIN_URL';
   static const YOUTUBE_URL = 'YOUTUBE_URL';
   static const INQUIRY_EMAIL = 'INQUIRY_EMAIL';
-  static const BRANCH_ID = 'BRANCH_ID';
-  static const BRANCH_CONTACT_NUMBER = 'BRANCH_CONTACT_NUMBER';
-  static const BRANCH_ADDRESS = 'BRANCH_ADDRESS';
-  static const BRANCH_NAME = 'BRANCH_NAME';
   static const AUTO_SLIDER_STATUS = 'AUTO_SLIDER_STATUS';
 }
 

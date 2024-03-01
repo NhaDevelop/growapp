@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:grow_tokyo_app/screens/branch/branch_repository.dart';
 import 'package:mobx/mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -81,37 +80,23 @@ abstract class _AppStore with Store {
   String playerId = '';
 
   @action
-  Future<void> setBranchAddress(String val,
-      {bool isInitializing = false}) async {
+  Future<void> setBranchAddress(String val) async {
     branchAddress = val;
-    if (!isInitializing) {
-      await setValue(SharedPreferenceConst.BRANCH_ADDRESS, val);
-    }
   }
 
   @action
-  Future<void> setBranchName(String val, {bool isInitializing = false}) async {
+  Future<void> setBranchName(String val) async {
     branchName = val;
-    if (!isInitializing) await setValue(SharedPreferenceConst.BRANCH_NAME, val);
   }
 
   @action
-  Future<void> setBranchContactNumber(String val,
-      {bool isInitializing = false}) async {
+  Future<void> setBranchContactNumber(String val) async {
     branchContactNumber = val;
-    if (!isInitializing) {
-      await setValue(SharedPreferenceConst.BRANCH_CONTACT_NUMBER, val);
-    }
   }
 
   @action
-  Future<void> setBranchId(int val, {bool isInitializing = false}) async {
+  Future<void> setBranchId(int val) async {
     branchId = val;
-    if (!isInitializing) {
-      await setValue(SharedPreferenceConst.BRANCH_ID, val);
-
-      getBranchConfiguration(val).then((value) => null).catchError(onError);
-    }
   }
 
   @action

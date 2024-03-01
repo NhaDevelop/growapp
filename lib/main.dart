@@ -111,14 +111,6 @@ void main() async {
 
   appStore.setLoggedIn(getBoolAsync(SharedPreferenceConst.IS_LOGGED_IN),
       isInitializing: true);
-  await appStore.setBranchId(getIntAsync(SharedPreferenceConst.BRANCH_ID,
-      defaultValue: UNSELECTED_BRANCH_ID));
-  await appStore
-      .setBranchAddress(getStringAsync(SharedPreferenceConst.BRANCH_ADDRESS));
-  await appStore
-      .setBranchName(getStringAsync(SharedPreferenceConst.BRANCH_NAME));
-  await appStore.setBranchContactNumber(
-      getStringAsync(SharedPreferenceConst.BRANCH_CONTACT_NUMBER));
   if (appStore.isLoggedIn) {
     await userStore.setUserId(getIntAsync(SharedPreferenceConst.USER_ID),
         isInitializing: true);
