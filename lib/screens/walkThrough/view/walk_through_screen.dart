@@ -1,4 +1,5 @@
 import 'package:grow_tokyo_app/configs.dart';
+import 'package:grow_tokyo_app/screens/dashboard/view/dashboard_screen.dart';
 import 'package:grow_tokyo_app/utils/colors.dart';
 import 'package:grow_tokyo_app/utils/constants.dart';
 import 'package:grow_tokyo_app/utils/images.dart';
@@ -6,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../main.dart';
-import '../../branch/view/select_branch_screen.dart';
 import '../model/walk_through_model.dart';
 
 class WalkThroughScreen extends StatefulWidget {
@@ -82,9 +82,11 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
                                 SharedPreferenceConst.IS_FIRST_TIME, false);
 
                             if (!context.mounted) return;
-                            const SelectBranchScreen().launch(context,
-                                isNewTask: true,
-                                pageRouteAnimation: PageRouteAnimation.Fade);
+                            const DashboardScreen().launch(
+                              context,
+                              isNewTask: true,
+                              pageRouteAnimation: PageRouteAnimation.Fade,
+                            );
                           },
                           child: Text(locale.skip,
                               style: boldTextStyle(color: white)),
@@ -130,9 +132,11 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
                       await setValue(
                           SharedPreferenceConst.IS_FIRST_TIME, false);
                       if (!context.mounted) return;
-                      const SelectBranchScreen().launch(context,
-                          isNewTask: true,
-                          pageRouteAnimation: PageRouteAnimation.Fade);
+                      const DashboardScreen().launch(
+                        context,
+                        isNewTask: true,
+                        pageRouteAnimation: PageRouteAnimation.Fade,
+                      );
                     } else {
                       pageController.nextPage(
                           duration: 500.milliseconds,

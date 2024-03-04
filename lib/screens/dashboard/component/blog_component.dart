@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:grow_tokyo_app/components/cached_image_widget.dart';
 import 'package:grow_tokyo_app/main.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -34,12 +33,6 @@ class BlogComponent extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           child: Row(
             children: [
-              _Item(
-                key: UniqueKey(),
-                text:
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                image: 'https://via.placeholder.com/150',
-              ),
               _Item(
                 key: UniqueKey(),
                 text:

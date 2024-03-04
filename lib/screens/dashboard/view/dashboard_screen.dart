@@ -11,7 +11,6 @@ import '../../../components/voice_search_component.dart';
 import '../../../main.dart';
 import '../../../utils/common_base.dart';
 import '../../../utils/constants.dart';
-import '../../branch/view/select_branch_screen.dart';
 // import '../../product/view/product_dashboard_screen.dart';
 import '../fragment/booking_fragment.dart';
 import '../fragment/home_fragment.dart';
@@ -70,10 +69,6 @@ class _DashboardScreenState extends State<DashboardScreen>
     await 3.seconds.delay;
     if (!mounted) return;
     showForceUpdateDialog(context);
-
-    if (!appStore.isBranchSelected) {
-      const SelectBranchScreen().launch(context, isNewTask: true);
-    }
   }
 
   @override

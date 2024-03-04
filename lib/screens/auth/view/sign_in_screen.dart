@@ -16,7 +16,6 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../../components/app_scaffold.dart';
 import '../../../components/back_widget.dart';
 import '../../../network/network_utils.dart';
-import '../../branch/view/select_branch_screen.dart';
 
 class SignInScreen extends StatefulWidget {
   final bool isRegeneratingToken;
@@ -108,13 +107,8 @@ class _SignInScreenState extends State<SignInScreen> {
       }
       finish(context, true);
     } else {
-      if (appStore.isBranchSelected) {
-        const DashboardScreen().launch(context,
-            isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
-      } else {
-        const SelectBranchScreen().launch(context,
-            isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
-      }
+      const DashboardScreen().launch(context,
+          isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
     }
     appStore.setLoading(false);
   }
@@ -266,7 +260,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                   showInDialog(
                                     context,
                                     contentPadding: EdgeInsets.zero,
-                                    builder: (_) => const ForgotPasswordScreen(),
+                                    builder: (_) =>
+                                        const ForgotPasswordScreen(),
                                   );
                                 },
                                 child: Text(

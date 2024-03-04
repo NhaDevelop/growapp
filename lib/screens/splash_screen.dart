@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:grow_tokyo_app/screens/branch/view/select_branch_screen.dart';
 import 'package:grow_tokyo_app/screens/dashboard/view/dashboard_screen.dart';
 import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -61,11 +60,8 @@ class _SplashScreenState extends State<SplashScreen> {
     if (!mounted) return;
     if (getBoolAsync(SharedPreferenceConst.IS_FIRST_TIME, defaultValue: true)) {
       const WalkThroughScreen().launch(context, isNewTask: true);
-    } else if (appStore.isBranchSelected) {
-      const DashboardScreen().launch(context, isNewTask: true);
     } else {
-      const SelectBranchScreen(isFromDashboard: true)
-          .launch(context, isNewTask: true);
+      const DashboardScreen().launch(context, isNewTask: true);
     }
   }
 
