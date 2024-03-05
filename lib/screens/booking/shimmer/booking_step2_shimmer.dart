@@ -18,7 +18,6 @@ class BookingStep2Shimmer extends StatelessWidget {
             16.height,
             AnimatedWrap(
               runSpacing: 16,
-              columnCount: 1,
               itemCount: 10,
               listAnimationType: ListAnimationType.None,
               itemBuilder: (context, index) {

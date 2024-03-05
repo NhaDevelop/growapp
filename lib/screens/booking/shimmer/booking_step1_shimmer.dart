@@ -16,7 +16,8 @@ class BookingStep1Shimmer extends StatelessWidget {
           children: [
             ShimmerWidget(height: 14, width: context.width() * 0.30),
             16.height,
-            AnimatedListView(
+            AnimatedWrap(
+              runSpacing: 16,
               itemCount: 10,
               listAnimationType: ListAnimationType.None,
               itemBuilder: (context, index) {
