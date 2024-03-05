@@ -26,7 +26,7 @@ class SelectServiceItemComponent extends StatelessWidget {
             width: 50,
             fit: BoxFit.cover,
           ).cornerRadiusWithClipRRect(8),
-          8.width,
+          12.width,
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -41,6 +41,7 @@ class SelectServiceItemComponent extends StatelessWidget {
               ),
             ],
           ).expand(),
+          12.width,
           Checkbox(
             value: selected,
             onChanged: (_) => onChanged(),

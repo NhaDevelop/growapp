@@ -6,6 +6,7 @@ import 'package:grow_tokyo_app/screens/booking/shimmer/booking_step2_shimmer.dar
 import 'package:grow_tokyo_app/screens/category/category_repository.dart';
 import 'package:grow_tokyo_app/screens/booking/component/select_category_item_component.dart';
 import 'package:grow_tokyo_app/screens/category/model/category_response.dart';
+import 'package:grow_tokyo_app/screens/services/models/service_response.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/loader_widget.dart';
@@ -26,6 +27,7 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
   int page = 1;
   bool isLastPage = false;
   List<CategoryData> categoryList = [];
+  List<ServiceListData> selectedServices = [];
 
   @override
   void initState() {
@@ -117,6 +119,7 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
                       itemBuilder: (_, index) {
                         return SelectCategoryItemComponent(
                           categoryData: list[index],
+                          servicesOnChanged: (val) => selectedServices = val,
                         );
                       },
                     ),
@@ -140,6 +143,8 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
                 price: bookingRequestStore.totalAmount,
                 buttonText: locale.next,
                 onTap: () {
+                  bookingRequestStore
+                      .setSelectedServiceListInRequest(selectedServices);
                   customStepperController.nextPage(
                       duration: 200.milliseconds, curve: Curves.easeOut);
                 },

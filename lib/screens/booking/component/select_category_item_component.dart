@@ -12,8 +12,10 @@ import '../../category/model/category_response.dart';
 
 class SelectCategoryItemComponent extends StatefulWidget {
   final CategoryData categoryData;
+  final void Function(List<ServiceListData>) servicesOnChanged;
 
-  const SelectCategoryItemComponent({super.key, required this.categoryData});
+  const SelectCategoryItemComponent(
+      {super.key, required this.categoryData, required this.servicesOnChanged});
 
   @override
   State<SelectCategoryItemComponent> createState() =>
@@ -59,6 +61,7 @@ class _SelectCategoryItemComponentState
     } else {
       selectedService.add(service);
     }
+    widget.servicesOnChanged(selectedService);
 
     setState(() {});
   }
