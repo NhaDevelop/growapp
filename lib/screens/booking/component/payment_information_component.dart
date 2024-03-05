@@ -11,7 +11,6 @@ import '../../cart/model/cart_list_response.dart';
 import '../../dashboard/component/booking_list_component.dart';
 import '../model/booking_list_response.dart';
 import '../view/booking_detail_screen.dart';
-import '../view/complete_payment_screen.dart';
 
 class PaymentInformationComponent extends StatelessWidget {
   final BookingListData booking;
@@ -198,13 +197,8 @@ class PaymentInformationComponent extends StatelessWidget {
                 color: secondaryColor,
                 width: context.width(),
                 onTap: () async {
-                  bool? res =
-                      await CompletePaymentScreen(booking).launch(context);
-
-                  if (res ?? false) {
-                    onBookingDetailUpdate.call();
-                    onBookingListUpdate.call('');
-                  }
+                  onBookingDetailUpdate.call();
+                  onBookingListUpdate.call('');
                 },
               ),
             ],

@@ -3,9 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:grow_tokyo_app/components/app_scaffold.dart';
 import 'package:grow_tokyo_app/components/common_bottom_price_widget.dart';
 import 'package:grow_tokyo_app/components/custom_stepper.dart';
-import 'package:grow_tokyo_app/components/view_all_label_component.dart';
-import 'package:grow_tokyo_app/screens/experts/component/employee_list_component.dart';
-import 'package:grow_tokyo_app/utils/colors.dart';
+import 'package:grow_tokyo_app/screens/experts/component/employee_list_component_new.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/empty_error_state_widget.dart';
@@ -101,51 +99,42 @@ class _BookingStep1ComponentState extends State<BookingStep1Component> {
                 children: [
                   AnimatedScrollView(
                     padding: const EdgeInsets.only(
-                        left: 20, right: 20, top: 60, bottom: 100),
+                        left: 20, right: 20, top: 70, bottom: 100),
                     physics: const AlwaysScrollableScrollPhysics(),
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ViewAllLabel(
-                              label: locale.chooseYourExpert, isShowAll: false),
-                          40.height,
-                          AnimatedWrap(
-                            runSpacing: 36,
-                            spacing: 16,
-                            columnCount: 2,
-                            itemCount: list.length,
-                            listAnimationType: ListAnimationType.Scale,
-                            scaleConfiguration: ScaleConfiguration(
-                                duration: 300.milliseconds,
-                                delay: 50.milliseconds),
-                            itemBuilder: (_, i) {
-                              EmployeeData data = list[i];
+                      Text(
+                        locale.chooseYourStylist,
+                        style: primaryTextStyle(weight: FontWeight.w500),
+                      ),
+                      16.height,
+                      AnimatedWrap(
+                        runSpacing: 16,
+                        spacing: 16,
+                        columnCount: 1,
+                        itemCount: list.length,
+                        listAnimationType: ListAnimationType.Scale,
+                        scaleConfiguration: ScaleConfiguration(
+                            duration: 300.milliseconds, delay: 50.milliseconds),
+                        itemBuilder: (_, i) {
+                          EmployeeData data = list[i];
 
-                              return GestureDetector(
-                                onTap: () {
-                                  selectedIndex = i;
+                          return GestureDetector(
+                            onTap: () {
+                              selectedIndex = i;
 
-                                  if (selectedIndex == i) {
-                                    employeeId = data.id.validate();
-                                  }
+                              if (selectedIndex == i) {
+                                employeeId = data.id.validate();
+                              }
 
-                                  setState(() {});
-                                },
-                                child: EmployeeListComponent(
-                                  expertData: data,
-                                  width: context.width() / 2 - 30,
-                                  decoration: boxDecorationWithRoundedCorners(
-                                      backgroundColor: selectedIndex == i
-                                          ? indicatorColor
-                                          : context.cardColor),
-                                  expertNameTextColor:
-                                      selectedIndex == i ? Colors.black : null,
-                                ),
-                              );
+                              setState(() {});
                             },
-                          ),
-                        ],
+                            child: EmployeeListComponentNew(
+                              expertData: data,
+                              selected: selectedIndex == i,
+                            ),
+                          );
+                        },
                       ),
                     ],
                     onSwipeRefresh: () async {
@@ -172,25 +161,28 @@ class _BookingStep1ComponentState extends State<BookingStep1Component> {
                     right: 0,
                     child: Observer(
                       builder: (_) => CommonBottomPriceWidget(
-                        title: bookingRequestStore.selectedServiceList
+                        title: bookingRequestStore.employeeName,
+                        subtitle: bookingRequestStore.selectedServiceList
                             .map((e) => widget.isReschedule
                                 ? e.serviceName.validate()
                                 : e.name.validate())
                             .toList()
                             .join(', '),
-                        price: bookingRequestStore.totalAmount,
                         buttonText: locale.next,
                         onTap: () {
                           if (employeeId != null) {
                             Fluttertoast.cancel();
                             bookingRequestStore
                                 .setEmployeeIdInRequest(employeeId.validate());
+                            bookingRequestStore.setEmployeeNameInRequest(
+                              list[selectedIndex].fullName.validate(),
+                            );
                             /*log(bookingRequestStore.toJson());*/
                             customStepperController.nextPage(
                                 duration: 200.milliseconds,
                                 curve: Curves.easeOut);
                           } else {
-                            toast(locale.pleaseChooseYourExpert);
+                            toast(locale.pleaseChooseYourStylist);
                           }
                         },
                       ),

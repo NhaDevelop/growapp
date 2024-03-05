@@ -209,6 +209,7 @@ class SharedPreferenceConst {
   static const YOUTUBE_URL = 'YOUTUBE_URL';
   static const INQUIRY_EMAIL = 'INQUIRY_EMAIL';
   static const AUTO_SLIDER_STATUS = 'AUTO_SLIDER_STATUS';
+  static const BRANCH_ID = 'BRANCH_ID';
 }
 
 //endregion

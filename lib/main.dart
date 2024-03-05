@@ -111,6 +111,8 @@ void main() async {
 
   appStore.setLoggedIn(getBoolAsync(SharedPreferenceConst.IS_LOGGED_IN),
       isInitializing: true);
+  await appStore.setBranchId(getIntAsync(SharedPreferenceConst.BRANCH_ID,
+      defaultValue: UNSELECTED_BRANCH_ID));
   if (appStore.isLoggedIn) {
     await userStore.setUserId(getIntAsync(SharedPreferenceConst.USER_ID),
         isInitializing: true);
@@ -189,7 +191,7 @@ class _MyAppState extends State<MyApp> {
               Locale(appStore.selectedLanguageCode),
           locale: Locale(appStore.selectedLanguageCode),
           theme: AppTheme.lightTheme,
-          darkTheme: AppTheme.darkTheme,
+          // darkTheme: AppTheme.darkTheme,
           themeMode: appStore.isDarkMode ? ThemeMode.dark : ThemeMode.light,
           home: const SplashScreen(),
         ),

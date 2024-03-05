@@ -10,7 +10,7 @@ import '../../../components/price_widget.dart';
 import '../../../utils/app_common.dart';
 import '../../../utils/colors.dart';
 import '../../cart/model/cart_list_response.dart';
-import '../../product/view/product_payment_screen.dart';
+// import '../../product/view/product_payment_screen.dart';
 
 class OrderSummaryScreen extends StatelessWidget {
   const OrderSummaryScreen({super.key});
@@ -26,7 +26,8 @@ class OrderSummaryScreen extends StatelessWidget {
       body: Stack(
         children: [
           AnimatedScrollView(
-            padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 80),
+            padding:
+                const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 80),
             children: [
               Container(
                 width: context.width(),
@@ -294,8 +295,8 @@ class OrderSummaryScreen extends StatelessWidget {
               width: context.width(),
               color: secondaryColor,
               onTap: () {
-                const ProductPaymentScreen().launch(context,
-                    pageRouteAnimation: PageRouteAnimation.Fade);
+                // const ProductPaymentScreen().launch(context,
+                //     pageRouteAnimation: PageRouteAnimation.Fade);
               },
               child: Text(locale.proceed,
                   style: boldTextStyle(color: Colors.white)),

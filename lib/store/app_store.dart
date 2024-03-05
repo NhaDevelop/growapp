@@ -97,6 +97,8 @@ abstract class _AppStore with Store {
   @action
   Future<void> setBranchId(int val) async {
     branchId = val;
+
+    await setValue(SharedPreferenceConst.BRANCH_ID, val);
   }
 
   @action

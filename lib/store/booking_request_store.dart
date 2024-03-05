@@ -20,6 +20,9 @@ abstract class _BookingRequestStore with Store {
   int employeeId = -1;
 
   @observable
+  String employeeName = '';
+
+  @observable
   String time = '';
 
   @observable
@@ -110,6 +113,11 @@ abstract class _BookingRequestStore with Store {
   @action
   void setEmployeeIdInRequest(int val) {
     employeeId = val;
+  }
+
+  @action
+  void setEmployeeNameInRequest(String val) {
+    employeeName = val;
   }
 
   @action

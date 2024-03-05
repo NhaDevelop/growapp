@@ -19,7 +19,8 @@ class BranchItemComponent extends StatefulWidget {
   final bool isFormSignIn;
   final Position? position;
 
-  const BranchItemComponent({super.key, 
+  const BranchItemComponent({
+    super.key,
     required this.branchData,
     this.selectedBranchId,
     this.currentBranchIndex,
@@ -111,10 +112,8 @@ class _BranchItemComponentState extends State<BranchItemComponent> {
                       spacing: 12,
                       textStyle: primaryTextStyle(),
                       maxLine: 2,
-                      expandedText: true,
                       onTap: () {
-                        launchMap(
-                            widget.branchData.addressLine1.validate());
+                        launchMap(widget.branchData.addressLine1.validate());
                       },
                       edgeInsets: const EdgeInsets.only(left: 0),
                       prefix: ic_location.iconImage(
@@ -209,10 +208,9 @@ class _BranchItemComponentState extends State<BranchItemComponent> {
             width: context.width(),
             margin: const EdgeInsets.only(bottom: 16),
             decoration: boxDecorationWithRoundedCorners(
-                backgroundColor: context.primaryColor.withOpacity(0.4),
+                backgroundColor: context.primaryColor.withOpacity(0.6),
                 borderRadius: radius()),
-            child: const Icon(Icons.check_circle_outline_outlined,
-                size: 40, color: white),
+            child: const Icon(Icons.check_rounded, size: 50, color: white),
           ),
       ],
     );

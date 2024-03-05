@@ -218,9 +218,11 @@ abstract class BaseLanguage {
 
   String get pleaseSelectTimeSlotFirst;
 
-  String get chooseYourExpert;
+  String get chooseYourStylist;
 
-  String get pleaseChooseYourExpert;
+  String get viewSchedule;
+
+  String get pleaseChooseYourStylist;
 
   String get services;
 
@@ -235,8 +237,6 @@ abstract class BaseLanguage {
   String get chooseBranch;
 
   String get noBranchFound;
-
-  String get doYouWantExplore;
 
   String get nearbyBranches;
 

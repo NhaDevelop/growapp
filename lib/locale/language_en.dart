@@ -333,10 +333,13 @@ class LanguageEn extends BaseLanguage {
   String get pleaseSelectTimeSlotFirst => 'Please Select Time Slot First';
 
   @override
-  String get chooseYourExpert => 'Choose Your Expert';
+  String get chooseYourStylist => 'Choose Your Stylist';
 
   @override
-  String get pleaseChooseYourExpert => 'Please Choose Your Expert First';
+  String get viewSchedule => 'View Schedule';
+
+  @override
+  String get pleaseChooseYourStylist => 'Please Choose Your Stylist First';
 
   @override
   String get services => 'Services';
@@ -358,9 +361,6 @@ class LanguageEn extends BaseLanguage {
 
   @override
   String get noBranchFound => 'No Branch Found';
-
-  @override
-  String get doYouWantExplore => 'Do you want to explore';
 
   @override
   String get nearbyBranches => 'Nearby Branches';

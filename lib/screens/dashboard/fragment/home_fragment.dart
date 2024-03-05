@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:grow_tokyo_app/components/app_scaffold.dart';
 import 'package:grow_tokyo_app/components/loader_widget.dart';
 import 'package:grow_tokyo_app/network/rest_apis.dart';
+import 'package:grow_tokyo_app/screens/branch/view/select_branch_screen.dart';
 import 'package:grow_tokyo_app/screens/dashboard/component/blog_component.dart';
 import 'package:grow_tokyo_app/screens/dashboard/component/common_app_component.dart';
 import 'package:grow_tokyo_app/screens/dashboard/component/dashboard_appbar_component.dart';
@@ -106,7 +107,10 @@ class _HomeFragmentState extends State<HomeFragment> {
                     AppButton(
                       color: context.primaryColor,
                       textColor: white,
-                      onTap: () {},
+                      onTap: () {
+                        const SelectBranchScreen(isFromDashboard: true)
+                            .launch(context);
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

@@ -1,296 +1,106 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:grow_tokyo_app/components/cached_image_widget.dart';
-import 'package:grow_tokyo_app/components/common_bottom_price_widget.dart';
+import 'package:grow_tokyo_app/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/components/slot_widget.dart';
 import 'package:grow_tokyo_app/components/view_all_label_component.dart';
-import 'package:grow_tokyo_app/paymentGateways/payment_repo.dart';
-import 'package:grow_tokyo_app/paymentGateways/services/paypal_service.dart';
-import 'package:grow_tokyo_app/paymentGateways/services/stripe_service.dart';
-import 'package:grow_tokyo_app/screens/booking/component/confirm_booking_dialog.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/utils/colors.dart';
+import 'package:grow_tokyo_app/utils/common_base.dart';
+import 'package:grow_tokyo_app/utils/constants.dart';
+import 'package:grow_tokyo_app/utils/extensions/date_extensions.dart';
+import 'package:grow_tokyo_app/utils/extensions/int_extension.dart';
+import 'package:grow_tokyo_app/utils/horizontalCalender/date_item.dart';
+import 'package:grow_tokyo_app/utils/horizontalCalender/date_picker_controller.dart';
+import 'package:grow_tokyo_app/utils/horizontalCalender/horizontal_date_picker.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../../components/common_app_dialog.dart';
+import '../../../components/common_bottom_price_widget.dart';
+import '../../../components/empty_error_state_widget.dart';
 import '../../../components/loader_widget.dart';
-// import '../../../configs.dart';
-import '../../../main.dart';
-import '../../../paymentGateways/models/payment_list_model.dart';
-import '../../../paymentGateways/services/flutter_wave_service.dart';
-import '../../../paymentGateways/services/paystack_service.dart';
-import '../../../paymentGateways/services/razor_pay_service.dart';
-import '../../../utils/common_base.dart';
-import '../../../utils/constants.dart';
-import '../../../utils/model_keys.dart';
-import '../../dashboard/view/dashboard_screen.dart';
+import '../../../utils/app_common.dart';
+import '../../branch/branch_repository.dart';
+import '../../branch/model/branch_configuration_response.dart';
+import '../../dashboard/component/booking_list_component.dart';
 import '../../services/models/service_response.dart';
 import '../booking_repository.dart';
+import '../shimmer/booking_step3_shimmer.dart';
+import '../view/booking_detail_screen.dart';
 
 class BookingStep3Component extends StatefulWidget {
+  final bool isFromBookingInfoDetail;
   final bool isReschedule;
+  final int? bookingId;
+  final int? employeeId;
+  final List<ServiceListData>? serviceList;
 
-  const BookingStep3Component({super.key, this.isReschedule = false});
+  const BookingStep3Component(
+      {super.key,
+      this.isFromBookingInfoDetail = false,
+      this.bookingId,
+      this.serviceList,
+      this.employeeId,
+      this.isReschedule = false});
 
   @override
   State<BookingStep3Component> createState() => _BookingStep3ComponentState();
 }
 
 class _BookingStep3ComponentState extends State<BookingStep3Component> {
-  ScrollController scrollController = ScrollController();
+  final DatePickerController _datePickerController = DatePickerController();
 
-  TextEditingController tipController = TextEditingController();
-  TextEditingController noteController = TextEditingController();
+  UniqueKey keyForSlotWidget = UniqueKey();
 
-  FocusNode tipFocusNode = FocusNode();
-  FocusNode noteFocusNode = FocusNode();
+  Future<BranchConfigurationResponse>? future;
 
-  List<PaymentData> payments = getPaymentList();
+  DateTime selectedHorizontalDate = DateTime.now();
 
-  late PaymentData selectedPayment;
+  List<String> monthList =
+      List.generate(12, (index) => (index + 1).toMonthName());
+  int currentMonthNumber = DateTime.now().month;
+  int selectedMonthIndex = DateTime.now().month - 1;
 
-  RazorPayService razorPayService = RazorPayService();
-  StripeService stripeServices = StripeService();
-  PayStackService paystackServices = PayStackService();
-  PayPalService payPalServices = PayPalService();
-  FlutterWaveService flutterWaveServices = FlutterWaveService();
-
-  String tempDate = '';
-  String tempTime = '';
-
-  DateTime? initialDateTime;
+  String startTime = DEFAULT_SLOT_INTERVAL_DURATION;
+  String endTime = DEFAULT_SLOT_INTERVAL_DURATION;
 
   @override
   void initState() {
     super.initState();
     init();
+
+    bookingRequestStore.setDateInRequest(selectedHorizontalDate
+        .setFormattedDate(DateFormatConst.DATE_FORMAT_5)
+        .toString());
   }
 
   void init() async {
-    tempDate = bookingRequestStore.date.validate();
-    tempTime = bookingRequestStore.time.validate();
-
-    selectedPayment = payments.first;
+    future = getBranchConfiguration(appStore.branchId);
   }
 
-  void saveBooking() {
-    if (bookingRequestStore.bookingId == null) {
-      appStore.setLoading(true);
+  void setCustomDate(int month) {
+    selectedHorizontalDate = DateTime(selectedHorizontalDate.year, month, 1);
+    _datePickerController.selectedDate = selectedHorizontalDate;
+    _datePickerController.scrollTo(selectedHorizontalDate);
 
-      String dateString = "$tempDate $tempTime";
-
-      try {
-        initialDateTime = DateTime.parse(dateString);
-
-        bookingRequestStore.selectedServiceList
-            .validate()
-            .forEachIndexed((element, index) {
-          if (index == 0) {
-            element.startDateTime = formatDate(initialDateTime.toString(),
-                format: DateFormatConst.NEW_FORMAT);
-            element.previousTime = initialDateTime;
-          } else {
-            ServiceListData previousData =
-                bookingRequestStore.selectedServiceList.validate()[index - 1];
-            element.startDateTime = formatDate(
-                previousData.previousTime!
-                    .add(previousData.durationMin.minutes)
-                    .toString(),
-                format: DateFormatConst.NEW_FORMAT);
-            element.previousTime = previousData.previousTime!
-                .add(previousData.durationMin.minutes);
-          }
-        });
-
-        bookingRequestStore.setNoteInRequest(noteController.text);
-      } catch (e) {
-        appStore.setLoading(false);
-        return toast(e.toString());
-      }
-
-      /// Save Booking API
-      saveBookingAPI(bookingRequestStore.toJson(
-              dateTime: formatDate(initialDateTime.toString(),
-                  format: DateFormatConst.NEW_FORMAT),
-              isRescheduleBooking: widget.isReschedule))
-          .then((value) async {
-        appStore.setLoading(false);
-        bookingRequestStore.setBookingIdInRequest(value[CommonKey.bookingId]);
-
-        if (selectedPayment.id == PaymentMethods.PAYMENT_METHOD_CASH) {
-          savePayment(bookingId: bookingRequestStore.bookingId.validate())
-              .then((value) {
-            finish(context);
-            finish(context);
-            showBookingCompleteDialog();
-          }).catchError((e) {
-            toast(e.toString());
-          });
-        } else {
-          savePayment(bookingId: bookingRequestStore.bookingId.validate());
-        }
-      }).catchError((e) {
-        appStore.setLoading(false);
-        toast(e.toString(), print: true);
-      });
-    } else {
-      savePayment(bookingId: bookingRequestStore.bookingId.validate());
-    }
+    _datePickerController.scrollToSelectedItem();
+    setState(() {});
   }
 
-  Future<void> savePayment({required int bookingId}) async {
-    if (selectedPayment.id == PaymentMethods.PAYMENT_METHOD_CASH) {
-      await savePay(
-        bookingId: bookingId,
-        externalTransactionId: '',
-        transactionType: PaymentMethods.PAYMENT_METHOD_CASH,
-        discountPercentage: 0,
-        discountAmount: 0,
-        taxData: bookingRequestStore.taxPercentage.validate(),
-        paymentStatus: '0',
-        totalAmount: bookingRequestStore.totalAmount,
-      );
-    } else if (selectedPayment.id == PaymentMethods.PAYMENT_METHOD_RAZORPAY) {
-      appStore.setLoading(true);
-
-      // razorPayService.init(
-      //   razorKey: RAZORPAY_TEST_KEY,
-      //   totalAmount: bookingRequestStore.totalAmount,
-      //   bookingId: bookingRequestStore.bookingId.validate(),
-      //   discountAmount: 0,
-      //   discountPercentage: 0,
-      //   serviceTip: tipController.text.toDouble(),
-      //   taxData: bookingRequestStore.taxPercentage.validate(),
-      //   onComplete: (res) {
-      //     log(res);
-
-      //     finish(context);
-      //     finish(context);
-      //     showBookingCompleteDialog();
-      //   },
-      // );
-
-      await 1.seconds.delay;
-      appStore.setLoading(false);
-
-      razorPayService.razorPayCheckout();
-    } else if (selectedPayment.id == PaymentMethods.PAYMENT_METHOD_STRIPE) {
-      appStore.setLoading(true);
-
-      // await stripeServices.init(
-      //   stripePaymentPublishKey: STRIPE_TEST_PUBLIC_KEY,
-      //   totalAmount: bookingRequestStore.totalAmount,
-      //   bookingId: bookingRequestStore.bookingId.validate(),
-      //   stripeURL: STRIPE_URL,
-      //   stripePaymentKey: STRIPE_TEST_SECRET_KEY,
-      //   isTest: true,
-      //   discountAmount: 0,
-      //   discountPercentage: 0,
-      //   serviceTip: tipController.text.toDouble(),
-      //   taxData: bookingRequestStore.taxPercentage.validate(),
-      //   onComplete: (res) {
-      //     finish(context);
-      //     finish(context);
-      //     showBookingCompleteDialog();
-      //   },
-      // );
-
-      await 1.seconds.delay;
-      stripeServices.stripePay().then((value) {
-        appStore.setLoading(false);
-        //
-      }).catchError((e) {
-        appStore.setLoading(false);
-        toast(e.toString());
-      });
-    } else if (selectedPayment.id == PaymentMethods.PAYMENT_METHOD_PAYSTACK) {
-      appStore.setLoading(true);
-
-      // await paystackServices.init(
-      //   context: context,
-      //   paystackPaymentPublicKey: PAYSTACK_TEST_PUBLIC_KEY,
-      //   totalAmount: bookingRequestStore.totalAmount,
-      //   bookingId: bookingRequestStore.bookingId.validate(),
-      //   discountAmount: 0,
-      //   discountPercentage: 0,
-      //   taxData: bookingRequestStore.taxPercentage.validate(),
-      //   serviceTip: tipController.text.toDouble(),
-      //   onComplete: (p0) {
-      //     log(p0);
-
-      //     finish(context);
-      //     finish(context);
-      //     showBookingCompleteDialog();
-      //   },
-      // );
-
-      await 1.seconds.delay;
-      appStore.setLoading(false);
-
-      paystackServices.checkout();
-    } else if (selectedPayment.id == PaymentMethods.PAYMENT_METHOD_PAYPAL) {
-      appStore.setLoading(true);
-
-      // await payPalServices.init(
-      //   context: context,
-      //   isTest: true,
-      //   paypalClientId: PAYPAL_CLIENT_ID,
-      //   secretKey: PAYPAL_TEST_SECRET_KEY,
-      //   totalAmount: bookingRequestStore.totalAmount,
-      //   bookingId: bookingRequestStore.bookingId.validate(),
-      //   discountAmount: 0,
-      //   discountPercentage: 0,
-      //   taxData: bookingRequestStore.taxPercentage.validate(),
-      //   serviceTip: tipController.text.toDouble(),
-      //   onComplete: (p0) {
-      //     finish(context);
-      //     finish(context);
-      //     showBookingCompleteDialog();
-      //   },
-      // );
-
-      await 1.seconds.delay;
-      appStore.setLoading(false);
-
-      payPalServices.paypalCheckOut();
-    } else if (selectedPayment.id ==
-        PaymentMethods.PAYMENT_METHOD_FLUTTER_WAVE) {
-      appStore.setLoading(true);
-
-      // flutterWaveServices.checkout(
-      //   flutterWavePublicKey: FLUTTER_WAVE_TEST_PUBLIC_KEY,
-      //   flutterWaveSecretKey: FLUTTER_WAVE_TEST_SECRET_KEY,
-      //   totalAmount: bookingRequestStore.totalAmount,
-      //   bookingId: bookingRequestStore.bookingId.validate(),
-      //   discountAmount: 0,
-      //   discountPercentage: 0,
-      //   isTestMode: true,
-      //   taxData: bookingRequestStore.taxPercentage.validate(),
-      //   onComplete: (p0) {
-      //     finish(context);
-      //     finish(context);
-      //     showBookingCompleteDialog();
-      //   },
-      // );
-
-      await 1.seconds.delay;
-      appStore.setLoading(false);
-    }
-  }
-
-  void showBookingCompleteDialog() {
-    showDialog(
-      context: context,
-      useSafeArea: false,
-      builder: (BuildContext context) => CommonAppDialog(
-        title: locale.bookingSuccessful,
-        subTitle:
-            '${locale.yourBookingFor} ${bookingRequestStore.selectedServiceList.validate().map((e) => e.name.validate()).toList().join(', ')} has been successfully booked',
-        buttonText: locale.goToBookings,
-        onTap: () {
-          finish(context);
-          const DashboardScreen(pageIndex: 1).launch(context, isNewTask: true);
-        },
-      ),
-    );
-  }
+  //   void showBookingCompleteDialog() {
+  //   showDialog(
+  //     context: context,
+  //     useSafeArea: false,
+  //     builder: (BuildContext context) => CommonAppDialog(
+  //       title: locale.bookingSuccessful,
+  //       subTitle:
+  //           '${locale.yourBookingFor} ${bookingRequestStore.selectedServiceList.validate().map((e) => e.name.validate()).toList().join(', ')} has been successfully booked',
+  //       buttonText: locale.goToBookings,
+  //       onTap: () {
+  //         finish(context);
+  //         const DashboardScreen(pageIndex: 1).launch(context, isNewTask: true);
+  //       },
+  //     ),
+  //   );
+  // }
 
   @override
   void setState(fn) {
@@ -299,102 +109,212 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return AppScaffold(
+      showAppBar: widget.isFromBookingInfoDetail ? true : false,
+      appBarWidget: commonAppBarWidget(
+        context,
+        title: '${locale.date} & ${locale.time}',
+        appBarHeight: 70,
+        roundCornerShape: true,
+        showLeadingIcon: true,
+      ),
       body: Stack(
         fit: StackFit.expand,
         children: [
-          SingleChildScrollView(
-            controller: scrollController,
-            padding: const EdgeInsets.only(
-                left: 20, right: 20, top: 60, bottom: 200),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ViewAllLabel(label: locale.paymentMethod, isShowAll: false),
-                AnimatedListView(
-                  shrinkWrap: true,
-                  itemCount: payments.length,
-                  listAnimationType: ListAnimationType.None,
-                  padding: EdgeInsets.zero,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      decoration: boxDecorationWithRoundedCorners(
-                          borderRadius: radius(),
-                          backgroundColor: context.cardColor),
-                      margin: const EdgeInsets.only(bottom: 16),
-                      child: SettingItemWidget(
-                        title: payments[index].paymentMethod.validate(),
-                        titleTextStyle: boldTextStyle(size: 14),
-                        padding: const EdgeInsets.only(
-                            left: 16, bottom: 10, top: 10, right: 10),
-                        leading: CachedImageWidget(
-                            url: payments[index].icon.validate(),
-                            height: 22,
-                            width: 22,
-                            fit: BoxFit.contain),
-                        radius: radius(),
-                        trailing: Radio<PaymentData>(
-                          value: payments[index],
-                          visualDensity: VisualDensity.compact,
-                          groupValue: selectedPayment,
-                          onChanged: (value) {
-                            selectedPayment = value!;
+          Stack(
+            children: [
+              SnapHelperWidget(
+                future: future,
+                loadingWidget: BookingStep3Shimmer(
+                    isFromBookingInfoDetail: widget.isFromBookingInfoDetail),
+                errorBuilder: (error) {
+                  return NoDataWidget(
+                    title: error,
+                    retryText: locale.reload,
+                    imageWidget: const ErrorStateWidget(),
+                    onRetry: () {
+                      appStore.setLoading(true);
 
-                            if (index == 0) {
-                              tipController.text = '';
-                              bookingRequestStore.setTip(0);
-                            }
-                            setState(() {});
-                          },
-                        ),
-                        onTap: () {
-                          selectedPayment = payments[index];
-
-                          if (index == 0) {
-                            tipController.text = '';
-                            bookingRequestStore.setTip(0);
-                          }
-                          setState(() {});
-                        },
-                      ),
-                    );
-                  },
-                ),
-                8.height,
-                Text(locale.optionalDetails, style: boldTextStyle()),
-                if (selectedPayment != payments.first)
-                  AppTextField(
-                    textFieldType: TextFieldType.NUMBER,
-                    controller: tipController,
-                    focus: tipFocusNode,
-                    nextFocus: noteFocusNode,
-                    decoration: inputDecoration(context, label: locale.tip),
-                    onChanged: (s) {
-                      bookingRequestStore.setTip(s.toInt());
-                      scrollController.animToBottom();
+                      init();
                       setState(() {});
                     },
-                    onTap: () {
-                      scrollController.animToBottom();
+                  );
+                },
+                onSuccess: (snap) {
+                  if (snap.data == null) {
+                    return NoDataWidget(
+                      title: locale.noTimeSlots,
+                      retryText: locale.reload,
+                      onRetry: () {
+                        appStore.setLoading(true);
+
+                        init();
+                        setState(() {});
+                      },
+                    );
+                  }
+
+                  if (snap.data!.slot.validate().any((element) =>
+                      element.day ==
+                      selectedHorizontalDate.weekday.getWeekDayName)) {
+                    startTime = snap.data!.slot
+                        .validate()
+                        .firstWhere((element) =>
+                            element.day ==
+                            selectedHorizontalDate.weekday.getWeekDayName)
+                        .startTime
+                        .validate();
+                    endTime = snap.data!.slot
+                        .validate()
+                        .firstWhere((element) =>
+                            element.day ==
+                            selectedHorizontalDate.weekday.getWeekDayName)
+                        .endTime
+                        .validate();
+                  }
+
+                  return AnimatedScrollView(
+                    padding: EdgeInsets.only(
+                        left: 20,
+                        right: 20,
+                        top: widget.isFromBookingInfoDetail ? 10 : 60,
+                        bottom: widget.isFromBookingInfoDetail ? 60 : 80),
+                    onSwipeRefresh: () async {
+                      init();
+                      setState(() {});
+
+                      return await 2.seconds.delay;
                     },
-                  ).paddingTop(16),
-                16.height,
-                AppTextField(
-                  textFieldType: TextFieldType.MULTILINE,
-                  controller: noteController,
-                  focus: noteFocusNode,
-                  minLines: 3,
-                  maxLines: 4,
-                  decoration: inputDecoration(context, label: 'Note'),
-                  onTap: () {
-                    scrollController.animToBottom();
-                  },
-                  onChanged: (s) {
-                    scrollController.animToBottom();
-                  },
-                ),
-              ],
-            ),
+                    children: [
+                      ViewAllLabel(label: locale.date, isShowAll: false),
+                      8.height,
+                      Container(
+                        decoration: boxDecorationWithRoundedCorners(
+                            backgroundColor: context.cardColor,
+                            borderRadius: radius()),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SettingItemWidget(
+                              title:
+                                  '${monthList[selectedMonthIndex]} ${selectedHorizontalDate.year}',
+                              titleTextStyle: boldTextStyle(
+                                  size: 14, color: textSecondaryColorGlobal),
+                              padding: EdgeInsets.zero,
+                              trailing: Row(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      if (selectedMonthIndex <
+                                          currentMonthNumber) {
+                                        //
+                                      } else {
+                                        selectedMonthIndex--;
+                                        setCustomDate(currentMonthNumber - 1);
+                                      }
+                                    },
+                                    icon: Icon(
+                                      Icons.arrow_back_ios,
+                                      size: ICON_SIZE,
+                                      color: selectedMonthIndex <
+                                              currentMonthNumber
+                                          ? grey
+                                          : context.iconColor,
+                                    ),
+                                  ),
+                                  IconButton(
+                                      onPressed: () {
+                                        if (selectedMonthIndex == 11) {
+                                          //
+                                        } else {
+                                          selectedMonthIndex++;
+                                          setCustomDate(currentMonthNumber + 1);
+                                        }
+                                      },
+                                      icon: Icon(
+                                        Icons.arrow_forward_ios_sharp,
+                                        size: ICON_SIZE,
+                                        color: selectedMonthIndex == 11
+                                            ? grey
+                                            : context.iconColor,
+                                      )),
+                                ],
+                              ),
+                            ).paddingOnly(left: 16),
+                            Divider(height: 0, color: context.dividerColor),
+                            HorizontalDatePickerWidget(
+                              datePickerController: _datePickerController,
+                              height: 70,
+                              startDate: DateTime.now(),
+                              endDate: DateTime(DateTime.now().year,
+                                  DateTime.now().month + 2),
+                              selectedDate: selectedHorizontalDate,
+                              widgetWidth: context.width(),
+                              selectedColor: indicatorColor,
+                              selectedTextColor: Colors.black,
+                              dateItemComponentList: const [
+                                DateItem.Month,
+                                DateItem.WeekDay,
+                                DateItem.Day
+                              ],
+                              dayFontSize: 14,
+                              weekDayFontSize: 14,
+                              onValueSelected: (date) {
+                                _datePickerController
+                                    .scrollTo(selectedHorizontalDate);
+                                selectedHorizontalDate = date;
+                                log(selectedHorizontalDate);
+
+                                if (snap.data!.slot.validate().any((element) =>
+                                    element.day ==
+                                    selectedHorizontalDate
+                                        .weekday.getWeekDayName)) {
+                                  startTime = snap.data!.slot
+                                      .validate()
+                                      .firstWhere((element) =>
+                                          element.day ==
+                                          selectedHorizontalDate
+                                              .weekday.getWeekDayName)
+                                      .startTime
+                                      .validate();
+                                  endTime = snap.data!.slot
+                                      .validate()
+                                      .firstWhere((element) =>
+                                          element.day ==
+                                          selectedHorizontalDate
+                                              .weekday.getWeekDayName)
+                                      .endTime
+                                      .validate();
+                                }
+
+                                keyForSlotWidget = UniqueKey();
+
+                                setState(() {});
+                              },
+                            ).paddingSymmetric(vertical: 16),
+                          ],
+                        ),
+                      ),
+                      16.height,
+                      ViewAllLabel(
+                          label: locale.availableSlots, isShowAll: false),
+                      8.height,
+                      SlotWidget(
+                        key: keyForSlotWidget,
+                        selectedHorizontalDate: selectedHorizontalDate,
+                        startTime: startTime,
+                        endTime: endTime,
+                        slotDuration: snap.data!.slotDuration
+                            .validate(value: DEFAULT_SLOT_INTERVAL_DURATION),
+                      ),
+                    ],
+                  );
+                },
+              ),
+              Observer(
+                  builder: (context) =>
+                      const LoaderWidget().visible(appStore.isLoading)),
+            ],
           ),
           Positioned(
             bottom: 0,
@@ -402,8 +322,8 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
             right: 0,
             child: Observer(
               builder: (_) => CommonBottomPriceWidget(
-                title: bookingRequestStore.selectedServiceList
-                    .validate()
+                title: bookingRequestStore.employeeName,
+                subtitle: bookingRequestStore.selectedServiceList
                     .map((e) => widget.isReschedule
                         ? e.serviceName.validate()
                         : e.name.validate())
@@ -411,26 +331,114 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
                     .join(', '),
                 price: bookingRequestStore.totalAmount,
                 buttonText: locale.confirm,
-                onTap: () {
-                  doIfLoggedIn(context, () async {
-                    bool? res = await showInDialog(
-                      context,
-                      builder: (context) => const ConfirmBookingDialog(),
-                    );
+                onTap: () async {
+                  if (bookingRequestStore.time.isNotEmpty) {
+                    bookingRequestStore.setDateInRequest(selectedHorizontalDate
+                        .setFormattedDate(DateFormatConst.DATE_FORMAT_5)
+                        .toString());
 
-                    if (res ?? false) {
-                      saveBooking();
-                    }
-                  });
+                    /// Slot Verify API Call
+                    doIfLoggedIn(context, () async {
+                      appStore.setLoading(true);
+
+                      await verifySlot(bookingRequestStore.employeeId,
+                              '${bookingRequestStore.date} ${bookingRequestStore.time}:00')
+                          .then((value) {
+                        log(bookingRequestStore.toJson());
+                        //TODO: to booking confirmation screen
+                      }).catchError((e) {
+                        toast(e.toString());
+                      });
+                      appStore.setLoading(false);
+                    });
+                  } else {
+                    toast(locale.pleaseSelectTimeSlotFirst);
+                  }
                 },
               ),
             ),
-          ),
-          Observer(
-              builder: (context) =>
-                  const LoaderWidget().visible(appStore.isLoading)),
+          ).visible(!widget.isFromBookingInfoDetail),
         ],
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: secondaryColor,
+        onPressed: () {
+          showConfirmDialogCustom(
+            context,
+            title: locale.bookingTimeSlotChangeMessage,
+            positiveText: locale.yes,
+            negativeText: locale.no,
+            onAccept: (_) {
+              List<ServiceListData> selectedService = [];
+
+              bookingRequestStore
+                  .setEmployeeIdInRequest(widget.employeeId.validate());
+              bookingRequestStore.setDateInRequest(selectedHorizontalDate
+                  .setFormattedDate(DateFormatConst.DATE_FORMAT_5)
+                  .toString());
+
+              widget.serviceList.validate().forEachIndexed((element, index) {
+                selectedService.add(widget.serviceList.validate()[index]);
+              });
+
+              bookingRequestStore
+                  .setSelectedServiceListInRequest(selectedService);
+
+              String tempDate = bookingRequestStore.date.validate();
+              String tempTime = bookingRequestStore.time.validate();
+
+              String dateString = "$tempDate $tempTime";
+
+              DateTime initialDateTime = DateTime.parse(dateString);
+
+              String updatedDateTime = formatDate(initialDateTime.toString(),
+                  format: DateFormatConst.NEW_FORMAT);
+
+              bookingRequestStore.selectedServiceList
+                  .validate()
+                  .forEachIndexed((element, index) {
+                if (index == 0) {
+                  element.startDateTime = formatDate(initialDateTime.toString(),
+                      format: DateFormatConst.NEW_FORMAT);
+                  element.previousTime = initialDateTime;
+                } else {
+                  ServiceListData previousData = bookingRequestStore
+                      .selectedServiceList
+                      .validate()[index - 1];
+                  element.startDateTime = formatDate(
+                      previousData.previousTime!
+                          .add(previousData.durationMin.minutes)
+                          .toString(),
+                      format: DateFormatConst.NEW_FORMAT);
+                  element.previousTime = previousData.previousTime!
+                      .add(previousData.durationMin.minutes);
+                }
+              });
+
+              appStore.setLoading(true);
+
+              bookingUpdate(bookingRequestStore.toJson(
+                      dateTime: updatedDateTime,
+                      bookingId: widget.bookingId,
+                      bookingStatus: BookingStatusConst.PENDING,
+                      isUpdate: true))
+                  .then((value) {
+                appStore.setLoading(false);
+
+                onBookingDetailUpdate.call();
+                onBookingListUpdate.call('');
+                finish(context);
+                toast(locale.bookingSuccessfullyUpdateMessage);
+              }).catchError((e) {
+                appStore.setLoading(false);
+                toast(e.toString());
+              });
+            },
+            primaryColor: context.primaryColor,
+          );
+        },
+        label: Text(locale.update, style: boldTextStyle(color: Colors.white)),
+      ).visible(widget.isFromBookingInfoDetail),
     );
   }
 }

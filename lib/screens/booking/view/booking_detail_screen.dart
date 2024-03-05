@@ -135,8 +135,9 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
             },
           ),
           Observer(
-              builder: (context) =>
-                  const LoaderWidget().visible(appStore.isLoading)),
+            builder: (context) =>
+                const LoaderWidget().visible(appStore.isLoading),
+          ),
         ],
       ),
     );

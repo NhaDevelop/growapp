@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:grow_tokyo_app/components/custom_stepper.dart';
 import 'package:grow_tokyo_app/screens/booking/component/booking_step1_component.dart';
-import 'package:grow_tokyo_app/screens/booking/component/booking_step3_component.dart';
+import 'package:grow_tokyo_app/screens/booking/component/booking_step2_component.dart';
 import 'package:grow_tokyo_app/store/booking_request_store.dart';
 import 'package:grow_tokyo_app/utils/constants.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../main.dart';
 import '../../services/models/service_response.dart';
-import '../component/booking_step2_component.dart';
+import '../component/booking_step3_component.dart';
 
 class CustomStep {
   final String? title;
@@ -53,10 +53,10 @@ class _BookingScreenState extends State<BookingScreen> {
           title: locale.staff,
           page: BookingStep1Component(isReschedule: widget.isReschedule)),
       CustomStep(
-          title: '${locale.date} & ${locale.time}',
+          title: locale.services,
           page: BookingStep2Component(isReschedule: widget.isReschedule)),
       CustomStep(
-          title: locale.payment,
+          title: '${locale.date} & ${locale.time}',
           page: BookingStep3Component(isReschedule: widget.isReschedule)),
     ];
   }

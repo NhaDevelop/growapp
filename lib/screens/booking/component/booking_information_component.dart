@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grow_tokyo_app/components/view_all_label_component.dart';
-import 'package:grow_tokyo_app/screens/booking/component/booking_step2_component.dart';
+import 'package:grow_tokyo_app/screens/booking/component/booking_step3_component.dart';
 import 'package:grow_tokyo_app/screens/booking/component/customer_review_component.dart';
 import 'package:grow_tokyo_app/screens/services/models/service_response.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -17,7 +17,10 @@ class BookingInformationComponent extends StatefulWidget {
   final List<ServiceListData> serviceList;
 
   const BookingInformationComponent(
-      {super.key, required this.booking, this.bookingStatus, required this.serviceList});
+      {super.key,
+      required this.booking,
+      this.bookingStatus,
+      required this.serviceList});
 
   @override
   State<BookingInformationComponent> createState() =>
@@ -38,7 +41,7 @@ class _BookingInformationComponentState
           isShowAll:
               widget.bookingStatus == BookingStatusConst.PENDING ? true : false,
           onTap: () {
-            BookingStep2Component(
+            BookingStep3Component(
               isFromBookingInfoDetail: true,
               bookingId: widget.booking.id,
               employeeId: widget.booking.employeeId,

@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:grow_tokyo_app/components/app_scaffold.dart';
 import 'package:grow_tokyo_app/components/loader_widget.dart';
 import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/screens/booking/view/booking_screen.dart';
 import 'package:grow_tokyo_app/screens/branch/model/branch_response.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -12,7 +13,6 @@ import '../../../utils/app_common.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/constants.dart';
 import '../../dashboard/component/branch_item_component.dart';
-import '../../dashboard/view/dashboard_screen.dart';
 import '../branch_repository.dart';
 import '../shimmer/select_branch_shimmer.dart';
 
@@ -32,7 +32,7 @@ class _SelectBranchScreenState extends State<SelectBranchScreen> {
   BranchData? selectedBranch;
 
   int page = 1;
-  int selectedBranchId = UNSELECTED_BRANCH_ID;
+  int selectedBranchId = appStore.branchId;
 
   bool isLastPage = false;
 
@@ -40,7 +40,6 @@ class _SelectBranchScreenState extends State<SelectBranchScreen> {
 
   @override
   void initState() {
-    selectedBranchId = appStore.branchId;
     init();
 
     super.initState();
@@ -70,8 +69,10 @@ class _SelectBranchScreenState extends State<SelectBranchScreen> {
           .setBranchContactNumber(branchList.first.contactNumber.validate());
 
       if (!mounted) return;
-      const DashboardScreen().launch(context,
-          isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
+      const BookingScreen(services: []).launch(
+        context,
+        pageRouteAnimation: PageRouteAnimation.Fade,
+      );
     }
   }
 
@@ -205,39 +206,24 @@ class _SelectBranchScreenState extends State<SelectBranchScreen> {
           backgroundColor: secondaryColor,
           onPressed: () async {
             if (appStore.branchId != selectedBranchId) {
-              showConfirmDialogCustom(
-                context,
-                positiveText: locale.yes,
-                negativeText: locale.no,
-                onAccept: (_) async {
-                  dashboardResponseCached = null;
-                  bookingDetailCached = [];
+              dashboardResponseCached = null;
+              bookingDetailCached = [];
 
-                  await appStore.setBranchId(
-                      selectedBranch!.id.validate(value: UNSELECTED_BRANCH_ID));
-                  await appStore.setBranchAddress(
-                      selectedBranch!.addressLine1.validate());
-                  await appStore.setBranchName(selectedBranch!.name.validate());
-                  await appStore.setBranchContactNumber(
-                      selectedBranch!.contactNumber.validate());
-
-                  if (context.mounted) {
-                    const DashboardScreen().launch(context,
-                        isNewTask: true,
-                        pageRouteAnimation: PageRouteAnimation.Fade);
-                  }
-                },
-                title: '${locale.doYouWantExplore} ${selectedBranch!.name}?',
-                primaryColor: context.primaryColor,
-              );
-            } else {
-              const DashboardScreen().launch(context,
-                  isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
+              await appStore.setBranchId(
+                  selectedBranch!.id.validate(value: UNSELECTED_BRANCH_ID));
+              await appStore
+                  .setBranchAddress(selectedBranch!.addressLine1.validate());
+              await appStore.setBranchName(selectedBranch!.name.validate());
+              await appStore.setBranchContactNumber(
+                  selectedBranch!.contactNumber.validate());
             }
+            if (!context.mounted) return;
+            const BookingScreen(services: []).launch(
+              context,
+            );
           },
           child: const Icon(Icons.arrow_right_alt_rounded, color: Colors.white),
-        ).visible(
-            branchList.isNotEmpty && selectedBranchId != UNSELECTED_BRANCH_ID),
+        ).visible(selectedBranchId != UNSELECTED_BRANCH_ID),
       ),
     );
   }
