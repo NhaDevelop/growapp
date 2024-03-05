@@ -13,7 +13,8 @@ class SlotItemComponent extends StatefulWidget {
   final VoidCallback? onTap;
 
   const SlotItemComponent(
-      {super.key, required this.timeSlot,
+      {super.key,
+      required this.timeSlot,
       required this.isSelected,
       this.onTap,
       required this.selectedHorizontalDate});
@@ -45,7 +46,7 @@ class _SlotItemComponentState extends State<SlotItemComponent> {
             style: boldTextStyle(
               size: 12,
               color:
-                  widget.isSelected ? Colors.black : textSecondaryColorGlobal,
+                  widget.isSelected ? Colors.white : textSecondaryColorGlobal,
               decoration: !widget.timeSlot
                       .slotAvailability(widget.selectedHorizontalDate)
                   ? TextDecoration.lineThrough

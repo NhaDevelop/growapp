@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:grow_tokyo_app/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/components/common_app_dialog.dart';
 import 'package:grow_tokyo_app/components/slot_widget.dart';
 import 'package:grow_tokyo_app/components/view_all_label_component.dart';
 import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/payment/payment_repo.dart';
+import 'package:grow_tokyo_app/screens/dashboard/view/dashboard_screen.dart';
 import 'package:grow_tokyo_app/utils/colors.dart';
 import 'package:grow_tokyo_app/utils/common_base.dart';
 import 'package:grow_tokyo_app/utils/constants.dart';
@@ -12,6 +15,7 @@ import 'package:grow_tokyo_app/utils/extensions/int_extension.dart';
 import 'package:grow_tokyo_app/utils/horizontalCalender/date_item.dart';
 import 'package:grow_tokyo_app/utils/horizontalCalender/date_picker_controller.dart';
 import 'package:grow_tokyo_app/utils/horizontalCalender/horizontal_date_picker.dart';
+import 'package:grow_tokyo_app/utils/model_keys.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/common_bottom_price_widget.dart';
@@ -85,22 +89,95 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
     setState(() {});
   }
 
-  //   void showBookingCompleteDialog() {
-  //   showDialog(
-  //     context: context,
-  //     useSafeArea: false,
-  //     builder: (BuildContext context) => CommonAppDialog(
-  //       title: locale.bookingSuccessful,
-  //       subTitle:
-  //           '${locale.yourBookingFor} ${bookingRequestStore.selectedServiceList.validate().map((e) => e.name.validate()).toList().join(', ')} has been successfully booked',
-  //       buttonText: locale.goToBookings,
-  //       onTap: () {
-  //         finish(context);
-  //         const DashboardScreen(pageIndex: 1).launch(context, isNewTask: true);
-  //       },
-  //     ),
-  //   );
-  // }
+  void saveBooking() {
+    if (bookingRequestStore.bookingId == null) {
+      appStore.setLoading(true);
+      final tempDate = bookingRequestStore.date.validate();
+      final tempTime = bookingRequestStore.time.validate();
+
+      final dateString = "$tempDate $tempTime";
+      final initialDateTime = DateTime.parse(dateString);
+
+      try {
+        bookingRequestStore.selectedServiceList
+            .validate()
+            .forEachIndexed((element, index) {
+          if (index == 0) {
+            element.startDateTime = formatDate(initialDateTime.toString(),
+                format: DateFormatConst.NEW_FORMAT);
+            element.previousTime = initialDateTime;
+          } else {
+            ServiceListData previousData =
+                bookingRequestStore.selectedServiceList.validate()[index - 1];
+            element.startDateTime = formatDate(
+                previousData.previousTime!
+                    .add(previousData.durationMin.minutes)
+                    .toString(),
+                format: DateFormatConst.NEW_FORMAT);
+            element.previousTime = previousData.previousTime!
+                .add(previousData.durationMin.minutes);
+          }
+        });
+      } catch (e) {
+        appStore.setLoading(false);
+        return toast(e.toString());
+      }
+
+      /// Save Booking API
+      saveBookingAPI(bookingRequestStore.toJson(
+              dateTime: formatDate(initialDateTime.toString(),
+                  format: DateFormatConst.NEW_FORMAT),
+              isRescheduleBooking: widget.isReschedule))
+          .then((value) async {
+        appStore.setLoading(false);
+        bookingRequestStore.setBookingIdInRequest(value[CommonKey.bookingId]);
+
+        savePayment(bookingId: bookingRequestStore.bookingId.validate())
+            .then((value) {
+          finish(context);
+          finish(context);
+          showBookingCompleteDialog();
+        }).catchError((e) {
+          toast(e.toString());
+        });
+      }).catchError((e) {
+        appStore.setLoading(false);
+        toast(e.toString(), print: true);
+      });
+    } else {
+      savePayment(bookingId: bookingRequestStore.bookingId.validate());
+    }
+  }
+
+  Future<void> savePayment({required int bookingId}) async {
+    await savePay(
+      bookingId: bookingId,
+      externalTransactionId: '',
+      transactionType: PaymentMethods.PAYMENT_METHOD_CASH,
+      discountPercentage: 0,
+      discountAmount: 0,
+      taxData: bookingRequestStore.taxPercentage.validate(),
+      paymentStatus: '0',
+      totalAmount: bookingRequestStore.totalAmount,
+    );
+  }
+
+  void showBookingCompleteDialog() {
+    showDialog(
+      context: context,
+      useSafeArea: false,
+      builder: (BuildContext context) => CommonAppDialog(
+        title: locale.bookingSuccessful,
+        subTitle:
+            '${locale.yourBookingFor} ${bookingRequestStore.selectedServiceList.validate().map((e) => e.name.validate()).toList().join(', ')} has been successfully booked',
+        buttonText: locale.goToBookings,
+        onTap: () {
+          finish(context);
+          const DashboardScreen(pageIndex: 1).launch(context, isNewTask: true);
+        },
+      ),
+    );
+  }
 
   @override
   void setState(fn) {
@@ -251,7 +328,7 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
                               selectedDate: selectedHorizontalDate,
                               widgetWidth: context.width(),
                               selectedColor: indicatorColor,
-                              selectedTextColor: Colors.black,
+                              selectedTextColor: Colors.white,
                               dateItemComponentList: const [
                                 DateItem.Month,
                                 DateItem.WeekDay,
@@ -344,8 +421,7 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
                       await verifySlot(bookingRequestStore.employeeId,
                               '${bookingRequestStore.date} ${bookingRequestStore.time}:00')
                           .then((value) {
-                        log(bookingRequestStore.toJson());
-                        //TODO: to booking confirmation screen
+                        saveBooking();
                       }).catchError((e) {
                         toast(e.toString());
                       });
