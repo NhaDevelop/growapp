@@ -227,30 +227,30 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                 }),
                 16.height,
                 _Card(
-                  child: Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            locale.usingXPoints(0), //TODO: Add user points
-                            style: boldTextStyle(),
-                          ),
-                          4.height,
-                          Text(
-                            locale.youWillSave$X(0), //TODO: Add amount;
-                            style: secondaryTextStyle(),
-                          ),
-                        ],
-                      ).expand(),
-                      Observer(builder: (_) {
-                        return Switch.adaptive(
+                  child: Observer(builder: (context) {
+                    return Row(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              locale.usingXPoints(userStore.credit),
+                              style: boldTextStyle(),
+                            ),
+                            4.height,
+                            Text(
+                              locale.youWillSave$X(0), //TODO: Add amount;
+                              style: secondaryTextStyle(),
+                            ),
+                          ],
+                        ).expand(),
+                        Switch.adaptive(
                           value: bookingRequestStore.useCredit,
                           onChanged: bookingRequestStore.setUseCreditInRequest,
-                        );
-                      })
-                    ],
-                  ),
+                        ),
+                      ],
+                    );
+                  }),
                 ),
                 16.height,
                 Text(locale.paymentDetails, style: secondaryTextStyle()),

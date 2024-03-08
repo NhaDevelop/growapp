@@ -221,6 +221,37 @@ mixin _$UserStore on _UserStore, Store {
     });
   }
 
+  late final _$referralCodeAtom =
+      Atom(name: '_UserStore.referralCode', context: context);
+
+  @override
+  String? get referralCode {
+    _$referralCodeAtom.reportRead();
+    return super.referralCode;
+  }
+
+  @override
+  set referralCode(String? value) {
+    _$referralCodeAtom.reportWrite(value, super.referralCode, () {
+      super.referralCode = value;
+    });
+  }
+
+  late final _$creditAtom = Atom(name: '_UserStore.credit', context: context);
+
+  @override
+  int get credit {
+    _$creditAtom.reportRead();
+    return super.credit;
+  }
+
+  @override
+  set credit(int value) {
+    _$creditAtom.reportWrite(value, super.credit, () {
+      super.credit = value;
+    });
+  }
+
   late final _$setUIdAsyncAction =
       AsyncAction('_UserStore.setUId', context: context);
 
@@ -338,6 +369,24 @@ mixin _$UserStore on _UserStore, Store {
         .run(() => super.setPlayerId(val, isInitializing: isInitializing));
   }
 
+  late final _$setReferralCodeAsyncAction =
+      AsyncAction('_UserStore.setReferralCode', context: context);
+
+  @override
+  Future<void> setReferralCode(String? val, {bool isInitializing = false}) {
+    return _$setReferralCodeAsyncAction
+        .run(() => super.setReferralCode(val, isInitializing: isInitializing));
+  }
+
+  late final _$setCreditAsyncAction =
+      AsyncAction('_UserStore.setCredit', context: context);
+
+  @override
+  Future<void> setCredit(int val, {bool isInitializing = false}) {
+    return _$setCreditAsyncAction
+        .run(() => super.setCredit(val, isInitializing: isInitializing));
+  }
+
   @override
   String toString() {
     return '''
@@ -354,6 +403,8 @@ userName: ${userName},
 token: ${token},
 userType: ${userType},
 playerId: ${playerId},
+referralCode: ${referralCode},
+credit: ${credit},
 userFullName: ${userFullName}
     ''';
   }

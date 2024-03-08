@@ -70,6 +70,8 @@ Future<void> saveUserData(UserData data) async {
   await userStore.setGenderValue(data.gender.validate());
   await userStore
       .setLoginType(data.loginType.validate(value: userStore.loginType));
+  await userStore.setCredit(data.credit.validate());
+  await userStore.setUserType(data.userType.validate());
 
   if (data.loginType == LoginTypeConst.LOGIN_TYPE_GOOGLE) {
     await userStore.setUserProfile(data.profileImage.validate());

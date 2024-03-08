@@ -19,6 +19,8 @@ class UserData {
   String? password;
   String? userType;
   String? profileImage;
+  String? referralCode;
+  int? credit;
 
   UserData({
     this.apiToken,
@@ -41,6 +43,8 @@ class UserData {
     this.password,
     this.userType,
     this.profileImage,
+    this.referralCode,
+    this.credit,
   });
 
   factory UserData.fromJson(Map<String, dynamic> json) {
@@ -56,7 +60,9 @@ class UserData {
       status: json['status'],
       displayName: json['display_name'],
       uid: json['uid'],
-      userRole: json['user_role'] != null ? List<String>.from(json['user_role']) : null,
+      userRole: json['user_role'] != null
+          ? List<String>.from(json['user_role'])
+          : null,
       username: json['username'],
       loginType: json['login_type'],
       socialImage: json['social_image'],
@@ -65,6 +71,8 @@ class UserData {
       password: json['password'],
       userType: json['user_type'],
       profileImage: json['profile_image'],
+      referralCode: json['referral_code'],
+      credit: json['credit'],
     );
   }
 
