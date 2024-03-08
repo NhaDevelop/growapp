@@ -32,11 +32,11 @@ dependencies:
   onesignal_flutter: ^5.0.2
 
   # FIREBASE
-  firebase_crashlytics: ^3.3.3
-  firebase_core: ^2.14.0
-  firebase_auth: ^4.6.3
-  firebase_storage: ^11.2.4
-  cloud_firestore: ^4.8.2
+  firebase_crashlytics: ^3.4.17
+  firebase_core: ^2.26.0
+  firebase_auth: ^4.17.7
+  firebase_storage: ^11.6.8
+  cloud_firestore: ^4.15.7
 
   # COUNTRY PICKER
   country_picker: ^2.0.20

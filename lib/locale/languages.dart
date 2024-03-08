@@ -176,6 +176,12 @@ abstract class BaseLanguage {
 
   String get doYouWantToConfirmBooking;
 
+  String get yourInformation;
+
+  String get timeSlot;
+
+  String get stylist;
+
   String get paymentDetails;
 
   String get subtotal;

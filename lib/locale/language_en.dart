@@ -270,6 +270,15 @@ class LanguageEn extends BaseLanguage {
       'Do you want to confirm this booking?';
 
   @override
+  String get yourInformation => 'Your Information';
+
+  @override
+  String get timeSlot => 'Time Slot';
+
+  @override
+  String get stylist => 'Stylist';
+
+  @override
   String get paymentDetails => 'Payment Details';
 
   @override
