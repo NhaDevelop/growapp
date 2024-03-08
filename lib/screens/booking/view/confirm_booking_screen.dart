@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:grow_tokyo_app/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/components/cached_image_widget.dart';
 import 'package:grow_tokyo_app/components/common_app_dialog.dart';
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/payment/payment_repo.dart';
 import 'package:grow_tokyo_app/screens/booking/booking_repository.dart';
+import 'package:grow_tokyo_app/screens/booking/component/add_referral_code_modal.dart';
 import 'package:grow_tokyo_app/screens/dashboard/view/dashboard_screen.dart';
 import 'package:grow_tokyo_app/screens/services/models/service_response.dart';
 import 'package:grow_tokyo_app/utils/app_common.dart';
@@ -125,7 +128,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
       ),
       body: Stack(
         children: [
-          Padding(
+          SingleChildScrollView(
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -164,6 +167,101 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                     value: bookingRequestStore.employeeName.validate(),
                   ),
                 ),
+                16.height,
+                Text(locale.services, style: secondaryTextStyle()),
+                12.height,
+                _Card(
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: bookingRequestStore.selectedServiceList.length,
+                    itemBuilder: (_, __) => const Divider(),
+                    separatorBuilder: (_, index) {
+                      final service =
+                          bookingRequestStore.selectedServiceList[index];
+                      return _ServiceItem(
+                        key: ValueKey(service.id),
+                        service: service,
+                      );
+                    },
+                  ),
+                ),
+                12.height,
+                AppTextField(
+                  textFieldType: TextFieldType.MULTILINE,
+                  decoration:
+                      inputDecoration(context, hint: locale.serviceNote),
+                  onChanged: bookingRequestStore.setNoteInRequest,
+                ).cornerRadiusWithClipRRect(defaultRadius),
+                16.height,
+                Observer(builder: (context) {
+                  return _Card(
+                    padding: const EdgeInsets.fromLTRB(16, 8, 8, 8),
+                    child: _CodeItem(
+                      onTap: () {},
+                      title: locale.coupon,
+                      actionText: locale.addCoupon,
+                      value: bookingRequestStore.couponCode,
+                    ),
+                  );
+                }),
+                16.height,
+                Observer(builder: (context) {
+                  return _Card(
+                    padding: const EdgeInsets.fromLTRB(16, 8, 8, 8),
+                    child: _CodeItem(
+                      onTap: () => bookingRequestStore.referralCode != null
+                          ? bookingRequestStore.setReferralCodeInRequest(null)
+                          : showModalBottomSheet<String>(
+                              context: context,
+                              isScrollControlled: true,
+                              builder: (context) =>
+                                  const AddReferralCodeModal(),
+                            ).then(
+                              bookingRequestStore.setReferralCodeInRequest),
+                      title: locale.referralCode,
+                      actionText: locale.addCode,
+                      value: bookingRequestStore.referralCode,
+                    ),
+                  );
+                }),
+                16.height,
+                _Card(
+                  child: Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            locale.usingXPoints(0), //TODO: Add user points
+                            style: boldTextStyle(),
+                          ),
+                          4.height,
+                          Text(
+                            locale.youWillSave$X(0), //TODO: Add amount;
+                            style: secondaryTextStyle(),
+                          ),
+                        ],
+                      ).expand(),
+                      Observer(builder: (_) {
+                        return Switch.adaptive(
+                          value: bookingRequestStore.useCredit,
+                          onChanged: bookingRequestStore.setUseCreditInRequest,
+                        );
+                      })
+                    ],
+                  ),
+                ),
+                16.height,
+                Text(locale.paymentDetails, style: secondaryTextStyle()),
+                12.height,
+                _Card(
+                  child: _RowData(
+                    title: locale.paymentMethod,
+                    value: locale.payAtSalon,
+                  ),
+                ),
+                80.height,
               ],
             ),
           ),
@@ -182,7 +280,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                 text: locale.bookNow,
                 textStyle: boldTextStyle(color: primaryColor),
                 onTap: saveBooking,
-              ),
+              ).paddingOnly(bottom: 20),
             ),
           ),
         ],
@@ -191,10 +289,43 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
   }
 }
 
-class _Card extends StatelessWidget {
-  const _Card({required this.child});
+class _ServiceItem extends StatelessWidget {
+  const _ServiceItem({
+    super.key,
+    required this.service,
+  });
 
+  final ServiceListData service;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        CachedImageWidget(
+          url: service.serviceImage.validate(),
+          height: 50,
+          width: 50,
+          fit: BoxFit.cover,
+        ).cornerRadiusWithClipRRect(8),
+        12.width,
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(service.name.validate(), style: boldTextStyle()),
+            4.height,
+            Text(service.description.validate(), style: secondaryTextStyle()),
+          ],
+        ).expand(),
+      ],
+    );
+  }
+}
+
+class _Card extends StatelessWidget {
   final Widget child;
+  final EdgeInsets? padding;
+
+  const _Card({required this.child, this.padding});
 
   @override
   Widget build(BuildContext context) {
@@ -211,7 +342,8 @@ class _Card extends StatelessWidget {
         ],
         backgroundColor: Colors.white,
       ),
-      child: child.paddingAll(16),
+      padding: padding ?? const EdgeInsets.all(16),
+      child: child,
     );
   }
 }
@@ -229,6 +361,54 @@ class _RowData extends StatelessWidget {
       children: [
         Text(title, style: secondaryTextStyle()),
         Text(value, style: boldTextStyle()),
+      ],
+    );
+  }
+}
+
+class _CodeItem extends StatelessWidget {
+  final String title;
+  final String actionText;
+  final String? value;
+  final VoidCallback onTap;
+
+  const _CodeItem(
+      {required this.title,
+      required this.actionText,
+      this.value,
+      required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        RichTextWidget(list: [
+          TextSpan(text: title, style: boldTextStyle()),
+          TextSpan(text: ' ', style: secondaryTextStyle()),
+          TextSpan(text: locale.optional, style: secondaryTextStyle()),
+        ]),
+        const Spacer(),
+        TextButton(
+          onPressed: onTap,
+          child: Row(
+            children: [
+              Text(
+                value ?? actionText,
+                style: boldTextStyle(
+                  decoration: TextDecoration.underline,
+                  size: 14,
+                ),
+              ),
+              4.width,
+              Icon(
+                value == null ? Icons.arrow_forward_ios : Icons.close,
+                size: 12,
+                color: primaryColor,
+              ),
+            ],
+          ),
+        )
       ],
     );
   }

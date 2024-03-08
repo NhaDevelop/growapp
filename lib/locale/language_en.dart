@@ -236,10 +236,25 @@ class LanguageEn extends BaseLanguage {
   String get points => 'Points';
 
   @override
+  String usingXPoints(int x) => 'Using $x points';
+
+  @override
+  String youWillSave$X(int x) => 'You will save \$$x';
+
+  @override
   String get referral => 'Referral';
 
   @override
+  String get referralCode => 'Referral Code';
+
+  @override
+  String get addReferralCode => 'Add Referral Code';
+
+  @override
   String get coupon => 'Coupon';
+
+  @override
+  String get addCoupon => 'Add Coupon';
 
   @override
   String get fbEcSite => 'FB EC Site';
@@ -279,7 +294,13 @@ class LanguageEn extends BaseLanguage {
   String get stylist => 'Stylist';
 
   @override
+  String get addCode => 'Add Code';
+
+  @override
   String get paymentDetails => 'Payment Details';
+
+  @override
+  String get payAtSalon => 'Pay at Salon';
 
   @override
   String get subtotal => 'Subtotal';
@@ -708,7 +729,10 @@ class LanguageEn extends BaseLanguage {
   String get description => 'Description';
 
   @override
-  String get serviceNote => 'Service Note';
+  String get serviceNote => 'Service Note (optional)';
+
+  @override
+  String get optional => '(optional)';
 
   @override
   String get priceMayBeUpdated => 'Price may be updated';

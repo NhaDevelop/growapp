@@ -69,6 +69,7 @@ class BookingListData {
 
   List<ProductsInfo>? productsInfo;
   num? discoutAmount;
+  num? amountPaidByCredit;
   num? sumOfServicePrices;
   num? sumOfProductPrices;
   num? taxAmount;
@@ -119,6 +120,7 @@ class BookingListData {
     this.serviceList,
     this.productsInfo,
     this.discoutAmount,
+    this.amountPaidByCredit,
     this.sumOfServicePrices,
     this.sumOfProductPrices,
     this.taxAmount,
@@ -168,6 +170,7 @@ class BookingListData {
       sumOfServicePrices: json['sumOfServicePrices'],
       sumOfProductPrices: json['sumOfProductPrices'],
       discoutAmount: json['discout_amount'],
+      amountPaidByCredit: json['amount_paid_by_credit'],
       taxAmount: json['tax_amount'],
       totalAmount: json['total_amount'],
       taxDetails: json['tax_details'] != null
@@ -203,6 +206,7 @@ class BookingListData {
     data['sumOfServicePrices'] = sumOfServicePrices;
     data['sumOfProductPrices'] = sumOfProductPrices;
     data['discout_amount'] = discoutAmount;
+    data['amount_paid_by_credit'] = amountPaidByCredit;
     data['tax_amount'] = taxAmount;
     data['total_amount'] = totalAmount;
     if (note != null) {

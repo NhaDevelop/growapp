@@ -32,6 +32,15 @@ abstract class _BookingRequestStore with Store {
   String note = '';
 
   @observable
+  bool useCredit = false;
+
+  @observable
+  String? referralCode;
+
+  @observable
+  String? couponCode;
+
+  @observable
   bool? isReschedule;
 
   @observable
@@ -82,6 +91,8 @@ abstract class _BookingRequestStore with Store {
     if (bookingStatus != null) data['status'] = bookingStatus;
     if (dateTime != null) data['start_date_time'] = dateTime;
     if (note.isNotEmpty) data['note'] = note.validate();
+    if (referralCode != null) data['referral_code'] = referralCode;
+    data['use_credit'] = useCredit;
     data['branch_id'] = appStore.branchId;
 
     if (selectedServiceList.isNotEmpty) {
@@ -133,6 +144,21 @@ abstract class _BookingRequestStore with Store {
   @action
   void setNoteInRequest(String val) {
     note = val;
+  }
+
+  @action
+  void setUseCreditInRequest(bool val) {
+    useCredit = val;
+  }
+
+  @action
+  void setReferralCodeInRequest(String? val) {
+    referralCode = val;
+  }
+
+  @action
+  void setCouponCodeInRequest(String? val) {
+    couponCode = val;
   }
 
   @action

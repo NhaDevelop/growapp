@@ -78,6 +78,22 @@ mixin _$BookingRequestStore on _BookingRequestStore, Store {
     });
   }
 
+  late final _$employeeNameAtom =
+      Atom(name: '_BookingRequestStore.employeeName', context: context);
+
+  @override
+  String get employeeName {
+    _$employeeNameAtom.reportRead();
+    return super.employeeName;
+  }
+
+  @override
+  set employeeName(String value) {
+    _$employeeNameAtom.reportWrite(value, super.employeeName, () {
+      super.employeeName = value;
+    });
+  }
+
   late final _$timeAtom =
       Atom(name: '_BookingRequestStore.time', context: context);
 
@@ -123,6 +139,54 @@ mixin _$BookingRequestStore on _BookingRequestStore, Store {
   set note(String value) {
     _$noteAtom.reportWrite(value, super.note, () {
       super.note = value;
+    });
+  }
+
+  late final _$useCreditAtom =
+      Atom(name: '_BookingRequestStore.useCredit', context: context);
+
+  @override
+  bool get useCredit {
+    _$useCreditAtom.reportRead();
+    return super.useCredit;
+  }
+
+  @override
+  set useCredit(bool value) {
+    _$useCreditAtom.reportWrite(value, super.useCredit, () {
+      super.useCredit = value;
+    });
+  }
+
+  late final _$referralCodeAtom =
+      Atom(name: '_BookingRequestStore.referralCode', context: context);
+
+  @override
+  String? get referralCode {
+    _$referralCodeAtom.reportRead();
+    return super.referralCode;
+  }
+
+  @override
+  set referralCode(String? value) {
+    _$referralCodeAtom.reportWrite(value, super.referralCode, () {
+      super.referralCode = value;
+    });
+  }
+
+  late final _$couponCodeAtom =
+      Atom(name: '_BookingRequestStore.couponCode', context: context);
+
+  @override
+  String? get couponCode {
+    _$couponCodeAtom.reportRead();
+    return super.couponCode;
+  }
+
+  @override
+  set couponCode(String? value) {
+    _$couponCodeAtom.reportWrite(value, super.couponCode, () {
+      super.couponCode = value;
     });
   }
 
@@ -244,6 +308,17 @@ mixin _$BookingRequestStore on _BookingRequestStore, Store {
   }
 
   @override
+  void setEmployeeNameInRequest(String val) {
+    final _$actionInfo = _$_BookingRequestStoreActionController.startAction(
+        name: '_BookingRequestStore.setEmployeeNameInRequest');
+    try {
+      return super.setEmployeeNameInRequest(val);
+    } finally {
+      _$_BookingRequestStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setTimeInRequest(String val) {
     final _$actionInfo = _$_BookingRequestStoreActionController.startAction(
         name: '_BookingRequestStore.setTimeInRequest');
@@ -271,6 +346,39 @@ mixin _$BookingRequestStore on _BookingRequestStore, Store {
         name: '_BookingRequestStore.setNoteInRequest');
     try {
       return super.setNoteInRequest(val);
+    } finally {
+      _$_BookingRequestStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setUseCreditInRequest(bool val) {
+    final _$actionInfo = _$_BookingRequestStoreActionController.startAction(
+        name: '_BookingRequestStore.setUseCreditInRequest');
+    try {
+      return super.setUseCreditInRequest(val);
+    } finally {
+      _$_BookingRequestStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setReferralCodeInRequest(String? val) {
+    final _$actionInfo = _$_BookingRequestStoreActionController.startAction(
+        name: '_BookingRequestStore.setReferralCodeInRequest');
+    try {
+      return super.setReferralCodeInRequest(val);
+    } finally {
+      _$_BookingRequestStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setCouponCodeInRequest(String? val) {
+    final _$actionInfo = _$_BookingRequestStoreActionController.startAction(
+        name: '_BookingRequestStore.setCouponCodeInRequest');
+    try {
+      return super.setCouponCodeInRequest(val);
     } finally {
       _$_BookingRequestStoreActionController.endAction(_$actionInfo);
     }
@@ -319,9 +427,13 @@ mixin _$BookingRequestStore on _BookingRequestStore, Store {
     return '''
 bookingId: ${bookingId},
 employeeId: ${employeeId},
+employeeName: ${employeeName},
 time: ${time},
 date: ${date},
 note: ${note},
+useCredit: ${useCredit},
+referralCode: ${referralCode},
+couponCode: ${couponCode},
 isReschedule: ${isReschedule},
 selectedServiceList: ${selectedServiceList},
 selectedBookingStatusList: ${selectedBookingStatusList},

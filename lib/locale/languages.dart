@@ -154,9 +154,19 @@ abstract class BaseLanguage {
 
   String get points;
 
+  String usingXPoints(int x);
+
+  String youWillSave$X(int x);
+
   String get referral;
 
+  String get referralCode;
+
+  String get addReferralCode;
+
   String get coupon;
+
+  String get addCoupon;
 
   String get fbEcSite;
 
@@ -182,7 +192,11 @@ abstract class BaseLanguage {
 
   String get stylist;
 
+  String get addCode;
+
   String get paymentDetails;
+
+  String get payAtSalon;
 
   String get subtotal;
 
@@ -461,6 +475,8 @@ abstract class BaseLanguage {
   String get description;
 
   String get serviceNote;
+
+  String get optional;
 
   String get priceMayBeUpdated;
 

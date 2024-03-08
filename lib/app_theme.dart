@@ -20,49 +20,54 @@ class AppTheme {
       ),
       fontFamily: GoogleFonts.lexendDeca().fontFamily,
       useMaterial3: true,
-      bottomNavigationBarTheme: const BottomNavigationBarThemeData(backgroundColor: Colors.white),
+      bottomNavigationBarTheme:
+          const BottomNavigationBarThemeData(backgroundColor: Colors.white),
       iconTheme: IconThemeData(color: textPrimaryColorGlobal),
       textTheme: GoogleFonts.lexendDecaTextTheme(),
       dialogBackgroundColor: Colors.white,
       unselectedWidgetColor: Colors.black,
       dividerColor: borderColor,
       bottomSheetTheme: BottomSheetThemeData(
-        shape: RoundedRectangleBorder(borderRadius: radiusOnly(topLeft: defaultRadius, topRight: defaultRadius)),
+        shape: RoundedRectangleBorder(
+            borderRadius:
+                radiusOnly(topLeft: defaultRadius, topRight: defaultRadius)),
         backgroundColor: Colors.white,
       ),
       cardColor: cardColor,
-      appBarTheme: const AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light)),
+      appBarTheme: const AppBarTheme(
+          systemOverlayStyle:
+              SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light)),
       dialogTheme: DialogTheme(shape: dialogShape()),
     );
   }
 
-  static ThemeData get darkTheme {
-    return ThemeData(
-      primarySwatch: createMaterialColor(primaryColor),
-      primaryColor: primaryColor,
-      appBarTheme: const AppBarTheme(
-        systemOverlayStyle: SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
-      ),
-      scaffoldBackgroundColor: scaffoldDarkColor,
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: primaryColor,
-        outlineVariant: borderColor,
-        onSurface: textPrimaryColorGlobal,
-      ),
-      fontFamily: GoogleFonts.lexendDeca().fontFamily,
-      bottomNavigationBarTheme: const BottomNavigationBarThemeData(backgroundColor: scaffoldSecondaryDark),
-      iconTheme: const IconThemeData(color: Colors.white),
-      textTheme: GoogleFonts.lexendDecaTextTheme(),
-      dialogBackgroundColor: scaffoldSecondaryDark,
-      unselectedWidgetColor: Colors.white60,
-      useMaterial3: true,
-      bottomSheetTheme: BottomSheetThemeData(
-        shape: RoundedRectangleBorder(borderRadius: radiusOnly(topLeft: defaultRadius, topRight: defaultRadius)),
-        backgroundColor: scaffoldDarkColor,
-      ),
-      dividerColor: dividerDarkColor,
-      cardColor: cardDarkColor,
-      dialogTheme: DialogTheme(shape: dialogShape()),
-    );
-  }
+  // static ThemeData get darkTheme {
+  //   return ThemeData(
+  //     primarySwatch: createMaterialColor(primaryColor),
+  //     primaryColor: primaryColor,
+  //     appBarTheme: const AppBarTheme(
+  //       systemOverlayStyle: SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
+  //     ),
+  //     scaffoldBackgroundColor: scaffoldDarkColor,
+  //     colorScheme: ColorScheme.fromSeed(
+  //       seedColor: primaryColor,
+  //       outlineVariant: borderColor,
+  //       onSurface: textPrimaryColorGlobal,
+  //     ),
+  //     fontFamily: GoogleFonts.lexendDeca().fontFamily,
+  //     bottomNavigationBarTheme: const BottomNavigationBarThemeData(backgroundColor: scaffoldSecondaryDark),
+  //     iconTheme: const IconThemeData(color: Colors.white),
+  //     textTheme: GoogleFonts.lexendDecaTextTheme(),
+  //     dialogBackgroundColor: scaffoldSecondaryDark,
+  //     unselectedWidgetColor: Colors.white60,
+  //     useMaterial3: true,
+  //     bottomSheetTheme: BottomSheetThemeData(
+  //       shape: RoundedRectangleBorder(borderRadius: radiusOnly(topLeft: defaultRadius, topRight: defaultRadius)),
+  //       backgroundColor: scaffoldDarkColor,
+  //     ),
+  //     dividerColor: dividerDarkColor,
+  //     cardColor: cardDarkColor,
+  //     dialogTheme: DialogTheme(shape: dialogShape()),
+  //   );
+  // }
 }
