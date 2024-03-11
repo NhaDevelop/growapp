@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:grow_tokyo_app/components/app_scaffold.dart';
 import 'package:grow_tokyo_app/components/cached_image_widget.dart';
 import 'package:grow_tokyo_app/components/common_app_dialog.dart';
+import 'package:grow_tokyo_app/components/default_card.dart';
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/payment/payment_repo.dart';
 import 'package:grow_tokyo_app/screens/booking/booking_repository.dart';
@@ -135,7 +136,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
               children: [
                 Text(locale.yourInformation, style: secondaryTextStyle()),
                 12.height,
-                _Card(
+                DefaultCard(
                   child: Column(
                     children: [
                       _RowData(
@@ -151,7 +152,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                 16.height,
                 Text(locale.timeSlot, style: secondaryTextStyle()),
                 12.height,
-                _Card(
+                DefaultCard(
                   child: _RowData(
                     title: '${locale.date} & ${locale.time}',
                     value:
@@ -161,7 +162,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                 16.height,
                 Text(locale.stylist, style: secondaryTextStyle()),
                 12.height,
-                _Card(
+                DefaultCard(
                   child: _RowData(
                     title: locale.stylist,
                     value: bookingRequestStore.employeeName.validate(),
@@ -170,7 +171,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                 16.height,
                 Text(locale.services, style: secondaryTextStyle()),
                 12.height,
-                _Card(
+                DefaultCard(
                   child: ListView.separated(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
@@ -195,7 +196,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                 ).cornerRadiusWithClipRRect(defaultRadius),
                 16.height,
                 Observer(builder: (context) {
-                  return _Card(
+                  return DefaultCard(
                     padding: const EdgeInsets.fromLTRB(16, 8, 8, 8),
                     child: _CodeItem(
                       onTap: () {},
@@ -207,7 +208,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                 }),
                 16.height,
                 Observer(builder: (context) {
-                  return _Card(
+                  return DefaultCard(
                     padding: const EdgeInsets.fromLTRB(16, 8, 8, 8),
                     child: _CodeItem(
                       onTap: () => bookingRequestStore.referralCode != null
@@ -226,7 +227,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                   );
                 }),
                 16.height,
-                _Card(
+                DefaultCard(
                   child: Observer(builder: (context) {
                     return Row(
                       children: [
@@ -255,7 +256,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                 16.height,
                 Text(locale.paymentDetails, style: secondaryTextStyle()),
                 12.height,
-                _Card(
+                DefaultCard(
                   child: _RowData(
                     title: locale.paymentMethod,
                     value: locale.payAtSalon,
@@ -317,33 +318,6 @@ class _ServiceItem extends StatelessWidget {
           ],
         ).expand(),
       ],
-    );
-  }
-}
-
-class _Card extends StatelessWidget {
-  final Widget child;
-  final EdgeInsets? padding;
-
-  const _Card({required this.child, this.padding});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: boxDecorationWithRoundedCorners(
-        borderRadius: radius(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            spreadRadius: 1,
-            blurRadius: 5,
-            offset: const Offset(0, 3),
-          )
-        ],
-        backgroundColor: Colors.white,
-      ),
-      padding: padding ?? const EdgeInsets.all(16),
-      child: child,
     );
   }
 }

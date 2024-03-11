@@ -12,7 +12,7 @@ import '../../../utils/app_common.dart';
 import '../../app_language_screen.dart';
 import '../../auth/auth_repository.dart';
 import '../../dashboard/view/dashboard_screen.dart';
-import '../components/theme_selection_dialog.dart';
+// import '../components/theme_selection_dialog.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -33,38 +33,40 @@ class _SettingScreenState extends State<SettingScreen> {
         roundCornerShape: true,
       ),
       body: AnimatedScrollView(
-        padding: const EdgeInsets.symmetric(vertical: 8),
+        padding: const EdgeInsets.all(16),
         listAnimationType: ListAnimationType.None,
         children: [
           SettingItemWidget(
             leading: ic_app_language.iconImage(size: 16),
             title: locale.language,
-            trailing: ic_arrow_right.iconImage(size: 16),
             splashColor: Colors.transparent,
+            decoration: boxDecorationWithRoundedCorners(
+                backgroundColor: context.cardColor),
             onTap: () {
               const AppLanguageScreen().launch(context).then((value) {
                 setState(() {});
               });
             },
           ),
-          SettingItemWidget(
-            leading: ic_dark_mode.iconImage(size: 16),
-            title: locale.appTheme,
-            trailing: ic_arrow_right.iconImage(size: 16),
-            onTap: () async {
-              await showInDialog(
-                context,
-                builder: (context) => const ThemeSelectionDaiLog(),
-                contentPadding: EdgeInsets.zero,
-              );
-            },
-          ),
-          if (!isSocialLoginType)
+          // SettingItemWidget(
+          //   leading: ic_dark_mode.iconImage(size: 16),
+          //   title: locale.appTheme,
+          //   onTap: () async {
+          //     await showInDialog(
+          //       context,
+          //       builder: (context) => const ThemeSelectionDaiLog(),
+          //       contentPadding: EdgeInsets.zero,
+          //     );
+          //   },
+          // ),
+          if (!isSocialLoginType) ...[
+            16.height,
             SettingItemWidget(
               leading: ic_lock.iconImage(size: 16),
               title: locale.changePassword,
-              trailing: ic_arrow_right.iconImage(size: 16),
               splashColor: Colors.transparent,
+              decoration: boxDecorationWithRoundedCorners(
+                  backgroundColor: context.cardColor),
               onTap: () {
                 doIfLoggedIn(context, () {
                   setState(() {});
@@ -72,11 +74,15 @@ class _SettingScreenState extends State<SettingScreen> {
                 });
               },
             ),
-          if (appStore.isLoggedIn)
+          ],
+          if (appStore.isLoggedIn) ...[
+            16.height,
             SettingItemWidget(
               leading: ic_delete_account.iconImage(size: 16),
               paddingBeforeTrailing: 4,
               title: locale.deleteAccount,
+              decoration: boxDecorationWithRoundedCorners(
+                  backgroundColor: context.cardColor),
               onTap: () {
                 showConfirmDialogCustom(
                   context,
@@ -107,6 +113,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 );
               },
             ),
+          ],
         ],
       ),
     );

@@ -47,9 +47,15 @@ String formatDate(String? dateTime,
 String formatOnlyTime(BuildContext context,
     {String? startTime, String? endTime}) {
   if (startTime != null && endTime == null) {
-    return TimeOfDay(hour: startTime.validate().split(':')[0].toInt(), minute: startTime.validate().split(':')[1].toInt()).format(context);
+    return TimeOfDay(
+            hour: startTime.validate().split(':')[0].toInt(),
+            minute: startTime.validate().split(':')[1].toInt())
+        .format(context);
   } else if (endTime != null && startTime == null) {
-    return TimeOfDay(hour: endTime.validate().split(':')[0].toInt(), minute: endTime.validate().split(':')[1].toInt()).format(context);
+    return TimeOfDay(
+            hour: endTime.validate().split(':')[0].toInt(),
+            minute: endTime.validate().split(':')[1].toInt())
+        .format(context);
   } else {
     return '${TimeOfDay(hour: startTime.validate().split(':')[0].toInt(), minute: startTime.validate().split(':')[1].toInt()).format(context)} - ${TimeOfDay(hour: endTime.validate().split(':')[0].toInt(), minute: endTime.validate().split(':')[1].toInt()).format(context)}';
   }
@@ -64,29 +70,17 @@ List<LanguageDataModel> languageList() {
         fullLanguageCode: 'en-US',
         flag: ic_us),
     LanguageDataModel(
-        id: 2,
-        name: 'Hindi',
-        languageCode: 'hi',
-        fullLanguageCode: 'hi-IN',
-        flag: ic_india),
+        id: 1,
+        name: 'Cambodian',
+        languageCode: 'km',
+        fullLanguageCode: 'km-KH',
+        flag: ic_km),
     LanguageDataModel(
-        id: 3,
-        name: 'Arabic',
-        languageCode: 'ar',
-        fullLanguageCode: 'ar-AR',
-        flag: ic_ar),
-    LanguageDataModel(
-        id: 4,
-        name: 'French',
-        languageCode: 'fr',
-        fullLanguageCode: 'fr-FR',
-        flag: ic_fr),
-    LanguageDataModel(
-        id: 5,
-        name: 'German',
-        languageCode: 'de',
-        fullLanguageCode: 'de-DE',
-        flag: ic_de),
+        id: 1,
+        name: 'Vietnamese',
+        languageCode: 'vi',
+        fullLanguageCode: 'vi-VN',
+        flag: ic_vi),
   ];
 }
 
@@ -167,7 +161,8 @@ InputDecoration inputDecoration(
   String? prefixText,
 }) {
   return InputDecoration(
-    contentPadding: const EdgeInsets.only(left: 12, bottom: 10, top: 10, right: 10),
+    contentPadding:
+        const EdgeInsets.only(left: 12, bottom: 10, top: 10, right: 10),
     hintText: hint,
     hintStyle: secondaryTextStyle(),
     labelText: label,

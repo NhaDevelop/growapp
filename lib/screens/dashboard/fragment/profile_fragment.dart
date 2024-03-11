@@ -20,7 +20,7 @@ import '../../../utils/colors.dart';
 import '../../../utils/images.dart';
 import '../../auth/view/edit_profile_screen.dart';
 import '../../cart/view/select_address_screen.dart';
-import '../../order/view/order_list_screen.dart';
+// import '../../order/view/order_list_screen.dart';
 import '../../profile/view/data_provider.dart';
 
 class ProfileFragment extends StatefulWidget {
@@ -141,24 +141,24 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                   ),
                 Column(
                   children: [
-                    SettingItemWidget(
-                      title: locale.orders,
-                      titleTextStyle: boldTextStyle(size: LABEL_TEXT_SIZE),
-                      subTitle: locale.seeYourOrders,
-                      leading: ic_order.iconImage(fit: BoxFit.cover, size: 16),
-                      decoration: boxDecorationWithRoundedCorners(
-                          backgroundColor: context.cardColor),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 12),
-                      onTap: () {
-                        const OrderListScreen().launch(context,
-                            pageRouteAnimation: PageRouteAnimation.Fade);
-                      },
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      splashColor: Colors.transparent,
-                    ).visible(appStore.isLoggedIn),
-                    if (appStore.isLoggedIn) 16.height,
+                    // SettingItemWidget(
+                    //   title: locale.orders,
+                    //   titleTextStyle: boldTextStyle(size: LABEL_TEXT_SIZE),
+                    //   subTitle: locale.seeYourOrders,
+                    //   leading: ic_order.iconImage(fit: BoxFit.cover, size: 16),
+                    //   decoration: boxDecorationWithRoundedCorners(
+                    //       backgroundColor: context.cardColor),
+                    //   padding: const EdgeInsets.symmetric(
+                    //       horizontal: 16, vertical: 12),
+                    //   onTap: () {
+                    //     const OrderListScreen().launch(context,
+                    //         pageRouteAnimation: PageRouteAnimation.Fade);
+                    //   },
+                    //   hoverColor: Colors.transparent,
+                    //   highlightColor: Colors.transparent,
+                    //   splashColor: Colors.transparent,
+                    // ).visible(appStore.isLoggedIn),
+                    // if (appStore.isLoggedIn) 16.height,
                     SettingItemWidget(
                       title: locale.myAddresses,
                       titleTextStyle: boldTextStyle(size: LABEL_TEXT_SIZE),
