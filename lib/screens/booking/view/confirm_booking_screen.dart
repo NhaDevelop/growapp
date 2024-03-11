@@ -8,6 +8,7 @@ import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/payment/payment_repo.dart';
 import 'package:grow_tokyo_app/screens/booking/booking_repository.dart';
 import 'package:grow_tokyo_app/screens/booking/component/add_referral_code_modal.dart';
+import 'package:grow_tokyo_app/screens/booking/view/add_coupon_screen.dart';
 import 'package:grow_tokyo_app/screens/dashboard/view/dashboard_screen.dart';
 import 'package:grow_tokyo_app/screens/services/models/service_response.dart';
 import 'package:grow_tokyo_app/utils/app_common.dart';
@@ -119,172 +120,175 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AppScaffold(
-      appBarWidget: commonAppBarWidget(
-        context,
-        title: locale.confirmBooking,
-        appBarHeight: 70,
-        roundCornerShape: true,
-        showLeadingIcon: true,
-      ),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(locale.yourInformation, style: secondaryTextStyle()),
-                12.height,
-                DefaultCard(
-                  child: Column(
-                    children: [
-                      _RowData(
-                          title: locale.name, value: userStore.userFullName),
-                      8.height,
-                      _RowData(
-                        title: locale.contactNumber,
-                        value: userStore.userContactNumber,
-                      ),
-                    ],
-                  ),
-                ),
-                16.height,
-                Text(locale.timeSlot, style: secondaryTextStyle()),
-                12.height,
-                DefaultCard(
-                  child: _RowData(
-                    title: '${locale.date} & ${locale.time}',
-                    value:
-                        '${bookingRequestStore.date.validate()} at ${bookingRequestStore.time.validate()}',
-                  ),
-                ),
-                16.height,
-                Text(locale.stylist, style: secondaryTextStyle()),
-                12.height,
-                DefaultCard(
-                  child: _RowData(
-                    title: locale.stylist,
-                    value: bookingRequestStore.employeeName.validate(),
-                  ),
-                ),
-                16.height,
-                Text(locale.services, style: secondaryTextStyle()),
-                12.height,
-                DefaultCard(
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: bookingRequestStore.selectedServiceList.length,
-                    itemBuilder: (_, __) => const Divider(),
-                    separatorBuilder: (_, index) {
-                      final service =
-                          bookingRequestStore.selectedServiceList[index];
-                      return _ServiceItem(
-                        key: ValueKey(service.id),
-                        service: service,
-                      );
-                    },
-                  ),
-                ),
-                12.height,
-                AppTextField(
-                  textFieldType: TextFieldType.MULTILINE,
-                  decoration:
-                      inputDecoration(context, hint: locale.serviceNote),
-                  onChanged: bookingRequestStore.setNoteInRequest,
-                ).cornerRadiusWithClipRRect(defaultRadius),
-                16.height,
-                Observer(builder: (context) {
-                  return DefaultCard(
-                    padding: const EdgeInsets.fromLTRB(16, 8, 8, 8),
-                    child: _CodeItem(
-                      onTap: () {},
-                      title: locale.coupon,
-                      actionText: locale.addCoupon,
-                      value: bookingRequestStore.couponCode,
-                    ),
-                  );
-                }),
-                16.height,
-                Observer(builder: (context) {
-                  return DefaultCard(
-                    padding: const EdgeInsets.fromLTRB(16, 8, 8, 8),
-                    child: _CodeItem(
-                      onTap: () => bookingRequestStore.referralCode != null
-                          ? bookingRequestStore.setReferralCodeInRequest(null)
-                          : showModalBottomSheet<String>(
-                              context: context,
-                              isScrollControlled: true,
-                              builder: (context) =>
-                                  const AddReferralCodeModal(),
-                            ).then(
-                              bookingRequestStore.setReferralCodeInRequest),
-                      title: locale.referralCode,
-                      actionText: locale.addCode,
-                      value: bookingRequestStore.referralCode,
-                    ),
-                  );
-                }),
-                16.height,
-                DefaultCard(
-                  child: Observer(builder: (context) {
-                    return Row(
+    return GestureDetector(
+      onTap: () => hideKeyboard(context),
+      child: AppScaffold(
+        appBarWidget: commonAppBarWidget(
+          context,
+          title: locale.confirmBooking,
+          appBarHeight: 70,
+          roundCornerShape: true,
+          showLeadingIcon: true,
+        ),
+        body: Stack(
+          children: [
+            SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(locale.yourInformation, style: secondaryTextStyle()),
+                  12.height,
+                  DefaultCard(
+                    child: Column(
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              locale.usingXPoints(userStore.credit),
-                              style: boldTextStyle(),
-                            ),
-                            4.height,
-                            Text(
-                              locale.youWillSave$X(0), //TODO: Add amount;
-                              style: secondaryTextStyle(),
-                            ),
-                          ],
-                        ).expand(),
-                        Switch.adaptive(
-                          value: bookingRequestStore.useCredit,
-                          onChanged: bookingRequestStore.setUseCreditInRequest,
+                        _RowData(
+                            title: locale.name, value: userStore.userFullName),
+                        8.height,
+                        _RowData(
+                          title: locale.contactNumber,
+                          value: userStore.userContactNumber,
                         ),
                       ],
+                    ),
+                  ),
+                  16.height,
+                  Text(locale.timeSlot, style: secondaryTextStyle()),
+                  12.height,
+                  DefaultCard(
+                    child: _RowData(
+                      title: '${locale.date} & ${locale.time}',
+                      value:
+                          '${bookingRequestStore.date.validate()} at ${bookingRequestStore.time.validate()}',
+                    ),
+                  ),
+                  16.height,
+                  Text(locale.stylist, style: secondaryTextStyle()),
+                  12.height,
+                  DefaultCard(
+                    child: _RowData(
+                      title: locale.stylist,
+                      value: bookingRequestStore.employeeName.validate(),
+                    ),
+                  ),
+                  16.height,
+                  Text(locale.services, style: secondaryTextStyle()),
+                  12.height,
+                  DefaultCard(
+                    child: Column(
+                      children: bookingRequestStore.selectedServiceList
+                          .map(
+                            (e) => _ServiceItem(key: ValueKey(e.id), service: e)
+                                .paddingSymmetric(vertical: 4),
+                          )
+                          .toList(),
+                    ),
+                  ),
+                  12.height,
+                  AppTextField(
+                    textFieldType: TextFieldType.MULTILINE,
+                    decoration:
+                        inputDecoration(context, hint: locale.serviceNote),
+                    onChanged: bookingRequestStore.setNoteInRequest,
+                  ).cornerRadiusWithClipRRect(defaultRadius),
+                  16.height,
+                  Observer(builder: (context) {
+                    return DefaultCard(
+                      padding: const EdgeInsets.fromLTRB(16, 8, 8, 8),
+                      child: _CodeItem(
+                        onTap: () => bookingRequestStore.couponCode != null
+                            ? bookingRequestStore.setCouponCodeInRequest(null)
+                            : const AddCouponScreen()
+                                .launch<String>(context)
+                                .then(
+                                    bookingRequestStore.setCouponCodeInRequest),
+                        title: locale.coupon,
+                        actionText: locale.addCoupon,
+                        value: bookingRequestStore.couponCode,
+                      ),
                     );
                   }),
-                ),
-                16.height,
-                Text(locale.paymentDetails, style: secondaryTextStyle()),
-                12.height,
-                DefaultCard(
-                  child: _RowData(
-                    title: locale.paymentMethod,
-                    value: locale.payAtSalon,
+                  16.height,
+                  Observer(builder: (context) {
+                    return DefaultCard(
+                      padding: const EdgeInsets.fromLTRB(16, 8, 8, 8),
+                      child: _CodeItem(
+                        onTap: () => bookingRequestStore.referralCode != null
+                            ? bookingRequestStore.setReferralCodeInRequest(null)
+                            : showModalBottomSheet<String>(
+                                context: context,
+                                isScrollControlled: true,
+                                builder: (context) =>
+                                    const AddReferralCodeModal(),
+                              ).then(
+                                bookingRequestStore.setReferralCodeInRequest),
+                        title: locale.referralCode,
+                        actionText: locale.addCode,
+                        value: bookingRequestStore.referralCode,
+                      ),
+                    );
+                  }),
+                  16.height,
+                  DefaultCard(
+                    child: Observer(builder: (context) {
+                      return Row(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                locale.usingXPoints(userStore.credit),
+                                style: boldTextStyle(),
+                              ),
+                              4.height,
+                              Text(
+                                locale.youWillSave$X(0), //TODO: Add amount;
+                                style: secondaryTextStyle(),
+                              ),
+                            ],
+                          ).expand(),
+                          Switch.adaptive(
+                            value: bookingRequestStore.useCredit,
+                            onChanged:
+                                bookingRequestStore.setUseCreditInRequest,
+                          ),
+                        ],
+                      );
+                    }),
                   ),
-                ),
-                80.height,
-              ],
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              decoration: boxDecorationWithRoundedCorners(
-                backgroundColor: primaryColor,
-                borderRadius:
-                    radiusOnly(topLeft: defaultRadius, topRight: defaultRadius),
+                  16.height,
+                  Text(locale.paymentDetails, style: secondaryTextStyle()),
+                  12.height,
+                  DefaultCard(
+                    child: _RowData(
+                      title: locale.paymentMethod,
+                      value: locale.payAtSalon,
+                    ),
+                  ),
+                  120.height,
+                ],
               ),
-              child: AppButton(
-                text: locale.bookNow,
-                textStyle: boldTextStyle(color: primaryColor),
-                onTap: saveBooking,
-              ).paddingOnly(bottom: 20),
             ),
-          ),
-        ],
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                decoration: boxDecorationWithRoundedCorners(
+                  backgroundColor: primaryColor,
+                  borderRadius: radiusOnly(
+                      topLeft: defaultRadius, topRight: defaultRadius),
+                ),
+                child: AppButton(
+                  text: locale.bookNow,
+                  textStyle: boldTextStyle(color: primaryColor),
+                  onTap: saveBooking,
+                ).paddingOnly(bottom: 20),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

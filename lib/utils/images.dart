@@ -31,6 +31,7 @@ const brand_6 = 'assets/images/brand_6.png';
 const brand_7 = 'assets/images/brand_7.png';
 const brand_8 = 'assets/images/brand_8.png';
 
+const coupon = 'assets/icons/coupon.png';
 const chevron_down = 'assets/icons/chevron_down.png';
 const chevron_up = 'assets/icons/chevron_up.png';
 const calendar_add = 'assets/icons/calendar_add.png';
