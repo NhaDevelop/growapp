@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/screens/coupon/view/coupon_list_screen.dart';
+import 'package:grow_tokyo_app/screens/dashboard/component/inquiry_dialog.dart';
+import 'package:grow_tokyo_app/screens/notification/view/notification_screen.dart';
 import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -44,13 +46,16 @@ class DashboardMenuComponent extends StatelessWidget {
             _MenuItem(
               icon: dashboard_menu_inquiry,
               title: locale.inquiry,
-              onTap: () {},
+              onTap: () => showDialog(
+                context: context,
+                builder: (context) => const InquiryDialog(),
+              ),
             ).expand(),
             16.width,
             _MenuItem(
               icon: dashboard_menu_notifications,
               title: locale.notifications,
-              onTap: () {},
+              onTap: () => const NotificationScreen().launch(context),
             ).expand(),
           ],
         ),

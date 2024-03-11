@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:grow_tokyo_app/components/zigzag_clipper.dart';
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/screens/coupon/component/coupon_details_modal.dart';
@@ -42,6 +41,7 @@ class CouponItemComponent extends StatelessWidget {
                   Text('Get 20% off on your first booking',
                       style: secondaryTextStyle()),
                   GestureDetector(
+                    behavior: HitTestBehavior.opaque,
                     onTap: () => showModalBottomSheet(
                       context: context,
                       builder: (context) => const CouponDetailsModal(),

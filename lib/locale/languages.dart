@@ -172,6 +172,12 @@ abstract class BaseLanguage {
 
   String get inquiry;
 
+  String get inquiryMessage;
+
+  String get telegram;
+
+  String get messenger;
+
   String get blog;
 
   String get service;
@@ -619,6 +625,8 @@ abstract class BaseLanguage {
   String get productPriceDetails;
 
   String get totalAmount;
+
+  String get select;
 
   String get selectAddress;
 

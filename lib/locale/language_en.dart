@@ -263,6 +263,16 @@ class LanguageEn extends BaseLanguage {
   String get inquiry => 'Inquiry';
 
   @override
+  String get inquiryMessage =>
+      'Please select the app you want to chat with us.';
+
+  @override
+  String get telegram => 'Telegram';
+
+  @override
+  String get messenger => 'Messenger';
+
+  @override
   String get blog => 'Blog';
 
   @override
@@ -957,6 +967,9 @@ class LanguageEn extends BaseLanguage {
 
   @override
   String get totalAmount => 'Total Amount';
+
+  @override
+  String get select => 'Select';
 
   @override
   String get selectAddress => 'Select Address';
