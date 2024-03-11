@@ -19,6 +19,6 @@ class ModalHeader extends StatelessWidget {
           },
         ),
       ],
-    ).paddingOnly(left: 16, right: 8, top: 8, bottom: 24);
+    ).paddingOnly(left: 24, right: 16, top: 8, bottom: 24);
   }
 }

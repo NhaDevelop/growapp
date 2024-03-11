@@ -399,6 +399,9 @@ class LanguageEn extends BaseLanguage {
   String get about => 'About';
 
   @override
+  String get details => 'Details';
+
+  @override
   String get reviews => 'Reviews';
 
   @override

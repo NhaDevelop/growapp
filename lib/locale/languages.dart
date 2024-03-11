@@ -262,6 +262,8 @@ abstract class BaseLanguage {
 
   String get about;
 
+  String get details;
+
   String get reviews;
 
   String get staff;

@@ -8,7 +8,7 @@ import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/payment/payment_repo.dart';
 import 'package:grow_tokyo_app/screens/booking/booking_repository.dart';
 import 'package:grow_tokyo_app/screens/booking/component/add_referral_code_modal.dart';
-import 'package:grow_tokyo_app/screens/booking/view/add_coupon_screen.dart';
+import 'package:grow_tokyo_app/screens/coupon/view/add_coupon_screen.dart';
 import 'package:grow_tokyo_app/screens/dashboard/view/dashboard_screen.dart';
 import 'package:grow_tokyo_app/screens/services/models/service_response.dart';
 import 'package:grow_tokyo_app/utils/app_common.dart';
@@ -378,12 +378,22 @@ class _CodeItem extends StatelessWidget {
                   size: 14,
                 ),
               ),
-              4.width,
-              Icon(
-                value == null ? Icons.arrow_forward_ios : Icons.close,
-                size: 12,
-                color: primaryColor,
-              ),
+              8.width,
+              value == null
+                  ? const Icon(
+                      Icons.arrow_forward_ios,
+                      size: 12,
+                      color: primaryColor,
+                    )
+                  : const CircleAvatar(
+                      radius: 12,
+                      backgroundColor: primaryColor,
+                      child: Icon(
+                        Icons.close,
+                        size: 12,
+                        color: white,
+                      ),
+                    ),
             ],
           ),
         )
