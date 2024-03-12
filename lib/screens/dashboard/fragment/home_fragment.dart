@@ -87,10 +87,11 @@ class _HomeFragmentState extends State<HomeFragment> {
             onSuccess: (snap) {
               return CommonAppComponent(
                 innerWidget: DashboardAppBarComponent(
-                  hintText: locale.searchForServices,
-                  positionWidgetHeight: 200,
-                  positionWidget: HorizontalSliderComponent(
-                    sliderList: snap.data!.sliderData.validate(),
+                  positionWidget: SizedBox(
+                    height: 200,
+                    child: HorizontalSliderComponent(
+                      sliderList: snap.data!.sliderData.validate(),
+                    ),
                   ),
                   positionBottom: -145,
                 ),

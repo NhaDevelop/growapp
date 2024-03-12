@@ -140,7 +140,6 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
                         : e.name.validate())
                     .toList()
                     .join(', '),
-                price: bookingRequestStore.totalAmount,
                 buttonText: locale.next,
                 onTap: () {
                   bookingRequestStore

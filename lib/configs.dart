@@ -3,7 +3,7 @@ import 'package:country_picker/country_picker.dart';
 const APP_NAME = 'growTokyo';
 const DEFAULT_LANGUAGE = 'en';
 
-const DOMAIN_URL = "http://54.254.134.180:8000";
+const DOMAIN_URL = "https://grow-cms.xclabs.io";
 const BASE_URL = '$DOMAIN_URL/api/';
 const appStoreAppBaseURL = '';
 

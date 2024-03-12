@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/screens/coupon/view/coupon_list_screen.dart';
 import 'package:grow_tokyo_app/screens/dashboard/component/inquiry_dialog.dart';
-import 'package:grow_tokyo_app/screens/notification/view/notification_screen.dart';
+import 'package:grow_tokyo_app/screens/notifications/view/notification_screen.dart';
+import 'package:grow_tokyo_app/screens/referral/view/referral_screen.dart';
+import 'package:grow_tokyo_app/utils/common_base.dart';
 import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -24,13 +26,19 @@ class DashboardMenuComponent extends StatelessWidget {
             _MenuItem(
               icon: dashboard_menu_referral,
               title: locale.referral,
-              onTap: () {},
+              onTap: () => doIfLoggedIn(
+                context,
+                () => const ReferralScreen().launch(context),
+              ),
             ).expand(),
             16.width,
             _MenuItem(
               icon: dashboard_menu_coupon,
               title: locale.coupon,
-              onTap: () => const CouponListScreen().launch(context),
+              onTap: () => doIfLoggedIn(
+                context,
+                () => const CouponListScreen().launch(context),
+              ),
             ).expand(),
           ],
         ),
@@ -55,7 +63,10 @@ class DashboardMenuComponent extends StatelessWidget {
             _MenuItem(
               icon: dashboard_menu_notifications,
               title: locale.notifications,
-              onTap: () => const NotificationScreen().launch(context),
+              onTap: () => doIfLoggedIn(
+                context,
+                () => const NotificationScreen().launch(context),
+              ),
             ).expand(),
           ],
         ),

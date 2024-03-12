@@ -144,10 +144,14 @@ abstract class _UserStore with Store {
   Future<void> setReferralCode(String? val,
       {bool isInitializing = false}) async {
     referralCode = val;
+    if (!isInitializing) {
+      await setValue(SharedPreferenceConst.REFERRAL_CODE, val);
+    }
   }
 
   @action
   Future<void> setCredit(int val, {bool isInitializing = false}) async {
     credit = val;
+    if (!isInitializing) await setValue(SharedPreferenceConst.CREDIT, val);
   }
 }

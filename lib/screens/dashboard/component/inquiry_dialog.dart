@@ -44,6 +44,7 @@ class _InquiryDialogState extends State<InquiryDialog> {
           Row(
             children: [
               _Item(
+                key: const ValueKey(InquiryType.telegram),
                 icon: ic_telegram,
                 title: locale.telegram,
                 selected: _selected == InquiryType.telegram,
@@ -51,6 +52,7 @@ class _InquiryDialogState extends State<InquiryDialog> {
               ).expand(),
               16.width,
               _Item(
+                key: const ValueKey(InquiryType.messenger),
                 icon: ic_messenger,
                 title: locale.messenger,
                 selected: _selected == InquiryType.messenger,

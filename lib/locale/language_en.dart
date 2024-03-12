@@ -248,6 +248,36 @@ class LanguageEn extends BaseLanguage {
   String get referralCode => 'Referral Code';
 
   @override
+  String get yourReferralCode => 'Your Referral Code';
+
+  @override
+  String get copyCode => 'Copy Code';
+
+  @override
+  String get copiedToClipboard => 'Copied to Clipboard';
+
+  @override
+  String get referralRewardMessage => 'Invite new customers to get points';
+
+  @override
+  String get howItWorks => 'How it works?';
+
+  @override
+  String get referralStep1 => 'Share your referral code to your friends.';
+
+  @override
+  String get referralStep2 =>
+      'Your friends booking an appointment and apply your code to receive a discount.';
+
+  @override
+  String get referralStep3 =>
+      'After your friend\'s booking is completed, you will receive points as a reward.';
+
+  @override
+  String get referralStepNote =>
+      'Each referral code can only be used once per people.';
+
+  @override
   String get addReferralCode => 'Add Referral Code';
 
   @override

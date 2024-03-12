@@ -313,7 +313,6 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
                         : e.name.validate())
                     .toList()
                     .join(', '),
-                price: bookingRequestStore.totalAmount,
                 buttonText: locale.confirm,
                 onTap: () async {
                   if (bookingRequestStore.time.isNotEmpty) {

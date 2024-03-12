@@ -162,6 +162,24 @@ abstract class BaseLanguage {
 
   String get referralCode;
 
+  String get yourReferralCode;
+
+  String get copyCode;
+
+  String get copiedToClipboard;
+
+  String get referralRewardMessage;
+
+  String get howItWorks;
+
+  String get referralStep1;
+
+  String get referralStep2;
+
+  String get referralStep3;
+
+  String get referralStepNote;
+
   String get addReferralCode;
 
   String get coupon;

@@ -136,6 +136,11 @@ void main() async {
         isInitializing: true);
     await userStore.setPlayerId(getStringAsync(SharedPreferenceConst.PLAYER_ID),
         isInitializing: true);
+    await userStore.setReferralCode(
+        getStringAsync(SharedPreferenceConst.REFERRAL_CODE),
+        isInitializing: true);
+    await userStore.setCredit(getIntAsync(SharedPreferenceConst.CREDIT),
+        isInitializing: true);
     await appStore.setHelplineNumber(
         getStringAsync(SharedPreferenceConst.HELPLINE_NUMBER),
         isInitializing: true);

@@ -13,7 +13,6 @@ class DashboardAppBarComponent extends StatefulWidget {
   final Widget? innerChild;
   final String? hintText;
   final Widget? positionWidget;
-  final double? positionWidgetHeight;
   final double? positionBottom;
   final VoidCallback? onTapSearch;
 
@@ -22,7 +21,6 @@ class DashboardAppBarComponent extends StatefulWidget {
       this.innerChild,
       this.hintText,
       this.positionWidget,
-      this.positionWidgetHeight,
       this.positionBottom,
       this.onTapSearch});
 
@@ -101,11 +99,10 @@ class _DashboardAppBarComponentState extends State<DashboardAppBarComponent> {
             ),
           ),
         Positioned(
-          bottom: widget.positionBottom ?? -25,
+          bottom: widget.positionBottom,
           left: 20,
           right: 20,
           child: Container(
-            height: widget.positionWidgetHeight ?? 50,
             width: context.width(),
             decoration: boxDecorationWithRoundedCorners(
                 backgroundColor: context.cardColor),
