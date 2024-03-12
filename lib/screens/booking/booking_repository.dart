@@ -43,6 +43,20 @@ Future<BookingDetailResponse> getBookingDetail({required int bookingId}) async {
   }
 }
 
+Future<double> getRefferalCodeRewardPercentageAPI(String code) async {
+  try {
+    var res = await handleResponse(await buildHttpResponse(
+        APIEndPoints.checkReferralCode,
+        method: HttpMethodType.POST,
+        request: {'referral_code': code}));
+    appStore.setLoading(false);
+    return (res['data']['referral_reward_percent'] as num).toDouble();
+  } catch (e) {
+    appStore.setLoading(false);
+    rethrow;
+  }
+}
+
 Future saveBookingAPI(Map request) async {
   return await handleResponse(await buildHttpResponse(APIEndPoints.saveBooking,
       request: request, method: HttpMethodType.POST));

@@ -38,7 +38,13 @@ abstract class _BookingRequestStore with Store {
   String? referralCode;
 
   @observable
+  double referralRewardPercentage = 0;
+
+  @observable
   String? couponCode;
+
+  @observable
+  double couponRewardPercentage = 0;
 
   @observable
   bool? isReschedule;
@@ -157,8 +163,30 @@ abstract class _BookingRequestStore with Store {
   }
 
   @action
+  void setReferralRewardPercentageInRequest(double val) {
+    referralRewardPercentage = val;
+  }
+
+  @action
+  void removeReferralCodeInRequest() {
+    referralCode = null;
+    referralRewardPercentage = 0;
+  }
+
+  @action
   void setCouponCodeInRequest(String? val) {
     couponCode = val;
+  }
+
+  @action
+  void setCouponRewardPercentageInRequest(double val) {
+    couponRewardPercentage = val;
+  }
+
+  @action
+  void removeCouponCodeInRequest() {
+    couponCode = null;
+    couponRewardPercentage = 0;
   }
 
   @action

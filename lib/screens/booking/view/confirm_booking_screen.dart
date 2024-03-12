@@ -197,14 +197,14 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                       padding: const EdgeInsets.fromLTRB(16, 8, 8, 8),
                       child: _CodeItem(
                         onTap: () => bookingRequestStore.couponCode != null
-                            ? bookingRequestStore.setCouponCodeInRequest(null)
+                            ? bookingRequestStore.removeCouponCodeInRequest()
                             : const AddCouponScreen()
                                 .launch<String>(context)
                                 .then(
                                     bookingRequestStore.setCouponCodeInRequest),
                         title: locale.coupon,
                         actionText: locale.addCoupon,
-                        value: bookingRequestStore.couponCode,
+                        value: bookingRequestStore.couponRewardPercentage,
                       ),
                     );
                   }),
@@ -214,17 +214,23 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                       padding: const EdgeInsets.fromLTRB(16, 8, 8, 8),
                       child: _CodeItem(
                         onTap: () => bookingRequestStore.referralCode != null
-                            ? bookingRequestStore.setReferralCodeInRequest(null)
-                            : showModalBottomSheet<String>(
+                            ? bookingRequestStore.removeReferralCodeInRequest()
+                            : showModalBottomSheet<Map<String, dynamic>>(
                                 context: context,
                                 isScrollControlled: true,
                                 builder: (context) =>
                                     const AddReferralCodeModal(),
-                              ).then(
-                                bookingRequestStore.setReferralCodeInRequest),
+                              ).then((map) {
+                                if (map == null) return;
+                                bookingRequestStore.setReferralCodeInRequest(
+                                    map['referralCode']);
+                                bookingRequestStore
+                                    .setReferralRewardPercentageInRequest(
+                                        map['rewardPercentage']);
+                              }),
                         title: locale.referralCode,
                         actionText: locale.addCode,
-                        value: bookingRequestStore.referralCode,
+                        value: bookingRequestStore.referralRewardPercentage,
                       ),
                     );
                   }),
@@ -347,13 +353,13 @@ class _RowData extends StatelessWidget {
 class _CodeItem extends StatelessWidget {
   final String title;
   final String actionText;
-  final String? value;
+  final double value;
   final VoidCallback onTap;
 
   const _CodeItem(
       {required this.title,
       required this.actionText,
-      this.value,
+      required this.value,
       required this.onTap});
 
   @override
@@ -371,15 +377,17 @@ class _CodeItem extends StatelessWidget {
           onPressed: onTap,
           child: Row(
             children: [
-              Text(
-                value ?? actionText,
-                style: boldTextStyle(
-                  decoration: TextDecoration.underline,
-                  size: 14,
-                ),
-              ),
+              value > 0
+                  ? Text('-$value%', style: boldTextStyle(color: Colors.red))
+                  : Text(
+                      actionText,
+                      style: boldTextStyle(
+                        decoration: TextDecoration.underline,
+                        size: 14,
+                      ),
+                    ),
               8.width,
-              value == null
+              value == 0
                   ? const Icon(
                       Icons.arrow_forward_ios,
                       size: 12,

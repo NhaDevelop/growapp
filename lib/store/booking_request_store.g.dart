@@ -174,6 +174,23 @@ mixin _$BookingRequestStore on _BookingRequestStore, Store {
     });
   }
 
+  late final _$referralRewardPercentageAtom = Atom(
+      name: '_BookingRequestStore.referralRewardPercentage', context: context);
+
+  @override
+  double get referralRewardPercentage {
+    _$referralRewardPercentageAtom.reportRead();
+    return super.referralRewardPercentage;
+  }
+
+  @override
+  set referralRewardPercentage(double value) {
+    _$referralRewardPercentageAtom
+        .reportWrite(value, super.referralRewardPercentage, () {
+      super.referralRewardPercentage = value;
+    });
+  }
+
   late final _$couponCodeAtom =
       Atom(name: '_BookingRequestStore.couponCode', context: context);
 
@@ -187,6 +204,23 @@ mixin _$BookingRequestStore on _BookingRequestStore, Store {
   set couponCode(String? value) {
     _$couponCodeAtom.reportWrite(value, super.couponCode, () {
       super.couponCode = value;
+    });
+  }
+
+  late final _$couponRewardPercentageAtom = Atom(
+      name: '_BookingRequestStore.couponRewardPercentage', context: context);
+
+  @override
+  double get couponRewardPercentage {
+    _$couponRewardPercentageAtom.reportRead();
+    return super.couponRewardPercentage;
+  }
+
+  @override
+  set couponRewardPercentage(double value) {
+    _$couponRewardPercentageAtom
+        .reportWrite(value, super.couponRewardPercentage, () {
+      super.couponRewardPercentage = value;
     });
   }
 
@@ -374,11 +408,55 @@ mixin _$BookingRequestStore on _BookingRequestStore, Store {
   }
 
   @override
+  void setReferralRewardPercentageInRequest(double val) {
+    final _$actionInfo = _$_BookingRequestStoreActionController.startAction(
+        name: '_BookingRequestStore.setReferralRewardPercentageInRequest');
+    try {
+      return super.setReferralRewardPercentageInRequest(val);
+    } finally {
+      _$_BookingRequestStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void removeReferralCodeInRequest() {
+    final _$actionInfo = _$_BookingRequestStoreActionController.startAction(
+        name: '_BookingRequestStore.removeReferralCodeInRequest');
+    try {
+      return super.removeReferralCodeInRequest();
+    } finally {
+      _$_BookingRequestStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setCouponCodeInRequest(String? val) {
     final _$actionInfo = _$_BookingRequestStoreActionController.startAction(
         name: '_BookingRequestStore.setCouponCodeInRequest');
     try {
       return super.setCouponCodeInRequest(val);
+    } finally {
+      _$_BookingRequestStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setCouponRewardPercentageInRequest(double val) {
+    final _$actionInfo = _$_BookingRequestStoreActionController.startAction(
+        name: '_BookingRequestStore.setCouponRewardPercentageInRequest');
+    try {
+      return super.setCouponRewardPercentageInRequest(val);
+    } finally {
+      _$_BookingRequestStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void removeCouponCodeInRequest() {
+    final _$actionInfo = _$_BookingRequestStoreActionController.startAction(
+        name: '_BookingRequestStore.removeCouponCodeInRequest');
+    try {
+      return super.removeCouponCodeInRequest();
     } finally {
       _$_BookingRequestStoreActionController.endAction(_$actionInfo);
     }
@@ -433,7 +511,9 @@ date: ${date},
 note: ${note},
 useCredit: ${useCredit},
 referralCode: ${referralCode},
+referralRewardPercentage: ${referralRewardPercentage},
 couponCode: ${couponCode},
+couponRewardPercentage: ${couponRewardPercentage},
 isReschedule: ${isReschedule},
 selectedServiceList: ${selectedServiceList},
 selectedBookingStatusList: ${selectedBookingStatusList},
