@@ -242,6 +242,9 @@ class LanguageEn extends BaseLanguage {
   String youWillSave$X(int x) => 'You will save \$$x';
 
   @override
+  String get membershipPoints => 'Membership Points';
+
+  @override
   String get referral => 'Referral';
 
   @override

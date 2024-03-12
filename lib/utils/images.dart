@@ -30,6 +30,7 @@ const brand_5 = 'assets/images/brand_5.png';
 const brand_6 = 'assets/images/brand_6.png';
 const brand_7 = 'assets/images/brand_7.png';
 const brand_8 = 'assets/images/brand_8.png';
+const points_banner_bg = 'assets/images/points_banner_bg.png';
 
 const ic_crown = 'assets/icons/ic_crown.png';
 const ic_percentage_square = 'assets/icons/ic_percentage_square.png';

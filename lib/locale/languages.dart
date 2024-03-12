@@ -158,6 +158,8 @@ abstract class BaseLanguage {
 
   String youWillSave$X(int x);
 
+  String get membershipPoints;
+
   String get referral;
 
   String get referralCode;

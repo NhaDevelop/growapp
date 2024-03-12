@@ -3,6 +3,7 @@ import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/screens/coupon/view/coupon_list_screen.dart';
 import 'package:grow_tokyo_app/screens/dashboard/component/inquiry_dialog.dart';
 import 'package:grow_tokyo_app/screens/notifications/view/notification_screen.dart';
+import 'package:grow_tokyo_app/screens/points/view/points_screen.dart';
 import 'package:grow_tokyo_app/screens/referral/view/referral_screen.dart';
 import 'package:grow_tokyo_app/utils/common_base.dart';
 import 'package:grow_tokyo_app/utils/images.dart';
@@ -20,7 +21,10 @@ class DashboardMenuComponent extends StatelessWidget {
             _MenuItem(
               icon: dashboard_menu_points,
               title: locale.points,
-              onTap: () {},
+              onTap: () => doIfLoggedIn(
+                context,
+                () => const PointsScreen().launch(context),
+              ),
             ).expand(),
             16.width,
             _MenuItem(
