@@ -99,7 +99,7 @@ class _MenuItem extends StatelessWidget {
         height: 110,
         decoration: boxDecorationRoundedWithShadow(
           12,
-          shadowColor: const Color(0xFF000000).withOpacity(0.03),
+          shadowColor: black.withOpacity(0.03),
           blurRadius: 8,
           offset: const Offset(0, 6),
         ),

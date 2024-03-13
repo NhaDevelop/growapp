@@ -67,7 +67,6 @@ class _InquiryDialogState extends State<InquiryDialog> {
             color: context.primaryColor,
             textColor: Colors.white,
             disabledColor: const Color(0xFFE0E0E0),
-            disabledTextColor: Colors.grey,
             enabled: _selected != null,
             onTap: _onSelect,
           ),

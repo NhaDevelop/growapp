@@ -37,7 +37,39 @@ class AppTheme {
       appBarTheme: const AppBarTheme(
           systemOverlayStyle:
               SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light)),
-      dialogTheme: DialogTheme(shape: dialogShape()),
+      dialogTheme: DialogTheme(
+          shape: dialogShape(), surfaceTintColor: Colors.transparent),
+      tabBarTheme: const TabBarTheme(
+        labelColor: primaryColor,
+        unselectedLabelColor: appTextSecondaryColor,
+        indicatorColor: primaryColor,
+      ),
+      // elevatedButtonTheme: ElevatedButtonThemeData(
+      //   style: ButtonStyle(
+      //     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+      //       RoundedRectangleBorder(
+      //         borderRadius: BorderRadius.circular(defaultAppButtonRadius),
+      //       ),
+      //     ),
+      //     textStyle: MaterialStateProperty.all<TextStyle>(boldTextStyle()),
+      //     backgroundColor: MaterialStateProperty.resolveWith<Color>(
+      //       (Set<MaterialState> states) {
+      //         if (states.contains(MaterialState.disabled)) {
+      //           return Colors.grey;
+      //         }
+      //         return primaryColor;
+      //       },
+      //     ),
+      //     foregroundColor: MaterialStateProperty.resolveWith<Color>(
+      //       (Set<MaterialState> states) {
+      //         if (states.contains(MaterialState.disabled)) {
+      //           return primaryColor;
+      //         }
+      //         return white;
+      //       },
+      //     ),
+      //   ),
+      // ),
     );
   }
 
