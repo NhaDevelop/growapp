@@ -117,8 +117,8 @@ String parseHtmlString(String? htmlString) {
 PreferredSizeWidget commonAppBarWidget(BuildContext context,
     {String? title,
     double? appBarHeight,
-    bool? showLeadingIcon,
-    bool? roundCornerShape,
+    bool showLeadingIcon = true,
+    bool roundCornerShape = true,
     List<Widget>? actions}) {
   return PreferredSize(
     preferredSize: Size.fromHeight(appBarHeight ?? 100.0),
@@ -129,14 +129,16 @@ PreferredSizeWidget commonAppBarWidget(BuildContext context,
           const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
       backgroundColor: primaryColor,
       centerTitle: true,
-      leading: !showLeadingIcon.validate() ? const Offstage() : const BackWidget(),
+      leading:
+          !showLeadingIcon.validate() ? const Offstage() : const BackWidget(),
       elevation: 0,
       actions: actions,
       shape: roundCornerShape.validate()
           ? const RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
             )
-          : const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.zero)),
+          : const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.zero)),
     ),
   );
 }

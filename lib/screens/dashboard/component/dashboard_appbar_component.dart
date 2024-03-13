@@ -61,7 +61,6 @@ class _DashboardAppBarComponentState extends State<DashboardAppBarComponent> {
         else
           Container(
             width: context.width(),
-            height: 190,
             padding: EdgeInsets.only(
                 left: 21, right: 6, top: context.statusBarHeight),
             decoration: boxDecorationWithRoundedCorners(

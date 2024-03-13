@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:grow_tokyo_app/components/app_scaffold.dart';
 import 'package:grow_tokyo_app/components/loader_widget.dart';
@@ -86,16 +87,7 @@ class _HomeFragmentState extends State<HomeFragment> {
             loadingWidget: const DashboardShimmer(),
             onSuccess: (snap) {
               return CommonAppComponent(
-                innerWidget: DashboardAppBarComponent(
-                  positionWidget: SizedBox(
-                    height: 200,
-                    child: HorizontalSliderComponent(
-                      sliderList: snap.data!.sliderData.validate(),
-                    ),
-                  ),
-                  positionBottom: -145,
-                ),
-                mainWidgetHeight: 190,
+                innerWidget: const DashboardAppBarComponent(),
                 onSwipeRefresh: () async {
                   init();
                   keyForBranchList = UniqueKey();
@@ -103,36 +95,50 @@ class _HomeFragmentState extends State<HomeFragment> {
 
                   return await 2.seconds.delay;
                 },
-                subWidget: Column(
-                  children: [
-                    AppButton(
-                      color: context.primaryColor,
-                      textColor: white,
-                      onTap: () {
-                        const SelectBranchScreen(isFromDashboard: true)
-                            .launch(context);
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(calendar_add, height: 24, width: 24),
-                          8.width,
-                          Text(
-                            locale.bookAppointment,
-                            style: boldTextStyle(size: 16, color: white),
-                          ),
-                        ],
+                subWidget: Transform.translate(
+                  offset: const Offset(0, -20),
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 20),
+                        decoration: boxDecorationWithRoundedCorners(
+                          backgroundColor: white,
+                          borderRadius: radius(20),
+                        ),
+                        height:
+                            (snap.data?.sliderData ?? []).isEmpty ? 20 : 200,
+                        child: HorizontalSliderComponent(
+                          sliderList: snap.data!.sliderData.validate(),
+                        ),
                       ),
-                    ).paddingSymmetric(horizontal: 20),
-                    24.height,
-                    const DashboardMenuComponent()
-                        .paddingSymmetric(horizontal: 20),
-                    16.height,
-                    const BlogComponent(),
-                  ],
-                )
-                    .paddingOnly(top: context.statusBarHeight + 150)
-                    .withWidth(context.width()),
+                      24.height,
+                      AppButton(
+                        color: context.primaryColor,
+                        textColor: white,
+                        onTap: () {
+                          const SelectBranchScreen(isFromDashboard: true)
+                              .launch(context);
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(calendar_add, height: 24, width: 24),
+                            8.width,
+                            Text(
+                              locale.bookAppointment,
+                              style: boldTextStyle(size: 16, color: white),
+                            ),
+                          ],
+                        ),
+                      ).paddingSymmetric(horizontal: 20),
+                      24.height,
+                      const DashboardMenuComponent()
+                          .paddingSymmetric(horizontal: 20),
+                      16.height,
+                      const BlogComponent(),
+                    ],
+                  ),
+                ),
               );
             },
           ),

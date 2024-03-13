@@ -28,8 +28,8 @@ class BookingListShimmer extends StatelessWidget {
                   ShimmerWidget(
                     child: Container(
                       height: 24,
-                      padding:
-                          const EdgeInsets.symmetric(vertical: 4, horizontal: 26),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 4, horizontal: 26),
                       decoration: boxDecorationWithRoundedCorners(
                         backgroundColor: context.cardColor,
                         borderRadius: radiusOnly(topLeft: defaultRadius),
@@ -39,8 +39,8 @@ class BookingListShimmer extends StatelessWidget {
                   ShimmerWidget(
                     child: Container(
                       height: 24,
-                      padding:
-                          const EdgeInsets.symmetric(vertical: 3, horizontal: 30),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 3, horizontal: 30),
                       decoration: boxDecorationWithRoundedCorners(
                         backgroundColor: context.cardColor,
                         borderRadius: radiusOnly(topRight: defaultRadius),

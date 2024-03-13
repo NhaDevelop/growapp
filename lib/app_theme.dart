@@ -35,8 +35,15 @@ class AppTheme {
       ),
       cardColor: cardColor,
       appBarTheme: const AppBarTheme(
-          systemOverlayStyle:
-              SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light)),
+        systemOverlayStyle:
+            SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(20),
+            bottomRight: Radius.circular(20),
+          ),
+        ),
+      ),
       dialogTheme: DialogTheme(
           shape: dialogShape(), surfaceTintColor: Colors.transparent),
       tabBarTheme: const TabBarTheme(

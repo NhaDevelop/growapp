@@ -30,11 +30,7 @@ class _AppLanguageScreenState extends State<AppLanguageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBarWidget(context,
-          title: locale.appLanguage,
-          appBarHeight: 70,
-          roundCornerShape: true,
-          showLeadingIcon: true),
+      appBar: commonAppBarWidget(context, title: locale.appLanguage),
       body: LanguageListWidget(
         widgetType: WidgetType.LIST,
         onLanguageChange: (v) {

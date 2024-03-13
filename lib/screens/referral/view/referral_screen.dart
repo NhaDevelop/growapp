@@ -14,24 +14,20 @@ class ReferralScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppScaffold(
       showAppBar: false,
-      body: Column(
-        children: [
-          CommonAppComponent(
-            innerWidget: DashboardAppBarComponent(
-              innerChild: appBarWidget(
-                locale.referral,
-                center: true,
-                color: context.primaryColor,
-                textColor: white,
-                backWidget: const BackWidget(),
-              ).cornerRadiusWithClipRRectOnly(bottomLeft: 20, bottomRight: 20),
-            ),
+      body: CommonAppComponent(
+        innerWidget: DashboardAppBarComponent(
+          innerChild: appBarWidget(
+            locale.referral,
+            center: true,
+            color: context.primaryColor,
+            textColor: white,
+            backWidget: const BackWidget(),
           ),
-          Transform.translate(
-            offset: const Offset(0, -50),
-            child: const ReferralCodeDetails(),
-          ),
-        ],
+        ),
+        subWidget: Transform.translate(
+          offset: const Offset(0, -20),
+          child: const ReferralCodeDetails(),
+        ),
       ),
     );
   }
