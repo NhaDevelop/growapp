@@ -19,7 +19,7 @@ class HorizontalDatePickerWidget extends StatefulWidget {
   final DateTime endDate;
 
   ///default selected date
-  final DateTime selectedDate;
+  final DateTime? selectedDate;
 
   final String locale;
 
@@ -75,6 +75,11 @@ class HorizontalDatePickerWidget extends StatefulWidget {
   ///at least one info must be in the list
   final List<DateItem> dateItemComponentList;
 
+  ///enable day predicate
+  ///if null, all days are enabled
+  ///if not null, only the days that predicate return true are enabled
+  final bool Function(DateTime)? enableDayPredicate;
+
   /// Main widget part of this library.
   /// It is a horizontal date picker that always make the selected option to center.
   HorizontalDatePickerWidget({
@@ -89,6 +94,7 @@ class HorizontalDatePickerWidget extends StatefulWidget {
       DateItem.Day,
       DateItem.WeekDay
     ],
+    this.enableDayPredicate,
 
     /// if null, the locale will use the system default one
     /// locale String like "de", can be found via
@@ -155,9 +161,6 @@ class _HorizontalDatePickerWidgetState
                 if (widget.onValueSelected != null) {
                   widget.onValueSelected!(dateTime);
                 }
-                setState(() {
-                  widget.datePickerController.scrollToSelectedItem();
-                });
               }
             },
             child: DateItemWidget(
@@ -192,7 +195,7 @@ class _HorizontalDatePickerWidgetState
     if (_isSelectedDate(dateTime)) {
       return DateItemState.SELECTED;
     } else {
-      if (_isWithinRange(dateTime)) {
+      if (_isWithinRange(dateTime) && _isAvailableDate(dateTime)) {
         return DateItemState.ACTIVE;
       } else {
         return DateItemState.DISABLED;
@@ -207,7 +210,7 @@ class _HorizontalDatePickerWidgetState
   }
 
   void _init(DatePickerController controller, double ttlWidth, double width,
-      DateTime startDate, DateTime endDate, DateTime selectedDate) {
+      DateTime startDate, DateTime endDate, DateTime? selectedDate) {
     int maxRowChild = 0;
     int shift = 0;
     double shiftPos;
@@ -240,5 +243,9 @@ class _HorizontalDatePickerWidgetState
 
   bool _isWithinRange(DateTime dateTime) {
     return widget.datePickerController.isWithinRange(dateTime);
+  }
+
+  bool _isAvailableDate(DateTime dateTime) {
+    return widget.enableDayPredicate?.call(dateTime) ?? true;
   }
 }

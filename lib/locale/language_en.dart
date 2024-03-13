@@ -403,6 +403,9 @@ class LanguageEn extends BaseLanguage {
   String get next => 'Next';
 
   @override
+  String get pleaseSelectDateFirst => 'Please Select Date First';
+
+  @override
   String get pleaseSelectTimeSlotFirst => 'Please Select Time Slot First';
 
   @override

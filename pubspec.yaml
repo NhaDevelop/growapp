@@ -23,6 +23,7 @@ dependencies:
   flutter_html: ^3.0.0-beta.1
   share_plus: ^7.0.2
   speech_to_text: ^6.3.0
+  table_calendar: ^3.1.0
 
   # State Management
   mobx: ^2.2.0

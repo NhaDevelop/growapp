@@ -3,7 +3,9 @@ import 'package:country_picker/country_picker.dart';
 const APP_NAME = 'growTokyo';
 const DEFAULT_LANGUAGE = 'en';
 
-const DOMAIN_URL = "https://grow-cms.xclabs.io";
+// const DOMAIN_URL = "https://grow-cms.xclabs.io";
+const DOMAIN_URL =
+    "https://1f28-2402-800-61c4-10dd-24d3-9257-ebc3-f967.ngrok-free.app";
 const BASE_URL = '$DOMAIN_URL/api/';
 const appStoreAppBaseURL = '';
 

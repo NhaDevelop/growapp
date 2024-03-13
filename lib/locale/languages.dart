@@ -262,6 +262,8 @@ abstract class BaseLanguage {
 
   String get next;
 
+  String get pleaseSelectDateFirst;
+
   String get pleaseSelectTimeSlotFirst;
 
   String get chooseYourStylist;

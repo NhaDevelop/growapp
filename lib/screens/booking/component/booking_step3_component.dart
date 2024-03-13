@@ -21,11 +21,11 @@ import '../../../components/loader_widget.dart';
 import '../../../utils/app_common.dart';
 import '../../branch/branch_repository.dart';
 import '../../branch/model/branch_configuration_response.dart';
-import '../../dashboard/component/booking_list_component.dart';
+// import '../../dashboard/component/booking_list_component.dart';
 import '../../services/models/service_response.dart';
 import '../booking_repository.dart';
 import '../shimmer/booking_step3_shimmer.dart';
-import '../view/booking_detail_screen.dart';
+// import '../view/booking_detail_screen.dart';
 
 class BookingStep3Component extends StatefulWidget {
   final bool isFromBookingInfoDetail;
@@ -48,42 +48,63 @@ class BookingStep3Component extends StatefulWidget {
 
 class _BookingStep3ComponentState extends State<BookingStep3Component> {
   final DatePickerController _datePickerController = DatePickerController();
-
-  UniqueKey keyForSlotWidget = UniqueKey();
+  UniqueKey slotWidgetKey = UniqueKey();
 
   Future<BranchConfigurationResponse>? future;
 
-  DateTime selectedHorizontalDate = DateTime.now();
+  DateTime? selectedHorizontalDate;
 
   List<String> monthList =
       List.generate(12, (index) => (index + 1).toMonthName());
   int currentMonthNumber = DateTime.now().month;
   int selectedMonthIndex = DateTime.now().month - 1;
 
-  String startTime = DEFAULT_SLOT_INTERVAL_DURATION;
-  String endTime = DEFAULT_SLOT_INTERVAL_DURATION;
-
   @override
   void initState() {
     super.initState();
     init();
-
-    bookingRequestStore.setDateInRequest(selectedHorizontalDate
-        .setFormattedDate(DateFormatConst.DATE_FORMAT_5)
-        .toString());
   }
 
-  void init() async {
-    future = getBranchConfiguration(appStore.branchId);
+  void init() {
+    future = getBranchConfiguration(
+        appStore.branchId, bookingRequestStore.employeeId);
   }
 
   void setCustomDate(int month) {
-    selectedHorizontalDate = DateTime(selectedHorizontalDate.year, month, 1);
+    selectedHorizontalDate = DateTime(DateTime.now().year, month, 1);
     _datePickerController.selectedDate = selectedHorizontalDate;
-    _datePickerController.scrollTo(selectedHorizontalDate);
+    _datePickerController.scrollTo(selectedHorizontalDate!);
 
     _datePickerController.scrollToSelectedItem();
     setState(() {});
+  }
+
+  String getSlotStartTime(List<SlotData>? slot, DateTime date) {
+    if (slot
+        .validate()
+        .any((element) => element.day == date.weekday.getWeekDayName)) {
+      return slot
+          .validate()
+          .firstWhere((element) => element.day == date.weekday.getWeekDayName)
+          .startTime
+          .validate();
+    }
+
+    return DEFAULT_SLOT_INTERVAL_DURATION;
+  }
+
+  String getSlotEndTime(List<SlotData>? slot, DateTime date) {
+    if (slot
+        .validate()
+        .any((element) => element.day == date.weekday.getWeekDayName)) {
+      return slot
+          .validate()
+          .firstWhere((element) => element.day == date.weekday.getWeekDayName)
+          .endTime
+          .validate();
+    }
+
+    return DEFAULT_SLOT_INTERVAL_DURATION;
   }
 
   @override
@@ -98,9 +119,6 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
       appBarWidget: commonAppBarWidget(
         context,
         title: '${locale.date} & ${locale.time}',
-        appBarHeight: 70,
-        roundCornerShape: true,
-        showLeadingIcon: true,
       ),
       body: Stack(
         fit: StackFit.expand,
@@ -138,23 +156,9 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
                     );
                   }
 
-                  if (snap.data!.slot.validate().any((element) =>
-                      element.day ==
-                      selectedHorizontalDate.weekday.getWeekDayName)) {
-                    startTime = snap.data!.slot
-                        .validate()
-                        .firstWhere((element) =>
-                            element.day ==
-                            selectedHorizontalDate.weekday.getWeekDayName)
-                        .startTime
-                        .validate();
-                    endTime = snap.data!.slot
-                        .validate()
-                        .firstWhere((element) =>
-                            element.day ==
-                            selectedHorizontalDate.weekday.getWeekDayName)
-                        .endTime
-                        .validate();
+                  if (selectedHorizontalDate == null &&
+                      snap.data!.employeeSchedule.isNotEmpty) {
+                    selectedHorizontalDate = snap.data!.employeeSchedule.first;
                   }
 
                   return AnimatedScrollView(
@@ -181,7 +185,7 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
                           children: [
                             SettingItemWidget(
                               title:
-                                  '${monthList[selectedMonthIndex]} ${selectedHorizontalDate.year}',
+                                  '${monthList[selectedMonthIndex]} ${DateTime.now().year}',
                               titleTextStyle: boldTextStyle(
                                   size: 14, color: textSecondaryColorGlobal),
                               padding: EdgeInsets.zero,
@@ -227,11 +231,13 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
                             ).paddingOnly(left: 16),
                             Divider(height: 0, color: context.dividerColor),
                             HorizontalDatePickerWidget(
+                              enableDayPredicate: (date) =>
+                                  date.isInList(snap.data!.employeeSchedule),
                               datePickerController: _datePickerController,
                               height: 70,
                               startDate: DateTime.now(),
                               endDate: DateTime(DateTime.now().year,
-                                  DateTime.now().month + 2),
+                                  DateTime.now().month + 1),
                               selectedDate: selectedHorizontalDate,
                               widgetWidth: context.width(),
                               selectedColor: indicatorColor,
@@ -244,53 +250,32 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
                               dayFontSize: 14,
                               weekDayFontSize: 14,
                               onValueSelected: (date) {
-                                _datePickerController
-                                    .scrollTo(selectedHorizontalDate);
                                 selectedHorizontalDate = date;
                                 log(selectedHorizontalDate);
 
-                                if (snap.data!.slot.validate().any((element) =>
-                                    element.day ==
-                                    selectedHorizontalDate
-                                        .weekday.getWeekDayName)) {
-                                  startTime = snap.data!.slot
-                                      .validate()
-                                      .firstWhere((element) =>
-                                          element.day ==
-                                          selectedHorizontalDate
-                                              .weekday.getWeekDayName)
-                                      .startTime
-                                      .validate();
-                                  endTime = snap.data!.slot
-                                      .validate()
-                                      .firstWhere((element) =>
-                                          element.day ==
-                                          selectedHorizontalDate
-                                              .weekday.getWeekDayName)
-                                      .endTime
-                                      .validate();
-                                }
-
-                                keyForSlotWidget = UniqueKey();
-
+                                slotWidgetKey = UniqueKey();
                                 setState(() {});
                               },
                             ).paddingSymmetric(vertical: 16),
                           ],
                         ),
                       ),
-                      16.height,
-                      ViewAllLabel(
-                          label: locale.availableSlots, isShowAll: false),
-                      8.height,
-                      SlotWidget(
-                        key: keyForSlotWidget,
-                        selectedHorizontalDate: selectedHorizontalDate,
-                        startTime: startTime,
-                        endTime: endTime,
-                        slotDuration: snap.data!.slotDuration
-                            .validate(value: DEFAULT_SLOT_INTERVAL_DURATION),
-                      ),
+                      if (selectedHorizontalDate != null) ...[
+                        16.height,
+                        ViewAllLabel(
+                            label: locale.availableSlots, isShowAll: false),
+                        8.height,
+                        SlotWidget(
+                          key: slotWidgetKey,
+                          selectedHorizontalDate: selectedHorizontalDate!,
+                          startTime: getSlotStartTime(
+                              snap.data!.slot, selectedHorizontalDate!),
+                          endTime: getSlotEndTime(
+                              snap.data!.slot, selectedHorizontalDate!),
+                          slotDuration: snap.data!.slotDuration
+                              .validate(value: DEFAULT_SLOT_INTERVAL_DURATION),
+                        ),
+                      ],
                     ],
                   );
                 },
@@ -315,8 +300,12 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
                     .join(', '),
                 buttonText: locale.confirm,
                 onTap: () async {
+                  if (selectedHorizontalDate == null) {
+                    toast(locale.pleaseSelectDateFirst);
+                    return;
+                  }
                   if (bookingRequestStore.time.isNotEmpty) {
-                    bookingRequestStore.setDateInRequest(selectedHorizontalDate
+                    bookingRequestStore.setDateInRequest(selectedHorizontalDate!
                         .setFormattedDate(DateFormatConst.DATE_FORMAT_5)
                         .toString());
 
@@ -343,85 +332,85 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
           ).visible(!widget.isFromBookingInfoDetail),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: secondaryColor,
-        onPressed: () {
-          showConfirmDialogCustom(
-            context,
-            title: locale.bookingTimeSlotChangeMessage,
-            positiveText: locale.yes,
-            negativeText: locale.no,
-            onAccept: (_) {
-              List<ServiceListData> selectedService = [];
+      // floatingActionButton: FloatingActionButton.extended(
+      //   backgroundColor: secondaryColor,
+      //   onPressed: () {
+      //     showConfirmDialogCustom(
+      //       context,
+      //       title: locale.bookingTimeSlotChangeMessage,
+      //       positiveText: locale.yes,
+      //       negativeText: locale.no,
+      //       onAccept: (_) {
+      //         List<ServiceListData> selectedService = [];
 
-              bookingRequestStore
-                  .setEmployeeIdInRequest(widget.employeeId.validate());
-              bookingRequestStore.setDateInRequest(selectedHorizontalDate
-                  .setFormattedDate(DateFormatConst.DATE_FORMAT_5)
-                  .toString());
+      //         bookingRequestStore
+      //             .setEmployeeIdInRequest(widget.employeeId.validate());
+      //         bookingRequestStore.setDateInRequest(selectedHorizontalDate
+      //             .setFormattedDate(DateFormatConst.DATE_FORMAT_5)
+      //             .toString());
 
-              widget.serviceList.validate().forEachIndexed((element, index) {
-                selectedService.add(widget.serviceList.validate()[index]);
-              });
+      //         widget.serviceList.validate().forEachIndexed((element, index) {
+      //           selectedService.add(widget.serviceList.validate()[index]);
+      //         });
 
-              bookingRequestStore
-                  .setSelectedServiceListInRequest(selectedService);
+      //         bookingRequestStore
+      //             .setSelectedServiceListInRequest(selectedService);
 
-              String tempDate = bookingRequestStore.date.validate();
-              String tempTime = bookingRequestStore.time.validate();
+      //         String tempDate = bookingRequestStore.date.validate();
+      //         String tempTime = bookingRequestStore.time.validate();
 
-              String dateString = "$tempDate $tempTime";
+      //         String dateString = "$tempDate $tempTime";
 
-              DateTime initialDateTime = DateTime.parse(dateString);
+      //         DateTime initialDateTime = DateTime.parse(dateString);
 
-              String updatedDateTime = formatDate(initialDateTime.toString(),
-                  format: DateFormatConst.NEW_FORMAT);
+      //         String updatedDateTime = formatDate(initialDateTime.toString(),
+      //             format: DateFormatConst.NEW_FORMAT);
 
-              bookingRequestStore.selectedServiceList
-                  .validate()
-                  .forEachIndexed((element, index) {
-                if (index == 0) {
-                  element.startDateTime = formatDate(initialDateTime.toString(),
-                      format: DateFormatConst.NEW_FORMAT);
-                  element.previousTime = initialDateTime;
-                } else {
-                  ServiceListData previousData = bookingRequestStore
-                      .selectedServiceList
-                      .validate()[index - 1];
-                  element.startDateTime = formatDate(
-                      previousData.previousTime!
-                          .add(previousData.durationMin.minutes)
-                          .toString(),
-                      format: DateFormatConst.NEW_FORMAT);
-                  element.previousTime = previousData.previousTime!
-                      .add(previousData.durationMin.minutes);
-                }
-              });
+      //         bookingRequestStore.selectedServiceList
+      //             .validate()
+      //             .forEachIndexed((element, index) {
+      //           if (index == 0) {
+      //             element.startDateTime = formatDate(initialDateTime.toString(),
+      //                 format: DateFormatConst.NEW_FORMAT);
+      //             element.previousTime = initialDateTime;
+      //           } else {
+      //             ServiceListData previousData = bookingRequestStore
+      //                 .selectedServiceList
+      //                 .validate()[index - 1];
+      //             element.startDateTime = formatDate(
+      //                 previousData.previousTime!
+      //                     .add(previousData.durationMin.minutes)
+      //                     .toString(),
+      //                 format: DateFormatConst.NEW_FORMAT);
+      //             element.previousTime = previousData.previousTime!
+      //                 .add(previousData.durationMin.minutes);
+      //           }
+      //         });
 
-              appStore.setLoading(true);
+      //         appStore.setLoading(true);
 
-              bookingUpdate(bookingRequestStore.toJson(
-                      dateTime: updatedDateTime,
-                      bookingId: widget.bookingId,
-                      bookingStatus: BookingStatusConst.PENDING,
-                      isUpdate: true))
-                  .then((value) {
-                appStore.setLoading(false);
+      //         bookingUpdate(bookingRequestStore.toJson(
+      //                 dateTime: updatedDateTime,
+      //                 bookingId: widget.bookingId,
+      //                 bookingStatus: BookingStatusConst.PENDING,
+      //                 isUpdate: true))
+      //             .then((value) {
+      //           appStore.setLoading(false);
 
-                onBookingDetailUpdate.call();
-                onBookingListUpdate.call('');
-                finish(context);
-                toast(locale.bookingSuccessfullyUpdateMessage);
-              }).catchError((e) {
-                appStore.setLoading(false);
-                toast(e.toString());
-              });
-            },
-            primaryColor: context.primaryColor,
-          );
-        },
-        label: Text(locale.update, style: boldTextStyle(color: Colors.white)),
-      ).visible(widget.isFromBookingInfoDetail),
+      //           onBookingDetailUpdate.call();
+      //           onBookingListUpdate.call('');
+      //           finish(context);
+      //           toast(locale.bookingSuccessfullyUpdateMessage);
+      //         }).catchError((e) {
+      //           appStore.setLoading(false);
+      //           toast(e.toString());
+      //         });
+      //       },
+      //       primaryColor: context.primaryColor,
+      //     );
+      //   },
+      //   label: Text(locale.update, style: boldTextStyle(color: Colors.white)),
+      // ).visible(widget.isFromBookingInfoDetail),
     );
   }
 }

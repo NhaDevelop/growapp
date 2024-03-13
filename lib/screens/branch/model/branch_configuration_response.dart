@@ -35,8 +35,13 @@ class BranchConfigurationData {
   List<SlotData>? slot;
   String? slotDuration;
   List<TaxPercentage>? tax;
+  List<DateTime> employeeSchedule;
 
-  BranchConfigurationData({this.slot, this.slotDuration, this.tax});
+  BranchConfigurationData(
+      {this.slot,
+      this.slotDuration,
+      this.tax,
+      this.employeeSchedule = const []});
 
   factory BranchConfigurationData.fromJson(Map<String, dynamic> json) {
     return BranchConfigurationData(
@@ -47,6 +52,11 @@ class BranchConfigurationData {
       tax: json['tax'] != null
           ? (json['tax'] as List).map((i) => TaxPercentage.fromJson(i)).toList()
           : null,
+      employeeSchedule: json['employee_schedule'] != null
+          ? (json['employee_schedule'] as List)
+              .map((i) => DateTime.parse(i))
+              .toList()
+          : [],
     );
   }
 
@@ -150,8 +160,7 @@ class SlotData {
     data['updated_guard'] = updatedGuard;
     data['is_available'] = isAvailable;
     if (breaks != null) {
-      data['breaks'] =
-          data['breaks'] = breaks!.map((v) => v.toJson()).toList();
+      data['breaks'] = data['breaks'] = breaks!.map((v) => v.toJson()).toList();
     }
     if (createdBy != null) {
       data['created_by'] = createdBy;

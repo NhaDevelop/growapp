@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/screens/referral/component/how_it_work_modal.dart';
 import 'package:grow_tokyo_app/utils/images.dart';
@@ -31,7 +30,9 @@ class ReferralCodeDetails extends StatelessWidget {
           ),
           8.height,
           Text(
-            userStore.referralCode ?? 'N/A',
+            userStore.referralCode?.isEmpty ?? true
+                ? 'N/A'
+                : userStore.referralCode.validate(),
             style: boldTextStyle(size: 24),
           ),
           24.height,
@@ -43,7 +44,9 @@ class ReferralCodeDetails extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   side: const BorderSide(),
                 ),
-                enabled: userStore.referralCode != null,
+                enabled: userStore.referralCode.validate().isNotEmpty,
+                disabledColor: Colors.grey,
+                disabledTextColor: Colors.white,
                 onTap: () => onCopyCode(userStore.referralCode!),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -59,7 +62,9 @@ class ReferralCodeDetails extends StatelessWidget {
                 elevation: 0,
                 color: const Color(0xFF12213A),
                 textColor: Colors.white,
-                enabled: userStore.referralCode != null,
+                enabled: userStore.referralCode.validate().isNotEmpty,
+                disabledColor: Colors.grey,
+                disabledTextColor: Colors.white,
                 onTap: () => Share.share(userStore.referralCode!),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
