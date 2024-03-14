@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/utils/build_config.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
-import '../configs.dart';
 import '../screens/booking/view/booking_detail_screen.dart';
 import '../screens/order/view/order_detail_screen.dart';
 
 Future<void> initOneSignal() async {
   ///Initialize
   OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
-  OneSignal.initialize(ONESIGNAL_APP_ID);
+  OneSignal.initialize(BuildConfig.onesignalAppId);
   OneSignal.Notifications.requestPermission(true);
   OneSignal.User.pushSubscription.optIn();
 

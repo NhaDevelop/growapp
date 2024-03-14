@@ -71,7 +71,7 @@ List<LanguageDataModel> languageList() {
         flag: ic_us),
     LanguageDataModel(
         id: 1,
-        name: 'Cambodian',
+        name: 'Khmer',
         languageCode: 'km',
         fullLanguageCode: 'km-KH',
         flag: ic_km),

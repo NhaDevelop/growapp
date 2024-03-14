@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:grow_tokyo_app/configs.dart';
 import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/utils/build_config.dart';
 import 'package:grow_tokyo_app/utils/common_base.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
@@ -66,7 +66,9 @@ Map<String, String> buildHeaderTokens({
 
 Uri buildBaseUrl(String endPoint) {
   Uri url = Uri.parse(endPoint);
-  if (!endPoint.startsWith('http')) url = Uri.parse('$BASE_URL$endPoint');
+  if (!endPoint.startsWith('http')) {
+    url = Uri.parse('${BuildConfig.baseUrl}$endPoint');
+  }
 
   // log('URL: ${url.toString()}');
 
