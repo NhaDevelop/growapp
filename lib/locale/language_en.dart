@@ -254,6 +254,9 @@ class LanguageEn extends BaseLanguage {
   String get yourReferralCode => 'Your Referral Code';
 
   @override
+  String get rewardHistory => 'Reward History';
+
+  @override
   String get copyCode => 'Copy Code';
 
   @override

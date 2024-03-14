@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grow_tokyo_app/components/modal_header.dart';
 import 'package:grow_tokyo_app/main.dart';
-import 'package:grow_tokyo_app/screens/booking/booking_repository.dart';
+import 'package:grow_tokyo_app/screens/referral/referral_repository.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class AddReferralCodeModal extends StatefulWidget {

@@ -9,6 +9,8 @@ class APIEndPoints {
   static const String changePassword = 'change-password';
   static const String forgotPassword = 'forgot-password';
   static const String userDetail = 'user-detail';
+  static const String referralCode = 'referral-code';
+  static const String referralTransactions = 'referral-transactions';
   static const String checkReferralCode = 'check-referral-code';
   static const String coupons = 'coupons';
   static const String saveBooking = 'save-booking';

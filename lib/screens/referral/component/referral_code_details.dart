@@ -7,7 +7,8 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:share_plus/share_plus.dart';
 
 class ReferralCodeDetails extends StatelessWidget {
-  const ReferralCodeDetails({super.key});
+  final String code;
+  const ReferralCodeDetails({super.key, required this.code});
 
   Future<void> onCopyCode(String code) async {
     await Clipboard.setData(ClipboardData(text: code));
@@ -30,9 +31,7 @@ class ReferralCodeDetails extends StatelessWidget {
           ),
           8.height,
           Text(
-            userStore.referralCode?.isEmpty ?? true
-                ? 'N/A'
-                : userStore.referralCode.validate(),
+            code.isEmpty ? 'N/A' : code,
             style: boldTextStyle(size: 24),
           ),
           24.height,
@@ -44,10 +43,10 @@ class ReferralCodeDetails extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   side: const BorderSide(),
                 ),
-                enabled: userStore.referralCode.validate().isNotEmpty,
+                enabled: code.isNotEmpty,
                 disabledColor: Colors.grey,
                 disabledTextColor: Colors.white,
-                onTap: () => onCopyCode(userStore.referralCode!),
+                onTap: () => onCopyCode(code),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -62,10 +61,10 @@ class ReferralCodeDetails extends StatelessWidget {
                 elevation: 0,
                 color: const Color(0xFF12213A),
                 textColor: Colors.white,
-                enabled: userStore.referralCode.validate().isNotEmpty,
+                enabled: code.isNotEmpty,
                 disabledColor: Colors.grey,
                 disabledTextColor: Colors.white,
-                onTap: () => Share.share(userStore.referralCode!),
+                onTap: () => Share.share(code),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

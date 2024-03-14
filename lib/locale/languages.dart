@@ -166,6 +166,8 @@ abstract class BaseLanguage {
 
   String get yourReferralCode;
 
+  String get rewardHistory;
+
   String get copyCode;
 
   String get copiedToClipboard;
