@@ -27,6 +27,8 @@ class APIEndPoints {
   static const String categoryList = 'category-list';
   static const String employeeList = 'employee-list';
   static const String employeeDetail = 'employee-detail';
+  static const String employeeCurrentMonthSchedule =
+      'employee-current-month-schedule';
   static const String notificationList = 'notification-list';
   static const String serviceList = 'service-list';
   static const String saveRating = 'save-rating';

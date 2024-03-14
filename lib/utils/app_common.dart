@@ -198,3 +198,7 @@ void serviceCommonBottomSheet(BuildContext context, {required Widget child}) {
 DateTime get lastDayOfTheMonth {
   return DateTime(DateTime.now().year, DateTime.now().month + 1, 0);
 }
+
+DateTime get firstDayOfTheMonth {
+  return DateTime(DateTime.now().year, DateTime.now().month, 1);
+}

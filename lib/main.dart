@@ -85,6 +85,7 @@ List<(int serviceId, EmployeeDetailResponse list)?> employeeDetailCachedData =
     [];
 List<BranchDetailResponse> branchDetailCachedData = [];
 BranchConfigurationData? branchConfigurationCached;
+
 //endregion
 
 void main() async {

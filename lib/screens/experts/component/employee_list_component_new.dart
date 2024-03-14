@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:grow_tokyo_app/components/cached_image_widget.dart';
 import 'package:grow_tokyo_app/components/default_user_image_placeholder.dart';
 import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/screens/experts/employee_repository.dart';
+import 'package:grow_tokyo_app/screens/experts/model/employee_month_schedule_response.dart';
+import 'package:grow_tokyo_app/screens/experts/shimmer/table_calendar_shimmer.dart';
 import 'package:grow_tokyo_app/utils/app_common.dart';
 import 'package:grow_tokyo_app/utils/extensions/date_extensions.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -92,7 +95,7 @@ class _EmployeeListComponentNewState extends State<EmployeeListComponentNew> {
           AnimatedSize(
             duration: defaultAnimationDuration,
             child: _expanded
-                ? const _EmployeeCalendar(availableDates: [])
+                ? _EmployeeCalendar(employeeId: widget.expertData.id.validate())
                 : const SizedBox.shrink(),
           ),
         ],
@@ -102,53 +105,68 @@ class _EmployeeListComponentNewState extends State<EmployeeListComponentNew> {
 }
 
 class _EmployeeCalendar extends StatelessWidget {
-  final List<DateTime> availableDates;
-  const _EmployeeCalendar({super.key, required this.availableDates});
+  final int employeeId;
+  const _EmployeeCalendar({required this.employeeId});
+
+  String _getBranchName(DateTime date, List<EmployeeWorkingDayModel> snap) {
+    final workingDay = snap.firstWhere((e) => e.date.isSameDateWith(date));
+
+    return workingDay.branchName.validate();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return TableCalendar(
-      focusedDay: DateTime.now(),
-      firstDay: DateTime.now(),
-      lastDay: lastDayOfTheMonth,
-      headerVisible: false,
-      calendarBuilders: CalendarBuilders(defaultBuilder: (context, date, _) {
-        final isAvailable = date.isInList(availableDates);
-        return Container(
-          color: isAvailable ? Colors.transparent : Colors.grey.shade200,
-          child: isAvailable
-              ? Column(
-                  children: [
-                    Text(
-                      date.day.toString(),
-                      style: secondaryTextStyle(),
+    return SnapHelperWidget<EmployeeMonthScheduleResponse>(
+      future: getEmployeeMonthSchedule(employeeId: employeeId),
+      loadingWidget: const TableCalendarShimmer(),
+      onSuccess: (snap) {
+        final workingDays = snap.employeeWorkingDaysList;
+        final availableDates = workingDays.map((e) => e.date).toList();
+
+        return TableCalendar(
+          focusedDay: DateTime.now(),
+          firstDay: firstDayOfTheMonth,
+          lastDay: lastDayOfTheMonth,
+          headerVisible: false,
+          calendarStyle: const CalendarStyle(isTodayHighlighted: false),
+          calendarBuilders:
+              CalendarBuilders(defaultBuilder: (context, date, _) {
+            final isAvailable = date.isInList(availableDates);
+            final isPast = date.isBefore(DateTime.now());
+            final isToday = date.isToday;
+
+            return Container(
+              width: double.infinity,
+              color: isAvailable ? Colors.transparent : Colors.grey.shade200,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    date.day.toString(),
+                    style: secondaryTextStyle(
+                      color: isToday ? Colors.red : Colors.black,
+                      weight: isToday ? FontWeight.bold : FontWeight.normal,
                     ),
-                    4.height,
-                    Container(
-                      height: 4,
-                      width: 4,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: context.primaryColor,
-                      ),
-                    ),
-                  ],
-                )
-              : Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      date.day.toString(),
-                      style: secondaryTextStyle(),
-                    ),
-                    Text(
-                      locale.off.capitalizeFirstLetter(),
-                      style: secondaryTextStyle(),
-                    ),
-                  ],
-                ),
+                  ).expand(),
+                  isAvailable
+                      ? Text(
+                          _getBranchName(date, workingDays),
+                          style: secondaryTextStyle(),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        )
+                      : !isPast
+                          ? Text(
+                              locale.off.capitalizeFirstLetter(),
+                              style: secondaryTextStyle(),
+                            )
+                          : const SizedBox.shrink(),
+                ],
+              ),
+            );
+          }),
         );
-      }),
+      },
     );
   }
 }

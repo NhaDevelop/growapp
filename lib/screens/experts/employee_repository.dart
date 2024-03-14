@@ -1,4 +1,5 @@
 import 'package:grow_tokyo_app/screens/experts/model/employee_detail_response.dart';
+import 'package:grow_tokyo_app/screens/experts/model/employee_month_schedule_response.dart';
 import 'package:grow_tokyo_app/screens/experts/model/employee_response.dart';
 import 'package:grow_tokyo_app/utils/api_end_points.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -56,6 +57,23 @@ Future<EmployeeDetailResponse> getEmployeeDetail(
           .indexWhere((element) => element?.$1 == employeeId);
       employeeDetailCachedData[index] = (employeeId, res);
     }
+
+    appStore.setLoading(false);
+
+    return res;
+  } catch (e) {
+    appStore.setLoading(false);
+    rethrow;
+  }
+}
+
+Future<EmployeeMonthScheduleResponse> getEmployeeMonthSchedule(
+    {required int employeeId}) async {
+  try {
+    var res = EmployeeMonthScheduleResponse.fromJson(await handleResponse(
+        await buildHttpResponse(
+            '${APIEndPoints.employeeCurrentMonthSchedule}?employee_id=$employeeId',
+            method: HttpMethodType.GET)));
 
     appStore.setLoading(false);
 

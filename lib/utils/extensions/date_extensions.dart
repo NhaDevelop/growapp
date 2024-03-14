@@ -5,11 +5,11 @@ extension DateExt on DateTime {
     return DateFormat(format).format(this);
   }
 
+  bool isSameDateWith(DateTime date) {
+    return date.year == year && date.month == month && date.day == day;
+  }
+
   bool isInList(List<DateTime> dateList) {
-    return dateList.any((element) {
-      return element.year == year &&
-          element.month == month &&
-          element.day == day;
-    });
+    return dateList.any((element) => element.isSameDateWith(this));
   }
 }
