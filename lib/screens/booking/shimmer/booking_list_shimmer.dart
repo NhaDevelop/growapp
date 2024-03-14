@@ -22,32 +22,17 @@ class BookingListShimmer extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ShimmerWidget(
-                    child: Container(
-                      height: 24,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 4, horizontal: 26),
-                      decoration: boxDecorationWithRoundedCorners(
-                        backgroundColor: context.cardColor,
-                        borderRadius: radiusOnly(topLeft: defaultRadius),
-                      ),
-                    ),
+              ShimmerWidget(
+                child: Container(
+                  height: 24,
+                  width: 60,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 4, horizontal: 26),
+                  decoration: boxDecorationWithRoundedCorners(
+                    backgroundColor: context.cardColor,
+                    borderRadius: radiusOnly(topLeft: defaultRadius),
                   ),
-                  ShimmerWidget(
-                    child: Container(
-                      height: 24,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 3, horizontal: 30),
-                      decoration: boxDecorationWithRoundedCorners(
-                        backgroundColor: context.cardColor,
-                        borderRadius: radiusOnly(topRight: defaultRadius),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
               12.height,
               Column(
@@ -66,11 +51,26 @@ class BookingListShimmer extends StatelessWidget {
                           ShimmerWidget(height: 12, width: context.width()),
                           10.height,
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const ShimmerWidget(height: 20, width: 20)
-                                  .paddingRight(4),
-                              ShimmerWidget(height: 12, width: context.width())
-                                  .flexible(),
+                              Row(
+                                children: [
+                                  const ShimmerWidget(height: 14, width: 14),
+                                  8.width,
+                                  ShimmerWidget(
+                                      height: 16,
+                                      width: context.width() * 0.15),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  const ShimmerWidget(height: 14, width: 14),
+                                  8.width,
+                                  ShimmerWidget(
+                                      height: 16,
+                                      width: context.width() * 0.15),
+                                ],
+                              ),
                             ],
                           ),
                         ],

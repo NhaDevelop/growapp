@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:grow_tokyo_app/components/app_scaffold.dart';
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/screens/coupon/component/coupon_item_component.dart';
+import 'package:grow_tokyo_app/screens/coupon/coupon_repository.dart';
+import 'package:grow_tokyo_app/screens/coupon/model/coupon_list_response.dart';
+import 'package:grow_tokyo_app/screens/coupon/shimmer/coupon_list_shimmer.dart';
 import 'package:grow_tokyo_app/utils/app_common.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -13,7 +16,18 @@ class AddCouponScreen extends StatefulWidget {
 }
 
 class _AddCouponScreenState extends State<AddCouponScreen> {
-  int _selected = 0;
+  Future<List<CouponData>>? future;
+  CouponData? _selected;
+
+  @override
+  void initState() {
+    super.initState();
+    _init();
+  }
+
+  Future<void> _init() async {
+    future = getCouponList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,15 +41,25 @@ class _AddCouponScreenState extends State<AddCouponScreen> {
       ),
       body: Stack(
         children: [
-          AnimatedListView(
-              itemCount: 2,
-              itemBuilder: (_, index) {
-                return CouponItemComponent(
-                  key: ValueKey(index),
-                  selected: index == _selected,
-                  onTap: () => setState(() => _selected = index),
-                );
-              }),
+          SnapHelperWidget(
+            future: future,
+            loadingWidget: const CouponListShimmer(),
+            onSuccess: (data) {
+              return AnimatedListView(
+                itemCount: data.length,
+                onSwipeRefresh: _init,
+                itemBuilder: (_, index) {
+                  final coupon = data[index];
+                  return CouponItemComponent(
+                    key: ValueKey(index),
+                    data: coupon,
+                    selected: coupon.code == _selected?.code,
+                    onTap: () => setState(() => _selected = coupon),
+                  );
+                },
+              );
+            },
+          ),
           Positioned(
             bottom: 48,
             left: 16,
@@ -44,7 +68,7 @@ class _AddCouponScreenState extends State<AddCouponScreen> {
               text: locale.apply,
               color: context.primaryColor,
               textStyle: boldTextStyle(color: white),
-              onTap: () => finish(context, _selected.toString()),
+              onTap: () => finish(context, _selected),
             ),
           ),
         ],

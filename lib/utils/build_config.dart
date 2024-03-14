@@ -8,7 +8,8 @@ class BuildConfig {
       case AppFlavor.prod:
         return 'https://grow-cms.xclabs.io';
       default:
-        return 'https://grow-cms.xclabs.io';
+        // return 'https://grow-cms.xclabs.io';
+        return 'https://b63f-2402-800-61c4-c778-9821-fbbb-d41e-26e.ngrok-free.app';
     }
   }
 

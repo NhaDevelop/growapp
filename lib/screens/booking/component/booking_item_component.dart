@@ -8,7 +8,6 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/cached_image_widget.dart';
 import '../../../components/default_user_image_placeholder.dart';
-import '../../../components/price_widget.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/constants.dart';
 import '../../dashboard/component/booking_list_component.dart';
@@ -31,45 +30,23 @@ class BookingItemComponent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
-                decoration: boxDecorationWithRoundedCorners(
-                  backgroundColor:
-                      bookingData.status == BookingStatusConst.COMPLETED
-                          ? primaryColor
-                          : territoryButtonColor,
-                  borderRadius: radiusOnly(topLeft: defaultRadius),
-                ),
-                child: Text(
-                  '#${bookingData.id.validate()}',
-                  style: boldTextStyle(
-                      color: bookingData.status == BookingStatusConst.COMPLETED
-                          ? Colors.white
-                          : secondaryColor,
-                      size: 12),
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 16),
-                decoration: boxDecorationWithRoundedCorners(
-                  backgroundColor:
-                      bookingData.status == BookingStatusConst.COMPLETED
-                          ? secondaryColor
-                          : territoryButtonColor,
-                  borderRadius: radiusOnly(topRight: defaultRadius),
-                ),
-                child: PriceWidget(
-                  price: bookingData.totalAmount.validate(),
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+            decoration: boxDecorationWithRoundedCorners(
+              backgroundColor:
+                  bookingData.status == BookingStatusConst.COMPLETED
+                      ? primaryColor
+                      : territoryButtonColor,
+              borderRadius: radiusOnly(topLeft: defaultRadius),
+            ),
+            child: Text(
+              '#${bookingData.id.validate()}',
+              style: boldTextStyle(
                   color: bookingData.status == BookingStatusConst.COMPLETED
                       ? Colors.white
                       : secondaryColor,
-                  size: 14,
-                ),
-              ),
-            ],
+                  size: 12),
+            ),
           ),
           12.height,
           Column(
@@ -130,21 +107,21 @@ class BookingItemComponent extends StatelessWidget {
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
-                            ).flexible(),
-                        ],
-                      ),
-                      8.height,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          ic_booking_status
-                              .iconImage(size: 16, color: primaryColor)
-                              .paddingRight(8),
-                          Text(
-                            getBookingStatusKey(
-                                status: bookingData.status.validate()),
-                            style: boldTextStyle(size: 13, color: primaryColor),
-                            maxLines: 1,
+                            ).paddingRight(16).expand(),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              ic_booking_status
+                                  .iconImage(size: 16, color: primaryColor)
+                                  .paddingRight(8),
+                              Text(
+                                getBookingStatusKey(
+                                    status: bookingData.status.validate()),
+                                style: boldTextStyle(
+                                    size: 13, color: primaryColor),
+                                maxLines: 1,
+                              ),
+                            ],
                           ),
                         ],
                       ),

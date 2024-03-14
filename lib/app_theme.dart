@@ -29,9 +29,8 @@ class AppTheme {
       dividerColor: borderColor,
       bottomSheetTheme: BottomSheetThemeData(
         shape: RoundedRectangleBorder(
-            borderRadius:
-                radiusOnly(topLeft: defaultRadius, topRight: defaultRadius)),
-        backgroundColor: Colors.white,
+          borderRadius: radiusOnly(topLeft: 20, topRight: 20),
+        ),
       ),
       cardColor: cardColor,
       appBarTheme: const AppBarTheme(
@@ -44,39 +43,17 @@ class AppTheme {
           ),
         ),
       ),
-      dialogTheme: DialogTheme(
-          shape: dialogShape(), surfaceTintColor: Colors.transparent),
+      dialogTheme: const DialogTheme(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        surfaceTintColor: Colors.transparent,
+      ),
       tabBarTheme: const TabBarTheme(
         labelColor: primaryColor,
         unselectedLabelColor: appTextSecondaryColor,
         indicatorColor: primaryColor,
       ),
-      // elevatedButtonTheme: ElevatedButtonThemeData(
-      //   style: ButtonStyle(
-      //     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-      //       RoundedRectangleBorder(
-      //         borderRadius: BorderRadius.circular(defaultAppButtonRadius),
-      //       ),
-      //     ),
-      //     textStyle: MaterialStateProperty.all<TextStyle>(boldTextStyle()),
-      //     backgroundColor: MaterialStateProperty.resolveWith<Color>(
-      //       (Set<MaterialState> states) {
-      //         if (states.contains(MaterialState.disabled)) {
-      //           return Colors.grey;
-      //         }
-      //         return primaryColor;
-      //       },
-      //     ),
-      //     foregroundColor: MaterialStateProperty.resolveWith<Color>(
-      //       (Set<MaterialState> states) {
-      //         if (states.contains(MaterialState.disabled)) {
-      //           return primaryColor;
-      //         }
-      //         return white;
-      //       },
-      //     ),
-      //   ),
-      // ),
     );
   }
 

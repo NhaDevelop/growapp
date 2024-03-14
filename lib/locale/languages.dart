@@ -186,6 +186,8 @@ abstract class BaseLanguage {
 
   String get coupon;
 
+  String get validUntil;
+
   String get addCoupon;
 
   String get fbEcSite;
@@ -229,6 +231,8 @@ abstract class BaseLanguage {
   String get tip;
 
   String get discount;
+
+  String get discountCode;
 
   String get yourReview;
 

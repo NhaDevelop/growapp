@@ -8,6 +8,7 @@ import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/payment/payment_repo.dart';
 import 'package:grow_tokyo_app/screens/booking/booking_repository.dart';
 import 'package:grow_tokyo_app/screens/booking/component/add_referral_code_modal.dart';
+import 'package:grow_tokyo_app/screens/coupon/model/coupon_list_response.dart';
 import 'package:grow_tokyo_app/screens/coupon/view/add_coupon_screen.dart';
 import 'package:grow_tokyo_app/screens/dashboard/view/dashboard_screen.dart';
 import 'package:grow_tokyo_app/screens/services/models/service_response.dart';
@@ -28,64 +29,58 @@ class ConfirmBookingScreen extends StatefulWidget {
 }
 
 class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
-  void saveBooking() {
-    if (bookingRequestStore.bookingId == null) {
+  Future<void> saveBookingAndPayment() async {
+    try {
       appStore.setLoading(true);
-      final tempDate = bookingRequestStore.date.validate();
-      final tempTime = bookingRequestStore.time.validate();
-
-      final dateString = "$tempDate $tempTime";
-      final initialDateTime = DateTime.parse(dateString);
-
-      try {
-        bookingRequestStore.selectedServiceList
-            .validate()
-            .forEachIndexed((element, index) {
-          if (index == 0) {
-            element.startDateTime = formatDate(initialDateTime.toString(),
-                format: DateFormatConst.NEW_FORMAT);
-            element.previousTime = initialDateTime;
-          } else {
-            ServiceListData previousData =
-                bookingRequestStore.selectedServiceList.validate()[index - 1];
-            element.startDateTime = formatDate(
-                previousData.previousTime!
-                    .add(previousData.durationMin.minutes)
-                    .toString(),
-                format: DateFormatConst.NEW_FORMAT);
-            element.previousTime = previousData.previousTime!
-                .add(previousData.durationMin.minutes);
-          }
-        });
-      } catch (e) {
-        appStore.setLoading(false);
-        return toast(e.toString());
+      if (bookingRequestStore.bookingId == null) {
+        await saveBooking();
       }
 
-      /// Save Booking API
-      saveBookingAPI(bookingRequestStore.toJson(
-              dateTime: formatDate(initialDateTime.toString(),
-                  format: DateFormatConst.NEW_FORMAT),
-              isRescheduleBooking: widget.isReschedule))
-          .then((value) async {
-        appStore.setLoading(false);
-        bookingRequestStore.setBookingIdInRequest(value[CommonKey.bookingId]);
-
-        savePayment(bookingId: bookingRequestStore.bookingId.validate())
-            .then((value) {
-          finish(context);
-          finish(context);
-          showBookingCompleteDialog();
-        }).catchError((e) {
-          toast(e.toString());
-        });
-      }).catchError((e) {
-        appStore.setLoading(false);
-        toast(e.toString(), print: true);
-      });
-    } else {
-      savePayment(bookingId: bookingRequestStore.bookingId.validate());
+      await savePayment(bookingId: bookingRequestStore.bookingId.validate());
+      if (mounted) {
+        finish(context);
+        finish(context);
+      }
+      showBookingCompleteDialog();
+    } catch (e) {
+      toast(e.toString());
+    } finally {
+      appStore.setLoading(false);
     }
+  }
+
+  Future<void> saveBooking() async {
+    final tempDate = bookingRequestStore.date.validate();
+    final tempTime = bookingRequestStore.time.validate();
+
+    final dateString = "$tempDate $tempTime";
+    final initialDateTime = DateTime.parse(dateString);
+
+    bookingRequestStore.selectedServiceList
+        .validate()
+        .forEachIndexed((element, index) {
+      if (index == 0) {
+        element.startDateTime = formatDate(initialDateTime.toString(),
+            format: DateFormatConst.NEW_FORMAT);
+        element.previousTime = initialDateTime;
+      } else {
+        ServiceListData previousData =
+            bookingRequestStore.selectedServiceList.validate()[index - 1];
+        element.startDateTime = formatDate(
+            previousData.previousTime!
+                .add(previousData.durationMin.minutes)
+                .toString(),
+            format: DateFormatConst.NEW_FORMAT);
+        element.previousTime =
+            previousData.previousTime!.add(previousData.durationMin.minutes);
+      }
+    });
+
+    final bookingJson = await saveBookingAPI(bookingRequestStore.toJson(
+        dateTime: formatDate(initialDateTime.toString(),
+            format: DateFormatConst.NEW_FORMAT),
+        isRescheduleBooking: widget.isReschedule));
+    bookingRequestStore.setBookingIdInRequest(bookingJson[CommonKey.bookingId]);
   }
 
   Future<void> savePayment({required int bookingId}) async {
@@ -199,9 +194,16 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                         onTap: () => bookingRequestStore.couponCode != null
                             ? bookingRequestStore.removeCouponCodeInRequest()
                             : const AddCouponScreen()
-                                .launch<String>(context)
-                                .then(
-                                    bookingRequestStore.setCouponCodeInRequest),
+                                .launch<CouponData>(context)
+                                .then((val) {
+                                if (val != null) {
+                                  bookingRequestStore
+                                      .setCouponCodeInRequest(val.code);
+                                  bookingRequestStore
+                                      .setCouponRewardPercentageInRequest(
+                                          val.discountPercentage);
+                                }
+                              }),
                         title: locale.coupon,
                         actionText: locale.addCoupon,
                         value: bookingRequestStore.couponRewardPercentage,
@@ -289,7 +291,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                 child: AppButton(
                   text: locale.bookNow,
                   textStyle: boldTextStyle(color: primaryColor),
-                  onTap: saveBooking,
+                  onTap: saveBookingAndPayment,
                 ).paddingOnly(bottom: 20),
               ),
             ),

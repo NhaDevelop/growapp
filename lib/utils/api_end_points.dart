@@ -10,6 +10,7 @@ class APIEndPoints {
   static const String forgotPassword = 'forgot-password';
   static const String userDetail = 'user-detail';
   static const String checkReferralCode = 'check-referral-code';
+  static const String coupons = 'coupons';
   static const String saveBooking = 'save-booking';
   static const String savePayment = 'save-payment';
   static const String verifySlot = 'verify-slot';

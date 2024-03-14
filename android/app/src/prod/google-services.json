@@ -12,7 +12,28 @@
           "package_name": "com.growtokyo"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "766983345198-5s72g8erfadvb6q99kl0ckt95o8amptj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.growtokyo",
+            "certificate_hash": "33bcdc418b0a4c57135590412fd64b0187c0e4a5"
+          }
+        },
+        {
+          "client_id": "766983345198-sdgsj5il189ivls1vhe831pdmc94cmd3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.growtokyo",
+            "certificate_hash": "d3102deb093f9be73ee8aff12b3a5681152ac79a"
+          }
+        },
+        {
+          "client_id": "766983345198-8u19c9qq7330os3jk5luelu39vrki32u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCelDk0zZzNdAkVsbburRy_IaBMH2cNI2Y"
@@ -20,7 +41,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "766983345198-8u19c9qq7330os3jk5luelu39vrki32u.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "766983345198-99nb5jo08dnhiihnfnh2jf9u34bui6po.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.growtokyo"
+              }
+            }
+          ]
         }
       }
     }

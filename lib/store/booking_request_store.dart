@@ -98,6 +98,7 @@ abstract class _BookingRequestStore with Store {
     if (dateTime != null) data['start_date_time'] = dateTime;
     if (note.isNotEmpty) data['note'] = note.validate();
     if (referralCode != null) data['referral_code'] = referralCode;
+    if (couponCode != null) data['coupon_code'] = couponCode;
     data['use_credit'] = useCredit;
     data['branch_id'] = appStore.branchId;
 

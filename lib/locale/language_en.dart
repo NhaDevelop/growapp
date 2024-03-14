@@ -287,6 +287,9 @@ class LanguageEn extends BaseLanguage {
   String get coupon => 'Coupon';
 
   @override
+  String get validUntil => 'Valid until';
+
+  @override
   String get addCoupon => 'Add Coupon';
 
   @override
@@ -353,6 +356,9 @@ class LanguageEn extends BaseLanguage {
 
   @override
   String get discount => 'Discount';
+
+  @override
+  String get discountCode => 'Discount Code';
 
   @override
   String get yourReview => 'Your Review';

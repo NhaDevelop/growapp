@@ -75,6 +75,12 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.release
+            applicationVariants.all { variant ->
+                variant.outputs.all {
+                    def releaseTime = new Date().format("ddMMyyyyHHmmss")
+                    outputFileName = "growTokyo-${variant.getFlavorName()}-${defaultConfig.versionCode}-${releaseTime}.apk"
+                }
+            }
         }
     }
 }

@@ -13,6 +13,7 @@ class BookingStep1Shimmer extends StatelessWidget {
       listAnimationType: ListAnimationType.None,
       children: [
         Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ShimmerWidget(height: 14, width: context.width() * 0.30),
             16.height,
