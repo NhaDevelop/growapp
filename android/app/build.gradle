@@ -63,9 +63,18 @@ android {
         }
     }
 
+    signingConfigs {
+        release {
+            storeFile file('/Users/cuongvuong/Development/keys/grow_tokyo/grow_tokyo.keystore')
+            keyAlias 'grow_tokyo'
+            storePassword 'growTokyo'
+            keyPassword 'growTokyo'
+        }
+    }
+
     buildTypes {
         release {
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
         }
     }
 }
