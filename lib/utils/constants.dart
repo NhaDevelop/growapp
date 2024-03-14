@@ -210,7 +210,6 @@ class SharedPreferenceConst {
   static const INQUIRY_EMAIL = 'INQUIRY_EMAIL';
   static const AUTO_SLIDER_STATUS = 'AUTO_SLIDER_STATUS';
   static const BRANCH_ID = 'BRANCH_ID';
-  static const REFERRAL_CODE = 'REFERRAL_CODE';
   static const CREDIT = 'CREDIT';
 }
 

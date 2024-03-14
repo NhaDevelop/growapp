@@ -52,10 +52,7 @@ abstract class _UserStore with Store {
   String playerId = '';
 
   @observable
-  String? referralCode;
-
-  @observable
-  int credit = 0;
+  double credit = 0;
 
   @action
   Future<void> setUId(String val, {bool isInitializing = false}) async {
@@ -141,16 +138,7 @@ abstract class _UserStore with Store {
   }
 
   @action
-  Future<void> setReferralCode(String? val,
-      {bool isInitializing = false}) async {
-    referralCode = val;
-    if (!isInitializing) {
-      await setValue(SharedPreferenceConst.REFERRAL_CODE, val);
-    }
-  }
-
-  @action
-  Future<void> setCredit(int val, {bool isInitializing = false}) async {
+  Future<void> setCredit(double val, {bool isInitializing = false}) async {
     credit = val;
     if (!isInitializing) await setValue(SharedPreferenceConst.CREDIT, val);
   }

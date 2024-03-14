@@ -9,6 +9,7 @@ class CouponListShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedListView(
+      itemCount: 5,
       itemBuilder: (_, index) {
         return ClipPath(
           clipper: ZigZagClipper(),
@@ -79,7 +80,6 @@ class CouponListShimmer extends StatelessWidget {
           ),
         );
       },
-      itemCount: 10,
     );
   }
 }

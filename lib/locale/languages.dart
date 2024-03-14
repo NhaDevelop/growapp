@@ -154,7 +154,7 @@ abstract class BaseLanguage {
 
   String get points;
 
-  String usingXPoints(int x);
+  String usingXPoints(double x);
 
   String youWillSave$X(int x);
 

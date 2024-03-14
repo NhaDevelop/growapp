@@ -19,8 +19,7 @@ class UserData {
   String? password;
   String? userType;
   String? profileImage;
-  String? referralCode;
-  int? credit;
+  double? credit;
 
   UserData({
     this.apiToken,
@@ -43,7 +42,6 @@ class UserData {
     this.password,
     this.userType,
     this.profileImage,
-    this.referralCode,
     this.credit,
   });
 
@@ -71,8 +69,7 @@ class UserData {
       password: json['password'],
       userType: json['user_type'],
       profileImage: json['profile_image'],
-      referralCode: json['referral_code'],
-      credit: json['credit'],
+      credit: (json['credit'] as num).toDouble(),
     );
   }
 

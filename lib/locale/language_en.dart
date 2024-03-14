@@ -236,7 +236,7 @@ class LanguageEn extends BaseLanguage {
   String get points => 'Points';
 
   @override
-  String usingXPoints(int x) => 'Using $x points';
+  String usingXPoints(double x) => 'Using $x points';
 
   @override
   String youWillSave$X(int x) => 'You will save \$$x';

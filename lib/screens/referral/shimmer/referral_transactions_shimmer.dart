@@ -8,7 +8,7 @@ class ReferralTransactionsShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedListView(
-      itemCount: 2,
+      itemCount: 5,
       shrinkWrap: true,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       physics: const NeverScrollableScrollPhysics(),
@@ -16,11 +16,7 @@ class ReferralTransactionsShimmer extends StatelessWidget {
         return Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const CircleAvatar(
-              radius: 12,
-              backgroundColor: Color(0xFF27AE60),
-              child: ShimmerWidget(),
-            ),
+            const CircleAvatar(radius: 12, child: ShimmerWidget()),
             16.width,
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
