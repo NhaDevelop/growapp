@@ -5,10 +5,8 @@ class ReferralTransactionsResponse {
 
   factory ReferralTransactionsResponse.fromJson(Map<String, dynamic> json) {
     List<ReferralTransactionData> referralTransactionData = [];
-    if (json['data'] != null) {
-      for (var v in (json['data'] as List)) {
-        referralTransactionData.add(ReferralTransactionData.fromJson(v));
-      }
+    for (var v in (json['data'])) {
+      referralTransactionData.add(ReferralTransactionData.fromJson(v));
     }
     return ReferralTransactionsResponse(
       data: referralTransactionData,
@@ -17,7 +15,7 @@ class ReferralTransactionsResponse {
 }
 
 class ReferralTransactionData {
-  final int value;
+  final double value;
   final String log;
   final DateTime createdAt;
 

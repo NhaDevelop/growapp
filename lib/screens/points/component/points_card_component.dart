@@ -4,9 +4,8 @@ import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class PointsCardComponent extends StatelessWidget {
-  const PointsCardComponent({
-    super.key,
-  });
+  final double points;
+  const PointsCardComponent({super.key, this.points = 0});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +37,7 @@ class PointsCardComponent extends StatelessWidget {
               Image.asset(ic_crown, height: 24, color: white),
               8.width,
               Text(
-                userStore.credit.toString(),
+                points.toString(),
                 style: boldTextStyle(size: 24, color: white),
               )
             ],

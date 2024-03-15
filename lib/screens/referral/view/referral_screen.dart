@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grow_tokyo_app/components/app_scaffold.dart';
 import 'package:grow_tokyo_app/components/back_widget.dart';
+import 'package:grow_tokyo_app/components/empty_error_state_widget.dart';
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/screens/dashboard/component/common_app_component.dart';
 import 'package:grow_tokyo_app/screens/dashboard/component/dashboard_appbar_component.dart';
@@ -23,7 +24,7 @@ class ReferralScreen extends StatefulWidget {
 class _ReferralScreenState extends State<ReferralScreen> {
   Future<String>? codeFuture;
   Future<List<ReferralTransactionData>>? transactionsFuture;
-  List<ReferralTransactionData> transactions = [];
+  List<ReferralTransactionData> transactionObj = [];
   int page = 1;
 
   @override
@@ -35,7 +36,24 @@ class _ReferralScreenState extends State<ReferralScreen> {
   void init() async {
     codeFuture = getReferralCodeAPI();
     transactionsFuture =
-        getReferralTransactionsAPI(page: page, list: transactions);
+        getReferralTransactionsAPI(page: page, list: transactionObj);
+  }
+
+  void refetchTransactions() {
+    transactionsFuture = getReferralTransactionsAPI(
+      page: page,
+      list: transactionObj,
+    );
+    setState(() {});
+  }
+
+  void fetchMoreTransactions() {
+    page++;
+    transactionsFuture = getReferralTransactionsAPI(
+      page: page,
+      list: transactionObj,
+    );
+    setState(() {});
   }
 
   @override
@@ -70,6 +88,14 @@ class _ReferralScreenState extends State<ReferralScreen> {
               SnapHelperWidget(
                 future: transactionsFuture,
                 loadingWidget: const ReferralTransactionsShimmer(),
+                errorBuilder: (error) {
+                  return NoDataWidget(
+                    title: error,
+                    retryText: locale.reload,
+                    imageWidget: const ErrorStateWidget(),
+                    onRetry: refetchTransactions,
+                  ).paddingTop(120).center();
+                },
                 onSuccess: (transactions) {
                   return AnimatedListView(
                     itemCount: transactions.length,
@@ -107,14 +133,7 @@ class _ReferralScreenState extends State<ReferralScreen> {
           init();
           setState(() {});
         },
-        onNextPage: () async {
-          page++;
-          transactionsFuture = getReferralTransactionsAPI(
-            page: page,
-            list: transactions,
-          );
-          setState(() {});
-        },
+        onNextPage: fetchMoreTransactions,
       ),
     );
   }
