@@ -25,10 +25,9 @@ class EmployeeCalendarComponent extends StatefulWidget {
 class _EmployeeCalendarComponentState extends State<EmployeeCalendarComponent> {
   DateTime? _selectedDate;
 
-  String _getBranchName(DateTime date, List<EmployeeWorkingDayModel> snap) {
-    final workingDay = snap.firstWhere((e) => e.date.isSameDateWith(date));
-
-    return workingDay.branchName.validate();
+  String? _getBranchName(DateTime date, List<EmployeeWorkingDayModel> snap) {
+    final index = snap.indexWhere((e) => e.date.isSameDateWith(date));
+    return index < 0 ? null : snap[index].branchName;
   }
 
   void _onSelected(DateTime date) {
@@ -36,12 +35,13 @@ class _EmployeeCalendarComponentState extends State<EmployeeCalendarComponent> {
     widget.onSelect?.call(date);
   }
 
-  bool _isAvailable(DateTime date, List<EmployeeWorkingDayModel> workingDays) {
+  bool _isAvailable(DateTime date, List<EmployeeWorkingDayModel> snap) {
     if (widget.branchId == null) {
-      return workingDays.any((e) => e.date.isSameDateWith(date));
+      return snap.any((e) => e.date.isSameDateWith(date));
     } else {
-      return workingDays.any(
-          (e) => e.date.isSameDateWith(date) && e.branchId == widget.branchId);
+      return snap.any(
+        (e) => e.date.isSameDateWith(date) && e.branchId == widget.branchId,
+      );
     }
   }
 
@@ -52,6 +52,7 @@ class _EmployeeCalendarComponentState extends State<EmployeeCalendarComponent> {
       loadingWidget: const TableCalendarShimmer(),
       onSuccess: (snap) {
         final workingDays = snap.employeeWorkingDaysList;
+
         return TableCalendar(
           focusedDay: DateTime.now(),
           firstDay: firstDayOfTheMonth,
@@ -65,8 +66,8 @@ class _EmployeeCalendarComponentState extends State<EmployeeCalendarComponent> {
             final isAvailable = _isAvailable(date, workingDays);
             final isPast = date.isBefore(DateTime.now());
             final isToday = date.isToday;
-            final isSelected =
-                _selectedDate != null && date.isSameDateWith(_selectedDate!);
+            final isSelected = date.isSameDateWith(_selectedDate);
+            final branchName = _getBranchName(date, workingDays);
 
             return GestureDetector(
               behavior: HitTestBehavior.opaque,
@@ -74,7 +75,7 @@ class _EmployeeCalendarComponentState extends State<EmployeeCalendarComponent> {
               child: Container(
                 width: double.infinity,
                 color: isSelected
-                    ? greenColor.withOpacity(0.2)
+                    ? context.primaryColor
                     : isAvailable
                         ? Colors.transparent
                         : Colors.grey.shade200,
@@ -87,25 +88,33 @@ class _EmployeeCalendarComponentState extends State<EmployeeCalendarComponent> {
                       style: secondaryTextStyle(
                         color: isToday
                             ? greenColor
-                            : isAvailable
-                                ? Colors.black
-                                : Colors.grey,
+                            : isSelected
+                                ? white
+                                : isAvailable
+                                    ? black
+                                    : grey,
                         weight: isToday ? FontWeight.bold : FontWeight.w500,
                       ),
                     ).expand(),
                     isAvailable
                         ? Text(
-                            _getBranchName(date, workingDays),
-                            style: secondaryTextStyle(size: 10),
+                            branchName.validate(),
+                            style: secondaryTextStyle(
+                              size: 10,
+                              color: isSelected ? white : null,
+                            ),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           )
-                        : !isPast
-                            ? Text(
-                                locale.off.capitalizeFirstLetter(),
-                                style: secondaryTextStyle(color: Colors.grey),
-                              )
-                            : const SizedBox.shrink(),
+                        : isPast
+                            ? const SizedBox.shrink()
+                            : Text(
+                                branchName ??
+                                    locale.off.capitalizeFirstLetter(),
+                                style: secondaryTextStyle(
+                                  color: isSelected ? white : null,
+                                ),
+                              ),
                   ],
                 ),
               ),
