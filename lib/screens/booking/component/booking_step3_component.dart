@@ -178,7 +178,7 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
                         decoration: boxDecorationWithRoundedCorners(),
                         child: EmployeeCalendarComponent(
                           employeeId: bookingRequestStore.employeeId,
-                          branchId: bookingRequestStore.bookingId,
+                          branchId: appStore.branchId,
                           onSelect: (day) {
                             selectedHorizontalDate = day;
                             slotWidgetKey = UniqueKey();

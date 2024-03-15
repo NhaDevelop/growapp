@@ -1,6 +1,7 @@
 import 'package:grow_tokyo_app/network/network_utils.dart';
 import 'package:grow_tokyo_app/screens/referral/model/referral_transactions_response.dart';
 import 'package:grow_tokyo_app/utils/api_end_points.dart';
+import 'package:grow_tokyo_app/utils/constants.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 Future<String> getReferralCodeAPI() async {
@@ -10,11 +11,18 @@ Future<String> getReferralCodeAPI() async {
   return res['referral_code'];
 }
 
-Future<List<ReferralTransactionData>> getReferralTransactionsAPI() async {
+Future<List<ReferralTransactionData>> getReferralTransactionsAPI({
+  int page = 1,
+  int perPage = PER_PAGE_ITEM,
+  List<ReferralTransactionData> list = const [],
+}) async {
   var res = ReferralTransactionsResponse.fromJson(await handleResponse(
-      await buildHttpResponse(APIEndPoints.referralTransactions,
+      await buildHttpResponse(
+          '${APIEndPoints.referralTransactions}?per_page=$perPage&page=$page',
           method: HttpMethodType.GET)));
-  return res.data.validate();
+  if (page == 1) list.clear();
+  list.addAll(res.data.validate());
+  return list;
 }
 
 Future<double> getRefferalCodeRewardPercentageAPI(String code) async {

@@ -112,6 +112,7 @@ class _EmployeeCalendarComponentState extends State<EmployeeCalendarComponent> {
                                 branchName ??
                                     locale.off.capitalizeFirstLetter(),
                                 style: secondaryTextStyle(
+                                  size: 10,
                                   color: isSelected ? white : null,
                                 ),
                               ),

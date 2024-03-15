@@ -23,6 +23,8 @@ class ReferralScreen extends StatefulWidget {
 class _ReferralScreenState extends State<ReferralScreen> {
   Future<String>? codeFuture;
   Future<List<ReferralTransactionData>>? transactionsFuture;
+  List<ReferralTransactionData> transactions = [];
+  int page = 1;
 
   @override
   void initState() {
@@ -32,7 +34,8 @@ class _ReferralScreenState extends State<ReferralScreen> {
 
   void init() async {
     codeFuture = getReferralCodeAPI();
-    transactionsFuture = getReferralTransactionsAPI();
+    transactionsFuture =
+        getReferralTransactionsAPI(page: page, list: transactions);
   }
 
   @override
@@ -58,9 +61,7 @@ class _ReferralScreenState extends State<ReferralScreen> {
                 future: codeFuture,
                 loadingWidget: const ReferralCodeDetailsShimmer(),
                 errorWidget: const ReferralCodeDetails(code: ''),
-                onSuccess: (code) {
-                  return ReferralCodeDetails(code: code);
-                },
+                onSuccess: (code) => ReferralCodeDetails(code: code),
               ),
               24.height,
               Text(locale.rewardHistory, style: boldTextStyle())
@@ -101,6 +102,19 @@ class _ReferralScreenState extends State<ReferralScreen> {
             ],
           ),
         ),
+        onSwipeRefresh: () async {
+          page = 1;
+          init();
+          setState(() {});
+        },
+        onNextPage: () async {
+          page++;
+          transactionsFuture = getReferralTransactionsAPI(
+            page: page,
+            list: transactions,
+          );
+          setState(() {});
+        },
       ),
     );
   }
