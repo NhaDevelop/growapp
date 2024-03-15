@@ -104,9 +104,11 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
                     }
                   },
                   children: [
-                    Text(
-                      locale.chooseYourStylist,
-                      style: primaryTextStyle(weight: FontWeight.w500),
+                    Center(
+                      child: Text(
+                        '${bookingRequestStore.employeeName}\'s ${locale.services}',
+                        style: primaryTextStyle(weight: FontWeight.w500),
+                      ),
                     ),
                     16.height,
                     AnimatedWrap(

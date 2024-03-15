@@ -69,7 +69,7 @@ class UserData {
       password: json['password'],
       userType: json['user_type'],
       profileImage: json['profile_image'],
-      credit: (json['credit'] as num).toDouble(),
+      credit: (json['credit'] as num?)?.toDouble(),
     );
   }
 
