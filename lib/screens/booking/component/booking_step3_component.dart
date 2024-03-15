@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:grow_tokyo_app/components/app_scaffold.dart';
 import 'package:grow_tokyo_app/components/slot_widget.dart';
 import 'package:grow_tokyo_app/components/view_all_label_component.dart';
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/screens/booking/view/confirm_booking_screen.dart';
-import 'package:grow_tokyo_app/utils/colors.dart';
+import 'package:grow_tokyo_app/screens/experts/component/employee_calendar_component.dart';
 import 'package:grow_tokyo_app/utils/common_base.dart';
 import 'package:grow_tokyo_app/utils/constants.dart';
 import 'package:grow_tokyo_app/utils/extensions/date_extensions.dart';
 import 'package:grow_tokyo_app/utils/extensions/int_extension.dart';
-import 'package:grow_tokyo_app/utils/horizontalCalender/date_item.dart';
 import 'package:grow_tokyo_app/utils/horizontalCalender/date_picker_controller.dart';
-import 'package:grow_tokyo_app/utils/horizontalCalender/horizontal_date_picker.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/common_bottom_price_widget.dart';
@@ -165,7 +164,7 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
                     padding: EdgeInsets.only(
                         left: 20,
                         right: 20,
-                        top: widget.isFromBookingInfoDetail ? 10 : 60,
+                        top: widget.isFromBookingInfoDetail ? 10 : 50,
                         bottom: widget.isFromBookingInfoDetail ? 60 : 80),
                     onSwipeRefresh: () async {
                       init();
@@ -175,96 +174,22 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
                     },
                     children: [
                       ViewAllLabel(label: locale.date, isShowAll: false),
-                      8.height,
                       Container(
-                        decoration: boxDecorationWithRoundedCorners(
-                            backgroundColor: context.cardColor,
-                            borderRadius: radius()),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SettingItemWidget(
-                              title:
-                                  '${monthList[selectedMonthIndex]} ${DateTime.now().year}',
-                              titleTextStyle: boldTextStyle(
-                                  size: 14, color: textSecondaryColorGlobal),
-                              padding: EdgeInsets.zero,
-                              trailing: Row(
-                                children: [
-                                  IconButton(
-                                    onPressed: () {
-                                      if (selectedMonthIndex <
-                                          currentMonthNumber) {
-                                        //
-                                      } else {
-                                        selectedMonthIndex--;
-                                        setCustomDate(currentMonthNumber - 1);
-                                      }
-                                    },
-                                    icon: Icon(
-                                      Icons.arrow_back_ios,
-                                      size: ICON_SIZE,
-                                      color: selectedMonthIndex <
-                                              currentMonthNumber
-                                          ? grey
-                                          : context.iconColor,
-                                    ),
-                                  ),
-                                  IconButton(
-                                      onPressed: () {
-                                        if (selectedMonthIndex == 11) {
-                                          //
-                                        } else {
-                                          selectedMonthIndex++;
-                                          setCustomDate(currentMonthNumber + 1);
-                                        }
-                                      },
-                                      icon: Icon(
-                                        Icons.arrow_forward_ios_sharp,
-                                        size: ICON_SIZE,
-                                        color: selectedMonthIndex == 11
-                                            ? grey
-                                            : context.iconColor,
-                                      )),
-                                ],
-                              ),
-                            ).paddingOnly(left: 16),
-                            Divider(height: 0, color: context.dividerColor),
-                            HorizontalDatePickerWidget(
-                              enableDayPredicate: (date) =>
-                                  date.isInList(snap.data!.employeeSchedule),
-                              datePickerController: _datePickerController,
-                              height: 70,
-                              startDate: DateTime.now(),
-                              endDate: DateTime(DateTime.now().year,
-                                  DateTime.now().month + 1),
-                              selectedDate: selectedHorizontalDate,
-                              widgetWidth: context.width(),
-                              selectedColor: indicatorColor,
-                              selectedTextColor: Colors.white,
-                              dateItemComponentList: const [
-                                DateItem.Month,
-                                DateItem.WeekDay,
-                                DateItem.Day
-                              ],
-                              dayFontSize: 14,
-                              weekDayFontSize: 14,
-                              onValueSelected: (date) {
-                                selectedHorizontalDate = date;
-                                log(selectedHorizontalDate);
-
-                                slotWidgetKey = UniqueKey();
-                                setState(() {});
-                              },
-                            ).paddingSymmetric(vertical: 16),
-                          ],
-                        ),
+                        decoration: boxDecorationWithRoundedCorners(),
+                        child: EmployeeCalendarComponent(
+                          employeeId: bookingRequestStore.employeeId,
+                          branchId: bookingRequestStore.bookingId,
+                          onSelect: (day) {
+                            selectedHorizontalDate = day;
+                            slotWidgetKey = UniqueKey();
+                            setState(() {});
+                          },
+                        ).paddingAll(12),
                       ),
                       if (selectedHorizontalDate != null) ...[
-                        16.height,
+                        8.height,
                         ViewAllLabel(
                             label: locale.availableSlots, isShowAll: false),
-                        8.height,
                         SlotWidget(
                           key: slotWidgetKey,
                           selectedHorizontalDate: selectedHorizontalDate!,

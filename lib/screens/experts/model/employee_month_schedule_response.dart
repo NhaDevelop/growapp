@@ -13,13 +13,16 @@ class EmployeeMonthScheduleResponse {
 }
 
 class EmployeeWorkingDayModel {
+  final int branchId;
   final String branchName;
   final DateTime date;
 
-  EmployeeWorkingDayModel({required this.branchName, required this.date});
+  EmployeeWorkingDayModel(
+      {required this.branchId, required this.branchName, required this.date});
 
   factory EmployeeWorkingDayModel.fromJson(Map<String, dynamic> json) {
     return EmployeeWorkingDayModel(
+      branchId: json['branch_id'],
       branchName: json['branch_name'],
       date: DateTime.parse(json['date']),
     );
