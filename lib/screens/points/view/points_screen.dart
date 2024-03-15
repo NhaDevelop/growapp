@@ -18,6 +18,15 @@ class _PointsScreenState extends State<PointsScreen>
     with SingleTickerProviderStateMixin {
   late final tabController =
       TabController(length: tabTitles.length, vsync: this);
+  Future<String>? pointsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  Future<void> init() async {}
 
   @override
   Widget build(BuildContext context) {

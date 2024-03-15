@@ -46,6 +46,14 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
     );
   }
 
+  void _onServiceSelect(ServiceListData service) {
+    if (selectedServices.any((e) => e.id == service.id)) {
+      selectedServices.removeWhere((element) => element.id == service.id);
+    } else {
+      selectedServices.add(service);
+    }
+  }
+
   @override
   void setState(fn) {
     if (mounted) super.setState(fn);
@@ -121,7 +129,7 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
                       itemBuilder: (_, index) {
                         return SelectCategoryItemComponent(
                           categoryData: list[index],
-                          servicesOnChanged: (val) => selectedServices = val,
+                          onServiceSelect: _onServiceSelect,
                         );
                       },
                     ),
@@ -144,6 +152,10 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
                     .join(', '),
                 buttonText: locale.next,
                 onTap: () {
+                  if (selectedServices.isEmpty) {
+                    toast(locale.pleaseSelectService);
+                    return;
+                  }
                   bookingRequestStore
                       .setSelectedServiceListInRequest(selectedServices);
                   customStepperController.nextPage(
