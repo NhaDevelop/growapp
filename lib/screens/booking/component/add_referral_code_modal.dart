@@ -12,6 +12,8 @@ class AddReferralCodeModal extends StatefulWidget {
 }
 
 class _AddReferralCodeModalState extends State<AddReferralCodeModal> {
+  final TextEditingController textController = TextEditingController();
+
   Future<double?> checkReferralCode(String code) async {
     try {
       final percentage = await getRefferalCodeRewardPercentageAPI(code);
@@ -24,8 +26,6 @@ class _AddReferralCodeModalState extends State<AddReferralCodeModal> {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController textController = TextEditingController();
-
     return SizedBox(
       height: context.height() * 0.5,
       child: Column(
