@@ -18,7 +18,8 @@ import '../auth_repository.dart';
 import '../component/gender_selection_component.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  const EditProfileScreen({super.key});
+  final Function? onSuccess;
+  const EditProfileScreen({super.key, this.onSuccess});
 
   @override
   EditProfileScreenState createState() => EditProfileScreenState();
@@ -86,7 +87,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
           if ((data as String).isJson()) {
             viewProfile().then((value) {}).catchError(onError);
 
-            finish(context);
+            widget.onSuccess != null ? widget.onSuccess!() : finish(context);
           }
         }
       },
@@ -99,7 +100,8 @@ class EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   void _getFromGallery() async {
-    pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery, maxWidth: 1800, maxHeight: 1800);
+    pickedFile = await ImagePicker().pickImage(
+        source: ImageSource.gallery, maxWidth: 1800, maxHeight: 1800);
     if (pickedFile != null) {
       imageFile = File(pickedFile!.path);
       setState(() {});
@@ -107,7 +109,8 @@ class EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   _getFromCamera() async {
-    pickedFile = await ImagePicker().pickImage(source: ImageSource.camera, maxWidth: 1800, maxHeight: 1800);
+    pickedFile = await ImagePicker()
+        .pickImage(source: ImageSource.camera, maxWidth: 1800, maxHeight: 1800);
     if (pickedFile != null) {
       imageFile = File(pickedFile!.path);
       setState(() {});
@@ -151,8 +154,10 @@ class EditProfileScreenState extends State<EditProfileScreen> {
   Future<void> changeCountry() async {
     showCountryPicker(
       context: context,
-      countryListTheme: CountryListThemeData(textStyle: secondaryTextStyle(color: textSecondaryColorGlobal)),
-      showPhoneCode: true, // optional. Shows phone code before the country name.
+      countryListTheme: CountryListThemeData(
+          textStyle: secondaryTextStyle(color: textSecondaryColorGlobal)),
+      showPhoneCode:
+          true, // optional. Shows phone code before the country name.
       onSelect: (Country country) {
         selectedCountry = country;
         setState(() {});
@@ -173,7 +178,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
           context,
           title: locale.editProfile,
           appBarHeight: 70,
-          showLeadingIcon: true,
+          showLeadingIcon: context.canPop,
           roundCornerShape: true,
         ),
         body: Stack(
@@ -191,18 +196,25 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                         children: [
                           Container(
                             decoration: boxDecorationDefault(
-                              border: Border.all(color: context.scaffoldBackgroundColor, width: 4),
+                              border: Border.all(
+                                  color: context.scaffoldBackgroundColor,
+                                  width: 4),
                               shape: BoxShape.circle,
                             ),
                             child: imageFile != null
-                                ? Image.file(imageFile!, width: 90, height: 90, fit: BoxFit.cover).cornerRadiusWithClipRRect(45)
+                                ? Image.file(imageFile!,
+                                        width: 90,
+                                        height: 90,
+                                        fit: BoxFit.cover)
+                                    .cornerRadiusWithClipRRect(45)
                                 : Observer(
                                     builder: (_) => CachedImageWidget(
                                       url: userStore.userProfileImage,
                                       height: 100,
                                       fit: BoxFit.cover,
                                       radius: 64,
-                                      child: const DefaultUserImagePlaceholder(),
+                                      child:
+                                          const DefaultUserImagePlaceholder(),
                                     ),
                                   ),
                           ),
@@ -216,7 +228,9 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                                 backgroundColor: primaryColor,
                                 border: Border.all(color: Colors.white),
                               ),
-                              child: const Icon(Icons.camera, color: Colors.white, size: 16).paddingAll(4.0),
+                              child: const Icon(Icons.camera,
+                                      color: Colors.white, size: 16)
+                                  .paddingAll(4.0),
                             ).onTap(
                               () async {
                                 _showBottomSheet(context);
@@ -236,8 +250,11 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                       focus: fNameFocus,
                       nextFocus: lNameFocus,
                       enabled: !isSocialLoginType,
-                      textStyle: isSocialLoginType ? secondaryTextStyle() : primaryTextStyle(),
-                      decoration: inputDecoration(context, label: locale.firstName),
+                      textStyle: isSocialLoginType
+                          ? secondaryTextStyle()
+                          : primaryTextStyle(),
+                      decoration:
+                          inputDecoration(context, label: locale.firstName),
                     ),
                     16.height,
                     AppTextField(
@@ -246,8 +263,11 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                       focus: lNameFocus,
                       nextFocus: emailFocus,
                       enabled: !isSocialLoginType,
-                      textStyle: isSocialLoginType ? secondaryTextStyle() : primaryTextStyle(),
-                      decoration: inputDecoration(context, label: locale.lastName),
+                      textStyle: isSocialLoginType
+                          ? secondaryTextStyle()
+                          : primaryTextStyle(),
+                      decoration:
+                          inputDecoration(context, label: locale.lastName),
                     ),
                     16.height,
                     AppTextField(
@@ -273,7 +293,8 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                       controller: mobileCont,
                       focus: mobileFocus,
                       errorThisFieldRequired: locale.thisFieldIsRequired,
-                      decoration: inputDecoration(context, label: locale.contactNumber),
+                      decoration:
+                          inputDecoration(context, label: locale.contactNumber),
                     ),
                     16.height,
                     AppButton(
@@ -297,7 +318,9 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                 ),
               ),
             ),
-            Observer(builder: (_) => const LoaderWidget().visible(appStore.isLoading)),
+            Observer(
+                builder: (_) =>
+                    const LoaderWidget().visible(appStore.isLoading)),
           ],
         ),
       ),

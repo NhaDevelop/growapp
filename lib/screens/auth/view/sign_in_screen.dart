@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/screens/auth/auth_repository.dart';
+import 'package:grow_tokyo_app/screens/auth/view/edit_profile_screen.dart';
 import 'package:grow_tokyo_app/screens/auth/view/forgot_password_screen.dart';
 import 'package:grow_tokyo_app/screens/auth/view/sign_up_screen.dart';
 import 'package:grow_tokyo_app/screens/dashboard/view/dashboard_screen.dart';
@@ -97,6 +98,15 @@ class _SignInScreenState extends State<SignInScreen> {
     }
   }
 
+  void _editProfileIfPhoneNumberEmpty({required VoidCallback callback}) {
+    if (userStore.userContactNumber.isEmpty) {
+      EditProfileScreen(onSuccess: callback).launch(context,
+          isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
+    } else {
+      callback();
+    }
+  }
+
   void onLoginSuccessRedirection() {
     TextInput.finishAutofillContext();
     if (widget.isFromServiceBooking.validate() ||
@@ -105,10 +115,12 @@ class _SignInScreenState extends State<SignInScreen> {
       if (widget.isFromDashboard.validate()) {
         setStatusBarColor(context.primaryColor);
       }
-      finish(context, true);
+
+      _editProfileIfPhoneNumberEmpty(callback: () => finish(context, true));
     } else {
-      const DashboardScreen().launch(context,
-          isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
+      _editProfileIfPhoneNumberEmpty(
+          callback: () => const DashboardScreen().launch(context,
+              isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade));
     }
     appStore.setLoading(false);
   }
