@@ -25,7 +25,7 @@ Future<List<BranchData>> getBranchList({
   try {
     BranchResponse res =
         BranchResponse.fromJson(await handleResponse(await buildHttpResponse(
-      '${APIEndPoints.branchList}?per_page=$perPage&page=$page',
+      '${APIEndPoints.branchList}?per_page=$perPage&page=$page&country_id=${appStore.countryId}',
       method: HttpMethodType.GET,
     )));
     if (page == 1) {

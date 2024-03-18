@@ -26,8 +26,15 @@ class _EmployeeCalendarComponentState extends State<EmployeeCalendarComponent> {
   DateTime? _selectedDate;
 
   String? _getBranchName(DateTime date, List<EmployeeWorkingDayModel> snap) {
-    final index = snap.indexWhere((e) => e.date.isSameDateWith(date));
-    return index < 0 ? null : snap[index].branchName;
+    if (widget.branchId == null) {
+      final index = snap.indexWhere((e) => e.date.isSameDateWith(date));
+      return index < 0 ? null : snap[index].branchName;
+    } else {
+      final index = snap.indexWhere(
+        (e) => e.date.isSameDateWith(date) && e.branchId == widget.branchId,
+      );
+      return index < 0 ? null : snap[index].branchName;
+    }
   }
 
   void _onSelected(DateTime date) {
@@ -63,9 +70,9 @@ class _EmployeeCalendarComponentState extends State<EmployeeCalendarComponent> {
           availableGestures: AvailableGestures.none,
           calendarBuilders:
               CalendarBuilders(defaultBuilder: (context, date, _) {
-            final isAvailable = _isAvailable(date, workingDays);
-            final isPast = date.isBefore(DateTime.now());
             final isToday = date.isToday;
+            final isPast = !isToday && date.isBefore(DateTime.now());
+            final isAvailable = !isPast && _isAvailable(date, workingDays);
             final isSelected = date.isSameDateWith(_selectedDate);
             final branchName = _getBranchName(date, workingDays);
 

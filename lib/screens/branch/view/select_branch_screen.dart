@@ -58,24 +58,6 @@ class _SelectBranchScreenState extends State<SelectBranchScreen> {
     );
   }
 
-  Future<void> redirectToDashboard(
-      {required List<BranchData> branchList}) async {
-    if (branchList.length == 1) {
-      await appStore.setBranchId(
-          branchList.first.id.validate(value: UNSELECTED_BRANCH_ID));
-      await appStore.setBranchAddress(branchList.first.addressLine1.validate());
-      await appStore.setBranchName(branchList.first.name.validate());
-      await appStore
-          .setBranchContactNumber(branchList.first.contactNumber.validate());
-
-      if (!mounted) return;
-      const BookingScreen(services: []).launch(
-        context,
-        pageRouteAnimation: PageRouteAnimation.Fade,
-      );
-    }
-  }
-
   void getLocation() {
     Geolocator.requestPermission().then((value) {
       if (value == LocationPermission.whileInUse ||
@@ -128,9 +110,6 @@ class _SelectBranchScreenState extends State<SelectBranchScreen> {
               },
               loadingWidget: const SelectBranchShimmer(),
               onSuccess: (list) {
-                ///If there is only one Branch in the list
-                redirectToDashboard(branchList: list);
-
                 return AnimatedListView(
                   padding: EdgeInsets.only(
                       bottom:
