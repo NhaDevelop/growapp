@@ -7,12 +7,10 @@ import 'package:grow_tokyo_app/utils/api_end_points.dart';
 import '../../main.dart';
 import 'models/dashboard_model.dart';
 
-Future<DashboardResponse> userDashboard({required int branchId}) async {
-  String endPoint = '${APIEndPoints.dashboardDetail}?branch_id=$branchId';
-
+Future<DashboardResponse> userDashboard() async {
   try {
-    dashboardResponseCached = DashboardResponse.fromJson(
-        await handleResponse(await buildHttpResponse(endPoint)));
+    dashboardResponseCached = DashboardResponse.fromJson(await handleResponse(
+        await buildHttpResponse(APIEndPoints.dashboardDetail)));
 
     appStore.setLoading(false);
 

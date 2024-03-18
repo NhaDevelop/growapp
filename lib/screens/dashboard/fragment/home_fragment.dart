@@ -49,7 +49,7 @@ class _HomeFragmentState extends State<HomeFragment> {
   }
 
   void init() async {
-    future = userDashboard(branchId: appStore.branchId);
+    future = userDashboard();
 
     if (appConfigurationResponseCached == null) {
       getAppConfigurations();
