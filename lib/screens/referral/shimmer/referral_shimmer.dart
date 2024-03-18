@@ -9,12 +9,8 @@ class ReferralShimmer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          decoration: boxDecorationWithRoundedCorners(
-            borderRadius: radiusOnly(bottomLeft: 20, bottomRight: 20),
-          ),
-          child: const ShimmerWidget(height: 150, width: double.infinity),
-        ),
+        const ShimmerWidget(height: 90, width: double.infinity)
+            .cornerRadiusWithClipRRectOnly(bottomLeft: 20, bottomRight: 20),
         Transform.translate(
           offset: const Offset(0, -25),
           child: Padding(

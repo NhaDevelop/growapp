@@ -79,6 +79,7 @@ class _BookingStep1ComponentState extends State<BookingStep1Component> {
         children: [
           SnapHelperWidget<List<EmployeeData>>(
             future: future,
+            initialData: employeeListCached,
             loadingWidget: const BookingStep1Shimmer(),
             onSuccess: (list) {
               if (list.isEmpty) {

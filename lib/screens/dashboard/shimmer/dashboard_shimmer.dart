@@ -8,17 +8,19 @@ class DashboardShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
       children: [
-        const ShimmerWidget(
-          height: 190,
-          width: double.infinity,
-        ),
-        24.height,
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+        const ShimmerWidget(height: 90, width: double.infinity)
+            .cornerRadiusWithClipRRectOnly(bottomLeft: 20, bottomRight: 20),
+        Transform.translate(
+          offset: const Offset(0, -25),
           child: Column(
             children: [
+              const ShimmerWidget(
+                height: 190,
+                width: double.infinity,
+              ),
+              24.height,
               // Booking Button
               const ShimmerWidget(height: 50, width: double.infinity),
               24.height,
@@ -60,7 +62,7 @@ class DashboardShimmer extends StatelessWidget {
                 ],
               )
             ],
-          ),
+          ).paddingSymmetric(horizontal: 20),
         ),
       ],
     );
