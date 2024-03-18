@@ -6,13 +6,13 @@ import 'package:nb_utils/nb_utils.dart';
 Future<double> getPointsAPI() async {
   var res = await handleResponse(
       await buildHttpResponse(APIEndPoints.credit, method: HttpMethodType.GET));
-  return res['credit'];
+  return (res['credit'] as num).toDouble();
 }
 
 Future<List<PointTransactionData>> getPointsTransactionsAPI({
   int page = 1,
   int perPage = 10,
-  String tabParam = '',
+  String? tabParam,
   List<PointTransactionData> list = const [],
 }) async {
   var res = PointTransactionsResponse.fromJson(await handleResponse(

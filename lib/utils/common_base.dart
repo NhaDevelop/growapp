@@ -39,9 +39,11 @@ String formatDate(String? dateTime,
   final languageCode = isLanguageNeeded ? appStore.selectedLanguageCode : null;
   final parsedDateTime = isFromMicrosecondsSinceEpoch
       ? DateTime.fromMicrosecondsSinceEpoch(dateTime.validate().toInt() * 1000)
-      : DateTime.parse(dateTime.validate());
+      : DateTime.tryParse(dateTime.validate());
 
-  return DateFormat(format, languageCode).format(parsedDateTime);
+  return parsedDateTime == null
+      ? 'N/A'
+      : DateFormat(format, languageCode).format(parsedDateTime);
 }
 
 String formatOnlyTime(BuildContext context,

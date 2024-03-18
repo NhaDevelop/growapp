@@ -15,13 +15,21 @@ class PointTransactionsResponse {
 class PointTransactionData {
   final double value;
   final String log;
+  final String? createdAtStr;
+  final String type;
 
-  PointTransactionData({required this.value, required this.log});
+  PointTransactionData(
+      {required this.type,
+      required this.value,
+      required this.log,
+      required this.createdAtStr});
 
   factory PointTransactionData.fromJson(Map<String, dynamic> json) {
     return PointTransactionData(
-      value: json['value'],
+      type: json['type'],
+      value: (json['value'] as num).toDouble(),
       log: json['log'],
+      createdAtStr: json['created_at'],
     );
   }
 }
