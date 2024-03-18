@@ -43,7 +43,7 @@ Future<LoginResponse> loginUser(Map request,
 
     if (res.userData != null) {
       appStore.setLoading(false);
-      saveUserData(res.userData!).then((value) {
+      await saveUserData(res.userData!).then((value) {
         getAppConfigurations();
       });
     }
