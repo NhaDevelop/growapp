@@ -112,6 +112,10 @@ void main() async {
 
   appStore.setLoggedIn(getBoolAsync(SharedPreferenceConst.IS_LOGGED_IN),
       isInitializing: true);
+  appStore.setCountryId(
+      getIntAsync(SharedPreferenceConst.COUNTRY_ID,
+          defaultValue: UNSELECTED_COUNTRY_ID),
+      isInitializing: true);
   await appStore.setBranchId(getIntAsync(SharedPreferenceConst.BRANCH_ID,
       defaultValue: UNSELECTED_BRANCH_ID));
   if (appStore.isLoggedIn) {

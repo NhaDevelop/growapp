@@ -971,6 +971,9 @@ class LanguageEn extends BaseLanguage {
   String get addNewAddress => 'Add New Address';
 
   @override
+  String get country => 'Country';
+
+  @override
   String get selectCountry => 'Select Country';
 
   @override

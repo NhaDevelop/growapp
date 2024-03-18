@@ -1,64 +1,71 @@
 import 'package:flutter/material.dart';
 import 'package:grow_tokyo_app/main.dart';
-import 'package:grow_tokyo_app/utils/images.dart';
+import 'package:grow_tokyo_app/screens/cart/model/country_list_response.dart';
+import 'package:grow_tokyo_app/screens/dashboard/dashboard_repository.dart';
+import 'package:grow_tokyo_app/utils/common_base.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:url_launcher/url_launcher.dart';
 
-class InquiryDialog extends StatefulWidget {
-  const InquiryDialog({super.key});
+class SelectCountryDialog extends StatefulWidget {
+  const SelectCountryDialog({super.key});
 
   @override
-  State<InquiryDialog> createState() => _InquiryDialogState();
+  State<SelectCountryDialog> createState() => _SelectCountryDialogState();
 }
 
-class _InquiryDialogState extends State<InquiryDialog> {
-  InquiryType? _selected;
+class _SelectCountryDialogState extends State<SelectCountryDialog> {
+  String? _selected;
+  final List<CountryData> countries = [];
+
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  Future<void> init() async {
+    try {
+      final list = await getCountries();
+      countries.addAll(list);
+      setState(() {});
+    } catch (e) {
+      toast(e.toString());
+    }
+  }
 
   void _onSelect() {
-    if (_selected == null) return;
-
-    launchUrl(Uri.parse(_selected!.url));
-    finish(context);
+    final index = countries.indexWhere((element) => element.name == _selected);
+    if (index < 0) return;
+    appStore.setCountryId(countries[index].id.validate());
+    finish(context, true);
   }
 
   @override
   Widget build(BuildContext context) {
+    final appCountryList = countryList();
     return AlertDialog(
       insetPadding: const EdgeInsets.all(16),
       title: AppBar(
-        title: Text(locale.inquiry, style: boldTextStyle(size: 20)),
+        title: Text(locale.selectCountry),
         automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.close),
-            onPressed: () => finish(context),
-          ),
-        ],
       ).cornerRadiusWithClipRRect(20),
       titlePadding: EdgeInsets.zero,
+      contentPadding: const EdgeInsets.all(16),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(locale.inquiryMessage, textAlign: TextAlign.center),
-          24.height,
-          Row(
-            children: [
-              _Item(
-                key: const ValueKey(InquiryType.telegram),
-                icon: ic_telegram,
-                title: locale.telegram,
-                selected: _selected == InquiryType.telegram,
-                onTap: () => setState(() => _selected = InquiryType.telegram),
-              ).expand(),
-              16.width,
-              _Item(
-                key: const ValueKey(InquiryType.messenger),
-                icon: ic_messenger,
-                title: locale.messenger,
-                selected: _selected == InquiryType.messenger,
-                onTap: () => setState(() => _selected = InquiryType.messenger),
-              ).expand(),
-            ],
+          Wrap(
+            alignment: WrapAlignment.spaceAround,
+            spacing: 16,
+            runSpacing: 16,
+            children: appCountryList
+                .map((e) => _Item(
+                    key: ValueKey(e.name),
+                    width: context.width() * 0.35,
+                    icon: e.icon,
+                    title: e.name,
+                    selected: e.name == _selected,
+                    onTap: () => setState(() => _selected = e.name)))
+                .toList(),
           ),
           24.height,
           AppButton(
@@ -81,12 +88,14 @@ class _Item extends StatelessWidget {
   final String title;
   final bool selected;
   final VoidCallback onTap;
+  final double? width;
   const _Item(
       {super.key,
       required this.icon,
       required this.title,
       required this.selected,
-      required this.onTap});
+      required this.onTap,
+      this.width});
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +103,7 @@ class _Item extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: Container(
+        width: width,
         decoration: boxDecorationWithRoundedCorners(
           backgroundColor: const Color(0xFFF2F2F2),
           borderRadius: radius(16),
@@ -112,18 +122,5 @@ class _Item extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-enum InquiryType { telegram, messenger }
-
-extension InquiryTypeExtension on InquiryType {
-  String get url {
-    switch (this) {
-      case InquiryType.telegram:
-        return '';
-      default:
-        return '';
-    }
   }
 }

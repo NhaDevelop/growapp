@@ -58,6 +58,7 @@ class APIEndPoints {
   static const String removeAddress = 'remove-address';
   static const String reviewLike = 'review-like';
   static const String getProductReviewList = 'get-review-list';
+  static const String country = 'country';
   static const String countryList = 'country-list';
   static const String stateList = 'state-list';
   static const String cityList = 'city-list';

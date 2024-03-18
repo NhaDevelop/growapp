@@ -626,6 +626,8 @@ abstract class BaseLanguage {
 
   String get addNewAddress;
 
+  String get country;
+
   String get selectCountry;
 
   String get selectState;

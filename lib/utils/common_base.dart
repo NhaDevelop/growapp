@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grow_tokyo_app/app_theme.dart';
+import 'package:grow_tokyo_app/screens/cart/model/country_list_response.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -83,6 +84,13 @@ List<LanguageDataModel> languageList() {
         languageCode: 'vi',
         fullLanguageCode: 'vi-VN',
         flag: ic_vi),
+  ];
+}
+
+List<AppCountryModel> countryList() {
+  return [
+    AppCountryModel('Cambodia', ic_km),
+    AppCountryModel('Vietnam', ic_vi),
   ];
 }
 

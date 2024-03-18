@@ -7,7 +7,9 @@ class CountryListResponse {
 
   factory CountryListResponse.fromJson(Map<String, dynamic> json) {
     return CountryListResponse(
-      data: json['data'] != null ? (json['data'] as List).map((i) => CountryData.fromJson(i)).toList() : null,
+      data: json['data'] != null
+          ? (json['data'] as List).map((i) => CountryData.fromJson(i)).toList()
+          : null,
       message: json['message'],
       status: json['status'],
     );
@@ -43,4 +45,11 @@ class CountryData {
     data['name'] = name;
     return data;
   }
+}
+
+class AppCountryModel {
+  final String name;
+  final String icon;
+
+  AppCountryModel(this.name, this.icon);
 }

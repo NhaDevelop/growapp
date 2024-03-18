@@ -35,7 +35,10 @@ abstract class _AppStore with Store {
   String currencyCode = 'USD';
 
   @observable
-  int countryId = 0;
+  int countryId = UNSELECTED_COUNTRY_ID;
+
+  @computed
+  bool get isCountrySelected => countryId != UNSELECTED_COUNTRY_ID;
 
   @observable
   int stateId = 0;

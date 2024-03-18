@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grow_tokyo_app/screens/app_country_screen.dart';
 import 'package:grow_tokyo_app/screens/auth/view/change_password_screen.dart';
 import 'package:grow_tokyo_app/utils/common_base.dart';
 import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
@@ -44,6 +45,19 @@ class _SettingScreenState extends State<SettingScreen> {
                 backgroundColor: context.cardColor),
             onTap: () {
               const AppLanguageScreen().launch(context).then((value) {
+                setState(() {});
+              });
+            },
+          ),
+          16.height,
+          SettingItemWidget(
+            leading: ic_app_language.iconImage(size: 16),
+            title: locale.country,
+            splashColor: Colors.transparent,
+            decoration: boxDecorationWithRoundedCorners(
+                backgroundColor: context.cardColor),
+            onTap: () {
+              const AppCountryScreen().launch(context).then((value) {
                 setState(() {});
               });
             },

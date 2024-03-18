@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:grow_tokyo_app/components/select_country_dialog.dart';
+import 'package:grow_tokyo_app/components/select_language_dialog.dart';
 import 'package:grow_tokyo_app/screens/auth/view/sign_in_screen.dart';
 import 'package:grow_tokyo_app/utils/colors.dart';
 import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
@@ -49,26 +51,26 @@ class _DashboardScreenState extends State<DashboardScreen>
     init();
   }
 
-  void init() async {
-    afterBuildCreated(() async {
-      /// Changes System theme when changed
-      if (getIntAsync(THEME_MODE_INDEX) == ThemeConst.THEME_MODE_SYSTEM) {
-        appStore.setDarkMode(context.platformBrightness() == Brightness.dark);
+  Future<void> init() async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      ///SelectCountry Dialog
+      if (!appStore.isCountrySelected) {
+        if (!appStore.isCountrySelected && mounted) {
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (_) => const SelectCountryDialog(),
+          ).then((value) => showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (_) => const SelectLanguageDialog(),
+              ));
+        }
       }
 
-      /*View.of(context).platformDispatcher.onPlatformBrightnessChanged = () async {
-        if (getIntAsync(THEME_MODE_INDEX) == ThemeConst.THEME_MODE_SYSTEM) {
-          appStore.setDarkMode(MediaQuery.of(context).platformBrightness == Brightness.light);
-        }
-      };*/
-
-      //WidgetsBinding.instance.handlePlatformBrightnessChanged();
+      /// ForceUpdate Dialog
+      if (mounted) showForceUpdateDialog(context);
     });
-
-    /// ForceUpdate Dialog
-    await 3.seconds.delay;
-    if (!mounted) return;
-    showForceUpdateDialog(context);
   }
 
   @override
