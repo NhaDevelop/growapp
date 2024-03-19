@@ -863,46 +863,46 @@ PODS:
   - nanopb/encode (2.30909.1)
   - nb_utils (0.0.1):
     - Flutter
-  - onesignal_flutter (5.1.0):
+  - onesignal_flutter (5.1.2):
     - Flutter
-    - OneSignalXCFramework (= 5.1.0)
-  - OneSignalXCFramework (5.1.0):
-    - OneSignalXCFramework/OneSignalComplete (= 5.1.0)
-  - OneSignalXCFramework/OneSignal (5.1.0):
+    - OneSignalXCFramework (= 5.1.3)
+  - OneSignalXCFramework (5.1.3):
+    - OneSignalXCFramework/OneSignalComplete (= 5.1.3)
+  - OneSignalXCFramework/OneSignal (5.1.3):
     - OneSignalXCFramework/OneSignalCore
     - OneSignalXCFramework/OneSignalExtension
     - OneSignalXCFramework/OneSignalNotifications
     - OneSignalXCFramework/OneSignalOSCore
     - OneSignalXCFramework/OneSignalOutcomes
     - OneSignalXCFramework/OneSignalUser
-  - OneSignalXCFramework/OneSignalComplete (5.1.0):
+  - OneSignalXCFramework/OneSignalComplete (5.1.3):
     - OneSignalXCFramework/OneSignal
     - OneSignalXCFramework/OneSignalInAppMessages
     - OneSignalXCFramework/OneSignalLocation
-  - OneSignalXCFramework/OneSignalCore (5.1.0)
-  - OneSignalXCFramework/OneSignalExtension (5.1.0):
+  - OneSignalXCFramework/OneSignalCore (5.1.3)
+  - OneSignalXCFramework/OneSignalExtension (5.1.3):
     - OneSignalXCFramework/OneSignalCore
     - OneSignalXCFramework/OneSignalOutcomes
-  - OneSignalXCFramework/OneSignalInAppMessages (5.1.0):
+  - OneSignalXCFramework/OneSignalInAppMessages (5.1.3):
     - OneSignalXCFramework/OneSignalCore
     - OneSignalXCFramework/OneSignalNotifications
     - OneSignalXCFramework/OneSignalOSCore
     - OneSignalXCFramework/OneSignalOutcomes
     - OneSignalXCFramework/OneSignalUser
-  - OneSignalXCFramework/OneSignalLocation (5.1.0):
+  - OneSignalXCFramework/OneSignalLocation (5.1.3):
     - OneSignalXCFramework/OneSignalCore
     - OneSignalXCFramework/OneSignalNotifications
     - OneSignalXCFramework/OneSignalOSCore
     - OneSignalXCFramework/OneSignalUser
-  - OneSignalXCFramework/OneSignalNotifications (5.1.0):
+  - OneSignalXCFramework/OneSignalNotifications (5.1.3):
     - OneSignalXCFramework/OneSignalCore
     - OneSignalXCFramework/OneSignalExtension
     - OneSignalXCFramework/OneSignalOutcomes
-  - OneSignalXCFramework/OneSignalOSCore (5.1.0):
+  - OneSignalXCFramework/OneSignalOSCore (5.1.3):
     - OneSignalXCFramework/OneSignalCore
-  - OneSignalXCFramework/OneSignalOutcomes (5.1.0):
+  - OneSignalXCFramework/OneSignalOutcomes (5.1.3):
     - OneSignalXCFramework/OneSignalCore
-  - OneSignalXCFramework/OneSignalUser (5.1.0):
+  - OneSignalXCFramework/OneSignalUser (5.1.3):
     - OneSignalXCFramework/OneSignalCore
     - OneSignalXCFramework/OneSignalNotifications
     - OneSignalXCFramework/OneSignalOSCore
@@ -949,6 +949,7 @@ DEPENDENCIES:
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - nb_utils (from `.symlinks/plugins/nb_utils/ios`)
   - onesignal_flutter (from `.symlinks/plugins/onesignal_flutter/ios`)
+  - OneSignalXCFramework (< 6.0, >= 5.0.0)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
@@ -1080,8 +1081,8 @@ SPEC CHECKSUMS:
   leveldb-library: 06a69cc7582d64b29424a63e085e683cc188230a
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   nb_utils: ada4338858d8827ec92fdab2a545206b4ba4cfb1
-  onesignal_flutter: 419a224915bbc03181d176a3cb507a88e64af92f
-  OneSignalXCFramework: 72a6dbc5d97b7eba09a51837f7858d8957ac2629
+  onesignal_flutter: 708cf6614165bdf59ef2aa5750c11d30c70b35e3
+  OneSignalXCFramework: 613f696d70d7e544b9f99e7a21c8b49fa47d7942
   path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   PromisesSwift: 9d77319bbe72ebf6d872900551f7eeba9bce2851
@@ -1096,6 +1097,6 @@ SPEC CHECKSUMS:
   Try: 5ef669ae832617b3cee58cb2c6f99fb767a4ff96
   url_launcher_ios: bbd758c6e7f9fd7b5b1d4cde34d2b95fcce5e812
 
-PODFILE CHECKSUM: 04d7d2b0caa41866e7fbf9522638761123f40530
+PODFILE CHECKSUM: c7fd27eda733d2475798b89b5f78e02202c5b12d
 
 COCOAPODS: 1.15.2

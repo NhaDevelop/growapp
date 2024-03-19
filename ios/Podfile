@@ -66,3 +66,8 @@ post_integrate do |installer|
   end
   project.save()
 end
+
+target 'OneSignalNotificationServiceExtension' do
+  use_frameworks!
+  pod 'OneSignalXCFramework', '>= 5.0.0', '< 6.0'
+end

@@ -17,9 +17,9 @@ class BuildConfig {
   static String get onesignalAppId {
     switch (appFlavor) {
       case AppFlavor.prod:
-        return 'YOUR_ONESIGNAL_APP_ID';
+        return 'a6f4aa1c-438b-4820-90b1-994547b2da3d';
       default:
-        return 'YOUR_ONESIGNAL_APP_ID';
+        return '12f26bc1-9c4d-41cb-80c0-ccce6660bc96';
     }
   }
 }
