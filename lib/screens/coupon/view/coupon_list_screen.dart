@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grow_tokyo_app/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/components/empty_error_state_widget.dart';
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/screens/coupon/component/coupon_item_component.dart';
 import 'package:grow_tokyo_app/screens/coupon/coupon_repository.dart';
@@ -41,7 +42,26 @@ class _CouponListScreenState extends State<CouponListScreen> {
       body: SnapHelperWidget(
         future: future,
         loadingWidget: const CouponListShimmer(),
+        initialData: couponListCached,
+        errorBuilder: (error) {
+          return NoDataWidget(
+            title: error,
+            retryText: locale.reload,
+            imageWidget: const ErrorStateWidget(),
+            onRetry: () {
+              _init();
+              setState(() {});
+            },
+          ).center();
+        },
         onSuccess: (data) {
+          if (data.isEmpty) {
+            return NoDataWidget(
+              title: locale.noTransactionFound,
+              imageWidget: const EmptyStateWidget(),
+            ).center();
+          }
+
           return AnimatedListView(
             itemCount: data.length,
             onSwipeRefresh: _init,

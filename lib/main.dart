@@ -16,6 +16,7 @@ import 'package:grow_tokyo_app/screens/branch/model/branch_detail_response.dart'
 import 'package:grow_tokyo_app/screens/branch/model/branch_gallery_list_response.dart';
 import 'package:grow_tokyo_app/screens/branch/model/branch_response.dart';
 import 'package:grow_tokyo_app/screens/category/model/category_response.dart';
+import 'package:grow_tokyo_app/screens/coupon/model/coupon_list_response.dart';
 import 'package:grow_tokyo_app/screens/dashboard/models/dashboard_model.dart';
 import 'package:grow_tokyo_app/screens/experts/model/employee_detail_response.dart';
 import 'package:grow_tokyo_app/screens/notifications/model/notification_model.dart';
@@ -85,6 +86,10 @@ List<(int serviceId, EmployeeDetailResponse list)?> employeeDetailCachedData =
     [];
 List<BranchDetailResponse> branchDetailCachedData = [];
 BranchConfigurationData? branchConfigurationCached;
+List<CouponData>? couponListCached;
+double? pointsCached;
+String? referralCodeCached;
+Map<String, List<ServiceListData>>? categoryToServiceListCached;
 
 //endregion
 

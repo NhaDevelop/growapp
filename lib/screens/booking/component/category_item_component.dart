@@ -10,20 +10,18 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../category/model/category_response.dart';
 
-class SelectCategoryItemComponent extends StatefulWidget {
+class CategoryItemComponent extends StatefulWidget {
   final CategoryData categoryData;
   final void Function(ServiceListData) onServiceSelect;
 
-  const SelectCategoryItemComponent(
+  const CategoryItemComponent(
       {super.key, required this.categoryData, required this.onServiceSelect});
 
   @override
-  State<SelectCategoryItemComponent> createState() =>
-      _SelectCategoryItemComponentState();
+  State<CategoryItemComponent> createState() => _CategoryItemComponentState();
 }
 
-class _SelectCategoryItemComponentState
-    extends State<SelectCategoryItemComponent> {
+class _CategoryItemComponentState extends State<CategoryItemComponent> {
   bool isExpanded = false;
 
   Future<List<ServiceListData>>? future;

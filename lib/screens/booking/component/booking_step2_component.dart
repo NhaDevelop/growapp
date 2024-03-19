@@ -4,7 +4,7 @@ import 'package:grow_tokyo_app/components/common_bottom_price_widget.dart';
 import 'package:grow_tokyo_app/components/custom_stepper.dart';
 import 'package:grow_tokyo_app/screens/booking/shimmer/booking_step2_shimmer.dart';
 import 'package:grow_tokyo_app/screens/category/category_repository.dart';
-import 'package:grow_tokyo_app/screens/booking/component/select_category_item_component.dart';
+import 'package:grow_tokyo_app/screens/booking/component/category_item_component.dart';
 import 'package:grow_tokyo_app/screens/category/model/category_response.dart';
 import 'package:grow_tokyo_app/screens/services/models/service_response.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -127,7 +127,7 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
                       scaleConfiguration: ScaleConfiguration(
                           duration: 300.milliseconds, delay: 50.milliseconds),
                       itemBuilder: (_, index) {
-                        return SelectCategoryItemComponent(
+                        return CategoryItemComponent(
                           categoryData: list[index],
                           onServiceSelect: _onServiceSelect,
                         );

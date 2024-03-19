@@ -77,6 +77,7 @@ class _ReferralScreenState extends State<ReferralScreen> {
             children: [
               SnapHelperWidget(
                 future: codeFuture,
+                initialData: referralCodeCached,
                 loadingWidget: const ReferralCodeDetailsShimmer(),
                 errorWidget: const ReferralCodeDetails(code: ''),
                 onSuccess: (code) => ReferralCodeDetails(code: code),
