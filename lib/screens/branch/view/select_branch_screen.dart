@@ -196,10 +196,10 @@ class _SelectBranchScreenState extends State<SelectBranchScreen> {
               await appStore.setBranchContactNumber(
                   selectedBranch!.contactNumber.validate());
             }
+
             if (!context.mounted) return;
-            const BookingScreen(services: []).launch(
-              context,
-            );
+            finish(context);
+            const BookingScreen(services: []).launch(context);
           },
           child: const Icon(Icons.arrow_right_alt_rounded, color: Colors.white),
         ).visible(selectedBranchId != UNSELECTED_BRANCH_ID),

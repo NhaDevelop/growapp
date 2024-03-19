@@ -3,9 +3,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:grow_tokyo_app/components/common_bottom_price_widget.dart';
 import 'package:grow_tokyo_app/components/custom_stepper.dart';
 import 'package:grow_tokyo_app/screens/booking/shimmer/booking_step2_shimmer.dart';
-import 'package:grow_tokyo_app/screens/category/category_repository.dart';
 import 'package:grow_tokyo_app/screens/booking/component/category_item_component.dart';
-import 'package:grow_tokyo_app/screens/category/model/category_response.dart';
+import 'package:grow_tokyo_app/screens/experts/employee_repository.dart';
+import 'package:grow_tokyo_app/screens/experts/model/employee_service_list_response.dart';
 import 'package:grow_tokyo_app/screens/services/models/service_response.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -23,12 +23,10 @@ class BookingStep2Component extends StatefulWidget {
 
 class _BookingStep2ComponentState extends State<BookingStep2Component> {
   UniqueKey key = UniqueKey();
-  Future<List<CategoryData>>? future;
-  int page = 1;
-  bool isLastPage = false;
-  List<CategoryData> categoryList = [];
-  late List<ServiceListData> selectedServices =
-      bookingRequestStore.selectedServiceList;
+  Future<List<EmployeeServiceListData>>? future;
+  late List<ServiceListData> selectedServices = [
+    ...bookingRequestStore.selectedServiceList
+  ];
 
   @override
   void initState() {
@@ -37,14 +35,7 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
   }
 
   void init() async {
-    future = getCategoryList(
-      page: page,
-      list: categoryList,
-      isStoreCached: true,
-      lastPageCallBack: (val) {
-        isLastPage = val;
-      },
-    );
+    future = getEmployeeServiceList(employeeId: bookingRequestStore.employeeId);
   }
 
   void _onServiceSelect(ServiceListData service) {
@@ -53,6 +44,7 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
     } else {
       selectedServices.add(service);
     }
+    setState(() {});
   }
 
   @override
@@ -71,7 +63,7 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          SnapHelperWidget<List<CategoryData>>(
+          SnapHelperWidget(
             future: future,
             initialData: categoryListCached,
             loadingWidget: const BookingStep2Shimmer(),
@@ -81,9 +73,6 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
                   title: locale.noCategoryFound,
                   retryText: locale.reload,
                   onRetry: () {
-                    page = 1;
-                    appStore.setLoading(true);
-
                     init();
                     setState(() {});
                   },
@@ -96,21 +85,8 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
                   listAnimationType: ListAnimationType.Scale,
                   physics: const AlwaysScrollableScrollPhysics(),
                   onSwipeRefresh: () async {
-                    page = 1;
-
                     init();
                     setState(() {});
-
-                    return await 2.seconds.delay;
-                  },
-                  onNextPage: () {
-                    if (!isLastPage) {
-                      page++;
-                      appStore.setLoading(true);
-
-                      init();
-                      setState(() {});
-                    }
                   },
                   children: [
                     Center(
@@ -129,7 +105,8 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
                           duration: 300.milliseconds, delay: 50.milliseconds),
                       itemBuilder: (_, index) {
                         return CategoryItemComponent(
-                          categoryData: list[index],
+                          data: list[index],
+                          selectedServices: selectedServices,
                           onServiceSelect: _onServiceSelect,
                         );
                       },

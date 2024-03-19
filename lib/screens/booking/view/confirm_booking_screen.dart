@@ -16,6 +16,7 @@ import 'package:grow_tokyo_app/utils/app_common.dart';
 import 'package:grow_tokyo_app/utils/colors.dart';
 import 'package:grow_tokyo_app/utils/common_base.dart';
 import 'package:grow_tokyo_app/utils/constants.dart';
+import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:grow_tokyo_app/utils/model_keys.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -102,6 +103,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
       useSafeArea: false,
       builder: (BuildContext context) => CommonAppDialog(
         title: locale.bookingSuccessful,
+        icon: ic_booking_success,
         subTitle:
             '${locale.yourBookingFor} ${bookingRequestStore.selectedServiceList.validate().map((e) => e.name.validate()).toList().join(', ')} has been successfully booked',
         buttonText: locale.goToBookings,

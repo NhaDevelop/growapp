@@ -59,10 +59,9 @@ class _CommonAppDialogState extends State<CommonAppDialog> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             CircleAvatar(
-                backgroundColor: indicatorColor,
                 radius: 50,
                 child: Image.asset(widget.icon ?? ic_confetti_ball,
-                    fit: BoxFit.cover, height: 50)),
+                    fit: BoxFit.cover)),
             16.height,
             Text(widget.title.validate(),
                 style: boldTextStyle(size: LABEL_TEXT_SIZE),

@@ -36,6 +36,7 @@ class APIEndPoints {
       'employee-current-month-schedule';
   static const String notificationList = 'notification-list';
   static const String serviceList = 'service-list';
+  static const String employeeServiceList = 'employee-service-list';
   static const String saveRating = 'save-rating';
   static const String getRating = 'get-rating';
   static const String deleteRating = 'delete-rating';
