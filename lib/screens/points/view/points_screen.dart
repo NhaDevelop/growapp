@@ -109,6 +109,13 @@ class _PointsScreenState extends State<PointsScreen>
                 ).center();
               },
               onSuccess: (transactions) {
+                if (transactions.isEmpty) {
+                  return NoDataWidget(
+                    title: locale.noTransactionFound,
+                    imageWidget: const EmptyStateWidget(),
+                  ).center();
+                }
+
                 return AnimatedListView(
                   itemCount: transactions.length,
                   onNextPage: loadMoreTransactions,

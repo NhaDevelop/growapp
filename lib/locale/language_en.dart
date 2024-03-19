@@ -236,6 +236,9 @@ class LanguageEn extends BaseLanguage {
   String get points => 'Points';
 
   @override
+  String get noTransactionFound => 'No Transaction Found';
+
+  @override
   String usingXPoints(double x) => 'Using $x points';
 
   @override

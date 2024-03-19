@@ -154,6 +154,8 @@ abstract class BaseLanguage {
 
   String get points;
 
+  String get noTransactionFound;
+
   String usingXPoints(double x);
 
   String youWillSave$X(int x);

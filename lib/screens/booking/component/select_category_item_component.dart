@@ -128,7 +128,12 @@ class _SelectCategoryItemComponentState
                       ).center();
                     },
                     onSuccess: (list) {
-                      if (list.isEmpty) return const EmptyStateWidget();
+                      if (list.isEmpty) {
+                        return NoDataWidget(
+                          title: locale.noServicesFound,
+                          imageWidget: const EmptyStateWidget(),
+                        ).center();
+                      }
 
                       return AnimatedWrap(
                         runSpacing: 16,

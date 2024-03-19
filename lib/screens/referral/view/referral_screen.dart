@@ -94,9 +94,16 @@ class _ReferralScreenState extends State<ReferralScreen> {
                     retryText: locale.reload,
                     imageWidget: const ErrorStateWidget(),
                     onRetry: refetchTransactions,
-                  ).paddingTop(120).center();
+                  ).paddingTop(100).center();
                 },
                 onSuccess: (transactions) {
+                  if (transactions.isEmpty) {
+                    return NoDataWidget(
+                      title: locale.noTransactionFound,
+                      imageWidget: const EmptyStateWidget(),
+                    ).paddingTop(100).center();
+                  }
+
                   return AnimatedListView(
                     itemCount: transactions.length,
                     shrinkWrap: true,
