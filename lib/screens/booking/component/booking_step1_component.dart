@@ -4,6 +4,7 @@ import 'package:grow_tokyo_app/components/app_scaffold.dart';
 import 'package:grow_tokyo_app/components/common_bottom_price_widget.dart';
 import 'package:grow_tokyo_app/components/custom_stepper.dart';
 import 'package:grow_tokyo_app/screens/experts/component/employee_list_component_new.dart';
+import 'package:grow_tokyo_app/utils/constants.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/empty_error_state_widget.dart';
@@ -28,8 +29,7 @@ class _BookingStep1ComponentState extends State<BookingStep1Component> {
   List<EmployeeData> expertList = [];
 
   int page = 1;
-  int selectedIndex = -1;
-  int? employeeId;
+  late int employeeId = bookingRequestStore.employeeId;
 
   String serviceIds = '';
 
@@ -122,17 +122,12 @@ class _BookingStep1ComponentState extends State<BookingStep1Component> {
 
                           return GestureDetector(
                             onTap: () {
-                              selectedIndex = i;
-
-                              if (selectedIndex == i) {
-                                employeeId = data.id.validate();
-                              }
-
+                              employeeId = data.id.validate();
                               setState(() {});
                             },
                             child: EmployeeListComponentNew(
                               expertData: data,
-                              selected: selectedIndex == i,
+                              selected: employeeId == data.id,
                             ),
                           );
                         },
@@ -171,14 +166,19 @@ class _BookingStep1ComponentState extends State<BookingStep1Component> {
                             .join(', '),
                         buttonText: locale.next,
                         onTap: () {
-                          if (employeeId != null) {
+                          if (employeeId != UNSELECTED_EMPLOYEE_ID) {
                             Fluttertoast.cancel();
                             bookingRequestStore
                                 .setEmployeeIdInRequest(employeeId.validate());
-                            bookingRequestStore.setEmployeeNameInRequest(
-                              list[selectedIndex].fullName.validate(),
-                            );
-                            /*log(bookingRequestStore.toJson());*/
+
+                            final employeeName = list
+                                .firstWhere(
+                                    (element) => element.id == employeeId)
+                                .fullName
+                                .validate();
+                            bookingRequestStore
+                                .setEmployeeNameInRequest(employeeName);
+
                             customStepperController.nextPage(
                                 duration: 200.milliseconds,
                                 curve: Curves.easeOut);

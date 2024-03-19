@@ -17,7 +17,10 @@ abstract class _BookingRequestStore with Store {
   int? bookingId;
 
   @observable
-  int employeeId = -1;
+  int employeeId = UNSELECTED_EMPLOYEE_ID;
+
+  @computed
+  bool get isEmployeeSelected => employeeId != UNSELECTED_EMPLOYEE_ID;
 
   @observable
   String employeeName = '';

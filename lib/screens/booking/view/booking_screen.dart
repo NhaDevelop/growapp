@@ -30,7 +30,7 @@ class BookingScreen extends StatefulWidget {
 
 class _BookingScreenState extends State<BookingScreen> {
   List<CustomStep>? stepsList;
-  int currentStep = 0;
+  final currentStep = ValueNotifier<int>(0);
 
   @override
   void initState() {
@@ -73,22 +73,25 @@ class _BookingScreenState extends State<BookingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: currentStep == 0,
-      onPopInvoked: (canPop) {
-        if (canPop) return;
-        bookingRequestStore.time = '';
-        customStepperController.previousPage(
-            duration: 300.milliseconds, curve: Curves.linear);
-        LiveStream()
-            .emit(LiveStreamKeyConst.LIVESTREAM_CHANGE_STEP, currentStep);
+    return ValueListenableBuilder<int>(
+      valueListenable: currentStep,
+      builder: (context, step, child) {
+        return PopScope(
+          canPop: step == 0,
+          onPopInvoked: (canPop) {
+            if (canPop) return;
+            bookingRequestStore.time = '';
+            customStepperController.previousPage(
+                duration: 300.milliseconds, curve: Curves.linear);
+            LiveStream().emit(LiveStreamKeyConst.LIVESTREAM_CHANGE_STEP, step);
+          },
+          child: child ?? const SizedBox(),
+        );
       },
       child: Scaffold(
         body: CustomStepper(
           stepsList: stepsList.validate(),
-          onChange: (p0) {
-            currentStep = p0;
-          },
+          onChange: (p0) => currentStep.value = p0,
         ),
       ),
     );

@@ -27,7 +27,8 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
   int page = 1;
   bool isLastPage = false;
   List<CategoryData> categoryList = [];
-  List<ServiceListData> selectedServices = [];
+  late List<ServiceListData> selectedServices =
+      bookingRequestStore.selectedServiceList;
 
   @override
   void initState() {
