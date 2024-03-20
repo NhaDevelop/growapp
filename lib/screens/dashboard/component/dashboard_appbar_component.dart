@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:grow_tokyo_app/screens/auth/view/sign_in_screen.dart';
+import 'package:grow_tokyo_app/screens/points/view/points_screen.dart';
 import 'package:grow_tokyo_app/utils/colors.dart';
-import 'package:grow_tokyo_app/utils/common_base.dart';
-import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
 import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../main.dart';
-import '../fragment/notification_fragment.dart';
 
 class DashboardAppBarComponent extends StatefulWidget {
   final Widget? innerChild;
@@ -83,14 +82,30 @@ class _DashboardAppBarComponentState extends State<DashboardAppBarComponent> {
                     }),
                     Image.asset(ic_hi, height: 22, fit: BoxFit.cover),
                     const Spacer(),
-                    IconButton(
-                      onPressed: () {
-                        doIfLoggedIn(context, () {
-                          const NotificationFragment().launch(context);
-                        });
-                      },
-                      icon: ic_unselected_bell.iconImage(
-                          color: Colors.white, size: 20),
+                    Observer(
+                      builder: (context) => appStore.isLoggedIn
+                          ? TextButton(
+                              onPressed: () =>
+                                  const PointsScreen().launch(context),
+                              child: Row(
+                                children: [
+                                  Image.asset(ic_crown,
+                                      height: 20, width: 20, color: white),
+                                  8.width,
+                                  Text(
+                                    userStore.pointAmount.toString(),
+                                    style:
+                                        boldTextStyle(color: white, size: 20),
+                                  ),
+                                ],
+                              ),
+                            )
+                          : TextButton(
+                              onPressed: () =>
+                                  const SignInScreen().launch(context),
+                              child: Text(locale.signIn,
+                                  style: boldTextStyle(size: 14, color: white)),
+                            ),
                     ),
                   ],
                 ),

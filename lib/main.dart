@@ -90,7 +90,6 @@ List<(int serviceId, EmployeeDetailResponse list)?> employeeDetailCachedData =
 List<BranchDetailResponse> branchDetailCachedData = [];
 BranchConfigurationData? branchConfigurationCached;
 List<CouponData>? couponListCached;
-double? pointsCached;
 String? referralCodeCached;
 Map<int, List<EmployeeServiceListData>>? employeeServiceListCached;
 Map<int, List<EmployeeData>>? branchEmployeeListCached;
@@ -152,7 +151,7 @@ void main() async {
         isInitializing: true);
     await userStore.setPlayerId(getStringAsync(SharedPreferenceConst.PLAYER_ID),
         isInitializing: true);
-    await userStore.setCredit(getDoubleAsync(SharedPreferenceConst.CREDIT),
+    await userStore.setPointAmount(getDoubleAsync(SharedPreferenceConst.CREDIT),
         isInitializing: true);
     await appStore.setHelplineNumber(
         getStringAsync(SharedPreferenceConst.HELPLINE_NUMBER),

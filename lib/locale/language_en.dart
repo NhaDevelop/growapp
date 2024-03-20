@@ -251,6 +251,9 @@ class LanguageEn extends BaseLanguage {
   String get referral => 'Referral';
 
   @override
+  String get referralDiscount => 'Referral Discount';
+
+  @override
   String get referralCode => 'Referral Code';
 
   @override
@@ -291,6 +294,9 @@ class LanguageEn extends BaseLanguage {
 
   @override
   String get coupon => 'Coupon';
+
+  @override
+  String get couponDiscount => 'Coupon Discount';
 
   @override
   String get validUntil => 'Valid until';

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:grow_tokyo_app/components/app_scaffold.dart';
-import 'package:grow_tokyo_app/components/cached_image_widget.dart';
 import 'package:grow_tokyo_app/components/common_app_dialog.dart';
 import 'package:grow_tokyo_app/components/default_card.dart';
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/payment/payment_repo.dart';
 import 'package:grow_tokyo_app/screens/booking/booking_repository.dart';
 import 'package:grow_tokyo_app/screens/booking/component/add_referral_code_modal.dart';
+import 'package:grow_tokyo_app/screens/booking/component/service_item_component.dart';
 import 'package:grow_tokyo_app/screens/coupon/model/coupon_list_response.dart';
 import 'package:grow_tokyo_app/screens/coupon/view/add_coupon_screen.dart';
 import 'package:grow_tokyo_app/screens/dashboard/view/dashboard_screen.dart';
@@ -160,6 +161,24 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                     ),
                   ),
                   16.height,
+                  Text(locale.locationInformation, style: secondaryTextStyle()),
+                  12.height,
+                  DefaultCard(
+                    child: Column(
+                      children: [
+                        _RowData(
+                          title: locale.branchName,
+                          value: appStore.branchName.validate(),
+                        ),
+                        8.height,
+                        _RowData(
+                          title: locale.address,
+                          value: appStore.branchAddress.validate(),
+                        ),
+                      ],
+                    ),
+                  ),
+                  16.height,
                   Text(locale.stylist, style: secondaryTextStyle()),
                   12.height,
                   DefaultCard(
@@ -175,7 +194,8 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                     child: Column(
                       children: bookingRequestStore.selectedServiceList
                           .map(
-                            (e) => _ServiceItem(key: ValueKey(e.id), service: e)
+                            (e) => ServiceItemComponent(
+                                    key: ValueKey(e.id), service: e)
                                 .paddingSymmetric(vertical: 4),
                           )
                           .toList(),
@@ -247,7 +267,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                locale.usingXPoints(userStore.credit),
+                                locale.usingXPoints(userStore.pointAmount),
                                 style: boldTextStyle(),
                               ),
                               4.height,
@@ -270,9 +290,36 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                   Text(locale.paymentDetails, style: secondaryTextStyle()),
                   12.height,
                   DefaultCard(
-                    child: _RowData(
-                      title: locale.paymentMethod,
-                      value: locale.payAtSalon,
+                    child: Column(
+                      children: [
+                        if (bookingRequestStore.referralCode != null) ...[
+                          _RowData(
+                            title: locale.referralDiscount,
+                            value:
+                                '-${bookingRequestStore.referralRewardPercentage}%',
+                          ),
+                          8.height,
+                        ],
+                        if (bookingRequestStore.couponCode != null) ...[
+                          _RowData(
+                            title: locale.couponDiscount,
+                            value:
+                                '-${bookingRequestStore.couponRewardPercentage}%',
+                          ),
+                          8.height,
+                        ],
+                        if (bookingRequestStore.useCredit) ...[
+                          _RowData(
+                            title: locale.points,
+                            value: 'XXX',
+                          ), //TODO: Add amount
+                          8.height,
+                        ],
+                        _RowData(
+                          title: locale.paymentMethod,
+                          value: locale.payAtSalon,
+                        ),
+                      ],
                     ),
                   ),
                   120.height,
@@ -304,38 +351,6 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
   }
 }
 
-class _ServiceItem extends StatelessWidget {
-  const _ServiceItem({
-    super.key,
-    required this.service,
-  });
-
-  final ServiceListData service;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        CachedImageWidget(
-          url: service.serviceImage.validate(),
-          height: 50,
-          width: 50,
-          fit: BoxFit.cover,
-        ).cornerRadiusWithClipRRect(8),
-        12.width,
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(service.name.validate(), style: boldTextStyle()),
-            4.height,
-            Text(service.description.validate(), style: secondaryTextStyle()),
-          ],
-        ).expand(),
-      ],
-    );
-  }
-}
-
 class _RowData extends StatelessWidget {
   final String title;
   final String value;
@@ -348,7 +363,8 @@ class _RowData extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(title, style: secondaryTextStyle()),
-        Text(value, style: boldTextStyle()),
+        16.width,
+        Flexible(child: Marquee(child: Text(value, style: boldTextStyle()))),
       ],
     );
   }

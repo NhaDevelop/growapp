@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/screens/services/models/service_response.dart';
 import 'package:grow_tokyo_app/utils/constants.dart';
@@ -26,16 +28,6 @@ class BookingListResponse {
       message: json['message'],
       status: json['status'],
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['message'] = message;
-    data['status'] = status;
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
-    }
-    return data;
   }
 }
 
@@ -69,6 +61,8 @@ class BookingListData {
 
   List<ProductsInfo>? productsInfo;
   num? discoutAmount;
+  num? referralRewardPercent;
+  num? couponDiscountPercentage;
   num? amountPaidByCredit;
   num? sumOfServicePrices;
   num? sumOfProductPrices;
@@ -121,6 +115,8 @@ class BookingListData {
     this.productsInfo,
     this.discoutAmount,
     this.amountPaidByCredit,
+    this.referralRewardPercent,
+    this.couponDiscountPercentage,
     this.sumOfServicePrices,
     this.sumOfProductPrices,
     this.taxAmount,
@@ -129,6 +125,7 @@ class BookingListData {
   });
 
   factory BookingListData.fromJson(Map<String, dynamic> json) {
+    inspect(json);
     return BookingListData(
       branchName: json['branch_name'],
       createdAt: json['created_at'],
@@ -171,6 +168,8 @@ class BookingListData {
       sumOfProductPrices: json['sumOfProductPrices'],
       discoutAmount: json['discout_amount'],
       amountPaidByCredit: json['amount_paid_by_credit'],
+      referralRewardPercent: json['referral_reward_percent'],
+      couponDiscountPercentage: json['coupon_discount_percentage'],
       taxAmount: json['tax_amount'],
       totalAmount: json['total_amount'],
       taxDetails: json['tax_details'] != null
@@ -179,55 +178,6 @@ class BookingListData {
               .toList()
           : null,
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['branch_name'] = branchName;
-    data['created_at'] = createdAt;
-    data['created_by_name'] = createdByName;
-    data['employee_image'] = employeeImage;
-    data['id'] = id;
-    data['start_date_time'] = startDateTime;
-    data['status'] = status;
-    data['updated_at'] = updatedAt;
-    data['updated_by_name'] = updatedByName;
-    data['user_created'] = userCreated;
-    data['user_name'] = userName;
-    data['user_profile_image'] = userProfileImage;
-    data['address_line_1'] = addressLine1;
-    data['address_line_2'] = addressLine2;
-    data['branch_id'] = branchId;
-    data['employee_id'] = employeeId;
-    data['phone'] = phone;
-    data['user_id'] = userId;
-    data['discount'] = discount;
-    data['tip'] = tip;
-    data['sumOfServicePrices'] = sumOfServicePrices;
-    data['sumOfProductPrices'] = sumOfProductPrices;
-    data['discout_amount'] = discoutAmount;
-    data['amount_paid_by_credit'] = amountPaidByCredit;
-    data['tax_amount'] = taxAmount;
-    data['total_amount'] = totalAmount;
-    if (note != null) {
-      data['note'] = note;
-    }
-    if (customerReview != null) {
-      data['customer_review'] = customerReview!.toJson();
-    }
-    if (payment != null) {
-      data['payment'] = payment!.toJson();
-    }
-    if (serviceList != null) {
-      data['services'] = serviceList!.map((v) => v.toJson()).toList();
-    }
-    if (productsInfo != null) {
-      data['products'] = productsInfo!.map((v) => v.toJson()).toList();
-    }
-    if (taxDetails != null) {
-      data['tax_data'] = taxDetails!.map((v) => v.toJson()).toList();
-    }
-    return data;
   }
 
   /// For Save Booking

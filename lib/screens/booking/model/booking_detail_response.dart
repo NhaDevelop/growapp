@@ -15,16 +15,6 @@ class BookingDetailResponse {
       status: json['status'],
     );
   }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['message'] = message;
-    data['status'] = status;
-    if (this.data != null) {
-      data['data'] = this.data!.toJson();
-    }
-    return data;
-  }
 }
 
 class Payment {
@@ -84,8 +74,7 @@ class Payment {
       externalTransactionId: json['external_transaction_id'],
       id: json['id'],
       paymentStatus: json['payment_status'],
-      requestToken:
-          json['request_token'],
+      requestToken: json['request_token'],
       taxPercentage: json['tax_percentage'] != null
           ? (json['tax_percentage'] as List)
               .map((i) => TaxPercentage.fromJson(i))
@@ -127,8 +116,7 @@ class Payment {
       data['request_token'] = requestToken;
     }
     if (taxPercentage != null) {
-      data['tax_percentage'] =
-          taxPercentage!.map((v) => v.toJson()).toList();
+      data['tax_percentage'] = taxPercentage!.map((v) => v.toJson()).toList();
     }
     if (updatedBy != null) {
       data['updated_by'] = updatedBy;

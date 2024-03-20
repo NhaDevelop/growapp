@@ -4,12 +4,14 @@ import 'package:nb_utils/nb_utils.dart';
 class DefaultCard extends StatelessWidget {
   final Widget child;
   final EdgeInsets? padding;
+  final double? width;
 
-  const DefaultCard({super.key, required this.child, this.padding});
+  const DefaultCard({super.key, required this.child, this.padding, this.width});
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: width,
       decoration: boxDecorationWithRoundedCorners(
         borderRadius: radius(12),
         boxShadow: [

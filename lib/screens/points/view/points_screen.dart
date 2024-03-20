@@ -88,7 +88,7 @@ class _PointsScreenState extends State<PointsScreen>
         children: [
           SnapHelperWidget(
             future: pointsFuture,
-            initialData: pointsCached,
+            initialData: userStore.pointAmount,
             loadingWidget: const PointsCardShimmer(),
             errorWidget: const PointsCardComponent(),
             onSuccess: (points) => PointsCardComponent(points: points),

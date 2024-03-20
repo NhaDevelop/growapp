@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:grow_tokyo_app/components/app_scaffold.dart';
-import 'package:grow_tokyo_app/screens/booking/component/booking_information_component.dart';
-import 'package:grow_tokyo_app/screens/booking/component/location_information_component.dart';
-import 'package:grow_tokyo_app/screens/booking/component/payment_information_component.dart';
+import 'package:grow_tokyo_app/components/default_card.dart';
+import 'package:grow_tokyo_app/screens/booking/component/service_item_component.dart';
 import 'package:grow_tokyo_app/utils/app_common.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -11,7 +10,6 @@ import '../../../components/empty_error_state_widget.dart';
 import '../../../components/loader_widget.dart';
 import '../../../main.dart';
 import '../booking_repository.dart';
-import '../component/booking_service_information_component.dart';
 import '../model/booking_detail_response.dart';
 import '../shimmer/booking_detail_shimmer.dart';
 
@@ -92,7 +90,8 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
               );
             },
             onSuccess: (snap) {
-              if (snap.data == null) {
+              final data = snap.data;
+              if (data == null) {
                 return NoDataWidget(
                   title: locale.noDetailsFound,
                   retryText: locale.reload,
@@ -109,21 +108,114 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                 padding: const EdgeInsets.all(16),
                 physics: const AlwaysScrollableScrollPhysics(),
                 children: [
-                  LocationInformationComponent(booking: snap.data!),
+                  Text(locale.yourInformation, style: secondaryTextStyle()),
+                  12.height,
+                  DefaultCard(
+                    child: Column(
+                      children: [
+                        _RowData(
+                          title: locale.name,
+                          value: userStore.userFullName,
+                        ),
+                        8.height,
+                        _RowData(
+                          title: locale.contactNumber,
+                          value: userStore.userContactNumber,
+                        ),
+                      ],
+                    ),
+                  ),
                   16.height,
-                  BookingInformationComponent(
-                    booking: snap.data!,
-                    bookingStatus: widget.bookingStatus,
-                    serviceList: snap.data!.serviceList.validate(),
+                  Text(locale.timeSlot, style: secondaryTextStyle()),
+                  12.height,
+                  DefaultCard(
+                    child: _RowData(
+                      title: '${locale.date} & ${locale.time}',
+                      value: '${data.bookingDate} At ${data.bookingTime}',
+                    ),
                   ),
-                  24.height,
-                  BookingServiceInformationComponent(
-                    serviceList: snap.data!.serviceList.validate(),
-                    productList: snap.data!.productsInfo,
-                    bookingStatus: widget.bookingStatus,
+                  16.height,
+                  Text(locale.locationInformation, style: secondaryTextStyle()),
+                  12.height,
+                  DefaultCard(
+                    child: Column(
+                      children: [
+                        _RowData(
+                          title: locale.branchName,
+                          value: data.branchName.validate(),
+                        ),
+                        // 8.height,
+                        // _RowData(
+                        //   title: locale.address,
+                        //   value: data.branchAddress.validate(),
+                        // ),
+                      ],
+                    ),
                   ),
-                  8.height,
-                  PaymentInformationComponent(booking: snap.data!),
+                  16.height,
+                  Text(locale.stylist, style: secondaryTextStyle()),
+                  12.height,
+                  DefaultCard(
+                    child: _RowData(
+                      title: locale.stylist,
+                      value: data.employeeName.validate(),
+                    ),
+                  ),
+                  16.height,
+                  Text(locale.services, style: secondaryTextStyle()),
+                  12.height,
+                  DefaultCard(
+                    child: Column(
+                      children: data.serviceList
+                          .validate()
+                          .map((e) => ServiceItemComponent(
+                                key: ValueKey(e.id),
+                                service: e,
+                              ).paddingSymmetric(vertical: 4))
+                          .toList(),
+                    ),
+                  ),
+                  16.height,
+                  Text(locale.serviceNote, style: secondaryTextStyle()),
+                  12.height,
+                  DefaultCard(
+                    width: context.width(),
+                    child: Text(data.note ?? 'N/A'),
+                  ),
+                  16.height,
+                  Text(locale.paymentDetails, style: secondaryTextStyle()),
+                  12.height,
+                  DefaultCard(
+                    child: Column(
+                      children: [
+                        if (data.referralRewardPercent.validate() > 0) ...[
+                          _RowData(
+                            title: locale.referralDiscount,
+                            value: '-${data.referralRewardPercent}%',
+                          ),
+                          8.height,
+                        ],
+                        if (data.couponDiscountPercentage.validate() > 0) ...[
+                          _RowData(
+                            title: locale.couponDiscount,
+                            value: '-${data.couponDiscountPercentage}%',
+                          ),
+                          8.height,
+                        ],
+                        if (data.amountPaidByCredit.validate() > 0) ...[
+                          _RowData(
+                            title: locale.points,
+                            value: 'XXX', //TODO: add value
+                          ),
+                          8.height,
+                        ],
+                        _RowData(
+                          title: locale.paymentMethod,
+                          value: locale.payAtSalon,
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
                 onSwipeRefresh: () async {
                   init();
@@ -140,6 +232,25 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _RowData extends StatelessWidget {
+  final String title;
+  final String value;
+
+  const _RowData({required this.title, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(title, style: secondaryTextStyle()),
+        16.width,
+        Flexible(child: Marquee(child: Text(value, style: boldTextStyle()))),
+      ],
     );
   }
 }

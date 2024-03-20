@@ -52,7 +52,7 @@ abstract class _UserStore with Store {
   String playerId = '';
 
   @observable
-  double credit = 0;
+  double pointAmount = 0;
 
   @action
   Future<void> setUId(String val, {bool isInitializing = false}) async {
@@ -138,8 +138,8 @@ abstract class _UserStore with Store {
   }
 
   @action
-  Future<void> setCredit(double val, {bool isInitializing = false}) async {
-    credit = val;
+  Future<void> setPointAmount(double val, {bool isInitializing = false}) async {
+    pointAmount = val;
     if (!isInitializing) await setValue(SharedPreferenceConst.CREDIT, val);
   }
 }

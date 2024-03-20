@@ -224,15 +224,15 @@ mixin _$UserStore on _UserStore, Store {
   late final _$creditAtom = Atom(name: '_UserStore.credit', context: context);
 
   @override
-  double get credit {
+  double get pointAmount {
     _$creditAtom.reportRead();
-    return super.credit;
+    return super.pointAmount;
   }
 
   @override
-  set credit(double value) {
-    _$creditAtom.reportWrite(value, super.credit, () {
-      super.credit = value;
+  set pointAmount(double value) {
+    _$creditAtom.reportWrite(value, super.pointAmount, () {
+      super.pointAmount = value;
     });
   }
 
@@ -357,9 +357,9 @@ mixin _$UserStore on _UserStore, Store {
       AsyncAction('_UserStore.setCredit', context: context);
 
   @override
-  Future<void> setCredit(double val, {bool isInitializing = false}) {
+  Future<void> setPointAmount(double val, {bool isInitializing = false}) {
     return _$setCreditAsyncAction
-        .run(() => super.setCredit(val, isInitializing: isInitializing));
+        .run(() => super.setPointAmount(val, isInitializing: isInitializing));
   }
 
   @override
@@ -378,7 +378,7 @@ userName: ${userName},
 token: ${token},
 userType: ${userType},
 playerId: ${playerId},
-credit: ${credit},
+credit: ${pointAmount},
 userFullName: ${userFullName}
     ''';
   }

@@ -8,7 +8,7 @@ Future<double> getPointsAPI() async {
   var res = await handleResponse(
       await buildHttpResponse(APIEndPoints.credit, method: HttpMethodType.GET));
   final points = (res['credit'] as num).toDouble();
-  pointsCached = points;
+  userStore.setPointAmount(points);
 
   return points;
 }

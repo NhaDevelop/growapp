@@ -166,6 +166,8 @@ abstract class BaseLanguage {
 
   String get referralCode;
 
+  String get referralDiscount;
+
   String get yourReferralCode;
 
   String get rewardHistory;
@@ -189,6 +191,8 @@ abstract class BaseLanguage {
   String get addReferralCode;
 
   String get coupon;
+
+  String get couponDiscount;
 
   String get validUntil;
 

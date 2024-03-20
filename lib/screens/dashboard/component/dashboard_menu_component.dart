@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/screens/coupon/view/coupon_list_screen.dart';
 import 'package:grow_tokyo_app/screens/dashboard/component/inquiry_dialog.dart';
-import 'package:grow_tokyo_app/screens/notifications/view/notification_screen.dart';
+import 'package:grow_tokyo_app/screens/dashboard/fragment/notification_fragment.dart';
 import 'package:grow_tokyo_app/screens/points/view/points_screen.dart';
 import 'package:grow_tokyo_app/screens/referral/view/referral_screen.dart';
 import 'package:grow_tokyo_app/utils/common_base.dart';
@@ -69,7 +69,7 @@ class DashboardMenuComponent extends StatelessWidget {
               title: locale.notifications,
               onTap: () => doIfLoggedIn(
                 context,
-                () => const NotificationScreen().launch(context),
+                () => const NotificationFragment().launch(context),
               ),
             ).expand(),
           ],
