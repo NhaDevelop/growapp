@@ -457,6 +457,15 @@ class LanguageEn extends BaseLanguage {
   String get about => 'About';
 
   @override
+  String get socialMedia => 'Social Media';
+
+  @override
+  String get instagram => 'Instagram';
+
+  @override
+  String get facebook => 'Facebook';
+
+  @override
   String get details => 'Details';
 
   @override

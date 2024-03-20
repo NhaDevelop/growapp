@@ -298,6 +298,12 @@ abstract class BaseLanguage {
 
   String get about;
 
+  String get socialMedia;
+
+  String get instagram;
+
+  String get facebook;
+
   String get details;
 
   String get reviews;

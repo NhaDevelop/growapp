@@ -34,7 +34,7 @@ class _AddCouponScreenState extends State<AddCouponScreen> {
     return AppScaffold(
       appBarWidget: commonAppBarWidget(
         context,
-        title: 'Add Coupon',
+        title: locale.addCoupon,
         appBarHeight: 70,
         showLeadingIcon: true,
         roundCornerShape: true,

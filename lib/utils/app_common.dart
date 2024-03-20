@@ -121,7 +121,7 @@ PreferredSizeWidget commonAppBarWidget(BuildContext context,
     bool roundCornerShape = true,
     List<Widget>? actions}) {
   return PreferredSize(
-    preferredSize: Size.fromHeight(appBarHeight ?? 100.0),
+    preferredSize: Size.fromHeight(appBarHeight ?? 70),
     child: AppBar(
       title: Text(title!,
           style: boldTextStyle(color: whiteColor, size: APPBAR_TEXT_SIZE)),

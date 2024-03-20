@@ -6,8 +6,9 @@ import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/screens/auth/auth_repository.dart';
 import 'package:grow_tokyo_app/screens/dashboard/component/common_app_component.dart';
 import 'package:grow_tokyo_app/screens/dashboard/view/dashboard_screen.dart';
-import 'package:grow_tokyo_app/screens/profile/view/about_detail_screen.dart';
+import 'package:grow_tokyo_app/screens/profile/view/about_app_screen.dart';
 import 'package:grow_tokyo_app/screens/profile/view/setting_screen.dart';
+import 'package:grow_tokyo_app/screens/profile/view/social_media_screen.dart';
 import 'package:grow_tokyo_app/utils/common_base.dart';
 import 'package:grow_tokyo_app/utils/constants.dart';
 import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
@@ -15,13 +16,11 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/cached_image_widget.dart';
 import '../../../components/default_user_image_placeholder.dart';
-import '../../../models/about_model.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/images.dart';
 import '../../auth/view/edit_profile_screen.dart';
 // import '../../cart/view/select_address_screen.dart';
 // import '../../order/view/order_list_screen.dart';
-import '../../profile/view/data_provider.dart';
 
 class ProfileFragment extends StatefulWidget {
   const ProfileFragment({super.key});
@@ -31,23 +30,6 @@ class ProfileFragment extends StatefulWidget {
 }
 
 class _ProfileFragmentState extends State<ProfileFragment> {
-  List<AboutModel> aboutAppList = [];
-  List<AboutModel> helpList = [];
-
-  @override
-  void initState() {
-    super.initState();
-    init();
-  }
-
-  void init() async {
-    afterBuildCreated(() {
-      aboutAppList = getAboutDataModel(context: context);
-      helpList = getHelpList(context: context);
-      setState(() {});
-    });
-  }
-
   @override
   void setState(fn) {
     if (mounted) super.setState(fn);
@@ -183,17 +165,30 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                       title: locale.setting,
                       titleTextStyle: boldTextStyle(size: LABEL_TEXT_SIZE),
                       subTitle: !isSocialLoginType
-                          ? '${locale.changePassword}, ${locale.appLanguage}, ${locale.theme}, ${locale.deleteAccount}'
-                          : '${locale.appLanguage}, ${locale.theme}, ${locale.deleteAccount}',
+                          ? '${locale.changePassword}, ${locale.language}, ${locale.country}, ${locale.deleteAccount}'
+                          : '${locale.appLanguage}, ${locale.country}, ${locale.deleteAccount}',
                       leading:
                           ic_setting.iconImage(fit: BoxFit.cover, size: 16),
                       decoration: boxDecorationWithRoundedCorners(
                           backgroundColor: context.cardColor),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 12),
-                      onTap: () {
-                        const SettingScreen().launch(context);
-                      },
+                      onTap: () => const SettingScreen().launch(context),
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                    ),
+                    16.height,
+                    SettingItemWidget(
+                      title: locale.socialMedia,
+                      titleTextStyle: boldTextStyle(size: LABEL_TEXT_SIZE),
+                      subTitle: '${locale.facebook}, ${locale.instagram}',
+                      leading: ic_about.iconImage(fit: BoxFit.cover, size: 18),
+                      decoration: boxDecorationWithRoundedCorners(
+                          backgroundColor: context.cardColor),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 12),
+                      onTap: () => const SocialMediaScreen().launch(context),
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       splashColor: Colors.transparent,
@@ -203,38 +198,13 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                       title: locale.aboutApp,
                       titleTextStyle: boldTextStyle(size: LABEL_TEXT_SIZE),
                       subTitle:
-                          '${locale.rateUs}, ${locale.share}, ${locale.about}',
-                      leading: ic_about.iconImage(fit: BoxFit.cover, size: 18),
-                      decoration: boxDecorationWithRoundedCorners(
-                          backgroundColor: context.cardColor),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 12),
-                      onTap: () {
-                        AboutDetailScreen(
-                                aboutModel: aboutAppList,
-                                title: locale.aboutApp)
-                            .launch(context);
-                      },
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      splashColor: Colors.transparent,
-                    ),
-                    16.height,
-                    SettingItemWidget(
-                      title: locale.help,
-                      titleTextStyle: boldTextStyle(size: LABEL_TEXT_SIZE),
-                      subTitle:
-                          '${locale.helpCenter}, ${locale.privacyPolicy}, ${locale.tC}',
+                          '${locale.about}, ${locale.privacyPolicy}, ${locale.tC}',
                       leading: ic_help.iconImage(fit: BoxFit.cover, size: 16),
                       decoration: boxDecorationWithRoundedCorners(
                           backgroundColor: context.cardColor),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 12),
-                      onTap: () {
-                        AboutDetailScreen(
-                                aboutModel: helpList, title: locale.help)
-                            .launch(context);
-                      },
+                      onTap: () => const AboutAppScreen().launch(context),
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       splashColor: Colors.transparent,

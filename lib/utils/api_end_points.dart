@@ -72,4 +72,5 @@ class APIEndPoints {
   static const String addReview = 'add-review';
   static const String updateReview = 'update-review';
   static const String removeReview = 'remove-review';
+  static const String pages = 'pages';
 }

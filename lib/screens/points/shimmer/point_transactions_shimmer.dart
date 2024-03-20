@@ -7,13 +7,13 @@ class PointTransactionsShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return AnimatedListView(
       shrinkWrap: true,
       itemCount: 5,
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       itemBuilder: (context, index) {
         return Container(
-          margin: const EdgeInsets.only(bottom: 16),
+          margin: const EdgeInsets.only(top: 16),
           padding: const EdgeInsets.all(16),
           decoration: boxDecorationDefault(),
           child: Row(
