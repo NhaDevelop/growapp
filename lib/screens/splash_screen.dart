@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:grow_tokyo_app/screens/dashboard/view/dashboard_screen.dart';
-import 'package:grow_tokyo_app/screens/points/point_repository.dart';
-import 'package:grow_tokyo_app/screens/profile/profile_repository.dart';
 import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -35,8 +33,6 @@ class _SplashScreenState extends State<SplashScreen> {
       ));
     });
 
-    getPages();
-    getPointsAPI();
     await getBranchList(branchList: []).then((value) {
       if (value.isNotEmpty) {
         if (value.length == 1) {

@@ -10,6 +10,7 @@ import 'package:grow_tokyo_app/screens/dashboard/component/common_app_component.
 import 'package:grow_tokyo_app/screens/dashboard/component/dashboard_appbar_component.dart';
 import 'package:grow_tokyo_app/screens/dashboard/component/dashboard_menu_component.dart';
 import 'package:grow_tokyo_app/screens/dashboard/component/horizontal_slider_component.dart';
+import 'package:grow_tokyo_app/screens/points/point_repository.dart';
 import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -28,7 +29,6 @@ class HomeFragment extends StatefulWidget {
 }
 
 class _HomeFragmentState extends State<HomeFragment> {
-  UniqueKey keyForBranchList = UniqueKey();
   Future<DashboardResponse>? future;
 
   @override
@@ -50,6 +50,8 @@ class _HomeFragmentState extends State<HomeFragment> {
 
   void init() async {
     future = userDashboard();
+
+    getPointsAPI();
 
     if (appConfigurationResponseCached == null) {
       getAppConfigurations();
@@ -79,7 +81,6 @@ class _HomeFragmentState extends State<HomeFragment> {
                   appStore.setLoading(true);
 
                   init();
-                  keyForBranchList = UniqueKey();
                   setState(() {});
                 },
               );
@@ -90,7 +91,6 @@ class _HomeFragmentState extends State<HomeFragment> {
                 innerWidget: const DashboardAppBarComponent(),
                 onSwipeRefresh: () async {
                   init();
-                  keyForBranchList = UniqueKey();
                   setState(() {});
 
                   return await 2.seconds.delay;
