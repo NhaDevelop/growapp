@@ -54,12 +54,11 @@ class _EmployeeCalendarComponentState extends State<EmployeeCalendarComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return SnapHelperWidget<EmployeeMonthScheduleResponse>(
+    return SnapHelperWidget<List<EmployeeWorkingDayModel>>(
       future: getEmployeeMonthSchedule(employeeId: widget.employeeId),
+      initialData: employeeWorkingDayListCached?[widget.employeeId],
       loadingWidget: const TableCalendarShimmer(),
-      onSuccess: (snap) {
-        final workingDays = snap.employeeWorkingDaysList;
-
+      onSuccess: (workingDays) {
         return TableCalendar(
           focusedDay: DateTime.now(),
           firstDay: firstDayOfTheMonth,

@@ -32,6 +32,9 @@ Future<List<EmployeeData>> getEmployeeList({
     list.addAll(res.topExperts.validate());
 
     employeeListCached = list;
+    if (branchId != null) {
+      branchEmployeeListCached = {...?branchEmployeeListCached, branchId: list};
+    }
 
     lastPageCallBack?.call(res.topExperts.validate().length != perPage);
 
@@ -68,7 +71,7 @@ Future<EmployeeDetailResponse> getEmployeeDetail(
   }
 }
 
-Future<EmployeeMonthScheduleResponse> getEmployeeMonthSchedule(
+Future<List<EmployeeWorkingDayModel>> getEmployeeMonthSchedule(
     {required int employeeId}) async {
   try {
     var res = EmployeeMonthScheduleResponse.fromJson(await handleResponse(
@@ -76,9 +79,13 @@ Future<EmployeeMonthScheduleResponse> getEmployeeMonthSchedule(
             '${APIEndPoints.employeeCurrentMonthSchedule}?employee_id=$employeeId',
             method: HttpMethodType.GET)));
 
+    employeeWorkingDayListCached = {
+      ...?employeeWorkingDayListCached,
+      employeeId: res.employeeWorkingDaysList
+    };
     appStore.setLoading(false);
 
-    return res;
+    return res.employeeWorkingDaysList;
   } catch (e) {
     appStore.setLoading(false);
     rethrow;
@@ -93,7 +100,10 @@ Future<List<EmployeeServiceListData>> getEmployeeServiceList(
       method: HttpMethodType.GET,
     ),
   ));
-  employeeServiceListCached?[employeeId] = res.data;
+  employeeServiceListCached = {
+    ...?employeeServiceListCached,
+    employeeId: res.data
+  };
 
   return res.data;
 }

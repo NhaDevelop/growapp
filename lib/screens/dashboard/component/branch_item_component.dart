@@ -109,6 +109,7 @@ class _BranchItemComponentState extends State<BranchItemComponent> {
                     12.height,
                     TextIcon(
                       text: widget.branchData.addressLine1.validate(),
+                      expandedText: true,
                       spacing: 12,
                       textStyle: primaryTextStyle(),
                       maxLine: 2,

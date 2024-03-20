@@ -19,6 +19,7 @@ import 'package:grow_tokyo_app/screens/category/model/category_response.dart';
 import 'package:grow_tokyo_app/screens/coupon/model/coupon_list_response.dart';
 import 'package:grow_tokyo_app/screens/dashboard/models/dashboard_model.dart';
 import 'package:grow_tokyo_app/screens/experts/model/employee_detail_response.dart';
+import 'package:grow_tokyo_app/screens/experts/model/employee_month_schedule_response.dart';
 import 'package:grow_tokyo_app/screens/experts/model/employee_service_list_response.dart';
 import 'package:grow_tokyo_app/screens/notifications/model/notification_model.dart';
 import 'package:grow_tokyo_app/screens/order/model/order_detail_response.dart';
@@ -91,6 +92,8 @@ List<CouponData>? couponListCached;
 double? pointsCached;
 String? referralCodeCached;
 Map<int, List<EmployeeServiceListData>>? employeeServiceListCached;
+Map<int, List<EmployeeData>>? branchEmployeeListCached;
+Map<int, List<EmployeeWorkingDayModel>>? employeeWorkingDayListCached;
 
 //endregion
 
