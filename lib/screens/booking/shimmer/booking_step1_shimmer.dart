@@ -8,35 +8,39 @@ class BookingStep1Shimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedScrollView(
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 70, bottom: 20),
-      listAnimationType: ListAnimationType.None,
+    return Column(
       children: [
-        Column(
-          children: [
-            ShimmerWidget(height: 14, width: context.width() * 0.30),
-            16.height,
-            AnimatedWrap(
-              runSpacing: 16,
-              itemCount: 10,
-              listAnimationType: ListAnimationType.None,
-              itemBuilder: (context, index) {
-                return ShimmerWidget(
-                  child: Container(
-                    width: context.width(),
-                    padding:
-                        const EdgeInsets.only(top: 48, left: 16, right: 16),
-                    decoration: boxDecorationWithRoundedCorners(
-                        backgroundColor: context.cardColor),
-                    child: ShimmerWidget(
-                        height: 68, width: context.width() * 0.25),
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
+        ShimmerWidget(height: 14, width: context.width() * 0.30),
+        AnimatedListView(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          itemCount: 5,
+          itemBuilder: (context, index) {
+            return Container(
+              width: context.width(),
+              padding: const EdgeInsets.all(16),
+              decoration: boxDecorationWithRoundedCorners(
+                  backgroundColor: context.cardColor),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const CircleAvatar(radius: 29, child: ShimmerWidget()),
+                  16.width,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ShimmerWidget(height: 16, width: context.width() * 0.2),
+                      8.height,
+                      ShimmerWidget(height: 12, width: context.width() * 0.2),
+                    ],
+                  ).expand(),
+                  16.width,
+                  const CircleAvatar(radius: 10, child: ShimmerWidget())
+                ],
+              ),
+            ).paddingOnly(top: 16);
+          },
+        ).expand(),
       ],
-    );
+    ).paddingOnly(top: 70);
   }
 }

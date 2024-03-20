@@ -130,19 +130,15 @@ String getBookingStatusKey({required String status}) {
 
 Color getBookingStatusColor({required String status}) {
   if (status.toLowerCase().contains(BookingStatusConst.COMPLETED)) {
-    return Colors.lightGreen;
+    return const Color(0xFF219653);
   } else if (status.toLowerCase().contains(BookingStatusConst.CONFIRMED)) {
-    return Colors.green;
+    return const Color(0xFF2F80ED);
   } else if (status.toLowerCase().contains(BookingStatusConst.CANCELLED)) {
-    return Colors.red;
-  } else if (status.toLowerCase().contains(BookingStatusConst.CHECK_IN)) {
-    return Colors.blue;
-  } else if (status.toLowerCase().contains(BookingStatusConst.CHECKOUT)) {
-    return Colors.blue;
+    return const Color(0xFFEB5757);
   } else if (status.toLowerCase().contains(BookingStatusConst.PENDING)) {
-    return Colors.redAccent;
+    return const Color(0xFFFF8A22);
   } else {
-    return Colors.transparent;
+    return black;
   }
 }
 

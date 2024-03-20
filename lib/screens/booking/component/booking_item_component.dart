@@ -22,6 +22,9 @@ class BookingItemComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bookingStatusColor =
+        getBookingStatusColor(status: bookingData.status.validate());
+
     return Container(
       width: context.width(),
       margin: const EdgeInsets.all(8),
@@ -112,13 +115,14 @@ class BookingItemComponent extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               ic_booking_status
-                                  .iconImage(size: 16, color: primaryColor)
+                                  .iconImage(
+                                      size: 16, color: bookingStatusColor)
                                   .paddingRight(8),
                               Text(
                                 getBookingStatusKey(
                                     status: bookingData.status.validate()),
                                 style: boldTextStyle(
-                                    size: 13, color: primaryColor),
+                                    size: 13, color: bookingStatusColor),
                                 maxLines: 1,
                               ),
                             ],

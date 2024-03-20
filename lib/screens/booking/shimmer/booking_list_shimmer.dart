@@ -11,7 +11,6 @@ class BookingListShimmer extends StatelessWidget {
       physics: const AlwaysScrollableScrollPhysics(),
       itemCount: 20,
       padding: const EdgeInsets.only(left: 8, right: 8, top: 40, bottom: 12),
-      listAnimationType: ListAnimationType.None,
       shrinkWrap: true,
       itemBuilder: (p0, p1) {
         return Container(

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:grow_tokyo_app/screens/experts/shimmer/table_calendar_shimmer.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/shimmer_widget.dart';
@@ -20,7 +22,10 @@ class BookingStep3Shimmer extends StatelessWidget {
       children: [
         ShimmerWidget(height: 14, width: context.width() * 0.15),
         18.height,
-        ShimmerWidget(height: 150, width: context.width()),
+        Container(
+          decoration: boxDecorationWithRoundedCorners(),
+          child: const TableCalendarShimmer().paddingAll(12),
+        ),
         30.height,
         ShimmerWidget(height: 14, width: context.width() * 0.30),
         18.height,

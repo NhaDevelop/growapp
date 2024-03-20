@@ -76,6 +76,7 @@ class _EmployeeListComponentNewState extends State<EmployeeListComponentNew> {
                   ),
                 ],
               ).expand(),
+              16.width,
               SizedBox(
                 width: 21,
                 height: 21,
