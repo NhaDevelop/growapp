@@ -576,6 +576,8 @@ abstract class BaseLanguage {
 
   String get change;
 
+  String get pleaseUpdateYourProfile;
+
   String get profileUpdatedSuccessfully;
 
   String get oldPasswordDoesNotMatchMessage;

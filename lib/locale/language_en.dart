@@ -891,6 +891,9 @@ class LanguageEn extends BaseLanguage {
   String get change => 'Change';
 
   @override
+  String get pleaseUpdateYourProfile => 'Please update your profile';
+
+  @override
   String get profileUpdatedSuccessfully => 'Profile Updated Successfully';
 
   @override

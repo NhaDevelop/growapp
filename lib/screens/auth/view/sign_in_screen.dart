@@ -98,14 +98,13 @@ class _SignInScreenState extends State<SignInScreen> {
     }
   }
 
-  void _editProfileIfPhoneNumberEmpty(
-      {required bool isSocialLogin, required VoidCallback callback}) {
-    if (isSocialLogin) {
-      EditProfileScreen(onSuccess: callback).launch(context,
-          isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
-    } else {
-      callback();
+  void _editProfileIfPhoneNumberEmpty({required VoidCallback callback}) async {
+    if (userStore.userContactNumber.isEmpty) {
+      await const EditProfileScreen(canPop: false)
+          .launch(context, pageRouteAnimation: PageRouteAnimation.Fade);
     }
+
+    callback();
   }
 
   void onLoginSuccessRedirection({bool isSocialLogin = false}) {
@@ -118,12 +117,10 @@ class _SignInScreenState extends State<SignInScreen> {
       }
 
       _editProfileIfPhoneNumberEmpty(
-        isSocialLogin: isSocialLogin,
         callback: () => finish(context, true),
       );
     } else {
       _editProfileIfPhoneNumberEmpty(
-        isSocialLogin: isSocialLogin,
         callback: () => const DashboardScreen().launch(context,
             isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade),
       );
