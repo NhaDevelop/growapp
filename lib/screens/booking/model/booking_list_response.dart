@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/screens/services/models/service_response.dart';
 import 'package:grow_tokyo_app/utils/constants.dart';
@@ -125,7 +123,6 @@ class BookingListData {
   });
 
   factory BookingListData.fromJson(Map<String, dynamic> json) {
-    inspect(json);
     return BookingListData(
       branchName: json['branch_name'],
       createdAt: json['created_at'],

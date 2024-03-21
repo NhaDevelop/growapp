@@ -521,6 +521,9 @@ class LanguageEn extends BaseLanguage {
   String get notifications => 'Notifications';
 
   @override
+  String get happyBirthday => 'Happy Birthday';
+
+  @override
   String get user => 'User';
 
   @override

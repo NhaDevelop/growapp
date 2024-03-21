@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:grow_tokyo_app/screens/profile/view/html_content_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/app_scaffold.dart';
@@ -110,6 +111,8 @@ class _NotificationFragmentState extends State<NotificationFragment> {
                 },
                 itemBuilder: (context, index) {
                   NotificationData notificationData = list[index];
+                  final notiGroup = notificationData
+                      .data?.notificationDetail?.notificationGroup;
 
                   return GestureDetector(
                     onTap: () async {
@@ -117,9 +120,14 @@ class _NotificationFragmentState extends State<NotificationFragment> {
                       if (notificationData.data!.notificationDetail!.id
                               .validate() >
                           0) {
-                        if (notificationData
-                                .data!.notificationDetail!.notificationGroup ==
-                            "shop") {
+                        if (notiGroup == "happy_birthday") {
+                          HtmlContentScreen(
+                                  title: locale.happyBirthday,
+                                  htmlData: notificationData
+                                      .data!.notificationDetail!.content
+                                      .validate())
+                              .launch(context);
+                        } else if (notiGroup == "shop") {
                           OrderDetailScreen(
                                   orderId: notificationData
                                       .data!.notificationDetail!.id

@@ -9,7 +9,6 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../../main.dart';
 import '../../../utils/app_common.dart';
 import '../../../utils/colors.dart';
-import '../../../utils/common_base.dart';
 import '../../branch/model/branch_response.dart';
 
 class BranchItemComponent extends StatefulWidget {
@@ -137,33 +136,7 @@ class _BranchItemComponentState extends State<BranchItemComponent> {
                                 style: secondaryTextStyle()),
                           ],
                         ).expand(),
-                      ],
-                    ),
-                    4.height,
-                    Row(
-                      children: [
-                        Row(
-                          children: [
-                            TextIcon(
-                              text: widget.branchData.ratingStar
-                                  .validate()
-                                  .toString(),
-                              spacing: 10,
-                              edgeInsets: const EdgeInsets.only(left: 0),
-                              prefix: Icon(Icons.star,
-                                  size: 18,
-                                  color: getRatingBarColor(widget
-                                      .branchData.ratingStar
-                                      .validate()
-                                      .toInt())),
-                            ),
-                            if (widget.branchData.totalReview.validate() >= 1)
-                              Text(
-                                '(${locale.basedOn} ${widget.branchData.totalReview.validate()} ${locale.review}${widget.branchData.totalReview.validate() > 1 ? locale.s : ''})',
-                                style: secondaryTextStyle(),
-                              ).paddingLeft(4),
-                          ],
-                        ).expand(),
+                        16.width,
                         if (widget.branchData.todayTime != null)
                           StatusWidget(
                             text: getBranchIsOpen(

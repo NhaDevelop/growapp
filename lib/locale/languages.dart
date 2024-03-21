@@ -340,6 +340,8 @@ abstract class BaseLanguage {
 
   String get notifications;
 
+  String get happyBirthday;
+
   String get user;
 
   String get profile;

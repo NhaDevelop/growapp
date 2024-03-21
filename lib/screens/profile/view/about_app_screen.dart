@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/screens/profile/profile_repository.dart';
 import 'package:grow_tokyo_app/screens/profile/shimmer/about_app_shimmer.dart';
-import 'package:grow_tokyo_app/screens/profile/view/page_screen.dart';
+import 'package:grow_tokyo_app/screens/profile/view/html_content_screen.dart';
 import 'package:grow_tokyo_app/utils/app_common.dart';
 import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
 import 'package:grow_tokyo_app/utils/images.dart';
@@ -31,7 +31,10 @@ class AboutAppScreen extends StatelessWidget {
                 splashColor: Colors.transparent,
                 decoration: boxDecorationWithRoundedCorners(
                     backgroundColor: context.cardColor),
-                onTap: () => PageScreen(data: page).launch(context),
+                onTap: () => HtmlContentScreen(
+                  title: page.name,
+                  htmlData: page.description,
+                ).launch(context),
               ).paddingOnly(top: 16);
             },
           );
