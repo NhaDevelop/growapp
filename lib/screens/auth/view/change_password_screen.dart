@@ -159,11 +159,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 color: secondaryColor,
                 textColor: Colors.white,
                 width: context.width() - context.navigationBarHeight,
-                onTap: () {
-                  ifNotTester(() {
-                    changePassword();
-                  });
-                },
+                onTap: changePassword,
               ),
               24.height,
             ],

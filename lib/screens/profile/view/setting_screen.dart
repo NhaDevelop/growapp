@@ -104,22 +104,20 @@ class _SettingScreenState extends State<SettingScreen> {
                   positiveText: locale.delete,
                   primaryColor: context.primaryColor,
                   onAccept: (_) {
-                    ifNotTester(() {
-                      appStore.setLoading(true);
+                    appStore.setLoading(true);
 
-                      deleteAccountCompletely().then((value) async {
-                        await clearPreferences();
-                        appStore.setLoading(false);
+                    deleteAccountCompletely().then((value) async {
+                      await clearPreferences();
+                      appStore.setLoading(false);
 
-                        toast(value.message);
+                      toast(value.message);
 
-                        push(const DashboardScreen(),
-                            isNewTask: true,
-                            pageRouteAnimation: PageRouteAnimation.Fade);
-                      }).catchError((e) {
-                        appStore.setLoading(false);
-                        toast(e.toString());
-                      });
+                      push(const DashboardScreen(),
+                          isNewTask: true,
+                          pageRouteAnimation: PageRouteAnimation.Fade);
+                    }).catchError((e) {
+                      appStore.setLoading(false);
+                      toast(e.toString());
                     });
                   },
                   dialogType: DialogType.DELETE,

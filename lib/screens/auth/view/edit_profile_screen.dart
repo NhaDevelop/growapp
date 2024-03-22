@@ -312,18 +312,16 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                         color: secondaryColor,
                         textStyle: primaryTextStyle(color: white),
                         width: context.width() - context.navigationBarHeight,
-                        onTap: () {
+                        onTap: () async {
                           final isFormValidate =
                               formKey.currentState?.validate() ?? false;
                           if (!isFormValidate) return;
 
-                          ifNotTester(() async {
-                            if (await isNetworkAvailable()) {
-                              update();
-                            } else {
-                              toast(locale.yourInternetIsNotWorking);
-                            }
-                          });
+                          if (await isNetworkAvailable()) {
+                            update();
+                          } else {
+                            toast(locale.yourInternetIsNotWorking);
+                          }
                         },
                       ),
                       24.height,

@@ -333,14 +333,6 @@ bool isTimeAfter(TimeOfDay currentTime, TimeOfDay specifiedTime) {
   return currentTimeDateTime.isAfter(specifiedTimeDateTime);
 }
 
-void ifNotTester(VoidCallback callback) {
-  if (userStore.userEmail != DEFAULT_EMAIL) {
-    callback.call();
-  } else {
-    toast(locale.demoUserCannotBeGrantedForThis);
-  }
-}
-
 void showNewUpdateDialog(BuildContext context) async {
   showInDialog(
     context,

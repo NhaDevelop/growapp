@@ -27,9 +27,6 @@ const SHIPPING_DELIVERY_TYPE_REGULAR = 'regular';
 const BRANCH_STATUS_OPEN = 'Open';
 const BRANCH_STATUS_CLOSED = 'Closed';
 
-//region default USER login
-const DEFAULT_EMAIL = 'john@gmail.com';
-const DEFAULT_PASS = '12345678';
 //endregion
 
 class TaxType {

@@ -57,10 +57,8 @@ class _SignInScreenState extends State<SignInScreen> {
     isRemember =
         getBoolAsync(SharedPreferenceConst.IS_REMEMBERED, defaultValue: true);
     if (isRemember && !isLoginTypeGoogle && !isLoginTypeApple) {
-      emailCont.text = getStringAsync(SharedPreferenceConst.USER_EMAIL,
-          defaultValue: DEFAULT_EMAIL);
-      passwordCont.text = getStringAsync(SharedPreferenceConst.USER_PASSWORD,
-          defaultValue: DEFAULT_PASS);
+      emailCont.text = getStringAsync(SharedPreferenceConst.USER_EMAIL);
+      passwordCont.text = getStringAsync(SharedPreferenceConst.USER_PASSWORD);
     }
   }
 
