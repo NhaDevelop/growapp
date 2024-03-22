@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:grow_tokyo_app/screens/notifications/component/happy_birthday_notification_widget.dart';
 import 'package:grow_tokyo_app/screens/profile/view/html_content_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -114,35 +115,34 @@ class _NotificationFragmentState extends State<NotificationFragment> {
                   final notiGroup = notificationData
                       .data?.notificationDetail?.notificationGroup;
 
+                  if (notiGroup == "happy_birthday") {
+                    return GestureDetector(
+                      onTap: () => HtmlContentScreen(
+                        title: locale.happyBirthday,
+                        htmlData: notificationData
+                            .data!.notificationDetail!.content
+                            .validate(),
+                      ).launch(context),
+                      child: HappyBirthdayNotificationWidget(
+                          notificationData: notificationData),
+                    );
+                  }
+
                   return GestureDetector(
                     onTap: () async {
-                      /// Tap on notification redirect to booking detail screen
-                      if (notificationData.data!.notificationDetail!.id
-                              .validate() >
-                          0) {
-                        if (notiGroup == "happy_birthday") {
-                          HtmlContentScreen(
-                                  title: locale.happyBirthday,
-                                  htmlData: notificationData
-                                      .data!.notificationDetail!.content
-                                      .validate())
-                              .launch(context);
-                        } else if (notiGroup == "shop") {
-                          OrderDetailScreen(
-                                  orderId: notificationData
-                                      .data!.notificationDetail!.id
-                                      .validate(),
-                                  orderCode: notificationData
-                                      .data!.notificationDetail!.orderCode
-                                      .validate())
-                              .launch(context,
-                                  pageRouteAnimation: PageRouteAnimation.Fade);
-                        } else {
-                          BookingDetailScreen(
-                                  bookingId:
-                                      notificationData.id.validate().toInt())
-                              .launch(context);
-                        }
+                      final id = notificationData.data!.notificationDetail!.id
+                          .validate();
+                      if (id < 0) return;
+                      final orderCode = notificationData
+                          .data!.notificationDetail!.orderCode
+                          .validate();
+
+                      if (notiGroup == "shop") {
+                        OrderDetailScreen(orderId: id, orderCode: orderCode)
+                            .launch(context,
+                                pageRouteAnimation: PageRouteAnimation.Fade);
+                      } else {
+                        BookingDetailScreen(bookingId: id).launch(context);
                       }
                     },
                     child:
