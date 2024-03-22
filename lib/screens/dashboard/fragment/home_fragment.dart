@@ -44,14 +44,15 @@ class _HomeFragmentState extends State<HomeFragment> {
         viewProfile().then((value) {
           //
         }).catchError(onError);
+        getPointsAPI().then((value) {
+          //
+        }).catchError(onError);
       }
     });
   }
 
   void init() async {
     future = userDashboard();
-
-    getPointsAPI();
 
     if (appConfigurationResponseCached == null) {
       getAppConfigurations();
