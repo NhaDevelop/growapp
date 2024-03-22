@@ -162,6 +162,27 @@ class _SignInScreenState extends State<SignInScreen> {
     });
   }
 
+  void facebookSignIn() async {
+    appStore.setLoading(true);
+    await facebookLoginAuthService.signIn(context).then((value) async {
+      /// Social Login Api
+      await loginUser(value.toJson(), isSocialLogin: true).then((value) {
+        if (isRemember) {
+          setValue(SharedPreferenceConst.USER_EMAIL, emailCont.text);
+          setValue(SharedPreferenceConst.USER_PASSWORD, passwordCont.text);
+        }
+        onLoginSuccessRedirection(isSocialLogin: true);
+      }).catchError((e) {
+        appStore.setLoading(false);
+        toast(e.toString(), print: true);
+      });
+    }).catchError((e) {
+      log(e);
+      toast(e.toString(), print: true);
+      appStore.setLoading(false);
+    });
+  }
+
   @override
   void setState(VoidCallback fn) {
     if (mounted) super.setState(fn);
@@ -357,6 +378,34 @@ class _SignInScreenState extends State<SignInScreen> {
                                   child: GoogleLogoWidget(size: 16),
                                 ),
                                 Text("${locale.signInWith} ${locale.google}",
+                                        style: boldTextStyle(size: 12),
+                                        textAlign: TextAlign.center)
+                                    .expand(),
+                              ],
+                            ),
+                          ),
+                          24.height,
+                          AppButton(
+                            text: '',
+                            color: context.cardColor,
+                            padding: const EdgeInsets.all(8),
+                            textStyle: boldTextStyle(),
+                            width:
+                                context.width() - context.navigationBarHeight,
+                            onTap: facebookSignIn,
+                            child: Row(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: boxDecorationWithRoundedCorners(
+                                    backgroundColor:
+                                        primaryColor.withOpacity(0.1),
+                                    boxShape: BoxShape.circle,
+                                  ),
+                                  child: Image.asset(ic_facebook_colored,
+                                      width: 24),
+                                ),
+                                Text("${locale.signInWith} ${locale.facebook}",
                                         style: boldTextStyle(size: 12),
                                         textAlign: TextAlign.center)
                                     .expand(),

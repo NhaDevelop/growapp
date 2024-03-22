@@ -45,6 +45,7 @@ dependencies:
   # SOCIAL LOGIN
   google_sign_in: ^6.1.4
   the_apple_sign_in: ^1.1.1
+  flutter_facebook_auth: ^6.1.1
 
   # BARCODE
   syncfusion_flutter_barcodes: ^22.1.38

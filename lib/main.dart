@@ -7,6 +7,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:grow_tokyo_app/locale/language_en.dart';
 import 'package:grow_tokyo_app/screens/auth/services/apple_login_auth_service.dart';
 import 'package:grow_tokyo_app/screens/auth/services/auth_service.dart';
+import 'package:grow_tokyo_app/screens/auth/services/facebook_login_auth_service.dart';
 import 'package:grow_tokyo_app/screens/auth/services/google_sign_in_auth_service.dart';
 import 'package:grow_tokyo_app/screens/auth/services/user_service.dart';
 import 'package:grow_tokyo_app/screens/booking/model/booking_list_response.dart';
@@ -61,6 +62,7 @@ UserService userService = UserService();
 AuthService authService = AuthService();
 GoogleSignInAuthService googleSignInAuthService = GoogleSignInAuthService();
 AppleLoginAuthService appleLoginAuthService = AppleLoginAuthService();
+FacebookLoginAuthService facebookLoginAuthService = FacebookLoginAuthService();
 //endregion
 
 //region LANGUAGE

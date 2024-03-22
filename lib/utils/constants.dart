@@ -80,6 +80,7 @@ class LoginTypeConst {
   static const LOGIN_TYPE_USER = 'user';
   static const LOGIN_TYPE_GOOGLE = 'google';
   static const LOGIN_TYPE_APPLE = 'apple';
+  static const LOGIN_TYPE_FACEBOOK = 'facebook';
   static const LOGIN_TYPE_OTP = 'mobile';
 }
 //endregion
