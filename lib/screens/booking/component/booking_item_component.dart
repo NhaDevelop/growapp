@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:grow_tokyo_app/main.dart';
-import 'package:grow_tokyo_app/screens/booking/view/booking_screen.dart';
 import 'package:grow_tokyo_app/utils/common_base.dart';
 import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
 import 'package:grow_tokyo_app/utils/images.dart';
@@ -161,27 +160,27 @@ class BookingItemComponent extends StatelessWidget {
                   ),
                 ],
               ).paddingSymmetric(horizontal: 16, vertical: 8),
-              if (bookingData.status == BookingStatusConst.COMPLETED)
-                Column(
-                  children: [
-                    8.height,
-                    AppButton(
-                      text: locale.reschedule,
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      width: context.width(),
-                      textColor: secondaryColor,
-                      color: territoryButtonColor,
-                      elevation: 0,
-                      onTap: () {
-                        BookingScreen(
-                                services: bookingData.serviceList.validate(),
-                                isReschedule: true)
-                            .launch(context);
-                      },
-                    ).paddingSymmetric(horizontal: 16),
-                    8.height,
-                  ],
-                ),
+              // if (bookingData.status == BookingStatusConst.COMPLETED)
+              //   Column(
+              //     children: [
+              //       8.height,
+              //       AppButton(
+              //         text: locale.reschedule,
+              //         padding: const EdgeInsets.symmetric(vertical: 12),
+              //         width: context.width(),
+              //         textColor: secondaryColor,
+              //         color: territoryButtonColor,
+              //         elevation: 0,
+              //         onTap: () {
+              //           BookingScreen(
+              //                   services: bookingData.serviceList.validate(),
+              //                   isReschedule: true)
+              //               .launch(context);
+              //         },
+              //       ).paddingSymmetric(horizontal: 16),
+              //       8.height,
+              //     ],
+              //   ),
               if (bookingData.status == BookingStatusConst.PENDING &&
                   (bookingData.payment == null ||
                       (bookingData.payment != null &&
