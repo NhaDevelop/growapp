@@ -190,7 +190,7 @@ Future<List<ServiceListData>> getBranchServiceList(
   return list;
 }
 
-Future<BranchConfigurationResponse> getBranchConfiguration(
+Future<BranchConfigurationData?> getBranchConfiguration(
     int branchId, int employeeId) async {
   try {
     var res = BranchConfigurationResponse.fromJson(await handleResponse(
@@ -203,7 +203,7 @@ Future<BranchConfigurationResponse> getBranchConfiguration(
 
     branchConfigurationCached = res.data;
 
-    return res;
+    return res.data;
   } catch (e) {
     appStore.setLoading(false);
     rethrow;

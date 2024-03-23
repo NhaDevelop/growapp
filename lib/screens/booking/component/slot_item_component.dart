@@ -5,7 +5,7 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/common_base.dart';
 
-class SlotItemComponent extends StatefulWidget {
+class SlotItemComponent extends StatelessWidget {
   final SlotData timeSlot;
   final bool isSelected;
   final DateTime selectedHorizontalDate;
@@ -20,15 +20,11 @@ class SlotItemComponent extends StatefulWidget {
       required this.selectedHorizontalDate});
 
   @override
-  State<SlotItemComponent> createState() => _SlotItemComponentState();
-}
-
-class _SlotItemComponentState extends State<SlotItemComponent> {
-  @override
   Widget build(BuildContext context) {
+    bool isSlotAvailable = timeSlot.slotAvailability(selectedHorizontalDate);
     return GestureDetector(
       onTap: () async {
-        widget.onTap?.call();
+        onTap?.call();
       },
       child: Container(
         width: context.width() / 3 - 35,
@@ -36,21 +32,26 @@ class _SlotItemComponentState extends State<SlotItemComponent> {
         alignment: Alignment.center,
         decoration: boxDecorationWithRoundedCorners(
           borderRadius: radius(),
-          backgroundColor: widget.isSelected
-              ? indicatorColor
-              : context.scaffoldBackgroundColor,
+          border: Border.all(
+            color: isSlotAvailable ? indicatorColor : Colors.transparent,
+          ),
+          backgroundColor: !isSlotAvailable
+              ? Colors.grey.shade200
+              : isSelected
+                  ? indicatorColor
+                  : transparentColor,
         ),
         child: Marquee(
           child: Text(
-            formatOnlyTime(context, startTime: widget.timeSlot.startTime),
+            formatOnlyTime(context, startTime: timeSlot.startTime),
             style: boldTextStyle(
               size: 12,
-              color:
-                  widget.isSelected ? Colors.white : textSecondaryColorGlobal,
-              decoration: !widget.timeSlot
-                      .slotAvailability(widget.selectedHorizontalDate)
-                  ? TextDecoration.lineThrough
-                  : null,
+              color: !isSlotAvailable
+                  ? grey
+                  : isSelected
+                      ? Colors.white
+                      : textSecondaryColorGlobal,
+              decoration: isSlotAvailable ? null : TextDecoration.lineThrough,
             ),
           ),
         ),

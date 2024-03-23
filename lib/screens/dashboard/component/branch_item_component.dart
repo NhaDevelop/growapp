@@ -87,10 +87,12 @@ class _BranchItemComponentState extends State<BranchItemComponent> {
                   children: [
                     Row(
                       children: [
-                        Text(widget.branchData.name.validate(),
-                            style: boldTextStyle(),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis),
+                        Marquee(
+                          child: Text(widget.branchData.name.validate(),
+                              style: boldTextStyle(),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis),
+                        ).expand(),
                         6.width,
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 8),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grow_tokyo_app/components/empty_error_state_widget.dart';
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/screens/experts/employee_repository.dart';
 import 'package:grow_tokyo_app/screens/experts/model/employee_month_schedule_response.dart';
@@ -15,7 +16,7 @@ class EmployeeCalendarComponent extends StatefulWidget {
   final Function(DateTime)? onSelect;
 
   const EmployeeCalendarComponent(
-      {super.key, required this.employeeId, this.onSelect, this.branchId});
+      {super.key, required this.employeeId, this.branchId, this.onSelect});
 
   @override
   State<EmployeeCalendarComponent> createState() =>
@@ -23,7 +24,18 @@ class EmployeeCalendarComponent extends StatefulWidget {
 }
 
 class _EmployeeCalendarComponentState extends State<EmployeeCalendarComponent> {
-  DateTime? _selectedDate;
+  Future<List<EmployeeWorkingDayModel>>? future;
+  DateTime? selectedDate;
+
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  Future<void> init() async {
+    future = getEmployeeMonthSchedule(employeeId: widget.employeeId);
+  }
 
   String? _getBranchName(DateTime date, List<EmployeeWorkingDayModel> snap) {
     if (widget.branchId == null) {
@@ -37,11 +49,6 @@ class _EmployeeCalendarComponentState extends State<EmployeeCalendarComponent> {
     }
   }
 
-  void _onSelected(DateTime date) {
-    _selectedDate = date;
-    widget.onSelect?.call(date);
-  }
-
   bool _isAvailable(DateTime date, List<EmployeeWorkingDayModel> snap) {
     if (widget.branchId == null) {
       return snap.any((e) => e.date.isSameDateWith(date));
@@ -52,13 +59,39 @@ class _EmployeeCalendarComponentState extends State<EmployeeCalendarComponent> {
     }
   }
 
+  void _onSelect(DateTime date) {
+    setState(() => selectedDate = date);
+    widget.onSelect?.call(date);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SnapHelperWidget<List<EmployeeWorkingDayModel>>(
-      future: getEmployeeMonthSchedule(employeeId: widget.employeeId),
+      future: future,
       initialData: employeeWorkingDayListCached?[widget.employeeId],
       loadingWidget: const TableCalendarShimmer(),
+      errorBuilder: (error) {
+        return NoDataWidget(
+          title: error,
+          retryText: locale.reload,
+          imageWidget: const ErrorStateWidget(),
+          onRetry: () {
+            init();
+            setState(() {});
+          },
+        );
+      },
       onSuccess: (workingDays) {
+        if (selectedDate == null &&
+            widget.onSelect != null &&
+            workingDays.isNotEmpty) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            final index = workingDays.indexWhere(
+                (e) => e.date.isToday || e.date.isAfter(DateTime.now()));
+            if (index < 0) return;
+            _onSelect(workingDays[index].date);
+          });
+        }
         return TableCalendar(
           focusedDay: DateTime.now(),
           firstDay: firstDayOfTheMonth,
@@ -72,12 +105,12 @@ class _EmployeeCalendarComponentState extends State<EmployeeCalendarComponent> {
             final isToday = date.isToday;
             final isPast = !isToday && date.isBefore(DateTime.now());
             final isAvailable = !isPast && _isAvailable(date, workingDays);
-            final isSelected = date.isSameDateWith(_selectedDate);
+            final isSelected = date.isSameDateWith(selectedDate);
             final branchName = _getBranchName(date, workingDays);
 
             return GestureDetector(
               behavior: HitTestBehavior.opaque,
-              onTap: isAvailable ? () => _onSelected(date) : null,
+              onTap: isAvailable ? () => _onSelect(date) : null,
               child: Container(
                 width: double.infinity,
                 color: isSelected

@@ -1,100 +1,78 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:grow_tokyo_app/screens/experts/shimmer/table_calendar_shimmer.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/shimmer_widget.dart';
 
 class BookingStep3Shimmer extends StatelessWidget {
-  final bool isFromBookingInfoDetail;
-
-  const BookingStep3Shimmer({super.key, this.isFromBookingInfoDetail = false});
+  const BookingStep3Shimmer({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedScrollView(
-      padding: EdgeInsets.only(
-          left: 20,
-          right: 20,
-          top: isFromBookingInfoDetail ? 10 : 80,
-          bottom: isFromBookingInfoDetail ? 60 : 80),
-      listAnimationType: ListAnimationType.None,
-      children: [
-        ShimmerWidget(height: 14, width: context.width() * 0.15),
-        18.height,
-        Container(
-          decoration: boxDecorationWithRoundedCorners(),
-          child: const TableCalendarShimmer().paddingAll(12),
-        ),
-        30.height,
-        ShimmerWidget(height: 14, width: context.width() * 0.30),
-        18.height,
-        Container(
-          padding: const EdgeInsets.all(16),
-          width: context.width(),
-          margin: const EdgeInsets.only(bottom: 50),
-          decoration: boxDecorationWithRoundedCorners(
-              backgroundColor: context.cardColor, borderRadius: radius()),
-          child: Column(
+    return Container(
+      padding: const EdgeInsets.all(16),
+      width: context.width(),
+      margin: const EdgeInsets.only(bottom: 50),
+      decoration: boxDecorationWithRoundedCorners(
+          backgroundColor: context.cardColor, borderRadius: radius()),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ShimmerWidget(height: 12, width: context.width() * 0.20),
-                  10.height,
-                  AnimatedWrap(
-                    spacing: 16,
-                    runSpacing: 16,
-                    itemCount: 12,
-                    listAnimationType: ListAnimationType.None,
-                    itemBuilder: (p0, p1) {
-                      return ShimmerWidget(
-                          height: 28, width: context.width() / 3 - 35);
-                    },
-                  ),
-                ],
-              ),
-              20.height,
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ShimmerWidget(height: 12, width: context.width() * 0.20),
-                  10.height,
-                  AnimatedWrap(
-                    spacing: 16,
-                    runSpacing: 16,
-                    itemCount: 12,
-                    listAnimationType: ListAnimationType.None,
-                    itemBuilder: (p0, p1) {
-                      return ShimmerWidget(
-                          height: 28, width: context.width() / 3 - 35);
-                    },
-                  ),
-                ],
-              ),
-              20.height,
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ShimmerWidget(height: 12, width: context.width() * 0.20),
-                  10.height,
-                  AnimatedWrap(
-                    spacing: 16,
-                    runSpacing: 16,
-                    itemCount: 12,
-                    listAnimationType: ListAnimationType.None,
-                    itemBuilder: (p0, p1) {
-                      return ShimmerWidget(
-                          height: 28, width: context.width() / 3 - 35);
-                    },
-                  ),
-                ],
+              ShimmerWidget(height: 12, width: context.width() * 0.20),
+              10.height,
+              AnimatedWrap(
+                spacing: 16,
+                runSpacing: 16,
+                itemCount: 12,
+                listAnimationType: ListAnimationType.None,
+                itemBuilder: (p0, p1) {
+                  return ShimmerWidget(
+                      height: 28, width: context.width() / 3 - 35);
+                },
               ),
             ],
           ),
-        ),
-      ],
+          20.height,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ShimmerWidget(height: 12, width: context.width() * 0.20),
+              10.height,
+              AnimatedWrap(
+                spacing: 16,
+                runSpacing: 16,
+                itemCount: 12,
+                listAnimationType: ListAnimationType.None,
+                itemBuilder: (p0, p1) {
+                  return ShimmerWidget(
+                      height: 28, width: context.width() / 3 - 35);
+                },
+              ),
+            ],
+          ),
+          20.height,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ShimmerWidget(height: 12, width: context.width() * 0.20),
+              10.height,
+              AnimatedWrap(
+                spacing: 16,
+                runSpacing: 16,
+                itemCount: 12,
+                listAnimationType: ListAnimationType.None,
+                itemBuilder: (p0, p1) {
+                  return ShimmerWidget(
+                      height: 28, width: context.width() / 3 - 35);
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

@@ -11,7 +11,6 @@ import 'package:grow_tokyo_app/utils/common_base.dart';
 import 'package:grow_tokyo_app/utils/constants.dart';
 import 'package:grow_tokyo_app/utils/extensions/date_extensions.dart';
 import 'package:grow_tokyo_app/utils/extensions/int_extension.dart';
-import 'package:grow_tokyo_app/utils/horizontalCalender/date_picker_controller.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/common_bottom_price_widget.dart';
@@ -20,11 +19,9 @@ import '../../../components/loader_widget.dart';
 import '../../../utils/app_common.dart';
 import '../../branch/branch_repository.dart';
 import '../../branch/model/branch_configuration_response.dart';
-// import '../../dashboard/component/booking_list_component.dart';
 import '../../services/models/service_response.dart';
 import '../booking_repository.dart';
 import '../shimmer/booking_step3_shimmer.dart';
-// import '../view/booking_detail_screen.dart';
 
 class BookingStep3Component extends StatefulWidget {
   final bool isFromBookingInfoDetail;
@@ -46,12 +43,11 @@ class BookingStep3Component extends StatefulWidget {
 }
 
 class _BookingStep3ComponentState extends State<BookingStep3Component> {
-  final DatePickerController _datePickerController = DatePickerController();
   UniqueKey slotWidgetKey = UniqueKey();
 
-  Future<BranchConfigurationResponse>? future;
+  Future<BranchConfigurationData?>? future;
 
-  DateTime? selectedHorizontalDate;
+  DateTime? selectedDate;
 
   List<String> monthList =
       List.generate(12, (index) => (index + 1).toMonthName());
@@ -67,15 +63,6 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
   void init() {
     future = getBranchConfiguration(
         appStore.branchId, bookingRequestStore.employeeId);
-  }
-
-  void setCustomDate(int month) {
-    selectedHorizontalDate = DateTime(DateTime.now().year, month, 1);
-    _datePickerController.selectedDate = selectedHorizontalDate;
-    _datePickerController.scrollTo(selectedHorizontalDate!);
-
-    _datePickerController.scrollToSelectedItem();
-    setState(() {});
   }
 
   String getSlotStartTime(List<SlotData>? slot, DateTime date) {
@@ -124,86 +111,81 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
         children: [
           Stack(
             children: [
-              SnapHelperWidget(
-                future: future,
-                loadingWidget: BookingStep3Shimmer(
-                    isFromBookingInfoDetail: widget.isFromBookingInfoDetail),
-                errorBuilder: (error) {
-                  return NoDataWidget(
-                    title: error,
-                    retryText: locale.reload,
-                    imageWidget: const ErrorStateWidget(),
-                    onRetry: () {
-                      appStore.setLoading(true);
+              AnimatedScrollView(
+                padding: EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                    top: widget.isFromBookingInfoDetail ? 10 : 50,
+                    bottom: widget.isFromBookingInfoDetail ? 60 : 80),
+                onSwipeRefresh: () async {
+                  init();
+                  setState(() {});
 
-                      init();
-                      setState(() {});
-                    },
-                  );
+                  return await 2.seconds.delay;
                 },
-                onSuccess: (snap) {
-                  if (snap.data == null) {
-                    return NoDataWidget(
-                      title: locale.noTimeSlots,
-                      retryText: locale.reload,
-                      onRetry: () {
-                        appStore.setLoading(true);
-
-                        init();
+                children: [
+                  ViewAllLabel(label: locale.date, isShowAll: false),
+                  Container(
+                    decoration: boxDecorationWithRoundedCorners(),
+                    child: EmployeeCalendarComponent(
+                      employeeId: bookingRequestStore.employeeId,
+                      branchId: appStore.branchId,
+                      onSelect: (day) {
+                        selectedDate = day;
+                        slotWidgetKey = UniqueKey();
                         setState(() {});
                       },
-                    );
-                  }
+                    ).paddingAll(12),
+                  ),
+                  8.height,
+                  ViewAllLabel(label: locale.availableSlots, isShowAll: false),
+                  SnapHelperWidget(
+                    future: future,
+                    loadingWidget: const BookingStep3Shimmer(),
+                    initialData: branchConfigurationCached,
+                    errorBuilder: (error) {
+                      return NoDataWidget(
+                        title: error,
+                        retryText: locale.reload,
+                        imageWidget: const ErrorStateWidget(),
+                        onRetry: () {
+                          appStore.setLoading(true);
 
-                  if (selectedHorizontalDate == null &&
-                      snap.data!.employeeSchedule.isNotEmpty) {
-                    selectedHorizontalDate = snap.data!.employeeSchedule.first;
-                  }
-
-                  return AnimatedScrollView(
-                    padding: EdgeInsets.only(
-                        left: 20,
-                        right: 20,
-                        top: widget.isFromBookingInfoDetail ? 10 : 50,
-                        bottom: widget.isFromBookingInfoDetail ? 60 : 80),
-                    onSwipeRefresh: () async {
-                      init();
-                      setState(() {});
-
-                      return await 2.seconds.delay;
+                          init();
+                          setState(() {});
+                        },
+                      );
                     },
-                    children: [
-                      ViewAllLabel(label: locale.date, isShowAll: false),
-                      Container(
-                        decoration: boxDecorationWithRoundedCorners(),
-                        child: EmployeeCalendarComponent(
-                          employeeId: bookingRequestStore.employeeId,
-                          branchId: appStore.branchId,
-                          onSelect: (day) {
-                            selectedHorizontalDate = day;
-                            slotWidgetKey = UniqueKey();
+                    onSuccess: (snap) {
+                      if (selectedDate == null) {
+                        return NoDataWidget(
+                          title: locale.pleaseSelectDateFirst,
+                        );
+                      }
+                      if (snap == null) {
+                        return NoDataWidget(
+                          title: locale.noTimeSlots,
+                          retryText: locale.reload,
+                          onRetry: () {
+                            appStore.setLoading(true);
+
+                            init();
                             setState(() {});
                           },
-                        ).paddingAll(12),
-                      ),
-                      if (selectedHorizontalDate != null) ...[
-                        8.height,
-                        ViewAllLabel(
-                            label: locale.availableSlots, isShowAll: false),
-                        SlotWidget(
-                          key: slotWidgetKey,
-                          selectedHorizontalDate: selectedHorizontalDate!,
-                          startTime: getSlotStartTime(
-                              snap.data!.slot, selectedHorizontalDate!),
-                          endTime: getSlotEndTime(
-                              snap.data!.slot, selectedHorizontalDate!),
-                          slotDuration: snap.data!.slotDuration
-                              .validate(value: DEFAULT_SLOT_INTERVAL_DURATION),
-                        ),
-                      ],
-                    ],
-                  );
-                },
+                        );
+                      }
+
+                      return SlotWidget(
+                        key: slotWidgetKey,
+                        selectedHorizontalDate: selectedDate!,
+                        startTime: getSlotStartTime(snap.slot, selectedDate!),
+                        endTime: getSlotEndTime(snap.slot, selectedDate!),
+                        slotDuration: snap.slotDuration
+                            .validate(value: DEFAULT_SLOT_INTERVAL_DURATION),
+                      );
+                    },
+                  ),
+                ],
               ),
               Observer(
                   builder: (context) =>
@@ -225,12 +207,12 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
                     .join(', '),
                 buttonText: locale.confirm,
                 onTap: () async {
-                  if (selectedHorizontalDate == null) {
+                  if (selectedDate == null) {
                     toast(locale.pleaseSelectDateFirst);
                     return;
                   }
                   if (bookingRequestStore.time.isNotEmpty) {
-                    bookingRequestStore.setDateInRequest(selectedHorizontalDate!
+                    bookingRequestStore.setDateInRequest(selectedDate!
                         .setFormattedDate(DateFormatConst.DATE_FORMAT_5)
                         .toString());
 
@@ -257,85 +239,6 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
           ).visible(!widget.isFromBookingInfoDetail),
         ],
       ),
-      // floatingActionButton: FloatingActionButton.extended(
-      //   backgroundColor: secondaryColor,
-      //   onPressed: () {
-      //     showConfirmDialogCustom(
-      //       context,
-      //       title: locale.bookingTimeSlotChangeMessage,
-      //       positiveText: locale.yes,
-      //       negativeText: locale.no,
-      //       onAccept: (_) {
-      //         List<ServiceListData> selectedService = [];
-
-      //         bookingRequestStore
-      //             .setEmployeeIdInRequest(widget.employeeId.validate());
-      //         bookingRequestStore.setDateInRequest(selectedHorizontalDate
-      //             .setFormattedDate(DateFormatConst.DATE_FORMAT_5)
-      //             .toString());
-
-      //         widget.serviceList.validate().forEachIndexed((element, index) {
-      //           selectedService.add(widget.serviceList.validate()[index]);
-      //         });
-
-      //         bookingRequestStore
-      //             .setSelectedServiceListInRequest(selectedService);
-
-      //         String tempDate = bookingRequestStore.date.validate();
-      //         String tempTime = bookingRequestStore.time.validate();
-
-      //         String dateString = "$tempDate $tempTime";
-
-      //         DateTime initialDateTime = DateTime.parse(dateString);
-
-      //         String updatedDateTime = formatDate(initialDateTime.toString(),
-      //             format: DateFormatConst.NEW_FORMAT);
-
-      //         bookingRequestStore.selectedServiceList
-      //             .validate()
-      //             .forEachIndexed((element, index) {
-      //           if (index == 0) {
-      //             element.startDateTime = formatDate(initialDateTime.toString(),
-      //                 format: DateFormatConst.NEW_FORMAT);
-      //             element.previousTime = initialDateTime;
-      //           } else {
-      //             ServiceListData previousData = bookingRequestStore
-      //                 .selectedServiceList
-      //                 .validate()[index - 1];
-      //             element.startDateTime = formatDate(
-      //                 previousData.previousTime!
-      //                     .add(previousData.durationMin.minutes)
-      //                     .toString(),
-      //                 format: DateFormatConst.NEW_FORMAT);
-      //             element.previousTime = previousData.previousTime!
-      //                 .add(previousData.durationMin.minutes);
-      //           }
-      //         });
-
-      //         appStore.setLoading(true);
-
-      //         bookingUpdate(bookingRequestStore.toJson(
-      //                 dateTime: updatedDateTime,
-      //                 bookingId: widget.bookingId,
-      //                 bookingStatus: BookingStatusConst.PENDING,
-      //                 isUpdate: true))
-      //             .then((value) {
-      //           appStore.setLoading(false);
-
-      //           onBookingDetailUpdate.call();
-      //           onBookingListUpdate.call('');
-      //           finish(context);
-      //           toast(locale.bookingSuccessfullyUpdateMessage);
-      //         }).catchError((e) {
-      //           appStore.setLoading(false);
-      //           toast(e.toString());
-      //         });
-      //       },
-      //       primaryColor: context.primaryColor,
-      //     );
-      //   },
-      //   label: Text(locale.update, style: boldTextStyle(color: Colors.white)),
-      // ).visible(widget.isFromBookingInfoDetail),
     );
   }
 }
