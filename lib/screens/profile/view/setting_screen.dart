@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grow_tokyo_app/screens/app_country_screen.dart';
 import 'package:grow_tokyo_app/screens/auth/view/change_password_screen.dart';
+import 'package:grow_tokyo_app/screens/profile/components/deletion_confirm_dialog.dart';
 import 'package:grow_tokyo_app/utils/common_base.dart';
 import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
 import 'package:grow_tokyo_app/utils/images.dart';
@@ -97,32 +98,30 @@ class _SettingScreenState extends State<SettingScreen> {
               title: locale.deleteAccount,
               decoration: boxDecorationWithRoundedCorners(
                   backgroundColor: context.cardColor),
-              onTap: () {
-                showConfirmDialogCustom(
-                  context,
-                  negativeText: locale.cancel,
-                  positiveText: locale.delete,
-                  primaryColor: context.primaryColor,
-                  onAccept: (_) {
-                    appStore.setLoading(true);
+              onTap: () async {
+                final isConfirm = await showDialog(
+                      context: context,
+                      builder: (context) => const DeletionConfirmDialog(),
+                    ) ??
+                    false;
 
-                    deleteAccountCompletely().then((value) async {
-                      await clearPreferences();
-                      appStore.setLoading(false);
+                if (!isConfirm) return;
 
-                      toast(value.message);
+                appStore.setLoading(true);
 
-                      push(const DashboardScreen(),
-                          isNewTask: true,
-                          pageRouteAnimation: PageRouteAnimation.Fade);
-                    }).catchError((e) {
-                      appStore.setLoading(false);
-                      toast(e.toString());
-                    });
-                  },
-                  dialogType: DialogType.DELETE,
-                  title: locale.deleteAccountConfirmation,
-                );
+                deleteAccountCompletely().then((value) async {
+                  await clearPreferences();
+                  appStore.setLoading(false);
+
+                  toast(value.message);
+
+                  push(const DashboardScreen(),
+                      isNewTask: true,
+                      pageRouteAnimation: PageRouteAnimation.Fade);
+                }).catchError((e) {
+                  appStore.setLoading(false);
+                  toast(e.toString());
+                });
               },
             ),
           ],

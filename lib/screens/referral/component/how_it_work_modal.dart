@@ -15,18 +15,29 @@ class HowItWorksModal extends StatelessWidget {
         ModalHeader(title: locale.howItWorks),
         const Divider(height: 0),
         16.height,
-        SettingItemWidget(
-          title: locale.referralStep1,
-          leading: Image.asset(ic_send_2, width: 24, height: 24),
-        ),
-        SettingItemWidget(
-          title: locale.referralStep2,
-          leading: Image.asset(ic_percentage_square, width: 24, height: 24),
-        ),
-        SettingItemWidget(
-          title: locale.referralStep3,
-          leading: Image.asset(ic_crown, width: 24, height: 24),
-        ),
+        Row(
+          children: [
+            Image.asset(ic_send_2, width: 24, height: 24),
+            16.width,
+            Text(locale.referralStep1, style: boldTextStyle()).expand(),
+          ],
+        ).paddingSymmetric(horizontal: 16),
+        16.height,
+        Row(
+          children: [
+            Image.asset(ic_percentage_square, width: 24, height: 24),
+            16.width,
+            Text(locale.referralStep2, style: boldTextStyle()).expand(),
+          ],
+        ).paddingSymmetric(horizontal: 16),
+        16.height,
+        Row(
+          children: [
+            Image.asset(ic_crown, width: 24, height: 24),
+            16.width,
+            Text(locale.referralStep3, style: boldTextStyle()).expand(),
+          ],
+        ).paddingSymmetric(horizontal: 16),
         24.height,
         DottedBorderWidget(
           color: const Color(0xFFF2994A),
