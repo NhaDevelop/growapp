@@ -336,7 +336,7 @@ abstract class BaseLanguage {
 
   String get home;
 
-  String get booking;
+  String get myBooking;
 
   String get notifications;
 

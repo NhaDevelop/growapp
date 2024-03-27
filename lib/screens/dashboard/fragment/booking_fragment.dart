@@ -76,7 +76,7 @@ class _BookingFragmentState extends State<BookingFragment> {
                 backgroundColor: context.primaryColor,
               ),
               child: appBarWidget(
-                locale.booking,
+                locale.myBooking,
                 center: true,
                 showBack: false,
                 color: context.primaryColor,
@@ -292,8 +292,12 @@ class _BookingFragmentState extends State<BookingFragment> {
                         children: [
                           AppButton(
                             text: locale.clearFilter,
-                            textStyle: boldTextStyle(color: Colors.white),
-                            color: secondaryColor,
+                            textStyle: boldTextStyle(),
+                            shapeBorder: RoundedRectangleBorder(
+                              side: const BorderSide(color: primaryColor),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            color: white,
                             onTap: () {
                               bookingRequestStore.selectedBookingStatusList
                                   .clear();
@@ -314,7 +318,7 @@ class _BookingFragmentState extends State<BookingFragment> {
                             },
                           ).expand(),
                         ],
-                      ).paddingOnly(left: 16, right: 16, bottom: 16),
+                      ).paddingOnly(left: 16, right: 16, bottom: 46),
                     ],
                   ).expand(),
                 ],

@@ -130,7 +130,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                       color: appTextSecondaryColor, size: 18),
                   activeIconData: ic_selected_booking.iconImage(
                       color: context.primaryColor, size: 18),
-                  tabName: locale.booking,
+                  tabName: locale.myBooking,
                 ),
                 // bottomTab(
                 //   iconData: ic_unselected_shop.iconImage(

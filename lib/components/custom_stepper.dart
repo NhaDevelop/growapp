@@ -163,7 +163,7 @@ class _CustomStepperState extends State<CustomStepper> {
               SizedBox(
                 width: context.width(),
                 height: 130,
-                child: appBarWidget(locale.booking,
+                child: appBarWidget(locale.myBooking,
                         center: true,
                         color: context.primaryColor,
                         textColor: white)

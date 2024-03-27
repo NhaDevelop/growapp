@@ -515,7 +515,7 @@ class LanguageEn extends BaseLanguage {
   String get home => 'Home';
 
   @override
-  String get booking => 'Booking';
+  String get myBooking => 'My Booking';
 
   @override
   String get notifications => 'Notifications';
@@ -779,7 +779,7 @@ class LanguageEn extends BaseLanguage {
 
   @override
   String get deleteAccountConfirmation =>
-      'Your account will be deleted permanently. Your Data will not be Restored Again.';
+      'Your data will not be able to be restored after the deletion!';
 
   @override
   String get dangerZone => 'Danger Zone';
