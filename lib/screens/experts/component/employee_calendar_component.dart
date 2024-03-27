@@ -95,11 +95,16 @@ class _EmployeeCalendarComponentState extends State<EmployeeCalendarComponent> {
         return TableCalendar(
           focusedDay: DateTime.now(),
           firstDay: firstDayOfTheMonth,
-          lastDay: lastDayOfTheMonth,
-          headerVisible: false,
+          lastDay: DateTime(DateTime.now().year, DateTime.now().month + 3, 0),
+          headerVisible: true,
           daysOfWeekHeight: 25,
           calendarStyle: const CalendarStyle(isTodayHighlighted: false),
           availableGestures: AvailableGestures.none,
+          headerStyle: HeaderStyle(
+            formatButtonVisible: false,
+            titleCentered: true,
+            titleTextStyle: secondaryTextStyle(size: 16),
+          ),
           calendarBuilders:
               CalendarBuilders(defaultBuilder: (context, date, _) {
             final isToday = date.isToday;
