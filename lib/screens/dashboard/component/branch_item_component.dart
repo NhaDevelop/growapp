@@ -8,7 +8,6 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../../main.dart';
 import '../../../utils/app_common.dart';
-import '../../../utils/colors.dart';
 import '../../branch/model/branch_response.dart';
 
 class BranchItemComponent extends StatefulWidget {
@@ -93,51 +92,6 @@ class _BranchItemComponentState extends State<BranchItemComponent> {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis),
                         ).expand(),
-                        6.width,
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          decoration: boxDecorationWithRoundedCorners(
-                              backgroundColor: quaternaryButtonColor),
-                          child: Text(
-                              widget.branchData.branchFor
-                                  .validate()
-                                  .capitalizeFirstLetter(),
-                              style: primaryTextStyle(
-                                  color: secondaryColor, size: 11)),
-                        ),
-                      ],
-                    ),
-                    12.height,
-                    TextIcon(
-                      text: widget.branchData.addressLine1.validate(),
-                      expandedText: true,
-                      spacing: 12,
-                      textStyle: primaryTextStyle(),
-                      maxLine: 2,
-                      onTap: () {
-                        launchMap(widget.branchData.addressLine1.validate());
-                      },
-                      edgeInsets: const EdgeInsets.only(left: 0),
-                      prefix: ic_location.iconImage(
-                          color: textSecondaryColorGlobal, size: 16),
-                    ),
-                    6.height,
-                    Row(
-                      children: [
-                        ic_direction.iconImage(
-                            color: textSecondaryColorGlobal, size: 16),
-                        12.width,
-                        RichTextWidget(
-                          list: [
-                            if (widget.position != null)
-                              TextSpan(
-                                  text: '$getDistance ${locale.kms} ',
-                                  style: boldTextStyle(size: 14)),
-                            TextSpan(
-                                text: locale.fromYourLocation,
-                                style: secondaryTextStyle()),
-                          ],
-                        ).expand(),
                         16.width,
                         if (widget.branchData.todayTime != null)
                           StatusWidget(
@@ -170,6 +124,20 @@ class _BranchItemComponentState extends State<BranchItemComponent> {
                         else
                           StatusWidget(text: locale.closed, color: Colors.red),
                       ],
+                    ),
+                    12.height,
+                    TextIcon(
+                      text: widget.branchData.addressLine1.validate(),
+                      expandedText: true,
+                      spacing: 12,
+                      textStyle: primaryTextStyle(),
+                      maxLine: 2,
+                      onTap: () {
+                        launchMap(widget.branchData.addressLine1.validate());
+                      },
+                      edgeInsets: const EdgeInsets.only(left: 0),
+                      prefix: ic_location.iconImage(
+                          color: textSecondaryColorGlobal, size: 16),
                     ),
                   ],
                 ).paddingAll(16),
