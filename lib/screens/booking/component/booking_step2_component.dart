@@ -35,10 +35,19 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
   }
 
   void init() async {
-    future = getEmployeeServiceList(employeeId: bookingRequestStore.employeeId);
+    future = getEmployeeServiceList(
+        employeeId: bookingRequestStore.employeeId,
+        onLoaded: removeServicesWhichAreNotProvidedBySelectedStylist);
   }
 
-  void _onServiceSelect(ServiceListData service) {
+  void removeServicesWhichAreNotProvidedBySelectedStylist(
+      List<EmployeeServiceListData> list) {
+    selectedServices.removeWhere(
+      (element) => !list.any((e) => e.services.any((s) => s.id == element.id)),
+    );
+  }
+
+  void onServiceSelect(ServiceListData service) {
     if (selectedServices.any((e) => e.id == service.id)) {
       selectedServices.removeWhere((element) => element.id == service.id);
     } else {
@@ -108,7 +117,7 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
                         return CategoryItemComponent(
                           data: list[index],
                           selectedServices: selectedServices,
-                          onServiceSelect: _onServiceSelect,
+                          onServiceSelect: onServiceSelect,
                         );
                       },
                     ),

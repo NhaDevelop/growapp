@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:grow_tokyo_app/components/dotted_line.dart';
 import 'package:grow_tokyo_app/utils/colors.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -160,16 +161,18 @@ class _CustomStepperState extends State<CustomStepper> {
             clipBehavior: Clip.none,
             alignment: Alignment.bottomCenter,
             children: [
-              SizedBox(
-                width: context.width(),
-                height: 130,
-                child: appBarWidget(locale.myBooking,
-                        center: true,
-                        color: context.primaryColor,
-                        textColor: white)
-                    .cornerRadiusWithClipRRectOnly(
-                        bottomLeft: 20, bottomRight: 20),
-              ),
+              Observer(builder: (context) {
+                return SizedBox(
+                  width: context.width(),
+                  height: 130,
+                  child: appBarWidget(appStore.branchName,
+                          center: true,
+                          color: context.primaryColor,
+                          textColor: white)
+                      .cornerRadiusWithClipRRectOnly(
+                          bottomLeft: 20, bottomRight: 20),
+                );
+              }),
               Positioned(
                 bottom: -40,
                 left: 18,

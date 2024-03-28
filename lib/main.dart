@@ -128,8 +128,13 @@ void main() async {
       getIntAsync(SharedPreferenceConst.COUNTRY_ID,
           defaultValue: UNSELECTED_COUNTRY_ID),
       isInitializing: true);
-  await appStore.setBranchId(getIntAsync(SharedPreferenceConst.BRANCH_ID,
-      defaultValue: UNSELECTED_BRANCH_ID));
+  await appStore.setBranchId(
+      getIntAsync(SharedPreferenceConst.BRANCH_ID,
+          defaultValue: UNSELECTED_BRANCH_ID),
+      isInitializing: true);
+  await appStore.setBranchName(
+      getStringAsync(SharedPreferenceConst.BRANCH_NAME),
+      isInitializing: true);
   if (appStore.isLoggedIn) {
     await userStore.setUserId(getIntAsync(SharedPreferenceConst.USER_ID),
         isInitializing: true);

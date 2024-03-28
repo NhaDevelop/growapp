@@ -93,7 +93,8 @@ Future<List<EmployeeWorkingDayModel>> getEmployeeMonthSchedule(
 }
 
 Future<List<EmployeeServiceListData>> getEmployeeServiceList(
-    {required int employeeId}) async {
+    {required int employeeId,
+    required Function(List<EmployeeServiceListData>) onLoaded}) async {
   final res = EmployeeServiceListResponse.fromJson(await handleResponse(
     await buildHttpResponse(
       '${APIEndPoints.employeeServiceList}?employee_id=$employeeId',
@@ -104,6 +105,7 @@ Future<List<EmployeeServiceListData>> getEmployeeServiceList(
     ...?employeeServiceListCached,
     employeeId: res.data
   };
+  onLoaded(res.data);
 
   return res.data;
 }

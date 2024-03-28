@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:grow_tokyo_app/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/components/common_bottom_price_widget.dart';
 import 'package:grow_tokyo_app/components/loader_widget.dart';
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/screens/booking/view/booking_screen.dart';
@@ -10,7 +11,6 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/empty_error_state_widget.dart';
 import '../../../utils/app_common.dart';
-import '../../../utils/colors.dart';
 import '../../../utils/constants.dart';
 import '../../dashboard/component/branch_item_component.dart';
 import '../branch_repository.dart';
@@ -69,6 +69,25 @@ class _SelectBranchScreenState extends State<SelectBranchScreen> {
         }).catchError(onError);
       }
     });
+  }
+
+  void onNextClick() async {
+    if (appStore.branchId != selectedBranchId) {
+      dashboardResponseCached = null;
+      bookingDetailCached = [];
+
+      await appStore.setBranchId(
+          selectedBranch!.id.validate(value: UNSELECTED_BRANCH_ID));
+      await appStore.setBranchAddress(selectedBranch!.addressLine1.validate());
+      await appStore.setBranchName(selectedBranch!.name.validate());
+      await appStore
+          .setBranchContactNumber(selectedBranch!.contactNumber.validate());
+    }
+
+    if (!context.mounted) return;
+    if (!mounted) return;
+    finish(context);
+    const BookingScreen(services: []).launch(context);
   }
 
   @override
@@ -176,33 +195,20 @@ class _SelectBranchScreenState extends State<SelectBranchScreen> {
                 );
               },
             ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: CommonBottomPriceWidget(
+                buttonText: locale.next,
+                onTap: onNextClick,
+              ),
+            ).visible(selectedBranchId != UNSELECTED_BRANCH_ID),
             Observer(
                 builder: (context) =>
                     const LoaderWidget().visible(appStore.isLoading)),
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: secondaryColor,
-          onPressed: () async {
-            if (appStore.branchId != selectedBranchId) {
-              dashboardResponseCached = null;
-              bookingDetailCached = [];
-
-              await appStore.setBranchId(
-                  selectedBranch!.id.validate(value: UNSELECTED_BRANCH_ID));
-              await appStore
-                  .setBranchAddress(selectedBranch!.addressLine1.validate());
-              await appStore.setBranchName(selectedBranch!.name.validate());
-              await appStore.setBranchContactNumber(
-                  selectedBranch!.contactNumber.validate());
-            }
-
-            if (!context.mounted) return;
-            finish(context);
-            const BookingScreen(services: []).launch(context);
-          },
-          child: const Icon(Icons.arrow_right_alt_rounded, color: Colors.white),
-        ).visible(selectedBranchId != UNSELECTED_BRANCH_ID),
       ),
     );
   }

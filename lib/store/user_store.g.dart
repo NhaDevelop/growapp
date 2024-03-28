@@ -221,17 +221,18 @@ mixin _$UserStore on _UserStore, Store {
     });
   }
 
-  late final _$creditAtom = Atom(name: '_UserStore.credit', context: context);
+  late final _$pointAmountAtom =
+      Atom(name: '_UserStore.pointAmount', context: context);
 
   @override
   double get pointAmount {
-    _$creditAtom.reportRead();
+    _$pointAmountAtom.reportRead();
     return super.pointAmount;
   }
 
   @override
   set pointAmount(double value) {
-    _$creditAtom.reportWrite(value, super.pointAmount, () {
+    _$pointAmountAtom.reportWrite(value, super.pointAmount, () {
       super.pointAmount = value;
     });
   }
@@ -353,12 +354,12 @@ mixin _$UserStore on _UserStore, Store {
         .run(() => super.setPlayerId(val, isInitializing: isInitializing));
   }
 
-  late final _$setCreditAsyncAction =
-      AsyncAction('_UserStore.setCredit', context: context);
+  late final _$setPointAmountAsyncAction =
+      AsyncAction('_UserStore.setPointAmount', context: context);
 
   @override
   Future<void> setPointAmount(double val, {bool isInitializing = false}) {
-    return _$setCreditAsyncAction
+    return _$setPointAmountAsyncAction
         .run(() => super.setPointAmount(val, isInitializing: isInitializing));
   }
 
@@ -378,7 +379,7 @@ userName: ${userName},
 token: ${token},
 userType: ${userType},
 playerId: ${playerId},
-credit: ${pointAmount},
+pointAmount: ${pointAmount},
 userFullName: ${userFullName}
     ''';
   }

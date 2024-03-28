@@ -355,8 +355,9 @@ mixin _$AppStore on _AppStore, Store {
       AsyncAction('_AppStore.setBranchName', context: context);
 
   @override
-  Future<void> setBranchName(String val) {
-    return _$setBranchNameAsyncAction.run(() => super.setBranchName(val));
+  Future<void> setBranchName(String val, {bool isInitializing = false}) {
+    return _$setBranchNameAsyncAction
+        .run(() => super.setBranchName(val, isInitializing: isInitializing));
   }
 
   late final _$setBranchContactNumberAsyncAction =
@@ -372,8 +373,9 @@ mixin _$AppStore on _AppStore, Store {
       AsyncAction('_AppStore.setBranchId', context: context);
 
   @override
-  Future<void> setBranchId(int val) {
-    return _$setBranchIdAsyncAction.run(() => super.setBranchId(val));
+  Future<void> setBranchId(int val, {bool isInitializing = false}) {
+    return _$setBranchIdAsyncAction
+        .run(() => super.setBranchId(val, isInitializing: isInitializing));
   }
 
   late final _$setHelplineNumberAsyncAction =

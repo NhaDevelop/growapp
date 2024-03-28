@@ -88,8 +88,12 @@ abstract class _AppStore with Store {
   }
 
   @action
-  Future<void> setBranchName(String val) async {
+  Future<void> setBranchName(String val, {bool isInitializing = false}) async {
     branchName = val;
+
+    if (!isInitializing) {
+      await setValue(SharedPreferenceConst.BRANCH_NAME, val);
+    }
   }
 
   @action
@@ -98,10 +102,12 @@ abstract class _AppStore with Store {
   }
 
   @action
-  Future<void> setBranchId(int val) async {
+  Future<void> setBranchId(int val, {bool isInitializing = false}) async {
     branchId = val;
 
-    await setValue(SharedPreferenceConst.BRANCH_ID, val);
+    if (!isInitializing) {
+      await setValue(SharedPreferenceConst.BRANCH_ID, val);
+    }
   }
 
   @action
