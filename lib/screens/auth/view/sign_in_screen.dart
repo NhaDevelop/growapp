@@ -190,7 +190,8 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     return AppScaffold(
       showAppBar: false,
-      body: SizedBox(
+      body: Container(
+        color: white,
         height: context.height(),
         width: context.width(),
         child: SingleChildScrollView(
@@ -202,23 +203,18 @@ class _SignInScreenState extends State<SignInScreen> {
                 alignment: Alignment.center,
                 children: [
                   Container(
-                    height: context.height() * 0.3,
                     width: context.width(),
-                    decoration: boxDecorationWithRoundedCorners(
-                      backgroundColor: context.primaryColor,
-                      borderRadius: radiusOnly(bottomLeft: 20, bottomRight: 20),
-                      decorationImage: const DecorationImage(
-                          image: AssetImage(bg_pattern), fit: BoxFit.cover),
+                    color: context.primaryColor,
+                    padding: EdgeInsets.only(
+                      top: context.statusBarHeight + 16,
+                      bottom: 46,
                     ),
-                  ),
-                  Positioned(
-                    bottom: -60,
-                    child: Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: boxDecorationDefault(shape: BoxShape.circle),
-                      child: Image.asset(app_logo,
-                          height: 104, width: 104, fit: BoxFit.cover),
-                    ).center(),
+                    child: Center(
+                      child: Image.asset(
+                        logo_long,
+                        width: context.width() * 0.4,
+                      ),
+                    ),
                   ),
                   Positioned(
                     top: context.statusBarHeight + 16,
@@ -227,226 +223,215 @@ class _SignInScreenState extends State<SignInScreen> {
                   ).visible(context.canPop),
                 ],
               ),
-              Column(
-                children: [
-                  Text(locale.welcomeBack,
-                      style: boldTextStyle(size: LABEL_TEXT_SIZE)),
-                  8.height,
-                  Text(locale.youHaveBeenMissed,
-                      style: secondaryTextStyle(), textAlign: TextAlign.center),
-                  Column(
+              Transform.translate(
+                offset: const Offset(0, -20),
+                child: Container(
+                  decoration: boxDecorationWithRoundedCorners(
+                    borderRadius: radiusOnly(topLeft: 20, topRight: 20),
+                  ),
+                  child: Column(
                     children: [
-                      Form(
-                        key: formKey,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            AppTextField(
-                              controller: emailCont,
-                              focus: emailFocus,
-                              nextFocus: passwordFocus,
-                              textFieldType: TextFieldType.EMAIL,
-                              decoration:
-                                  inputDecoration(context, label: locale.email),
-                              autoFillHints: const [AutofillHints.email],
-                              selectionControls:
-                                  MaterialTextSelectionControls(),
-                            ),
-                            16.height,
-                            AppTextField(
-                              controller: passwordCont,
-                              textFieldType: TextFieldType.PASSWORD,
-                              focus: passwordFocus,
-                              decoration: inputDecoration(context,
-                                  label: locale.password),
-                              autoFillHints: const [AutofillHints.password],
-                              onFieldSubmitted: (s) {
-                                onSignIn();
-                              },
-                            ),
-                          ],
-                        ),
+                      Text(
+                        locale.welcomeBack,
+                        style:
+                            primaryTextStyle(size: 20, weight: FontWeight.w500),
                       ),
+                      8.height,
+                      Text(locale.pleaseLogin,
+                          style: secondaryTextStyle(),
+                          textAlign: TextAlign.center),
                       Column(
                         children: [
-                          16.height,
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              RoundedCheckBox(
-                                borderColor: secondaryColor,
-                                checkedColor: secondaryColor,
-                                isChecked: isRemember,
-                                text: locale.rememberMe,
-                                textStyle: secondaryTextStyle(),
-                                size: 20,
-                                onTap: (value) async {
-                                  await setValue(
-                                      SharedPreferenceConst.IS_REMEMBERED,
-                                      isRemember);
-                                  isRemember = !isRemember;
-                                  setState(() {});
-                                },
-                              ).flexible(),
-                              TextButton(
-                                onPressed: () {
-                                  showInDialog(
-                                    context,
-                                    contentPadding: EdgeInsets.zero,
-                                    builder: (_) =>
-                                        const ForgotPasswordScreen(),
-                                  );
-                                },
-                                child: Text(
-                                  locale.forgotPassword,
-                                  style: secondaryTextStyle(
-                                      color: appStore.isDarkMode
-                                          ? territoryButtonColor
-                                          : null,
-                                      fontStyle: FontStyle.italic),
-                                  textAlign: TextAlign.right,
-                                ),
-                              ).flexible(),
-                            ],
-                          ),
-                        ],
-                      ),
-                      16.height,
-                      AppButton(
-                        width: context.width(),
-                        color: secondaryColor,
-                        onTap: () async {
-                          onSignIn();
-                        },
-                        child: Text(locale.signIn,
-                            style: boldTextStyle(color: white)),
-                      ),
-                      16.height,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(locale.notAMember, style: secondaryTextStyle()),
-                          TextButton(
-                            onPressed: () {
-                              hideKeyboard(context);
-                              const SignUpScreen().launch(context);
-                            },
-                            child: Text(
-                              locale.signUp,
-                              style: boldTextStyle(
-                                  color: primaryColor,
-                                  fontStyle: FontStyle.italic),
-                            ),
-                          ),
-                        ],
-                      ),
-                      24.height,
-                      Column(
-                        children: [
-                          Row(
-                            children: [
-                              Divider(color: context.dividerColor).expand(),
-                              8.width,
-                              Text(locale.or,
-                                  style: boldTextStyle(
-                                      color: textSecondaryColorGlobal)),
-                              8.width,
-                              Divider(color: context.dividerColor).expand(),
-                            ],
-                          ),
-                          24.height,
-                          AppButton(
-                            text: '',
-                            color: context.cardColor,
-                            padding: const EdgeInsets.all(8),
-                            textStyle: boldTextStyle(),
-                            width:
-                                context.width() - context.navigationBarHeight,
-                            onTap: googleSignIn,
-                            child: Row(
+                          Form(
+                            key: formKey,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                  padding: const EdgeInsets.all(12),
-                                  decoration: boxDecorationWithRoundedCorners(
-                                    backgroundColor:
-                                        primaryColor.withOpacity(0.1),
-                                    boxShape: BoxShape.circle,
-                                  ),
-                                  child: GoogleLogoWidget(size: 16),
+                                AppTextField(
+                                  controller: emailCont,
+                                  focus: emailFocus,
+                                  nextFocus: passwordFocus,
+                                  textFieldType: TextFieldType.EMAIL,
+                                  decoration: inputDecoration(context,
+                                      label: locale.email),
+                                  autoFillHints: const [AutofillHints.email],
+                                  selectionControls:
+                                      MaterialTextSelectionControls(),
                                 ),
-                                Text("${locale.signInWith} ${locale.google}",
-                                        style: boldTextStyle(size: 12),
-                                        textAlign: TextAlign.center)
-                                    .expand(),
+                                16.height,
+                                AppTextField(
+                                  controller: passwordCont,
+                                  textFieldType: TextFieldType.PASSWORD,
+                                  focus: passwordFocus,
+                                  decoration: inputDecoration(context,
+                                      label: locale.password),
+                                  autoFillHints: const [AutofillHints.password],
+                                  onFieldSubmitted: (s) {
+                                    onSignIn();
+                                  },
+                                ),
                               ],
                             ),
                           ),
-                          24.height,
-                          AppButton(
-                            text: '',
-                            color: context.cardColor,
-                            padding: const EdgeInsets.all(8),
-                            textStyle: boldTextStyle(),
-                            width:
-                                context.width() - context.navigationBarHeight,
-                            onTap: facebookSignIn,
-                            child: Row(
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.all(8),
-                                  decoration: boxDecorationWithRoundedCorners(
-                                    backgroundColor:
-                                        primaryColor.withOpacity(0.1),
-                                    boxShape: BoxShape.circle,
-                                  ),
-                                  child: Image.asset(ic_facebook_colored,
-                                      width: 24),
-                                ),
-                                Text("${locale.signInWith} ${locale.facebook}",
-                                        style: boldTextStyle(size: 12),
-                                        textAlign: TextAlign.center)
-                                    .expand(),
-                              ],
-                            ),
-                          ),
-                          24.height,
-
-                          ///Implement apple sign in
-                          if (isIOS)
-                            AppButton(
-                              text: '',
-                              color: context.cardColor,
-                              padding: const EdgeInsets.all(8),
-                              textStyle: boldTextStyle(),
-                              width:
-                                  context.width() - context.navigationBarHeight,
-                              onTap: appleSign,
-                              child: Row(
+                          Column(
+                            children: [
+                              16.height,
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Container(
-                                    padding: const EdgeInsets.all(8),
-                                    decoration: boxDecorationWithRoundedCorners(
-                                      backgroundColor:
-                                          primaryColor.withOpacity(0.1),
-                                      boxShape: BoxShape.circle,
+                                  RoundedCheckBox(
+                                    borderColor: secondaryColor,
+                                    checkedColor: secondaryColor,
+                                    isChecked: isRemember,
+                                    text: locale.rememberMe,
+                                    textStyle: secondaryTextStyle(),
+                                    size: 20,
+                                    onTap: (value) async {
+                                      await setValue(
+                                          SharedPreferenceConst.IS_REMEMBERED,
+                                          isRemember);
+                                      isRemember = !isRemember;
+                                      setState(() {});
+                                    },
+                                  ).flexible(),
+                                  TextButton(
+                                    onPressed: () {
+                                      showInDialog(
+                                        context,
+                                        contentPadding: EdgeInsets.zero,
+                                        builder: (_) =>
+                                            const ForgotPasswordScreen(),
+                                      );
+                                    },
+                                    child: Text(
+                                      locale.forgotPassword,
+                                      style: secondaryTextStyle(
+                                          color: appStore.isDarkMode
+                                              ? territoryButtonColor
+                                              : null,
+                                          decoration: TextDecoration.underline),
+                                      textAlign: TextAlign.right,
                                     ),
-                                    child: const Icon(Icons.apple),
-                                  ),
-                                  Text("${locale.signInWith} ${locale.apple}",
-                                          style: boldTextStyle(size: 12),
-                                          textAlign: TextAlign.center)
-                                      .expand(),
+                                  ).flexible(),
                                 ],
                               ),
-                            ),
+                            ],
+                          ),
+                          16.height,
+                          AppButton(
+                            width: context.width(),
+                            color: secondaryColor,
+                            onTap: () async {
+                              onSignIn();
+                            },
+                            child: Text(locale.signIn,
+                                style: boldTextStyle(color: white)),
+                          ),
                           24.height,
+                          Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Divider(color: context.dividerColor).expand(),
+                                  8.width,
+                                  Text(locale.or,
+                                      style: boldTextStyle(
+                                          color: textSecondaryColorGlobal)),
+                                  8.width,
+                                  Divider(color: context.dividerColor).expand(),
+                                ],
+                              ),
+                              24.height,
+                              AppButton(
+                                color: context.cardColor,
+                                padding: const EdgeInsets.all(16),
+                                width: context.width() -
+                                    context.navigationBarHeight,
+                                onTap: googleSignIn,
+                                elevation: 0,
+                                shapeBorder: RoundedRectangleBorder(
+                                  borderRadius: radius(10),
+                                  side: const BorderSide(color: primaryColor),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Image.asset(ic_login_google, width: 24),
+                                    Text("${locale.signInWith} ${locale.google}",
+                                            style: boldTextStyle(),
+                                            textAlign: TextAlign.center)
+                                        .expand(),
+                                  ],
+                                ),
+                              ),
+                              24.height,
+                              AppButton(
+                                color: const Color(0xFF4267B2),
+                                padding: const EdgeInsets.all(16),
+                                elevation: 0,
+                                width: context.width() -
+                                    context.navigationBarHeight,
+                                onTap: facebookSignIn,
+                                child: Row(
+                                  children: [
+                                    Image.asset(ic_login_facebook, width: 24),
+                                    Text("${locale.signInWith} ${locale.facebook}",
+                                            style: boldTextStyle(color: white),
+                                            textAlign: TextAlign.center)
+                                        .expand(),
+                                  ],
+                                ),
+                              ),
+                              24.height,
+                              if (isIOS)
+                                AppButton(
+                                  color: primaryColor,
+                                  padding: const EdgeInsets.all(16),
+                                  elevation: 0,
+                                  width: context.width() -
+                                      context.navigationBarHeight,
+                                  onTap: appleSign,
+                                  child: Row(
+                                    children: [
+                                      Image.asset(ic_login_apple, width: 24),
+                                      Text("${locale.signInWith} ${locale.apple}",
+                                              style:
+                                                  boldTextStyle(color: white),
+                                              textAlign: TextAlign.center)
+                                          .expand(),
+                                    ],
+                                  ),
+                                ),
+                              24.height,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(locale.notAMember,
+                                      style: secondaryTextStyle()),
+                                  TextButton(
+                                    onPressed: () {
+                                      hideKeyboard(context);
+                                      const SignUpScreen().launch(context);
+                                    },
+                                    child: Text(
+                                      locale.signUp,
+                                      style: boldTextStyle(
+                                          color: primaryColor,
+                                          decoration: TextDecoration.underline),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ],
-                      ),
+                      ).paddingSymmetric(horizontal: 16, vertical: 16),
                     ],
-                  ).paddingSymmetric(horizontal: 16, vertical: 16),
-                ],
-              ).paddingOnly(top: 80),
+                  ).paddingTop(24),
+                ),
+              ),
             ],
           ),
         ),

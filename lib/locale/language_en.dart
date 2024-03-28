@@ -33,7 +33,7 @@ class LanguageEn extends BaseLanguage {
   String get hey => 'Hey';
 
   @override
-  String get helloUser => 'Hello User!';
+  String get welcomeToGrowTokyo => 'Welcome to growTokyo!';
 
   @override
   String get createYourAccountFor =>
@@ -70,7 +70,7 @@ class LanguageEn extends BaseLanguage {
   String get welcomeBack => 'Welcome Back!';
 
   @override
-  String get youHaveBeenMissed => 'You Have Been Missed For A Long Time';
+  String get pleaseLogin => 'Please login to begin';
 
   @override
   String get rememberMe => 'Remember Me';
@@ -623,6 +623,9 @@ class LanguageEn extends BaseLanguage {
 
   @override
   String get appTheme => 'App Theme';
+
+  @override
+  String get bySigningUpYouAgreeToOur => 'By signing up you agree to our';
 
   @override
   String get termsConditions => 'Terms & Conditions';

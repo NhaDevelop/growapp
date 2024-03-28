@@ -24,7 +24,7 @@ abstract class BaseLanguage {
 
   String get hey;
 
-  String get helloUser;
+  String get welcomeToGrowTokyo;
 
   String get createYourAccountFor;
 
@@ -48,7 +48,7 @@ abstract class BaseLanguage {
 
   String get welcomeBack;
 
-  String get youHaveBeenMissed;
+  String get pleaseLogin;
 
   String get rememberMe;
 
@@ -407,6 +407,8 @@ abstract class BaseLanguage {
   String get language;
 
   String get appTheme;
+
+  String get bySigningUpYouAgreeToOur;
 
   String get termsConditions;
 

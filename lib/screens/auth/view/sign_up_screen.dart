@@ -123,166 +123,180 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return AppScaffold(
       showAppBar: false,
-      body: SizedBox(
+      body: Container(
+        color: white,
         height: context.height(),
         width: context.width(),
         child: SingleChildScrollView(
           dragStartBehavior: DragStartBehavior.down,
           child: Column(
             children: [
-              Stack(
-                clipBehavior: Clip.none,
-                alignment: Alignment.center,
-                children: [
-                  Container(
-                    height: context.height() * 0.3,
-                    width: context.width(),
-                    decoration: boxDecorationWithRoundedCorners(
-                      backgroundColor: primaryColor,
-                      borderRadius: radiusOnly(bottomLeft: 20, bottomRight: 20),
-                      decorationImage: const DecorationImage(
-                          image: AssetImage(bg_pattern), fit: BoxFit.cover),
-                    ),
+              Container(
+                width: context.width(),
+                color: context.primaryColor,
+                padding: EdgeInsets.only(
+                  top: context.statusBarHeight + 16,
+                  bottom: 46,
+                ),
+                child: Center(
+                  child: Image.asset(
+                    logo_long,
+                    width: context.width() * 0.4,
                   ),
-                  Positioned(
-                    bottom: -60,
-                    child: Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: boxDecorationDefault(shape: BoxShape.circle),
-                      child: Image.asset(app_logo,
-                          height: 104, width: 104, fit: BoxFit.cover),
-                    ).center(),
-                  ),
-                ],
+                ),
               ),
-              Column(
-                children: [
-                  Text(locale.helloUser,
-                      style: boldTextStyle(size: LABEL_TEXT_SIZE)),
-                  8.height,
-                  Text(locale.createYourAccountFor,
-                      style: secondaryTextStyle(), textAlign: TextAlign.center),
-                  Column(
+              Transform.translate(
+                offset: const Offset(0, -20),
+                child: Container(
+                  decoration: boxDecorationWithRoundedCorners(
+                    borderRadius: radiusOnly(topLeft: 20, topRight: 20),
+                  ),
+                  child: Column(
                     children: [
-                      16.height,
-                      Form(
-                        key: formKey,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            AppTextField(
-                              controller: firstNameCont,
-                              focus: firstNameFocus,
-                              nextFocus: lastNameFocus,
-                              textFieldType: TextFieldType.NAME,
-                              readOnly: widget.isOTPLogin.validate()
-                                  ? widget.isOTPLogin
-                                  : false,
-                              decoration: inputDecoration(context,
-                                  label: locale.firstName),
-                            ),
-                            16.height,
-                            AppTextField(
-                              controller: lastNameCont,
-                              focus: lastNameFocus,
-                              nextFocus: emailFocus,
-                              textFieldType: TextFieldType.NAME,
-                              readOnly: widget.isOTPLogin.validate()
-                                  ? widget.isOTPLogin
-                                  : false,
-                              decoration: inputDecoration(context,
-                                  label: locale.lastName),
-                            ),
-                            16.height,
-                            AppTextField(
-                              controller: emailCont,
-                              focus: emailFocus,
-                              nextFocus: passwordFocus,
-                              textFieldType: TextFieldType.EMAIL,
-                              decoration:
-                                  inputDecoration(context, label: locale.email),
-                            ),
-                            16.height,
-                            AppTextField(
-                              controller: passwordCont,
-                              textFieldType: TextFieldType.PASSWORD,
-                              focus: passwordFocus,
-                              nextFocus: mobileFocus,
-                              readOnly: widget.isOTPLogin.validate()
-                                  ? widget.isOTPLogin
-                                  : false,
-                              decoration: inputDecoration(context,
-                                  label: locale.password),
-                              autoFillHints: const [AutofillHints.password],
-                              onFieldSubmitted: (s) {
-                                if (widget.isOTPLogin) {
-                                  registerWithOTP();
-                                } else {
-                                  registerUser();
-                                }
-                              },
-                            ),
-                            16.height,
-                            GenderSelectionComponent(
-                              onTap: (value) {
-                                genderValue = value;
-                                setState(() {});
-                              },
-                            ),
-                            16.height,
-                            AppTextField(
-                              textFieldType: TextFieldType.PHONE,
-                              controller: mobileCont,
-                              focus: mobileFocus,
-                              errorThisFieldRequired:
-                                  locale.thisFieldIsRequired,
-                              decoration: inputDecoration(context,
-                                  label: locale.contactNumber),
-                              maxLength: 15,
-                            ),
-                            16.height,
-                          ],
-                        ),
-                      ),
-                      16.height,
-                      AppButton(
-                        width: context.width(),
-                        color: secondaryColor,
-                        onTap: () async {
-                          if (widget.isOTPLogin) {
-                            registerWithOTP();
-                          } else {
-                            registerUser();
-                          }
-                        },
-                        child: Text(locale.signUp,
-                            style: boldTextStyle(color: white)),
-                      ),
-                      16.height,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      Text(locale.welcomeToGrowTokyo,
+                          style: boldTextStyle(size: 20)),
+                      8.height,
+                      Text(locale.createYourAccountFor,
+                          style: secondaryTextStyle(),
+                          textAlign: TextAlign.center),
+                      Column(
                         children: [
-                          Text(locale.alreadyHaveAnAccount,
-                              style: secondaryTextStyle()),
-                          TextButton(
-                            onPressed: () {
-                              hideKeyboard(context);
-                              finish(context);
-                            },
-                            child: Text(
-                              locale.signIn,
-                              style: boldTextStyle(
-                                  color: primaryColor,
-                                  fontStyle: FontStyle.italic),
+                          16.height,
+                          Form(
+                            key: formKey,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                AppTextField(
+                                  controller: firstNameCont,
+                                  focus: firstNameFocus,
+                                  nextFocus: lastNameFocus,
+                                  textFieldType: TextFieldType.NAME,
+                                  readOnly: widget.isOTPLogin.validate()
+                                      ? widget.isOTPLogin
+                                      : false,
+                                  decoration: inputDecoration(context,
+                                      label: locale.firstName),
+                                ),
+                                16.height,
+                                AppTextField(
+                                  controller: lastNameCont,
+                                  focus: lastNameFocus,
+                                  nextFocus: emailFocus,
+                                  textFieldType: TextFieldType.NAME,
+                                  readOnly: widget.isOTPLogin.validate()
+                                      ? widget.isOTPLogin
+                                      : false,
+                                  decoration: inputDecoration(context,
+                                      label: locale.lastName),
+                                ),
+                                16.height,
+                                AppTextField(
+                                  controller: emailCont,
+                                  focus: emailFocus,
+                                  nextFocus: passwordFocus,
+                                  textFieldType: TextFieldType.EMAIL,
+                                  decoration: inputDecoration(context,
+                                      label: locale.email),
+                                ),
+                                16.height,
+                                AppTextField(
+                                  controller: passwordCont,
+                                  textFieldType: TextFieldType.PASSWORD,
+                                  focus: passwordFocus,
+                                  nextFocus: mobileFocus,
+                                  readOnly: widget.isOTPLogin.validate()
+                                      ? widget.isOTPLogin
+                                      : false,
+                                  decoration: inputDecoration(context,
+                                      label: locale.password),
+                                  autoFillHints: const [AutofillHints.password],
+                                  onFieldSubmitted: (s) {
+                                    if (widget.isOTPLogin) {
+                                      registerWithOTP();
+                                    } else {
+                                      registerUser();
+                                    }
+                                  },
+                                ),
+                                16.height,
+                                GenderSelectionComponent(
+                                  onTap: (value) {
+                                    genderValue = value;
+                                    setState(() {});
+                                  },
+                                ),
+                                16.height,
+                                AppTextField(
+                                  textFieldType: TextFieldType.PHONE,
+                                  controller: mobileCont,
+                                  focus: mobileFocus,
+                                  errorThisFieldRequired:
+                                      locale.thisFieldIsRequired,
+                                  decoration: inputDecoration(context,
+                                      label: locale.contactNumber),
+                                  maxLength: 15,
+                                ),
+                                16.height,
+                              ],
                             ),
                           ),
+                          16.height,
+                          AppButton(
+                            width: context.width(),
+                            color: secondaryColor,
+                            onTap: () async {
+                              if (widget.isOTPLogin) {
+                                registerWithOTP();
+                              } else {
+                                registerUser();
+                              }
+                            },
+                            child: Text(locale.signUp,
+                                style: boldTextStyle(color: white)),
+                          ),
+                          16.height,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(locale.alreadyHaveAnAccount,
+                                  style: secondaryTextStyle()),
+                              TextButton(
+                                onPressed: () {
+                                  hideKeyboard(context);
+                                  finish(context);
+                                },
+                                child: Text(
+                                  locale.signIn,
+                                  style: boldTextStyle(
+                                      color: primaryColor,
+                                      decoration: TextDecoration.underline),
+                                ),
+                              ),
+                            ],
+                          ),
+                          TextButton(
+                            onPressed: () {},
+                            child: RichTextWidget(list: [
+                              TextSpan(
+                                text: locale.bySigningUpYouAgreeToOur,
+                                style: secondaryTextStyle(),
+                              ),
+                              const TextSpan(text: ' '),
+                              TextSpan(
+                                text: locale.termsConditions,
+                                style: boldTextStyle(color: primaryColor),
+                              ),
+                            ]),
+                          ),
                         ],
-                      ),
+                      ).paddingSymmetric(horizontal: 16, vertical: 16),
                     ],
-                  ).paddingSymmetric(horizontal: 16, vertical: 16),
-                ],
-              ).paddingOnly(top: 80),
+                  ).paddingOnly(top: 24),
+                ),
+              ),
             ],
           ),
         ),

@@ -32,6 +32,9 @@ const brand_7 = 'assets/images/brand_7.png';
 const brand_8 = 'assets/images/brand_8.png';
 const points_banner_bg = 'assets/images/points_banner_bg.png';
 
+const ic_login_google = 'assets/icons/ic_login_google.png';
+const ic_login_facebook = 'assets/icons/ic_login_facebook.png';
+const ic_login_apple = 'assets/icons/ic_login_apple.png';
 const ic_profile_delete = 'assets/icons/ic_profile_delete.png';
 const ic_booking_success = 'assets/icons/ic_booking_success.png';
 const ic_crown = 'assets/icons/ic_crown.png';
