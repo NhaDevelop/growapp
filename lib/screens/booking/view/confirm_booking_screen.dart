@@ -4,7 +4,6 @@ import 'package:grow_tokyo_app/components/app_scaffold.dart';
 import 'package:grow_tokyo_app/components/common_app_dialog.dart';
 import 'package:grow_tokyo_app/components/default_card.dart';
 import 'package:grow_tokyo_app/main.dart';
-import 'package:grow_tokyo_app/payment/payment_repo.dart';
 import 'package:grow_tokyo_app/screens/booking/booking_repository.dart';
 import 'package:grow_tokyo_app/screens/booking/component/add_referral_code_modal.dart';
 import 'package:grow_tokyo_app/screens/booking/component/service_item_component.dart';
@@ -37,7 +36,6 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
         await saveBooking();
       }
 
-      await savePayment(bookingId: bookingRequestStore.bookingId.validate());
       if (mounted) {
         finish(context);
         finish(context);
@@ -82,19 +80,6 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
             format: DateFormatConst.NEW_FORMAT),
         isRescheduleBooking: widget.isReschedule));
     bookingRequestStore.setBookingIdInRequest(bookingJson[CommonKey.bookingId]);
-  }
-
-  Future<void> savePayment({required int bookingId}) async {
-    await savePay(
-      bookingId: bookingId,
-      externalTransactionId: '',
-      transactionType: PaymentMethods.PAYMENT_METHOD_CASH,
-      discountPercentage: 0,
-      discountAmount: 0,
-      taxData: bookingRequestStore.taxPercentage.validate(),
-      paymentStatus: '0',
-      totalAmount: bookingRequestStore.totalAmount,
-    );
   }
 
   void showBookingCompleteDialog() {

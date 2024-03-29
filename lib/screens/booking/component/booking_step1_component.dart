@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:grow_tokyo_app/components/app_scaffold.dart';
-import 'package:grow_tokyo_app/components/common_bottom_price_widget.dart';
+import 'package:grow_tokyo_app/components/bottom_sheet_button.dart';
 import 'package:grow_tokyo_app/components/custom_stepper.dart';
 import 'package:grow_tokyo_app/screens/experts/component/employee_list_component_new.dart';
 import 'package:grow_tokyo_app/utils/constants.dart';
@@ -64,6 +64,24 @@ class _BookingStep1ComponentState extends State<BookingStep1Component> {
         lastPageCallBack: (p0) {
           isLastPage = p0;
         });
+  }
+
+  void onNextClick(List<EmployeeData> list) {
+    if (employeeId != UNSELECTED_EMPLOYEE_ID) {
+      Fluttertoast.cancel();
+      bookingRequestStore.setEmployeeIdInRequest(employeeId.validate());
+
+      final employeeName = list
+          .firstWhere((element) => element.id == employeeId)
+          .fullName
+          .validate();
+      bookingRequestStore.setEmployeeNameInRequest(employeeName);
+
+      customStepperController.nextPage(
+          duration: 200.milliseconds, curve: Curves.easeOut);
+    } else {
+      toast(locale.pleaseChooseYourStylist);
+    }
   }
 
   @override
@@ -155,38 +173,9 @@ class _BookingStep1ComponentState extends State<BookingStep1Component> {
                     bottom: 0,
                     left: 0,
                     right: 0,
-                    child: Observer(
-                      builder: (_) => CommonBottomPriceWidget(
-                        title: bookingRequestStore.employeeName,
-                        subtitle: bookingRequestStore.selectedServiceList
-                            .map((e) => widget.isReschedule
-                                ? e.serviceName.validate()
-                                : e.name.validate())
-                            .toList()
-                            .join(', '),
-                        buttonText: locale.next,
-                        onTap: () {
-                          if (employeeId != UNSELECTED_EMPLOYEE_ID) {
-                            Fluttertoast.cancel();
-                            bookingRequestStore
-                                .setEmployeeIdInRequest(employeeId.validate());
-
-                            final employeeName = list
-                                .firstWhere(
-                                    (element) => element.id == employeeId)
-                                .fullName
-                                .validate();
-                            bookingRequestStore
-                                .setEmployeeNameInRequest(employeeName);
-
-                            customStepperController.nextPage(
-                                duration: 200.milliseconds,
-                                curve: Curves.easeOut);
-                          } else {
-                            toast(locale.pleaseChooseYourStylist);
-                          }
-                        },
-                      ),
+                    child: BottomSheetButton(
+                      text: locale.next,
+                      onTap: () => onNextClick(list),
                     ),
                   ),
                 ],

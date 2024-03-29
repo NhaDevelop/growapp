@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:grow_tokyo_app/components/app_scaffold.dart';
-import 'package:grow_tokyo_app/components/common_bottom_price_widget.dart';
+import 'package:grow_tokyo_app/components/bottom_sheet_button.dart';
 import 'package:grow_tokyo_app/components/loader_widget.dart';
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/screens/booking/view/booking_screen.dart';
@@ -199,10 +199,7 @@ class _SelectBranchScreenState extends State<SelectBranchScreen> {
               bottom: 0,
               left: 0,
               right: 0,
-              child: CommonBottomPriceWidget(
-                buttonText: locale.next,
-                onTap: onNextClick,
-              ),
+              child: BottomSheetButton(text: locale.next, onTap: onNextClick),
             ).visible(selectedBranchId != UNSELECTED_BRANCH_ID),
             Observer(
                 builder: (context) =>

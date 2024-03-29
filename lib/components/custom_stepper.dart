@@ -164,7 +164,7 @@ class _CustomStepperState extends State<CustomStepper> {
               Observer(builder: (context) {
                 return SizedBox(
                   width: context.width(),
-                  height: 130,
+                  height: 140,
                   child: appBarWidget(appStore.branchName,
                           center: true,
                           color: context.primaryColor,
