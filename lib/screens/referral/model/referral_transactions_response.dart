@@ -24,7 +24,7 @@ class ReferralTransactionData {
 
   factory ReferralTransactionData.fromJson(Map<String, dynamic> json) {
     return ReferralTransactionData(
-      value: json['value'],
+      value: (json['value'] as num).toDouble(),
       log: json['log'],
       createdAt: DateTime.parse(json['created_at']),
     );
