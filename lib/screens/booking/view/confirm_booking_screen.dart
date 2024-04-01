@@ -10,6 +10,7 @@ import 'package:grow_tokyo_app/screens/booking/component/service_item_component.
 import 'package:grow_tokyo_app/screens/coupon/model/coupon_list_response.dart';
 import 'package:grow_tokyo_app/screens/coupon/view/add_coupon_screen.dart';
 import 'package:grow_tokyo_app/screens/dashboard/view/dashboard_screen.dart';
+import 'package:grow_tokyo_app/screens/points/point_repository.dart';
 import 'package:grow_tokyo_app/screens/services/models/service_response.dart';
 import 'package:grow_tokyo_app/utils/app_common.dart';
 import 'package:grow_tokyo_app/utils/colors.dart';
@@ -41,6 +42,9 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
         finish(context);
       }
       showBookingCompleteDialog();
+      if (bookingRequestStore.useCredit) {
+        getPointsAPI().then((_) => null).catchError(onError);
+      }
     } catch (e) {
       toast(e.toString());
     } finally {

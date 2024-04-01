@@ -574,7 +574,7 @@ abstract class BaseLanguage {
 
   String get yourInternetIsNotWorking;
 
-  String get youCannotBookPrevious;
+  String get slotUnavailable;
 
   String get galleryWillBeAppearedHere;
 

@@ -162,7 +162,7 @@ class _SlotWidgetState extends State<SlotWidget> {
                                 }
                               }
                             } else {
-                              toast(locale.youCannotBookPrevious);
+                              toast(locale.slotUnavailable);
                             }
 
                             setState(() {});

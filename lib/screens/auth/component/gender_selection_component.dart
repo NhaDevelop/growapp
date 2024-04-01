@@ -18,7 +18,7 @@ class GenderSelectionComponent extends StatefulWidget {
 }
 
 class _GenderSelectionComponentState extends State<GenderSelectionComponent> {
-  int selectedGender = -1;
+  int selectedGender = 2;
   bool isUpdate = false;
 
   List<GenderModel> genderList = [
@@ -38,6 +38,9 @@ class _GenderSelectionComponentState extends State<GenderSelectionComponent> {
     if (isUpdate) {
       selectedGender = genderList
           .indexWhere((element) => element.value == widget.type.validate());
+      if (selectedGender == -1) {
+        selectedGender = 2;
+      }
     }
   }
 
@@ -70,8 +73,9 @@ class _GenderSelectionComponentState extends State<GenderSelectionComponent> {
                   child: Row(
                     children: [
                       Container(
-                        padding:
-                            isSelected ? const EdgeInsets.all(2) : const EdgeInsets.all(1),
+                        padding: isSelected
+                            ? const EdgeInsets.all(2)
+                            : const EdgeInsets.all(1),
                         decoration: boxDecorationDefault(
                           shape: BoxShape.circle,
                           border: Border.all(
@@ -90,8 +94,7 @@ class _GenderSelectionComponentState extends State<GenderSelectionComponent> {
                       ),
                       8.width,
                       Marquee(
-                              child: Text(
-                                  genderList[index].name.validate(),
+                              child: Text(genderList[index].name.validate(),
                                   style: primaryTextStyle(size: 14),
                                   textAlign: TextAlign.center))
                           .flexible(),

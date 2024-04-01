@@ -886,7 +886,7 @@ class LanguageEn extends BaseLanguage {
   String get yourInternetIsNotWorking => 'Your internet is not working';
 
   @override
-  String get youCannotBookPrevious => 'You cannot book previous slots';
+  String get slotUnavailable => 'This slot is unavailable';
 
   @override
   String get galleryWillBeAppearedHere => 'Gallery will be appeared here';
