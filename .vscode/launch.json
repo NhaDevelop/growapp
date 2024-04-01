@@ -18,5 +18,19 @@
       "type": "dart",
       "args": ["--flavor", "prod"]
     },
+    {
+      "name": "web staging",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_stag.dart",
+      "args": ["--web-renderer","html"]
+    },
+    {
+      "name": "web production",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_prod.dart",
+      "args": ["--web-renderer","html"]
+    }
   ]
 }
