@@ -394,7 +394,8 @@ class LanguageEn extends BaseLanguage {
   String get goToBookings => 'Go to Bookings';
 
   @override
-  String get yourBookingFor => 'Your booking for';
+  String get bookingSuccessMessage =>
+      'Your booking has been successfully booked';
 
   @override
   String get bookingSuccessful => 'Booking Successful!';

@@ -256,7 +256,7 @@ abstract class BaseLanguage {
 
   String get goToBookings;
 
-  String get yourBookingFor;
+  String get bookingSuccessMessage;
 
   String get bookingSuccessful;
 

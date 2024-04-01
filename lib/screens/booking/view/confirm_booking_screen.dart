@@ -93,8 +93,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
       builder: (BuildContext context) => CommonAppDialog(
         title: locale.bookingSuccessful,
         icon: ic_booking_success,
-        subTitle:
-            '${locale.yourBookingFor} ${bookingRequestStore.selectedServiceList.validate().map((e) => e.name.validate()).toList().join(', ')} has been successfully booked',
+        subTitle: locale.bookingSuccessMessage,
         buttonText: locale.goToBookings,
         onTap: () {
           finish(context);
