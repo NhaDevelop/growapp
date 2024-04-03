@@ -119,7 +119,7 @@ void main() async {
   locale = await const AppLocalizations()
       .load(Locale(appStore.selectedLanguageCode));
 
-  if (!kIsWeb) {
+  if (isMobile) {
     Firebase.initializeApp().then((value) {
       FlutterError.onError =
           FirebaseCrashlytics.instance.recordFlutterFatalError;

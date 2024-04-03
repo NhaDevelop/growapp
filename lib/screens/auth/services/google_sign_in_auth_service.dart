@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/utils/constants.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -8,9 +7,19 @@ import 'package:nb_utils/nb_utils.dart';
 import '../model/user_data_model.dart';
 
 class GoogleSignInAuthService {
-  final GoogleSignIn googleSignIn = GoogleSignIn();
+  final googleSignIn = GoogleSignIn(scopes: [
+    'email',
+    'https://www.googleapis.com/auth/contacts.readonly',
+  ]);
+  final googleProvider = GoogleAuthProvider();
 
-  Future<UserData> signInWithGoogle(BuildContext context) async {
+  Future<UserData> signIn() async {
+    // if (isWeb) return signInWeb();
+
+    return signInNative();
+  }
+
+  Future<UserData> signInNative() async {
     GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
 
     if (googleSignInAccount != null) {
@@ -22,46 +31,31 @@ class GoogleSignInAuthService {
         idToken: googleSignInAuthentication.idToken,
       );
 
-      final UserCredential authResult =
+      final UserCredential userCredential =
           await auth.signInWithCredential(credential);
-      final User user = authResult.user!;
-      assert(!user.isAnonymous);
-
-      final User currentUser = auth.currentUser!;
-      assert(user.uid == currentUser.uid);
-
-      log(currentUser);
 
       await googleSignIn.signOut();
 
-      String firstName = '';
-      String lastName = '';
-      if (currentUser.displayName.validate().split(' ').isNotEmpty) {
-        firstName = currentUser.displayName.splitBefore(' ');
-      }
-      if (currentUser.displayName.validate().split(' ').length >= 2) {
-        lastName = currentUser.displayName.splitAfter(' ');
-      }
-
-      /// Create a temporary request to send
-      UserData tempUserData = UserData()
-        ..mobile = currentUser.phoneNumber.validate()
-        ..email = currentUser.email.validate()
-        ..firstName = firstName.validate()
-        ..lastName = lastName.validate()
-        ..socialImage = currentUser.photoURL.validate()
-        ..profileImage = currentUser.photoURL.validate()
-        ..userType = LoginTypeConst.LOGIN_TYPE_USER
-        ..loginType = LoginTypeConst.LOGIN_TYPE_GOOGLE
-        ..playerId = appStore.playerId
-        ..uid = user.uid
-        ..username =
-            (currentUser.email.validate().splitBefore('@').replaceAll('.', ''))
-                .toLowerCase();
-
-      return tempUserData;
+      return UserData.fromFirebaseUserCredential(userCredential);
     } else {
       appStore.setLoading(false);
+      throw USER_NOT_CREATED;
+    }
+  }
+
+  Future<UserData> signInWeb() async {
+    try {
+      googleProvider
+          .addScope('https://www.googleapis.com/auth/contacts.readonly');
+      googleProvider.setCustomParameters({'login_hint': 'user@example.com'});
+
+      final userCredential =
+          await FirebaseAuth.instance.signInWithPopup(googleProvider);
+
+      return UserData.fromFirebaseUserCredential(userCredential);
+    } catch (e) {
+      appStore.setLoading(false);
+      log('sign in google web error: ${e.toString()}');
       throw USER_NOT_CREATED;
     }
   }

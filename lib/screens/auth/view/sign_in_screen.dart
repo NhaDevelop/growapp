@@ -141,7 +141,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
   void googleSignIn() async {
     appStore.setLoading(true);
-    await googleSignInAuthService.signInWithGoogle(context).then((value) async {
+    await googleSignInAuthService.signIn().then((value) async {
       /// Social Login Api
       await loginUser(value.toJson(), isSocialLogin: true).then((value) {
         if (isRemember) {
@@ -162,7 +162,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
   void facebookSignIn() async {
     appStore.setLoading(true);
-    await facebookLoginAuthService.signIn(context).then((value) async {
+    await facebookLoginAuthService.signIn().then((value) async {
       /// Social Login Api
       await loginUser(value.toJson(), isSocialLogin: true).then((value) {
         if (isRemember) {

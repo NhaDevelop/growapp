@@ -1,3 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/utils/constants.dart';
+import 'package:nb_utils/nb_utils.dart';
+
 class UserData {
   int? id;
   String? firstName;
@@ -98,5 +103,42 @@ class UserData {
       data['user_role'] = userRole;
     }
     return data;
+  }
+
+  factory UserData.fromFirebaseUserCredential(UserCredential userCredential) {
+    final User user = userCredential.user!;
+    assert(!user.isAnonymous);
+
+    final User currentUser = auth.currentUser!;
+    assert(user.uid == currentUser.uid);
+
+    log(currentUser);
+
+    String firstName = '';
+    String lastName = '';
+    if (currentUser.displayName.validate().split(' ').isNotEmpty) {
+      firstName = currentUser.displayName.splitBefore(' ');
+    }
+    if (currentUser.displayName.validate().split(' ').length >= 2) {
+      lastName = currentUser.displayName.splitAfter(' ');
+    }
+
+    /// Create a temporary request to send
+    UserData tempUserData = UserData()
+      ..mobile = currentUser.phoneNumber.validate()
+      ..email = currentUser.email.validate()
+      ..firstName = firstName.validate()
+      ..lastName = lastName.validate()
+      ..socialImage = currentUser.photoURL.validate()
+      ..profileImage = currentUser.photoURL.validate()
+      ..userType = LoginTypeConst.LOGIN_TYPE_USER
+      ..loginType = LoginTypeConst.LOGIN_TYPE_GOOGLE
+      ..playerId = appStore.playerId
+      ..uid = user.uid
+      ..username =
+          (currentUser.email.validate().splitBefore('@').replaceAll('.', ''))
+              .toLowerCase();
+
+    return tempUserData;
   }
 }

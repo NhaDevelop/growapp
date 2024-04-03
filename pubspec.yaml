@@ -33,17 +33,17 @@ dependencies:
   onesignal_flutter: ^5.1.2
 
   # FIREBASE
-  firebase_crashlytics: ^3.4.17
-  firebase_core: ^2.26.0
-  firebase_auth: ^4.17.7
-  firebase_storage: ^11.6.8
-  cloud_firestore: ^4.15.7
+  firebase_crashlytics: ^3.5.0
+  firebase_core: ^2.28.0
+  firebase_auth: ^4.19.0
+  firebase_storage: ^11.7.0
+  cloud_firestore: ^4.16.0
 
   # COUNTRY PICKER
   country_picker: ^2.0.20
 
   # SOCIAL LOGIN
-  google_sign_in: ^6.1.4
+  google_sign_in: ^6.2.1
   the_apple_sign_in: ^1.1.1
   flutter_facebook_auth: ^6.1.1
 
