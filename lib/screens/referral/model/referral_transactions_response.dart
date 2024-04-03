@@ -26,7 +26,7 @@ class ReferralTransactionData {
     return ReferralTransactionData(
       value: (json['value'] as num).toDouble(),
       log: json['log'],
-      createdAt: DateTime.parse(json['created_at']),
+      createdAt: DateTime.parse(json['created_at']).toLocal(),
     );
   }
 }

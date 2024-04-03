@@ -69,13 +69,14 @@ class BookingListData {
   List<TaxDetail>? taxDetails;
 
   // local
-  DateTime get bookingDateTime => DateTime.parse(startDateTime.validate());
+  DateTime get bookingDateTime =>
+      DateTime.parse(startDateTime.validate()).toLocal();
 
   String get bookingDate => formatDate(bookingDateTime.toString(),
       format: DateFormatConst.BOOK_DATE_FORMAT);
 
   String get bookingTime => formatDate(bookingDateTime.toString(),
-      format: DateFormatConst.HOUR_12_FORMAT);
+      format: DateFormatConst.HOUR_24_FORMAT);
 
   String get statusLabel => status.validate().getBookingStatusLabel;
 

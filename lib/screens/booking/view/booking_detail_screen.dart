@@ -131,7 +131,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                   DefaultCard(
                     child: _RowData(
                       title: '${locale.date} & ${locale.time}',
-                      value: '${data.bookingDate} At ${data.bookingTime}',
+                      value: '${data.bookingDate} at ${data.bookingTime}',
                     ),
                   ),
                   16.height,

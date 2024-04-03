@@ -58,11 +58,17 @@ class OrderListData {
   num? totalTaxAmount;
 
   // local
-  DateTime get orderingDateTime => DateTime.parse(orderDate.validate());
-  DateTime? get deliveringDateTime => DateTime.tryParse(expectedDeliveryDate.validate());
+  DateTime get orderingDateTime =>
+      DateTime.parse(orderDate.validate()).toLocal();
+  DateTime? get deliveringDateTime =>
+      DateTime.tryParse(expectedDeliveryDate.validate())?.toLocal();
 
-  String get orderingDate => formatDate(orderingDateTime.toString(), format: DateFormatConst.BOOK_DATE_FORMAT);
-  String get deliveringDate => deliveringDateTime != null ? formatDate(deliveringDateTime.toString(), format: DateFormatConst.BOOK_DATE_FORMAT) : '';
+  String get orderingDate => formatDate(orderingDateTime.toString(),
+      format: DateFormatConst.BOOK_DATE_FORMAT);
+  String get deliveringDate => deliveringDateTime != null
+      ? formatDate(deliveringDateTime.toString(),
+          format: DateFormatConst.BOOK_DATE_FORMAT)
+      : '';
 
   OrderListData({
     this.addressLine1,
@@ -106,7 +112,11 @@ class OrderListData {
       paymentStatus: json['payment_status'],
       phoneNo: json['phone_no'],
       postalCode: json['postal_code'],
-      productDetails: json['product_details'] != null ? (json['product_details'] as List).map((i) => CartListData.fromJson(i)).toList() : null,
+      productDetails: json['product_details'] != null
+          ? (json['product_details'] as List)
+              .map((i) => CartListData.fromJson(i))
+              .toList()
+          : null,
       state: json['state'],
       totalAmount: json['total_amount'],
       userId: json['user_id'],
