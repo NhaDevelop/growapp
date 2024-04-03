@@ -51,7 +51,6 @@ class _SelectBranchScreenState extends State<SelectBranchScreen> {
     future = getBranchList(
       page: page,
       branchList: branchList,
-      selectedBranch: selectedBranch,
       lastPageCallBack: (p0) {
         isLastPage = p0;
       },

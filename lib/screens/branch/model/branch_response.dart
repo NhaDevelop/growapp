@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grow_tokyo_app/models/configuration_response.dart';
 import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -45,6 +46,7 @@ class BranchData {
   String? branchImg;
   String? description;
   int? totalReview;
+  Currency? currency;
 
   List<WorkingHourList>? workingHourList;
 
@@ -81,6 +83,7 @@ class BranchData {
     this.totalReview,
     this.description,
     this.workingHourList,
+    this.currency,
   });
 
   factory BranchData.fromJson(Map<String, dynamic> json) {
@@ -114,6 +117,7 @@ class BranchData {
               .map((e) => WorkingHourList.fromJson(e))
               .toList()
           : null,
+      currency: Currency.fromJson(json['currency']),
     );
   }
 }
