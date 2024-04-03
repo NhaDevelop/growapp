@@ -18,16 +18,6 @@ class DashboardResponse {
       status: json['status'],
     );
   }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['message'] = message;
-    data['status'] = status;
-    if (this.data != null) {
-      data['data'] = this.data!.toJson();
-    }
-    return data;
-  }
 }
 
 class DashboardData {
@@ -60,22 +50,5 @@ class DashboardData {
           ? (json['slider'] as List).map((i) => SliderData.fromJson(i)).toList()
           : null,
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (category != null) {
-      data['category'] = category!.map((v) => v.toJson()).toList();
-    }
-    if (service != null) {
-      data['service'] = service!.map((v) => v.toJson()).toList();
-    }
-    if (topExperts != null) {
-      data['topExperts'] = topExperts!.map((v) => v.toJson()).toList();
-    }
-    if (topExperts != null) {
-      data['slider'] = topExperts!.map((v) => v.toJson()).toList();
-    }
-    return data;
   }
 }

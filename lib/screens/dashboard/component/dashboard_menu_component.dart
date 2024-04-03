@@ -3,6 +3,7 @@ import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/screens/coupon/view/coupon_list_screen.dart';
 import 'package:grow_tokyo_app/screens/dashboard/component/inquiry_dialog.dart';
 import 'package:grow_tokyo_app/screens/dashboard/fragment/notification_fragment.dart';
+import 'package:grow_tokyo_app/screens/notifications/notification_repository.dart';
 import 'package:grow_tokyo_app/screens/points/view/points_screen.dart';
 import 'package:grow_tokyo_app/screens/referral/view/referral_screen.dart';
 import 'package:grow_tokyo_app/utils/common_base.dart';
@@ -64,7 +65,7 @@ class DashboardMenuComponent extends StatelessWidget {
               ),
             ).expand(),
             16.width,
-            _MenuItem(
+            _NotificationMenuItem(
               icon: dashboard_menu_notifications,
               title: locale.notifications,
               onTap: () => doIfLoggedIn(
@@ -83,11 +84,13 @@ class _MenuItem extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
   final String icon;
+  final Widget iconIndicator;
 
   const _MenuItem({
     required this.icon,
     required this.title,
     required this.onTap,
+    this.iconIndicator = const SizedBox.shrink(),
   });
 
   @override
@@ -106,10 +109,69 @@ class _MenuItem extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(icon, width: 48, height: 48),
+            Stack(
+              children: [
+                Image.asset(icon, width: 48, height: 48),
+                Positioned(right: 0, top: 0, child: iconIndicator),
+              ],
+            ),
             8.height,
             Text(title, style: boldTextStyle(size: 14)),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _NotificationMenuItem extends StatefulWidget {
+  final String title;
+  final VoidCallback onTap;
+  final String icon;
+
+  const _NotificationMenuItem({
+    required this.icon,
+    required this.title,
+    required this.onTap,
+  });
+
+  @override
+  State<_NotificationMenuItem> createState() => _NotificationMenuItemState();
+}
+
+class _NotificationMenuItemState extends State<_NotificationMenuItem> {
+  Future? future;
+  int? count;
+
+  @override
+  void initState() {
+    super.initState();
+    getNotification(callBack: (totalCount) {
+      count = totalCount;
+      setState(() {});
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _MenuItem(
+      icon: widget.icon,
+      title: widget.title,
+      onTap: widget.onTap,
+      iconIndicator: Container(
+        padding: const EdgeInsets.all(3),
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.red,
+        ),
+        child: SizedBox(
+          height: 16,
+          width: 16,
+          child: count == null
+              ? null
+              : FittedBox(
+                  child: Text(count.toString(),
+                      style: boldTextStyle(color: white))),
         ),
       ),
     );

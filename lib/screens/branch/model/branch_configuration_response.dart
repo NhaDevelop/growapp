@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grow_tokyo_app/screens/branch/model/branch_response.dart';
 import 'package:grow_tokyo_app/utils/common_base.dart';
+import 'package:grow_tokyo_app/utils/extensions/num_extensions.dart';
 import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -118,6 +119,22 @@ class SlotData {
     this.updatedGuard,
     this.isAvailable = true,
   });
+
+  String? getStartTimeWithEmployeeStartHour(int employeeStartHour) {
+    final startHour = startTime!.split(':').first.toInt();
+    final startMinute = startTime!.split(':').last.toInt();
+
+    if (startHour > employeeStartHour) return startTime;
+    if (startHour == employeeStartHour && startMinute > 0) return startTime;
+    return '${employeeStartHour.formatDoubleDigit}:00';
+  }
+
+  String? getEndTimeWithEmployeeEndHour(int employeeEndHour) {
+    final endHour = endTime!.split(':').first.toInt();
+
+    if (endHour < employeeEndHour) return endTime;
+    return '${employeeEndHour.formatDoubleDigit}:00';
+  }
 
   factory SlotData.fromJson(Map<String, dynamic> json) {
     return SlotData(

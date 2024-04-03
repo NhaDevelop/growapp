@@ -18,16 +18,6 @@ class ServiceResponse {
       status: json['status'],
     );
   }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['message'] = message;
-    data['status'] = status;
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
 }
 
 class ServiceListData {
@@ -96,64 +86,22 @@ class ServiceListData {
       name: json['name'],
       serviceId: json['service_id'],
       serviceName: json['service_name'],
-      serviceImage:
-          json['service_image'],
+      serviceImage: json['service_image'],
       slug: json['slug'],
       status: json['status'],
-      subCategoryId:
-          json['sub_category_id'],
+      subCategoryId: json['sub_category_id'],
       updatedAt: json['updated_at'],
       updatedBy: json['updated_by'],
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['category_id'] = categoryId;
-    data['created_at'] = createdAt;
-    data['default_price'] = defaultPrice;
-    data['service_price'] = servicePrice;
-    data['description'] = description;
-    data['duration_min'] = durationMin;
-    data['id'] = id;
-    data['name'] = name;
-    data['service_id'] = serviceId;
-    data['service_name'] = serviceName;
-    data['slug'] = slug;
-    data['status'] = status;
-    data['updated_at'] = updatedAt;
-    if (createdBy != null) {
-      data['created_by'] = createdBy;
-    }
-    if (deletedAt != null) {
-      data['deleted_at'] = deletedAt;
-    }
-    if (deletedBy != null) {
-      data['deleted_by'] = deletedBy;
-    }
-    if (serviceImage != null) {
-      data['service_image'] = serviceImage;
-    }
-    if (subCategoryId != null) {
-      data['sub_category_id'] = subCategoryId;
-    }
-    if (updatedBy != null) {
-      data['updated_by'] = updatedBy;
-    }
-    data['start_date_time'] = startDateTime;
-
-    return data;
   }
 
   /// For Save Booking
   Map<String, dynamic> toBookingServiceJson(
       {bool isUpdate = false, bool isRescheduleBooking = false}) {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['service_id'] =
-        (isUpdate || isRescheduleBooking) ? serviceId : id;
-    data['service_price'] = (isUpdate || isRescheduleBooking)
-        ? servicePrice
-        : defaultPrice;
+    data['service_id'] = (isUpdate || isRescheduleBooking) ? serviceId : id;
+    data['service_price'] =
+        (isUpdate || isRescheduleBooking) ? servicePrice : defaultPrice;
     if (bookingRequestStore.employeeId != -1) {
       data['employee_id'] = bookingRequestStore.employeeId;
     }

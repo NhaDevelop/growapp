@@ -72,7 +72,8 @@ Future<EmployeeDetailResponse> getEmployeeDetail(
 }
 
 Future<List<EmployeeWorkingDayModel>> getEmployeeMonthSchedule(
-    {required int employeeId}) async {
+    {required int employeeId,
+    Function(List<EmployeeWorkingDayModel>)? callback}) async {
   try {
     var res = EmployeeMonthScheduleResponse.fromJson(await handleResponse(
         await buildHttpResponse(
@@ -83,6 +84,7 @@ Future<List<EmployeeWorkingDayModel>> getEmployeeMonthSchedule(
       ...?employeeWorkingDayListCached,
       employeeId: res.employeeWorkingDaysList
     };
+    callback?.call(res.employeeWorkingDaysList);
     appStore.setLoading(false);
 
     return res.employeeWorkingDaysList;

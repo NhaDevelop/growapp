@@ -14,9 +14,14 @@ class EmployeeCalendarComponent extends StatefulWidget {
   final int employeeId;
   final int? branchId;
   final Function(DateTime)? onSelect;
+  final Function(List<EmployeeWorkingDayModel>)? onEmployeeScheduleLoaded;
 
   const EmployeeCalendarComponent(
-      {super.key, required this.employeeId, this.branchId, this.onSelect});
+      {super.key,
+      required this.employeeId,
+      this.branchId,
+      this.onSelect,
+      this.onEmployeeScheduleLoaded});
 
   @override
   State<EmployeeCalendarComponent> createState() =>
@@ -34,7 +39,10 @@ class _EmployeeCalendarComponentState extends State<EmployeeCalendarComponent> {
   }
 
   Future<void> init() async {
-    future = getEmployeeMonthSchedule(employeeId: widget.employeeId);
+    future = getEmployeeMonthSchedule(
+      employeeId: widget.employeeId,
+      callback: widget.onEmployeeScheduleLoaded,
+    );
   }
 
   String? _getBranchName(DateTime date, List<EmployeeWorkingDayModel> snap) {

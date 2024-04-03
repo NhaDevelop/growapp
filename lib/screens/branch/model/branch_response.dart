@@ -20,16 +20,6 @@ class BranchResponse {
       status: json['status'],
     );
   }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['message'] = message;
-    data['status'] = status;
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
 }
 
 class BranchData {
@@ -125,50 +115,6 @@ class BranchData {
               .toList()
           : null,
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['address_line_1'] = addressLine1;
-    data['branch_for'] = branchFor;
-    data['contact_email'] = contactEmail;
-    data['contact_number'] = contactNumber;
-    data['created_at'] = createdAt;
-    data['id'] = id;
-    data['latitude'] = latitude;
-    data['longitude'] = longitude;
-    data['manager_id'] = managerId;
-    data['name'] = name;
-    data['slug'] = slug;
-    data['status'] = status;
-    data['updated_at'] = updatedAt;
-    data['total_review'] = totalReview;
-    data['description'] = description;
-    if (createdBy != null) {
-      data['created_by'] = createdBy;
-    }
-    if (deletedAt != null) {
-      data['deleted_at'] = deletedAt;
-    }
-    if (deletedBy != null) {
-      data['deleted_by'] = deletedBy;
-    }
-    if (paymentMethod != null) {
-      data['payment_method'] = paymentMethod;
-    }
-    if (ratingStar != null) {
-      data['rating_start'] = ratingStar;
-    }
-    if (updatedBy != null) {
-      data['updated_by'] = updatedBy;
-    }
-    if (branchImg != null) {
-      data['branch_image'] = branchImg;
-    }
-    if (workingHourList != null) {
-      data['working_days'] = workingHourList;
-    }
-    return data;
   }
 }
 
