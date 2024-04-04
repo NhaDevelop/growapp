@@ -29,6 +29,7 @@ import 'package:grow_tokyo_app/screens/order/model/order_status_response.dart';
 import 'package:grow_tokyo_app/screens/product/model/product_dashboard_response.dart';
 import 'package:grow_tokyo_app/screens/product/model/product_list_response.dart';
 import 'package:grow_tokyo_app/screens/profile/model/pages_response.dart';
+import 'package:grow_tokyo_app/screens/profile/model/social_data.dart';
 import 'package:grow_tokyo_app/screens/services/models/service_response.dart';
 import 'package:grow_tokyo_app/store/booking_request_store.dart';
 import 'package:grow_tokyo_app/store/product_store.dart';
@@ -98,6 +99,7 @@ Map<int, List<EmployeeServiceListData>>? employeeServiceListCached;
 Map<int, List<EmployeeData>>? branchEmployeeListCached;
 Map<int, List<EmployeeWorkingDayModel>>? employeeWorkingDayListCached;
 List<PageModel>? pageListCached;
+SocialData? socialDataCached;
 
 //endregion
 

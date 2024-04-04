@@ -14,6 +14,7 @@ class APIEndPoints {
   static const String checkReferralCode = 'check-referral-code';
   static const String coupons = 'coupons';
   static const String credit = 'credit';
+  static const String social = 'social';
   static const String creditTransactions = 'credit-transactions';
   static const String saveBooking = 'save-booking';
   static const String savePayment = 'save-payment';

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/screens/profile/model/social_data.dart';
+import 'package:grow_tokyo_app/screens/profile/profile_repository.dart';
 import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class InquiryDialog extends StatefulWidget {
   const InquiryDialog({super.key});
@@ -13,11 +15,34 @@ class InquiryDialog extends StatefulWidget {
 
 class _InquiryDialogState extends State<InquiryDialog> {
   InquiryType? _selected;
+  SocialData? _socialData;
+
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  Future<void> init() async {
+    _socialData = socialDataCached;
+    try {
+      _socialData = await getSocialUrls();
+      setState(() {});
+    } catch (e) {
+      log(e.toString());
+    }
+  }
 
   void _onSelect() {
     if (_selected == null) return;
 
-    launchUrl(Uri.parse(_selected!.url));
+    final url = _selected == InquiryType.telegram
+        ? _socialData?.telegramChannel
+        : _socialData?.messengerChannel;
+    if (url == null) return;
+
+    launchUrlString(url);
+
     finish(context);
   }
 
@@ -67,7 +92,7 @@ class _InquiryDialogState extends State<InquiryDialog> {
             color: context.primaryColor,
             textColor: Colors.white,
             disabledColor: const Color(0xFFE0E0E0),
-            enabled: _selected != null,
+            enabled: _selected != null && _socialData != null,
             onTap: _onSelect,
           ),
         ],
@@ -116,14 +141,3 @@ class _Item extends StatelessWidget {
 }
 
 enum InquiryType { telegram, messenger }
-
-extension InquiryTypeExtension on InquiryType {
-  String get url {
-    switch (this) {
-      case InquiryType.telegram:
-        return '';
-      default:
-        return '';
-    }
-  }
-}

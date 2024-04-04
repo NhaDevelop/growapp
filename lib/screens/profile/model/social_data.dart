@@ -1,0 +1,22 @@
+class SocialData {
+  final String facebookLink;
+  final String instagramLink;
+  final String telegramChannel;
+  final String messengerChannel;
+
+  SocialData({
+    required this.facebookLink,
+    required this.instagramLink,
+    required this.telegramChannel,
+    required this.messengerChannel,
+  });
+
+  factory SocialData.fromJson(Map<String, dynamic> json) {
+    return SocialData(
+      facebookLink: json['facebook_link'],
+      instagramLink: json['instagram_link'],
+      telegramChannel: json['telegram_chanel'],
+      messengerChannel: json['messenger_chanel'],
+    );
+  }
+}
