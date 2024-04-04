@@ -32,6 +32,8 @@ abstract class BaseLanguage {
 
   String get lastName;
 
+  String get dob;
+
   String get email;
 
   String get thisFieldIsRequired;

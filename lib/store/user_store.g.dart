@@ -95,6 +95,21 @@ mixin _$UserStore on _UserStore, Store {
     });
   }
 
+  late final _$dobAtom = Atom(name: '_UserStore.dob', context: context);
+
+  @override
+  String get dob {
+    _$dobAtom.reportRead();
+    return super.dob;
+  }
+
+  @override
+  set dob(String value) {
+    _$dobAtom.reportWrite(value, super.dob, () {
+      super.dob = value;
+    });
+  }
+
   late final _$userEmailAtom =
       Atom(name: '_UserStore.userEmail', context: context);
 
@@ -318,6 +333,15 @@ mixin _$UserStore on _UserStore, Store {
         .run(() => super.setLastName(val, isInitializing: isInitializing));
   }
 
+  late final _$setDobAsyncAction =
+      AsyncAction('_UserStore.setDob', context: context);
+
+  @override
+  Future<void> setDob(String val, {bool isInitializing = false}) {
+    return _$setDobAsyncAction
+        .run(() => super.setDob(val, isInitializing: isInitializing));
+  }
+
   late final _$setContactNumberAsyncAction =
       AsyncAction('_UserStore.setContactNumber', context: context);
 
@@ -371,6 +395,7 @@ uid: ${uid},
 loginType: ${loginType},
 userFirstName: ${userFirstName},
 userLastName: ${userLastName},
+dob: ${dob},
 userEmail: ${userEmail},
 userProfileImage: ${userProfileImage},
 userContactNumber: ${userContactNumber},

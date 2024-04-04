@@ -46,6 +46,9 @@ class LanguageEn extends BaseLanguage {
   String get lastName => 'Last Name';
 
   @override
+  String get dob => 'Date of Birth';
+
+  @override
   String get email => 'Email';
 
   @override

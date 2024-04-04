@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:grow_tokyo_app/utils/constants.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -31,17 +32,20 @@ class EditProfileScreenState extends State<EditProfileScreen> {
 
   File? imageFile;
   XFile? pickedFile;
+  DateTime? dob;
 
   TextEditingController fNameCont = TextEditingController();
   TextEditingController lNameCont = TextEditingController();
   TextEditingController emailCont = TextEditingController();
   TextEditingController mobileCont = TextEditingController();
   TextEditingController genderCont = TextEditingController();
+  TextEditingController dobCont = TextEditingController();
 
   FocusNode fNameFocus = FocusNode();
   FocusNode lNameFocus = FocusNode();
   FocusNode emailFocus = FocusNode();
   FocusNode mobileFocus = FocusNode();
+  FocusNode dobFocus = FocusNode();
 
   Country selectedCountry = defaultCountry();
 
@@ -61,6 +65,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
     emailCont.text = userStore.userEmail.validate();
     mobileCont.text = userStore.userContactNumber.validate();
     genderCont.text = userStore.gender.validate();
+    dobCont.text = userStore.dob.validate();
     genderKey = UniqueKey();
 
     /*String countryCode = userStore.userContactNumber.validate().splitBefore('-').replaceAll('+', '');
@@ -86,6 +91,9 @@ class EditProfileScreenState extends State<EditProfileScreen> {
       lastName: lNameCont.text,
       mobile: mobileCont.text,
       gender: genderCont.text,
+      dob: dob == null
+          ? ''
+          : formatDate(dob.toString(), format: DateFormatConst.BE_DATE_FORMAT),
       imageFile: imageFile,
       onSuccess: (data) {
         appStore.setLoading(false);
@@ -180,159 +188,190 @@ class EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: widget.canPop,
-      child: SafeArea(
-        child: Scaffold(
-          appBar: commonAppBarWidget(
-            context,
-            title: locale.editProfile,
-            appBarHeight: 70,
-            showLeadingIcon: widget.canPop,
-            roundCornerShape: true,
-          ),
-          body: Stack(
-            children: [
-              SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
-                child: Form(
-                  key: formKey,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Align(
-                        child: Stack(
-                          children: [
-                            Container(
-                              decoration: boxDecorationDefault(
-                                border: Border.all(
-                                    color: context.scaffoldBackgroundColor,
-                                    width: 4),
-                                shape: BoxShape.circle,
-                              ),
-                              child: imageFile != null
-                                  ? Image.file(imageFile!,
-                                          width: 90,
-                                          height: 90,
-                                          fit: BoxFit.cover)
-                                      .cornerRadiusWithClipRRect(45)
-                                  : Observer(
-                                      builder: (_) => CachedImageWidget(
-                                        url: userStore.userProfileImage,
-                                        height: 100,
-                                        fit: BoxFit.cover,
-                                        radius: 64,
-                                        child:
-                                            const DefaultUserImagePlaceholder(),
-                                      ),
-                                    ),
-                            ),
-                            Positioned(
-                              bottom: 4,
-                              right: 2,
-                              child: Container(
-                                alignment: Alignment.center,
-                                decoration: boxDecorationWithRoundedCorners(
-                                  boxShape: BoxShape.circle,
-                                  backgroundColor: primaryColor,
-                                  border: Border.all(color: Colors.white),
+      child: GestureDetector(
+        onTap: () => hideKeyboard(context),
+        child: SafeArea(
+          child: Scaffold(
+            appBar: commonAppBarWidget(
+              context,
+              title: locale.editProfile,
+              appBarHeight: 70,
+              showLeadingIcon: widget.canPop,
+              roundCornerShape: true,
+            ),
+            body: Stack(
+              children: [
+                SingleChildScrollView(
+                  padding: const EdgeInsets.all(16),
+                  child: Form(
+                    key: formKey,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Align(
+                          child: Stack(
+                            children: [
+                              Container(
+                                decoration: boxDecorationDefault(
+                                  border: Border.all(
+                                      color: context.scaffoldBackgroundColor,
+                                      width: 4),
+                                  shape: BoxShape.circle,
                                 ),
-                                child: const Icon(Icons.camera,
-                                        color: Colors.white, size: 16)
-                                    .paddingAll(4.0),
-                              ).onTap(
-                                () async {
-                                  _showBottomSheet(context);
-                                },
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                splashColor: Colors.transparent,
+                                child: imageFile != null
+                                    ? Image.file(imageFile!,
+                                            width: 90,
+                                            height: 90,
+                                            fit: BoxFit.cover)
+                                        .cornerRadiusWithClipRRect(45)
+                                    : Observer(
+                                        builder: (_) => CachedImageWidget(
+                                          url: userStore.userProfileImage,
+                                          height: 100,
+                                          fit: BoxFit.cover,
+                                          radius: 64,
+                                          child:
+                                              const DefaultUserImagePlaceholder(),
+                                        ),
+                                      ),
                               ),
-                            ).visible(!isLoginTypeGoogle && !isLoginTypeApple)
-                          ],
+                              Positioned(
+                                bottom: 4,
+                                right: 2,
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  decoration: boxDecorationWithRoundedCorners(
+                                    boxShape: BoxShape.circle,
+                                    backgroundColor: primaryColor,
+                                    border: Border.all(color: Colors.white),
+                                  ),
+                                  child: const Icon(Icons.camera,
+                                          color: Colors.white, size: 16)
+                                      .paddingAll(4.0),
+                                ).onTap(
+                                  () async {
+                                    _showBottomSheet(context);
+                                  },
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  splashColor: Colors.transparent,
+                                ),
+                              ).visible(!isLoginTypeGoogle && !isLoginTypeApple)
+                            ],
+                          ),
                         ),
-                      ),
-                      24.height,
-                      AppTextField(
-                        textFieldType: TextFieldType.NAME,
-                        controller: fNameCont,
-                        focus: fNameFocus,
-                        nextFocus: lNameFocus,
-                        enabled: !isSocialLoginType,
-                        textStyle: isSocialLoginType
-                            ? secondaryTextStyle()
-                            : primaryTextStyle(),
-                        decoration:
-                            inputDecoration(context, label: locale.firstName),
-                      ),
-                      16.height,
-                      AppTextField(
-                        textFieldType: TextFieldType.NAME,
-                        controller: lNameCont,
-                        focus: lNameFocus,
-                        nextFocus: emailFocus,
-                        enabled: !isSocialLoginType,
-                        textStyle: isSocialLoginType
-                            ? secondaryTextStyle()
-                            : primaryTextStyle(),
-                        decoration:
-                            inputDecoration(context, label: locale.lastName),
-                      ),
-                      16.height,
-                      AppTextField(
-                        textFieldType: TextFieldType.EMAIL_ENHANCED,
-                        controller: emailCont,
-                        focus: emailFocus,
-                        nextFocus: mobileFocus,
-                        enabled: false,
-                        textStyle: secondaryTextStyle(),
-                        decoration:
-                            inputDecoration(context, label: locale.email),
-                      ),
-                      16.height,
-                      GenderSelectionComponent(
-                        key: genderKey,
-                        type: genderCont.text,
-                        onTap: (value) {
-                          genderCont.text = value;
-                        },
-                      ),
-                      16.height,
-                      AppTextField(
-                        textFieldType: TextFieldType.PHONE,
-                        controller: mobileCont,
-                        focus: mobileFocus,
-                        errorThisFieldRequired: locale.thisFieldIsRequired,
-                        decoration: inputDecoration(context,
-                            label: locale.contactNumber),
-                      ),
-                      16.height,
-                      AppButton(
-                        text: locale.update,
-                        height: 40,
-                        color: secondaryColor,
-                        textStyle: primaryTextStyle(color: white),
-                        width: context.width() - context.navigationBarHeight,
-                        onTap: () async {
-                          final isFormValidate =
-                              formKey.currentState?.validate() ?? false;
-                          if (!isFormValidate) return;
+                        24.height,
+                        AppTextField(
+                          textFieldType: TextFieldType.NAME,
+                          controller: fNameCont,
+                          focus: fNameFocus,
+                          nextFocus: lNameFocus,
+                          enabled: !isSocialLoginType,
+                          textStyle: isSocialLoginType
+                              ? secondaryTextStyle()
+                              : primaryTextStyle(),
+                          decoration:
+                              inputDecoration(context, label: locale.firstName),
+                        ),
+                        16.height,
+                        AppTextField(
+                          textFieldType: TextFieldType.NAME,
+                          controller: lNameCont,
+                          focus: lNameFocus,
+                          nextFocus: dobFocus,
+                          enabled: !isSocialLoginType,
+                          textStyle: isSocialLoginType
+                              ? secondaryTextStyle()
+                              : primaryTextStyle(),
+                          decoration:
+                              inputDecoration(context, label: locale.lastName),
+                        ),
+                        16.height,
+                        AppTextField(
+                          textFieldType: TextFieldType.OTHER,
+                          controller: dobCont,
+                          focus: dobFocus,
+                          nextFocus: emailFocus,
+                          onTap: () {
+                            showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(1900),
+                              lastDate: DateTime.now(),
+                            ).then((value) {
+                              if (value != null) {
+                                dob = value;
+                                dobCont.text = formatDate(
+                                  value.toString(),
+                                  format: DateFormatConst.BOOK_DATE_FORMAT,
+                                );
+                              }
+                            });
+                          },
+                          textStyle: isSocialLoginType
+                              ? secondaryTextStyle()
+                              : primaryTextStyle(),
+                          decoration:
+                              inputDecoration(context, label: locale.dob),
+                        ),
+                        16.height,
+                        GenderSelectionComponent(
+                          key: genderKey,
+                          type: genderCont.text,
+                          onTap: (value) {
+                            genderCont.text = value;
+                          },
+                        ),
+                        16.height,
+                        AppTextField(
+                          textFieldType: TextFieldType.EMAIL_ENHANCED,
+                          controller: emailCont,
+                          focus: emailFocus,
+                          nextFocus: mobileFocus,
+                          enabled: false,
+                          textStyle: secondaryTextStyle(),
+                          decoration:
+                              inputDecoration(context, label: locale.email),
+                        ),
+                        16.height,
+                        AppTextField(
+                          textFieldType: TextFieldType.PHONE,
+                          controller: mobileCont,
+                          focus: mobileFocus,
+                          errorThisFieldRequired: locale.thisFieldIsRequired,
+                          decoration: inputDecoration(context,
+                              label: locale.contactNumber),
+                        ),
+                        16.height,
+                        AppButton(
+                          text: locale.update,
+                          height: 40,
+                          color: secondaryColor,
+                          textStyle: primaryTextStyle(color: white),
+                          width: context.width() - context.navigationBarHeight,
+                          onTap: () async {
+                            final isFormValidate =
+                                formKey.currentState?.validate() ?? false;
+                            if (!isFormValidate) return;
 
-                          if (await isNetworkAvailable()) {
-                            update();
-                          } else {
-                            toast(locale.yourInternetIsNotWorking);
-                          }
-                        },
-                      ),
-                      24.height,
-                    ],
+                            if (await isNetworkAvailable()) {
+                              update();
+                            } else {
+                              toast(locale.yourInternetIsNotWorking);
+                            }
+                          },
+                        ),
+                        24.height,
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Observer(
-                  builder: (_) =>
-                      const LoaderWidget().visible(appStore.isLoading)),
-            ],
+                Observer(
+                    builder: (_) =>
+                        const LoaderWidget().visible(appStore.isLoading)),
+              ],
+            ),
           ),
         ),
       ),

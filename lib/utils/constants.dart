@@ -58,6 +58,7 @@ const SERVICE_PAYMENT_STATUS_UNPAID = 'unpaid';
 
 //region DateFormats
 class DateFormatConst {
+  static const BE_DATE_FORMAT = 'MM/dd/yyyy';
   static const DATE_FORMAT_1 = 'dd-MMM-yyyy hh:mm a';
   static const NEW_FORMAT = 'yyyy-MM-dd HH:mm';
   static const DATE_FORMAT_2 = 'd MMM, yyyy';
@@ -169,6 +170,7 @@ class SharedPreferenceConst {
   static const USER_ID = 'USER_ID';
   static const FIRST_NAME = 'FIRST_NAME';
   static const LAST_NAME = 'LAST_NAME';
+  static const DOB = 'DOB';
   static const USER_EMAIL = 'USER_EMAIL';
   static const TOKEN = 'TOKEN';
   static const AVTAR = 'AVTAR';

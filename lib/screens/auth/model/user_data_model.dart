@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/utils/common_base.dart';
 import 'package:grow_tokyo_app/utils/constants.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -7,6 +8,7 @@ class UserData {
   int? id;
   String? firstName;
   String? lastName;
+  String? dob;
   String? username;
   int? status;
   String? email;
@@ -34,6 +36,7 @@ class UserData {
     this.firstName,
     this.id,
     this.lastName,
+    this.dob,
     this.playerId,
     this.socialImage,
     this.uid,
@@ -59,6 +62,10 @@ class UserData {
       firstName: json['first_name'],
       id: json['id'],
       lastName: json['last_name'],
+      dob: formatDate(
+        json['date_of_birth'],
+        format: DateFormatConst.BOOK_DATE_FORMAT,
+      ),
       playerId: json['player_id'],
       status: json['status'],
       displayName: json['display_name'],

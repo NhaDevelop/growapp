@@ -151,6 +151,8 @@ void main() async {
         isInitializing: true);
     await userStore.setLastName(getStringAsync(SharedPreferenceConst.LAST_NAME),
         isInitializing: true);
+    await userStore.setDob(getStringAsync(SharedPreferenceConst.DOB),
+        isInitializing: true);
     await userStore.setUserEmail(
         getStringAsync(SharedPreferenceConst.USER_EMAIL),
         isInitializing: true);

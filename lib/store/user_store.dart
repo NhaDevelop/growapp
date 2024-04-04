@@ -28,6 +28,9 @@ abstract class _UserStore with Store {
   String get userFullName => '$userFirstName $userLastName'.trim();
 
   @observable
+  String dob = '';
+
+  @observable
   String userEmail = '';
 
   @observable
@@ -108,6 +111,12 @@ abstract class _UserStore with Store {
   Future<void> setLastName(String val, {bool isInitializing = false}) async {
     userLastName = val;
     if (!isInitializing) await setValue(SharedPreferenceConst.LAST_NAME, val);
+  }
+
+  @action
+  Future<void> setDob(String val, {bool isInitializing = false}) async {
+    dob = val;
+    if (!isInitializing) await setValue(SharedPreferenceConst.DOB, val);
   }
 
   @action
