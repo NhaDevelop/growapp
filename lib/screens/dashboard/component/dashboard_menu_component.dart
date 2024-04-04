@@ -165,7 +165,7 @@ class _NotificationMenuItemState extends State<_NotificationMenuItem> {
       icon: widget.icon,
       title: widget.title,
       onTap: widget.onTap,
-      iconIndicator: !appStore.isLoggedIn
+      iconIndicator: !appStore.isLoggedIn || count.validate() == 0
           ? null
           : Container(
               padding: const EdgeInsets.all(3),
