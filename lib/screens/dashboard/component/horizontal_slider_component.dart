@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:grow_tokyo_app/components/cached_image_widget.dart';
 import 'package:grow_tokyo_app/screens/dashboard/models/slider_data.dart';
-import 'package:grow_tokyo_app/screens/services/view/view_all_service_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../configs.dart';
 import '../../../utils/colors.dart';
@@ -91,15 +91,17 @@ class _HorizontalSliderComponentState extends State<HorizontalSliderComponent> {
                         fit: BoxFit.cover,
                         radius: defaultRadius)
                     .onTap(() {
-                  if (data.type == SLIDER_TYPE_CATEGORY) {
-                    ViewAllServiceScreen(
-                            serviceTitle: data.name.validate(),
-                            categoryId: data.linkId)
-                        .launch(context);
-                  } else if (data.type == SLIDER_TYPE_SERVICE) {
-                    ViewAllServiceScreen(serviceTitle: data.name.validate())
-                        .launch(context);
-                  }
+                  final link = data.link.validate();
+                  if (link.isNotEmpty) launchUrlString(link);
+                  // if (data.type == SLIDER_TYPE_CATEGORY) {
+                  //   ViewAllServiceScreen(
+                  //           serviceTitle: data.name.validate(),
+                  //           categoryId: data.linkId)
+                  //       .launch(context);
+                  // } else if (data.type == SLIDER_TYPE_SERVICE) {
+                  //   ViewAllServiceScreen(serviceTitle: data.name.validate())
+                  //       .launch(context);
+                  // }
                 });
               },
             ),
