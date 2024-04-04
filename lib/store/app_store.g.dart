@@ -343,6 +343,22 @@ mixin _$AppStore on _AppStore, Store {
     });
   }
 
+  late final _$socialDataAtom =
+      Atom(name: '_AppStore.socialData', context: context);
+
+  @override
+  SocialData get socialData {
+    _$socialDataAtom.reportRead();
+    return super.socialData;
+  }
+
+  @override
+  set socialData(SocialData value) {
+    _$socialDataAtom.reportWrite(value, super.socialData, () {
+      super.socialData = value;
+    });
+  }
+
   late final _$setBranchAddressAsyncAction =
       AsyncAction('_AppStore.setBranchAddress', context: context);
 
@@ -502,6 +518,14 @@ mixin _$AppStore on _AppStore, Store {
     return _$setLanguageAsyncAction.run(() => super.setLanguage(val));
   }
 
+  late final _$setSocialDataAsyncAction =
+      AsyncAction('_AppStore.setSocialData', context: context);
+
+  @override
+  Future<void> setSocialData(SocialData val) {
+    return _$setSocialDataAsyncAction.run(() => super.setSocialData(val));
+  }
+
   late final _$_AppStoreActionController =
       ActionController(name: '_AppStore', context: context);
 
@@ -550,6 +574,7 @@ branchAddress: ${branchAddress},
 branchName: ${branchName},
 branchContactNumber: ${branchContactNumber},
 playerId: ${playerId},
+socialData: ${socialData},
 isCountrySelected: ${isCountrySelected},
 isBranchSelected: ${isBranchSelected}
     ''';

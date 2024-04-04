@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:grow_tokyo_app/components/empty_error_state_widget.dart';
 import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/screens/dashboard/dashboard_repository.dart';
 import 'package:grow_tokyo_app/screens/profile/model/social_data.dart';
-import 'package:grow_tokyo_app/screens/profile/profile_repository.dart';
 import 'package:grow_tokyo_app/screens/profile/shimmer/social_media_shimmer.dart';
 import 'package:grow_tokyo_app/utils/app_common.dart';
 import 'package:grow_tokyo_app/utils/images.dart';

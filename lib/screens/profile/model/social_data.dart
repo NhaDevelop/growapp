@@ -5,10 +5,10 @@ class SocialData {
   final String messengerChannel;
 
   SocialData({
-    required this.facebookLink,
-    required this.instagramLink,
-    required this.telegramChannel,
-    required this.messengerChannel,
+    this.facebookLink = '#',
+    this.instagramLink = '#',
+    this.telegramChannel = '#',
+    this.messengerChannel = '#',
   });
 
   factory SocialData.fromJson(Map<String, dynamic> json) {

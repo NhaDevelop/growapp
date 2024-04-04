@@ -9,6 +9,7 @@ import 'package:grow_tokyo_app/screens/referral/view/referral_screen.dart';
 import 'package:grow_tokyo_app/utils/common_base.dart';
 import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class DashboardMenuComponent extends StatelessWidget {
   const DashboardMenuComponent({super.key});
@@ -53,7 +54,7 @@ class DashboardMenuComponent extends StatelessWidget {
             _MenuItem(
               icon: dashboard_menu_fbecsite,
               title: locale.fbEcSite,
-              onTap: () {},
+              onTap: () => launchUrlString(appStore.socialData.facebookLink),
             ).expand(),
             16.width,
             _MenuItem(

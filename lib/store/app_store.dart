@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:grow_tokyo_app/screens/profile/model/social_data.dart';
 import 'package:mobx/mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -81,6 +82,9 @@ abstract class _AppStore with Store {
 
   @observable
   String playerId = '';
+
+  @observable
+  SocialData socialData = SocialData();
 
   @action
   Future<void> setBranchAddress(String val) async {
@@ -257,5 +261,10 @@ abstract class _AppStore with Store {
     errorSomethingWentWrong = locale.somethingWentWrong;
     errorThisFieldRequired = locale.thisFieldIsRequired;
     errorInternetNotAvailable = locale.yourInternetIsNotWorking;
+  }
+
+  @action
+  Future<void> setSocialData(SocialData val) async {
+    socialData = val;
   }
 }

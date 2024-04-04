@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:grow_tokyo_app/components/select_country_dialog.dart';
 import 'package:grow_tokyo_app/components/select_language_dialog.dart';
 import 'package:grow_tokyo_app/screens/auth/view/sign_in_screen.dart';
+import 'package:grow_tokyo_app/screens/dashboard/dashboard_repository.dart';
 import 'package:grow_tokyo_app/utils/colors.dart';
 import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
 import 'package:grow_tokyo_app/utils/images.dart';
@@ -67,6 +68,8 @@ class _DashboardScreenState extends State<DashboardScreen>
               ));
         }
       }
+
+      getSocialUrls().then(appStore.setSocialData).catchError(onError);
 
       /// ForceUpdate Dialog
       if (mounted) showForceUpdateDialog(context);

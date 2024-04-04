@@ -1,5 +1,6 @@
 import 'package:grow_tokyo_app/network/network_utils.dart';
 import 'package:grow_tokyo_app/screens/cart/model/country_list_response.dart';
+import 'package:grow_tokyo_app/screens/profile/model/social_data.dart';
 import 'package:grow_tokyo_app/utils/api_end_points.dart';
 
 import '../../main.dart';
@@ -26,4 +27,13 @@ Future<List<CountryData>> getCountries() async {
       (json['data'] as List).map((e) => CountryData.fromJson(e)).toList();
 
   return list;
+}
+
+Future<SocialData> getSocialUrls() async {
+  final json =
+      await handleResponse(await buildHttpResponse(APIEndPoints.social));
+  final data = SocialData.fromJson(json);
+  socialDataCached = data;
+
+  return data;
 }
