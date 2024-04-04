@@ -22,4 +22,13 @@ class BuildConfig {
         return '12f26bc1-9c4d-41cb-80c0-ccce6660bc96';
     }
   }
+
+  static String get blogPostHost {
+    switch (appFlavor) {
+      case AppFlavor.prod:
+        return 'demo.lectron.vn';
+      default:
+        return 'demo.lectron.vn';
+    }
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grow_tokyo_app/screens/dashboard/shimmer/blog_component_shimmer.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/shimmer_widget.dart';
@@ -37,30 +38,7 @@ class DashboardShimmer extends StatelessWidget {
               24.height,
 
               //Blog Component
-              Column(
-                children: [
-                  const Row(
-                    children: [
-                      ShimmerWidget(height: 20, width: 100),
-                      Spacer(),
-                      ShimmerWidget(height: 20, width: 100),
-                    ],
-                  ),
-                  8.height,
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: List.generate(
-                        3,
-                        (index) => const ShimmerWidget(
-                          height: 150,
-                          width: 270,
-                        ).paddingOnly(right: 16),
-                      ),
-                    ),
-                  ),
-                ],
-              )
+              const BlogComponentShimmer(),
             ],
           ).paddingSymmetric(horizontal: 20),
         ),
