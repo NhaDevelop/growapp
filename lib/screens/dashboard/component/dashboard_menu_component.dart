@@ -84,13 +84,13 @@ class _MenuItem extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
   final String icon;
-  final Widget iconIndicator;
+  final Widget? iconIndicator;
 
   const _MenuItem({
     required this.icon,
     required this.title,
     required this.onTap,
-    this.iconIndicator = const SizedBox.shrink(),
+    this.iconIndicator,
   });
 
   @override
@@ -112,7 +112,11 @@ class _MenuItem extends StatelessWidget {
             Stack(
               children: [
                 Image.asset(icon, width: 48, height: 48),
-                Positioned(right: 0, top: 0, child: iconIndicator),
+                Positioned(
+                  right: 0,
+                  top: 0,
+                  child: iconIndicator ?? const Offstage(),
+                ),
               ],
             ),
             8.height,
@@ -146,6 +150,8 @@ class _NotificationMenuItemState extends State<_NotificationMenuItem> {
   @override
   void initState() {
     super.initState();
+
+    if (!appStore.isLoggedIn) return;
     getNotification(callBack: (totalCount) {
       count = totalCount;
       setState(() {});
@@ -158,22 +164,24 @@ class _NotificationMenuItemState extends State<_NotificationMenuItem> {
       icon: widget.icon,
       title: widget.title,
       onTap: widget.onTap,
-      iconIndicator: Container(
-        padding: const EdgeInsets.all(3),
-        decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.red,
-        ),
-        child: SizedBox(
-          height: 16,
-          width: 16,
-          child: count == null
-              ? null
-              : FittedBox(
-                  child: Text(count.toString(),
-                      style: boldTextStyle(color: white))),
-        ),
-      ),
+      iconIndicator: !appStore.isLoggedIn
+          ? null
+          : Container(
+              padding: const EdgeInsets.all(3),
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.red,
+              ),
+              child: SizedBox(
+                height: 16,
+                width: 16,
+                child: count == null
+                    ? null
+                    : FittedBox(
+                        child: Text(count.toString(),
+                            style: boldTextStyle(color: white))),
+              ),
+            ),
     );
   }
 }
