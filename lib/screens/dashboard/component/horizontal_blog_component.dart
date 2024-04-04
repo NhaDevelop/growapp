@@ -9,14 +9,15 @@ import 'package:grow_tokyo_app/screens/dashboard/view/blog_post_list_screen.dart
 import 'package:grow_tokyo_app/screens/profile/view/html_content_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-class BlogComponent extends StatefulWidget {
-  const BlogComponent({super.key});
+class HorizontalBlogComponent extends StatefulWidget {
+  const HorizontalBlogComponent({super.key});
 
   @override
-  State<BlogComponent> createState() => _BlogComponentState();
+  State<HorizontalBlogComponent> createState() =>
+      _HorizontalBlogComponentState();
 }
 
-class _BlogComponentState extends State<BlogComponent> {
+class _HorizontalBlogComponentState extends State<HorizontalBlogComponent> {
   Future<List<BlogPostModel>>? future;
 
   @override
@@ -26,13 +27,14 @@ class _BlogComponentState extends State<BlogComponent> {
   }
 
   Future<void> init() async {
-    future = getBlogPosts(perPage: 5);
+    future = getBlogPosts();
   }
 
   @override
   Widget build(BuildContext context) {
     return SnapHelperWidget(
       future: future,
+      initialData: blogPostListCached,
       loadingWidget: const BlogComponentShimmer().paddingAll(16),
       errorBuilder: (error) {
         return NoDataWidget(

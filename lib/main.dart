@@ -19,6 +19,7 @@ import 'package:grow_tokyo_app/screens/branch/model/branch_gallery_list_response
 import 'package:grow_tokyo_app/screens/branch/model/branch_response.dart';
 import 'package:grow_tokyo_app/screens/category/model/category_response.dart';
 import 'package:grow_tokyo_app/screens/coupon/model/coupon_list_response.dart';
+import 'package:grow_tokyo_app/screens/dashboard/models/blog_post_model.dart';
 import 'package:grow_tokyo_app/screens/dashboard/models/dashboard_model.dart';
 import 'package:grow_tokyo_app/screens/experts/model/employee_detail_response.dart';
 import 'package:grow_tokyo_app/screens/experts/model/employee_month_schedule_response.dart';
@@ -100,6 +101,7 @@ Map<int, List<EmployeeData>>? branchEmployeeListCached;
 Map<int, List<EmployeeWorkingDayModel>>? employeeWorkingDayListCached;
 List<PageModel>? pageListCached;
 SocialData? socialDataCached;
+List<BlogPostModel>? blogPostListCached;
 
 //endregion
 

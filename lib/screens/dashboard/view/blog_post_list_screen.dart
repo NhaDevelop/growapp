@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:grow_tokyo_app/components/empty_error_state_widget.dart';
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/screens/dashboard/blog_repository.dart';
-import 'package:grow_tokyo_app/screens/dashboard/component/blog_component.dart';
+import 'package:grow_tokyo_app/screens/dashboard/component/horizontal_blog_component.dart';
 import 'package:grow_tokyo_app/screens/dashboard/models/blog_post_model.dart';
 import 'package:grow_tokyo_app/screens/dashboard/shimmer/blog_list_shimmer.dart';
 import 'package:grow_tokyo_app/utils/app_common.dart';
@@ -48,6 +48,7 @@ class _BlogPostListScreenState extends State<BlogPostListScreen> {
       appBar: commonAppBarWidget(context, title: locale.blog),
       body: SnapHelperWidget(
         future: future,
+        initialData: blogPostListCached,
         loadingWidget: const BlogPostListShimmer(),
         errorBuilder: (error) {
           return NoDataWidget(

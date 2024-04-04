@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/screens/dashboard/models/blog_post_model.dart';
 import 'package:grow_tokyo_app/utils/build_config.dart';
 import 'package:http/http.dart' as http;
@@ -21,6 +22,7 @@ Future<List<BlogPostModel>> getBlogPosts(
   if (response.statusCode == 200) {
     final List<dynamic> data = jsonDecode(response.body);
     final newItems = data.map((e) => BlogPostModel.fromJson(e)).toList();
+    if (page == 1) blogPostListCached = newItems;
     if (list == null) return newItems;
 
     if (page == 1) list.clear();
