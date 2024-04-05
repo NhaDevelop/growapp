@@ -115,7 +115,10 @@ class EditProfileScreenState extends State<EditProfileScreen> {
 
   void _getFromGallery() async {
     pickedFile = await ImagePicker().pickImage(
-        source: ImageSource.gallery, maxWidth: 1800, maxHeight: 1800);
+        source: ImageSource.gallery,
+        maxWidth: 1800,
+        maxHeight: 1800,
+        imageQuality: 10);
     if (pickedFile != null) {
       imageFile = File(pickedFile!.path);
       setState(() {});
@@ -123,8 +126,11 @@ class EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   _getFromCamera() async {
-    pickedFile = await ImagePicker()
-        .pickImage(source: ImageSource.camera, maxWidth: 1800, maxHeight: 1800);
+    pickedFile = await ImagePicker().pickImage(
+        source: ImageSource.camera,
+        maxWidth: 1800,
+        maxHeight: 1800,
+        imageQuality: 10);
     if (pickedFile != null) {
       imageFile = File(pickedFile!.path);
       setState(() {});
