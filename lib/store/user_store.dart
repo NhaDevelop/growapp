@@ -71,6 +71,9 @@ abstract class _UserStore with Store {
   @computed
   double get pointToAmount => pointAmount * conversionRate;
 
+  @observable
+  int unreadNotificationCount = 0;
+
   @action
   Future<void> setUId(String val, {bool isInitializing = false}) async {
     uid = val;
@@ -169,5 +172,10 @@ abstract class _UserStore with Store {
   @action
   Future<void> setConversionRates(Map<String, double> val) async {
     conversionRates = val;
+  }
+
+  @action
+  Future<void> setUnreadNotificationCount(int val) async {
+    unreadNotificationCount = val;
   }
 }

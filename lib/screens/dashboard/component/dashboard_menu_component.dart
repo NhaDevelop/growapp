@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/screens/coupon/view/coupon_list_screen.dart';
 import 'package:grow_tokyo_app/screens/dashboard/component/inquiry_dialog.dart';
@@ -145,44 +146,41 @@ class _NotificationMenuItem extends StatefulWidget {
 }
 
 class _NotificationMenuItemState extends State<_NotificationMenuItem> {
-  Future? future;
-  int? count;
-
   @override
   void initState() {
     super.initState();
 
     if (!appStore.isLoggedIn) return;
     getNotification(callBack: (totalCount) {
-      count = totalCount;
-      setState(() {});
+      userStore.setUnreadNotificationCount(totalCount);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return _MenuItem(
-      icon: widget.icon,
-      title: widget.title,
-      onTap: widget.onTap,
-      iconIndicator: !appStore.isLoggedIn || count.validate() == 0
-          ? null
-          : Container(
-              padding: const EdgeInsets.all(3),
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.red,
+    return Observer(builder: (context) {
+      final count = userStore.unreadNotificationCount;
+      return _MenuItem(
+        icon: widget.icon,
+        title: widget.title,
+        onTap: widget.onTap,
+        iconIndicator: !appStore.isLoggedIn || count.validate() == 0
+            ? null
+            : Container(
+                padding: const EdgeInsets.all(3),
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.red,
+                ),
+                child: SizedBox(
+                  height: 16,
+                  width: 16,
+                  child: FittedBox(
+                      child: Text(count.toString(),
+                          style: boldTextStyle(color: white))),
+                ),
               ),
-              child: SizedBox(
-                height: 16,
-                width: 16,
-                child: count == null
-                    ? null
-                    : FittedBox(
-                        child: Text(count.toString(),
-                            style: boldTextStyle(color: white))),
-              ),
-            ),
-    );
+      );
+    });
   }
 }

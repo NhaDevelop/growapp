@@ -282,6 +282,23 @@ mixin _$UserStore on _UserStore, Store {
     });
   }
 
+  late final _$unreadNotificationCountAtom =
+      Atom(name: '_UserStore.unreadNotificationCount', context: context);
+
+  @override
+  int get unreadNotificationCount {
+    _$unreadNotificationCountAtom.reportRead();
+    return super.unreadNotificationCount;
+  }
+
+  @override
+  set unreadNotificationCount(int value) {
+    _$unreadNotificationCountAtom
+        .reportWrite(value, super.unreadNotificationCount, () {
+      super.unreadNotificationCount = value;
+    });
+  }
+
   late final _$setUIdAsyncAction =
       AsyncAction('_UserStore.setUId', context: context);
 
@@ -426,6 +443,15 @@ mixin _$UserStore on _UserStore, Store {
         .run(() => super.setConversionRates(val));
   }
 
+  late final _$setUnreadNotificationCountAsyncAction =
+      AsyncAction('_UserStore.setUnreadNotificationCount', context: context);
+
+  @override
+  Future<void> setUnreadNotificationCount(int val) {
+    return _$setUnreadNotificationCountAsyncAction
+        .run(() => super.setUnreadNotificationCount(val));
+  }
+
   @override
   String toString() {
     return '''
@@ -445,6 +471,7 @@ userType: ${userType},
 playerId: ${playerId},
 pointAmount: ${pointAmount},
 conversionRates: ${conversionRates},
+unreadNotificationCount: ${unreadNotificationCount},
 userFullName: ${userFullName},
 conversionRate: ${conversionRate},
 pointToAmount: ${pointToAmount}

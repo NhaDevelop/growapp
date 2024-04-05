@@ -26,23 +26,14 @@ class NotificationFragment extends StatefulWidget {
 class _NotificationFragmentState extends State<NotificationFragment> {
   Future<List<NotificationData>>? future;
 
-  bool showMarkAsReadButton = false;
-
   @override
   void initState() {
     super.initState();
     init();
   }
 
-  Future<void> init({bool flag = false, bool markAsRead = false}) async {
-    future = getNotification(
-      notificationType: markAsRead,
-      callBack: (count) {
-        showMarkAsReadButton = count != 0;
-
-        setState(() {});
-      },
-    );
+  Future<void> init({bool flag = false}) async {
+    future = getNotification(markAsRead: true);
     if (flag) setState(() {});
   }
 
@@ -60,17 +51,6 @@ class _NotificationFragmentState extends State<NotificationFragment> {
         appBarHeight: 70,
         showLeadingIcon: true,
         roundCornerShape: true,
-        actions: [
-          if (showMarkAsReadButton)
-            IconButton(
-              icon: const Icon(Icons.clear_all_rounded, color: Colors.white),
-              onPressed: () async {
-                appStore.setLoading(true);
-
-                init(flag: true, markAsRead: true);
-              },
-            ),
-        ],
       ),
       body: Stack(
         children: [

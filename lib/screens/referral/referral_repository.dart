@@ -12,7 +12,7 @@ Future<ReferralData> getReferralCodeAPI() async {
       method: HttpMethodType.GET));
 
   final data = ReferralData.fromJson(res);
-  referralCodeCached = data.code;
+  referralDataCached = data;
 
   return data;
 }

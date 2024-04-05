@@ -31,6 +31,7 @@ import 'package:grow_tokyo_app/screens/product/model/product_dashboard_response.
 import 'package:grow_tokyo_app/screens/product/model/product_list_response.dart';
 import 'package:grow_tokyo_app/screens/profile/model/pages_response.dart';
 import 'package:grow_tokyo_app/screens/profile/model/social_data.dart';
+import 'package:grow_tokyo_app/screens/referral/model/referral_data.dart';
 import 'package:grow_tokyo_app/screens/services/models/service_response.dart';
 import 'package:grow_tokyo_app/store/booking_request_store.dart';
 import 'package:grow_tokyo_app/store/product_store.dart';
@@ -95,7 +96,7 @@ List<(int serviceId, EmployeeDetailResponse list)?> employeeDetailCachedData =
 List<BranchDetailResponse> branchDetailCachedData = [];
 BranchConfigurationData? branchConfigurationCached;
 List<CouponData>? couponListCached;
-String? referralCodeCached;
+ReferralData? referralDataCached;
 Map<int, List<EmployeeServiceListData>>? employeeServiceListCached;
 Map<int, List<EmployeeData>>? branchEmployeeListCached;
 Map<int, List<EmployeeWorkingDayModel>>? employeeWorkingDayListCached;

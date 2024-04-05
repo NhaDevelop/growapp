@@ -6,9 +6,9 @@ import 'model/notification_model.dart';
 
 //region Notification Api
 Future<List<NotificationData>> getNotification(
-    {bool notificationType = false, Function(int)? callBack}) async {
+    {bool markAsRead = false, Function(int)? callBack}) async {
   try {
-    String type = notificationType ? '&type=mark_as_read' : '';
+    String type = markAsRead ? '&type=mark_as_read' : '';
 
     NotificationListResponse res = NotificationListResponse.fromJson(
       await (handleResponse(await buildHttpResponse(
@@ -19,6 +19,10 @@ Future<List<NotificationData>> getNotification(
     appStore.setLoading(false);
     callBack?.call(res.allUnreadCount.validate());
     notificationListCached = res.notificationData.validate();
+    userStore.setUnreadNotificationCount(
+      markAsRead ? 0 : res.allUnreadCount.validate(),
+    );
+
     return res.notificationData.validate();
   } catch (e) {
     appStore.setLoading(false);
