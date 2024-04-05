@@ -89,8 +89,8 @@ List<LanguageDataModel> languageList() {
 
 List<AppCountryModel> countryList() {
   return [
-    AppCountryModel('Cambodia', ic_km),
-    AppCountryModel('Vietnam', ic_vi),
+    AppCountryModel('Cambodia', ic_km, 'USD', '\$'),
+    AppCountryModel('Vietnam', ic_vi, 'VND', '₫'),
   ];
 }
 

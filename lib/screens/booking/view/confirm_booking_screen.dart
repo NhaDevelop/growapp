@@ -16,6 +16,7 @@ import 'package:grow_tokyo_app/utils/app_common.dart';
 import 'package:grow_tokyo_app/utils/colors.dart';
 import 'package:grow_tokyo_app/utils/common_base.dart';
 import 'package:grow_tokyo_app/utils/constants.dart';
+import 'package:grow_tokyo_app/utils/extensions/num_extensions.dart';
 import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:grow_tokyo_app/utils/model_keys.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -254,12 +255,14 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                locale.usingXPoints(userStore.pointAmount),
+                                locale.usingXPoints(
+                                    userStore.pointAmount.formatPrice),
                                 style: boldTextStyle(),
                               ),
                               4.height,
                               Text(
-                                locale.youWillSave$X(0), //TODO: Add amount;
+                                locale.youWillSave$X(
+                                    userStore.pointToAmount.formatPrice),
                                 style: secondaryTextStyle(),
                               ),
                             ],
@@ -298,8 +301,8 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                         if (bookingRequestStore.useCredit) ...[
                           _RowData(
                             title: locale.points,
-                            value: 'XXX',
-                          ), //TODO: Add amount
+                            value: userStore.pointToAmount.formatPrice,
+                          ),
                           8.height,
                         ],
                         _RowData(

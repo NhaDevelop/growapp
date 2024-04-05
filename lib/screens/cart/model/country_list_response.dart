@@ -50,6 +50,8 @@ class CountryData {
 class AppCountryModel {
   final String name;
   final String icon;
+  final String currencyCode;
+  final String currencySymbol;
 
-  AppCountryModel(this.name, this.icon);
+  AppCountryModel(this.name, this.icon, this.currencyCode, this.currencySymbol);
 }

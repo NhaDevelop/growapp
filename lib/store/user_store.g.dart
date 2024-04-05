@@ -16,6 +16,20 @@ mixin _$UserStore on _UserStore, Store {
       (_$userFullNameComputed ??= Computed<String>(() => super.userFullName,
               name: '_UserStore.userFullName'))
           .value;
+  Computed<double>? _$conversionRateComputed;
+
+  @override
+  double get conversionRate =>
+      (_$conversionRateComputed ??= Computed<double>(() => super.conversionRate,
+              name: '_UserStore.conversionRate'))
+          .value;
+  Computed<double>? _$pointToAmountComputed;
+
+  @override
+  double get pointToAmount =>
+      (_$pointToAmountComputed ??= Computed<double>(() => super.pointToAmount,
+              name: '_UserStore.pointToAmount'))
+          .value;
 
   late final _$userIdAtom = Atom(name: '_UserStore.userId', context: context);
 
@@ -252,6 +266,22 @@ mixin _$UserStore on _UserStore, Store {
     });
   }
 
+  late final _$conversionRatesAtom =
+      Atom(name: '_UserStore.conversionRates', context: context);
+
+  @override
+  Map<String, double> get conversionRates {
+    _$conversionRatesAtom.reportRead();
+    return super.conversionRates;
+  }
+
+  @override
+  set conversionRates(Map<String, double> value) {
+    _$conversionRatesAtom.reportWrite(value, super.conversionRates, () {
+      super.conversionRates = value;
+    });
+  }
+
   late final _$setUIdAsyncAction =
       AsyncAction('_UserStore.setUId', context: context);
 
@@ -387,6 +417,15 @@ mixin _$UserStore on _UserStore, Store {
         .run(() => super.setPointAmount(val, isInitializing: isInitializing));
   }
 
+  late final _$setConversionRatesAsyncAction =
+      AsyncAction('_UserStore.setConversionRates', context: context);
+
+  @override
+  Future<void> setConversionRates(Map<String, double> val) {
+    return _$setConversionRatesAsyncAction
+        .run(() => super.setConversionRates(val));
+  }
+
   @override
   String toString() {
     return '''
@@ -405,7 +444,10 @@ token: ${token},
 userType: ${userType},
 playerId: ${playerId},
 pointAmount: ${pointAmount},
-userFullName: ${userFullName}
+conversionRates: ${conversionRates},
+userFullName: ${userFullName},
+conversionRate: ${conversionRate},
+pointToAmount: ${pointToAmount}
     ''';
   }
 }

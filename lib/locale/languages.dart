@@ -158,11 +158,13 @@ abstract class BaseLanguage {
 
   String get noTransactionFound;
 
-  String usingXPoints(double x);
+  String usingXPoints(String x);
 
-  String youWillSave$X(int x);
+  String youWillSave$X(String x);
 
   String get membershipPoints;
+
+  String equivalentToX(String x);
 
   String get referral;
 

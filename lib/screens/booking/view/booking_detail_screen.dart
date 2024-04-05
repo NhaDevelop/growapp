@@ -4,6 +4,7 @@ import 'package:grow_tokyo_app/components/app_scaffold.dart';
 import 'package:grow_tokyo_app/components/default_card.dart';
 import 'package:grow_tokyo_app/screens/booking/component/service_item_component.dart';
 import 'package:grow_tokyo_app/utils/app_common.dart';
+import 'package:grow_tokyo_app/utils/extensions/num_extensions.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/empty_error_state_widget.dart';
@@ -205,7 +206,9 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                         if (data.amountPaidByCredit.validate() > 0) ...[
                           _RowData(
                             title: locale.points,
-                            value: 'XXX', //TODO: add value
+                            value: (data.amountPaidByCredit.validate() *
+                                    userStore.conversionRate)
+                                .formatPrice,
                           ),
                           8.height,
                         ],

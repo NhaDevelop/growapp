@@ -89,10 +89,10 @@ Future<ConfigurationResponse> getAppConfigurations(
         appConfigurationResponseCached!.versionCode);
 
     if (appConfigurationResponseCached!.currency != null) {
-      appStore.setCurrencySymbol(
-          appConfigurationResponseCached!.currency!.currencySymbol.validate());
-      appStore.setCurrencyCode(
-          appConfigurationResponseCached!.currency!.currencyCode.validate());
+      // appStore.setCurrencySymbol(
+      //     appConfigurationResponseCached!.currency!.currencySymbol.validate());
+      // appStore.setCurrencyCode(
+      //     appConfigurationResponseCached!.currency!.currencyCode.validate());
       await setValue(ConfigurationKeyConst.CURRENCY_NAME,
           appConfigurationResponseCached!.currency!.currencyName);
       await setValue(ConfigurationKeyConst.CURRENCY_SYMBOL,

@@ -242,13 +242,16 @@ class LanguageEn extends BaseLanguage {
   String get noTransactionFound => 'No Transaction Found';
 
   @override
-  String usingXPoints(double x) => 'Using $x points';
+  String usingXPoints(String x) => 'Using $x points';
 
   @override
-  String youWillSave$X(int x) => 'You will save \$$x';
+  String youWillSave$X(String x) => 'You will save $x';
 
   @override
   String get membershipPoints => 'Membership Points';
+
+  @override
+  String equivalentToX(String x) => 'Equivalent to $x';
 
   @override
   String get referral => 'Referral';

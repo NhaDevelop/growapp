@@ -1,16 +1,19 @@
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/network/network_utils.dart';
+import 'package:grow_tokyo_app/screens/points/model/point_data.dart';
 import 'package:grow_tokyo_app/screens/points/model/point_transactions_response.dart';
 import 'package:grow_tokyo_app/utils/api_end_points.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-Future<double> getPointsAPI() async {
+Future<PointData> getPointsAPI() async {
   var res = await handleResponse(
       await buildHttpResponse(APIEndPoints.credit, method: HttpMethodType.GET));
-  final points = (res['credit'] as num).toDouble();
-  userStore.setPointAmount(points);
+  final pointData = PointData.fromJson(res);
 
-  return points;
+  userStore.setPointAmount(pointData.amount);
+  userStore.setConversionRates(pointData.conversionRates);
+
+  return pointData;
 }
 
 Future<List<PointTransactionData>> getPointsTransactionsAPI({

@@ -45,13 +45,16 @@ Future<List<BranchData>> getBranchList({
 }
 
 Future<void> setBranchAndRedirectToDashboard(BranchData branchData) async {
-  final currencyCode = branchData.currency?.currencyCode.validate();
+  final currency = branchData.currency;
   await appStore
       .setBranchId(branchData.id.validate(value: UNSELECTED_BRANCH_ID));
   await appStore.setBranchAddress(branchData.addressLine1.validate());
   await appStore.setBranchName(branchData.name.validate());
   await appStore.setBranchContactNumber(branchData.contactNumber.validate());
-  if (currencyCode != null) await appStore.setCurrencyCode(currencyCode);
+  if (currency != null) {
+    await appStore.setCurrencyCode(currency.currencyCode.validate());
+    await appStore.setCurrencySymbol(currency.currencySymbol.validate());
+  }
 
   push(const DashboardScreen(),
       isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);

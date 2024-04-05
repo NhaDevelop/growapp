@@ -1,3 +1,4 @@
+import 'package:grow_tokyo_app/main.dart';
 import 'package:mobx/mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -56,6 +57,19 @@ abstract class _UserStore with Store {
 
   @observable
   double pointAmount = 0;
+
+  @observable
+  Map<String, double> conversionRates = {};
+
+  @computed
+  double get conversionRate {
+    if (conversionRates.isEmpty) return 0;
+    final currencyCode = appStore.currencyCode;
+    return conversionRates[currencyCode] ?? 0;
+  }
+
+  @computed
+  double get pointToAmount => pointAmount * conversionRate;
 
   @action
   Future<void> setUId(String val, {bool isInitializing = false}) async {
@@ -150,5 +164,10 @@ abstract class _UserStore with Store {
   Future<void> setPointAmount(double val, {bool isInitializing = false}) async {
     pointAmount = val;
     if (!isInitializing) await setValue(SharedPreferenceConst.CREDIT, val);
+  }
+
+  @action
+  Future<void> setConversionRates(Map<String, double> val) async {
+    conversionRates = val;
   }
 }

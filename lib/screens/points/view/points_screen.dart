@@ -3,6 +3,7 @@ import 'package:grow_tokyo_app/components/app_scaffold.dart';
 import 'package:grow_tokyo_app/components/empty_error_state_widget.dart';
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/screens/points/component/points_card_component.dart';
+import 'package:grow_tokyo_app/screens/points/model/point_data.dart';
 import 'package:grow_tokyo_app/screens/points/model/point_transactions_response.dart';
 import 'package:grow_tokyo_app/screens/points/point_repository.dart';
 import 'package:grow_tokyo_app/screens/points/shimmer/point_transactions_shimmer.dart';
@@ -27,7 +28,7 @@ class _PointsScreenState extends State<PointsScreen>
   late final tabController =
       TabController(length: tabTitles.length, vsync: this);
   UniqueKey transactionsWidgetKey = UniqueKey();
-  Future<double>? pointsFuture;
+  Future<PointData>? pointsFuture;
   Future<List<PointTransactionData>>? transactionsFuture;
   List<PointTransactionData> transactionsObj = [];
   int page = 1;
@@ -88,7 +89,6 @@ class _PointsScreenState extends State<PointsScreen>
         children: [
           SnapHelperWidget(
             future: pointsFuture,
-            initialData: userStore.pointAmount,
             loadingWidget: const PointsCardShimmer(),
             errorWidget: const PointsCardComponent(),
             onSuccess: (points) => PointsCardComponent(points: points),
