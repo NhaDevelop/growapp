@@ -13,7 +13,7 @@ class SelectCountryDialog extends StatefulWidget {
 }
 
 class _SelectCountryDialogState extends State<SelectCountryDialog> {
-  String? _selected;
+  AppCountryModel? _selected;
   final List<CountryData> countries = [];
 
   @override
@@ -33,9 +33,13 @@ class _SelectCountryDialogState extends State<SelectCountryDialog> {
   }
 
   void _onSelect() {
-    final index = countries.indexWhere((element) => element.name == _selected);
+    if (_selected == null) return;
+    final index =
+        countries.indexWhere((element) => element.name == _selected!.name);
     if (index < 0) return;
     appStore.setCountryId(countries[index].id.validate());
+    appStore.setCurrencyCode(_selected!.currencyCode.validate());
+    appStore.setCurrencySymbol(_selected!.currencySymbol.validate());
     finish(context, true);
   }
 
@@ -63,8 +67,8 @@ class _SelectCountryDialogState extends State<SelectCountryDialog> {
                     width: context.width() * 0.35,
                     icon: e.icon,
                     title: e.name,
-                    selected: e.name == _selected,
-                    onTap: () => setState(() => _selected = e.name)))
+                    selected: e.name == _selected?.name,
+                    onTap: () => setState(() => _selected = e)))
                 .toList(),
           ),
           24.height,

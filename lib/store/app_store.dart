@@ -51,7 +51,7 @@ abstract class _AppStore with Store {
   String currencyCountryId = '';
 
   @observable
-  String currencySymbol = '';
+  String currencySymbol = '\$';
 
   @observable
   String privacyPolicy = '';

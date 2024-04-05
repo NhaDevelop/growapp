@@ -1,3 +1,9 @@
+import 'package:flutter/material.dart';
+import 'package:grow_tokyo_app/utils/common_base.dart';
+import 'package:grow_tokyo_app/utils/extensions/num_extensions.dart';
+import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
+import 'package:nb_utils/nb_utils.dart';
+
 class EmployeeMonthScheduleResponse {
   final List<EmployeeWorkingDayModel> employeeWorkingDaysList;
 
@@ -25,6 +31,15 @@ class EmployeeWorkingDayModel {
       required this.date,
       required this.startingHour,
       required this.endingHour});
+
+  String get startTime => '${startingHour.formatDoubleDigit}:00';
+
+  String get endTime => '${endingHour.formatDoubleDigit}:00';
+
+  bool slotAvailability(DateTime date) => date.isToday
+      ? isTimeBefore(TimeOfDay.now(), startTime.getTimeOfDay()) &&
+          isTimeAfter(TimeOfDay.now(), endTime.getTimeOfDay())
+      : true;
 
   factory EmployeeWorkingDayModel.fromJson(Map<String, dynamic> json) {
     return EmployeeWorkingDayModel(

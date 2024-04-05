@@ -39,8 +39,10 @@ class _AppCountryScreenState extends State<AppCountryScreen> {
     return countries[index].id;
   }
 
-  void onTap(int countryId) {
+  void onTap(int countryId, AppCountryModel country) {
     appStore.setCountryId(countryId);
+    appStore.setCurrencyCode(country.currencyCode);
+    appStore.setCurrencySymbol(country.currencySymbol);
     setState(() {});
     finish(context, true);
   }
@@ -67,7 +69,7 @@ class _AppCountryScreenState extends State<AppCountryScreen> {
             splashColor: Colors.transparent,
             decoration: boxDecorationWithRoundedCorners(
                 backgroundColor: context.cardColor),
-            onTap: countryId == null ? null : () => onTap(countryId),
+            onTap: countryId == null ? null : () => onTap(countryId, country),
             trailing: Observer(builder: (context) {
               return appStore.countryId == countryId
                   ? Icon(Icons.check, color: context.iconColor)
