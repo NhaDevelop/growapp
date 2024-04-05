@@ -175,7 +175,7 @@ abstract class BaseLanguage {
   String get yourReferralCode;
 
   String shareReferralCode(
-      String code, String downloadUrl, double discountPercentage);
+      String code, String downloadUrl, String discountPercentage);
 
   String get rewardHistory;
 

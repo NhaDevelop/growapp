@@ -19,6 +19,15 @@ class ReferralCodeDetails extends StatelessWidget {
     toast(locale.copiedToClipboard);
   }
 
+  Future<void> onShare() async {
+    final text = locale.shareReferralCode(
+      data!.code,
+      Platform.isIOS ? IOS_DOWNLOAD_URL : ANDROID_DOWNLOAD_URL,
+      data!.rewardPercentage,
+    );
+    await Share.share(text);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -68,13 +77,7 @@ class ReferralCodeDetails extends StatelessWidget {
                 enabled: data != null && data!.code.isNotEmpty,
                 disabledColor: Colors.grey,
                 disabledTextColor: Colors.white,
-                onTap: () => Share.share(
-                  locale.shareReferralCode(
-                    data!.code,
-                    Platform.isIOS ? IOS_DOWNLOAD_URL : ANDROID_DOWNLOAD_URL,
-                    data!.rewardPercentage,
-                  ),
-                ),
+                onTap: onShare,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

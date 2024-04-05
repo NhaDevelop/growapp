@@ -14,7 +14,7 @@ class GoogleSignInAuthService {
   final googleProvider = GoogleAuthProvider();
 
   Future<UserData> signIn() async {
-    // if (isWeb) return signInWeb();
+    if (isWeb) return signInWeb();
 
     return signInNative();
   }
@@ -55,7 +55,7 @@ class GoogleSignInAuthService {
       return UserData.fromFirebaseUserCredential(userCredential);
     } catch (e) {
       appStore.setLoading(false);
-      log('sign in google web error: ${e.toString()}');
+      log('Google SignIn Web Error: ${e.toString()}');
       throw USER_NOT_CREATED;
     }
   }
