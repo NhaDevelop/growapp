@@ -1,18 +1,20 @@
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/network/network_utils.dart';
+import 'package:grow_tokyo_app/screens/referral/model/referral_data.dart';
 import 'package:grow_tokyo_app/screens/referral/model/referral_transactions_response.dart';
 import 'package:grow_tokyo_app/utils/api_end_points.dart';
 import 'package:grow_tokyo_app/utils/constants.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-Future<String> getReferralCodeAPI() async {
+Future<ReferralData> getReferralCodeAPI() async {
   var res = await handleResponse(await buildHttpResponse(
       APIEndPoints.referralCode,
       method: HttpMethodType.GET));
-  final code = res['referral_code'];
-  referralCodeCached = code;
 
-  return code;
+  final data = ReferralData.fromJson(res);
+  referralCodeCached = data.code;
+
+  return data;
 }
 
 Future<List<ReferralTransactionData>> getReferralTransactionsAPI({

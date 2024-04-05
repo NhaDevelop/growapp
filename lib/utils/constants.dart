@@ -1,6 +1,9 @@
 /// DO NOT CHANGE THIS PACKAGE NAME
 const appPackageName = 'com.growtokyo';
 
+const ANDROID_DOWNLOAD_URL = '#'; //TODO: Add Android App URL
+const IOS_DOWNLOAD_URL = '#'; //TODO: Add iOS App URL
+
 const PER_PAGE_ITEM = 25;
 const LABEL_TEXT_SIZE = 14;
 const ICON_SIZE = 16.0;

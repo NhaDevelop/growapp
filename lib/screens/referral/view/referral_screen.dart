@@ -6,6 +6,7 @@ import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/screens/dashboard/component/common_app_component.dart';
 import 'package:grow_tokyo_app/screens/dashboard/component/dashboard_appbar_component.dart';
 import 'package:grow_tokyo_app/screens/referral/component/referral_code_details.dart';
+import 'package:grow_tokyo_app/screens/referral/model/referral_data.dart';
 import 'package:grow_tokyo_app/screens/referral/model/referral_transactions_response.dart';
 import 'package:grow_tokyo_app/screens/referral/referral_repository.dart';
 import 'package:grow_tokyo_app/screens/referral/shimmer/referral_code_details_shimmer.dart';
@@ -22,7 +23,7 @@ class ReferralScreen extends StatefulWidget {
 }
 
 class _ReferralScreenState extends State<ReferralScreen> {
-  Future<String>? codeFuture;
+  Future<ReferralData>? codeFuture;
   Future<List<ReferralTransactionData>>? transactionsFuture;
   List<ReferralTransactionData> transactionObj = [];
   int page = 1;
@@ -79,8 +80,8 @@ class _ReferralScreenState extends State<ReferralScreen> {
                 future: codeFuture,
                 initialData: referralCodeCached,
                 loadingWidget: const ReferralCodeDetailsShimmer(),
-                errorWidget: const ReferralCodeDetails(code: ''),
-                onSuccess: (code) => ReferralCodeDetails(code: code),
+                errorWidget: const ReferralCodeDetails(),
+                onSuccess: (data) => ReferralCodeDetails(data: data),
               ),
               24.height,
               Text(locale.rewardHistory, style: boldTextStyle())

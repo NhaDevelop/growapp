@@ -266,6 +266,10 @@ class LanguageEn extends BaseLanguage {
   String get yourReferralCode => 'Your Referral Code';
 
   @override
+  String shareReferralCode(code, downloadUrl, discountPercentage) =>
+      'Check out this awesome app. It has made booking a haircut so much easier! Download it here $downloadUrl and use my code $code to receive %$discountPercentage discount.';
+
+  @override
   String get rewardHistory => 'Reward History';
 
   @override

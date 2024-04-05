@@ -1,14 +1,18 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/screens/referral/component/how_it_work_modal.dart';
+import 'package:grow_tokyo_app/screens/referral/model/referral_data.dart';
+import 'package:grow_tokyo_app/utils/constants.dart';
 import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:share_plus/share_plus.dart';
 
 class ReferralCodeDetails extends StatelessWidget {
-  final String code;
-  const ReferralCodeDetails({super.key, required this.code});
+  final ReferralData? data;
+  const ReferralCodeDetails({super.key, this.data});
 
   Future<void> onCopyCode(String code) async {
     await Clipboard.setData(ClipboardData(text: code));
@@ -31,7 +35,7 @@ class ReferralCodeDetails extends StatelessWidget {
           ),
           8.height,
           Text(
-            code.isEmpty ? 'N/A' : code,
+            data == null || data!.code.isEmpty ? 'N/A' : data!.code,
             style: boldTextStyle(size: 24),
           ),
           24.height,
@@ -43,10 +47,10 @@ class ReferralCodeDetails extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   side: const BorderSide(),
                 ),
-                enabled: code.isNotEmpty,
+                enabled: data != null && data!.code.isNotEmpty,
                 disabledColor: Colors.grey,
                 disabledTextColor: Colors.white,
-                onTap: () => onCopyCode(code),
+                onTap: () => onCopyCode(data!.code),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -61,10 +65,16 @@ class ReferralCodeDetails extends StatelessWidget {
                 elevation: 0,
                 color: const Color(0xFF12213A),
                 textColor: Colors.white,
-                enabled: code.isNotEmpty,
+                enabled: data != null && data!.code.isNotEmpty,
                 disabledColor: Colors.grey,
                 disabledTextColor: Colors.white,
-                onTap: () => Share.share(code),
+                onTap: () => Share.share(
+                  locale.shareReferralCode(
+                    data!.code,
+                    Platform.isIOS ? IOS_DOWNLOAD_URL : ANDROID_DOWNLOAD_URL,
+                    data!.rewardPercentage,
+                  ),
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
