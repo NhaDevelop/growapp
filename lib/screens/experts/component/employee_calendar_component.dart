@@ -31,6 +31,7 @@ class EmployeeCalendarComponent extends StatefulWidget {
 class _EmployeeCalendarComponentState extends State<EmployeeCalendarComponent> {
   late final initialData = employeeWorkingDayListCached?[widget.employeeId];
   Future<List<EmployeeWorkingDayModel>>? future;
+  DateTime focusedDay = DateTime.now();
   DateTime? selectedDate;
 
   @override
@@ -102,11 +103,13 @@ class _EmployeeCalendarComponentState extends State<EmployeeCalendarComponent> {
             final index = workingDays.indexWhere(
                 (e) => e.date.isToday || e.date.isAfter(DateTime.now()));
             if (index < 0) return;
-            _onSelect(workingDays[index].date);
+            final firstAvailableDate = workingDays[index].date;
+            _onSelect(firstAvailableDate);
+            focusedDay = firstAvailableDate;
           });
         }
         return TableCalendar(
-          focusedDay: DateTime.now(),
+          focusedDay: focusedDay,
           firstDay: firstDayOfTheMonth,
           lastDay: DateTime(DateTime.now().year, DateTime.now().month + 3, 0),
           headerVisible: true,

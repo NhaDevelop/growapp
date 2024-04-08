@@ -77,7 +77,7 @@ Future<List<EmployeeWorkingDayModel>> getEmployeeMonthSchedule(
   try {
     var res = EmployeeMonthScheduleResponse.fromJson(await handleResponse(
         await buildHttpResponse(
-            '${APIEndPoints.employeeCurrentMonthSchedule}?employee_id=$employeeId',
+            '${APIEndPoints.employeeSchedule}?employee_id=$employeeId',
             method: HttpMethodType.GET)));
 
     employeeWorkingDayListCached = {
