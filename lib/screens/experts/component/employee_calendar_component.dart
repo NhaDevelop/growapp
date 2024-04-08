@@ -29,12 +29,17 @@ class EmployeeCalendarComponent extends StatefulWidget {
 }
 
 class _EmployeeCalendarComponentState extends State<EmployeeCalendarComponent> {
+  late final initialData = employeeWorkingDayListCached?[widget.employeeId];
   Future<List<EmployeeWorkingDayModel>>? future;
   DateTime? selectedDate;
 
   @override
   void initState() {
     super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget.onEmployeeScheduleLoaded?.call(initialData ?? []);
+    });
     init();
   }
 
@@ -76,7 +81,7 @@ class _EmployeeCalendarComponentState extends State<EmployeeCalendarComponent> {
   Widget build(BuildContext context) {
     return SnapHelperWidget<List<EmployeeWorkingDayModel>>(
       future: future,
-      initialData: employeeWorkingDayListCached?[widget.employeeId],
+      initialData: initialData,
       loadingWidget: const TableCalendarShimmer(),
       errorBuilder: (error) {
         return NoDataWidget(

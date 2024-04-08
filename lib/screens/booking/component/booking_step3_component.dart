@@ -5,24 +5,22 @@ import 'package:grow_tokyo_app/components/app_scaffold.dart';
 import 'package:grow_tokyo_app/components/slot_widget.dart';
 import 'package:grow_tokyo_app/components/view_all_label_component.dart';
 import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/screens/booking/shimmer/booking_step3_shimmer.dart';
 import 'package:grow_tokyo_app/screens/booking/view/confirm_booking_screen.dart';
 import 'package:grow_tokyo_app/screens/experts/component/employee_calendar_component.dart';
 import 'package:grow_tokyo_app/screens/experts/model/employee_month_schedule_response.dart';
 import 'package:grow_tokyo_app/utils/common_base.dart';
 import 'package:grow_tokyo_app/utils/constants.dart';
 import 'package:grow_tokyo_app/utils/extensions/date_extensions.dart';
-import 'package:grow_tokyo_app/utils/extensions/int_extension.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/common_bottom_price_widget.dart';
-import '../../../components/empty_error_state_widget.dart';
 import '../../../components/loader_widget.dart';
 import '../../../utils/app_common.dart';
 import '../../branch/branch_repository.dart';
 import '../../branch/model/branch_configuration_response.dart';
 import '../../services/models/service_response.dart';
 import '../booking_repository.dart';
-import '../shimmer/booking_step3_shimmer.dart';
 
 class BookingStep3Component extends StatefulWidget {
   final bool isFromBookingInfoDetail;
@@ -56,6 +54,12 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
   int currentMonthNumber = DateTime.now().month;
   int selectedMonthIndex = DateTime.now().month - 1;
 
+  EmployeeWorkingDayModel? get employeeScheduleOnSelectedDate {
+    final index = employeeSchedule
+        .indexWhere((element) => element.date.isSameDateWith(selectedDate));
+    return index < 0 ? null : employeeSchedule[index];
+  }
+
   @override
   void initState() {
     super.initState();
@@ -65,47 +69,6 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
   void init() {
     future = getBranchConfiguration(
         appStore.branchId, bookingRequestStore.employeeId);
-  }
-
-  SlotData? getBranchSlotOnDate(List<SlotData>? slot, DateTime date) {
-    if (slot
-        .validate()
-        .any((element) => element.day == date.weekday.getWeekDayName)) {
-      return slot
-          .validate()
-          .firstWhere((element) => element.day == date.weekday.getWeekDayName);
-    }
-
-    return null;
-  }
-
-  String getSlotStartTime(List<SlotData>? slot, DateTime date) {
-    final index = employeeSchedule
-        .indexWhere((element) => element.date.isSameDateWith(date));
-    final branchSlot = getBranchSlotOnDate(slot, date);
-
-    if (branchSlot == null) return DEFAULT_SLOT_INTERVAL_DURATION;
-
-    return index < 0
-        ? branchSlot.startTime.validate()
-        : branchSlot
-            .getStartTimeWithEmployeeStartHour(
-                employeeSchedule[index].startingHour)
-            .validate();
-  }
-
-  String getSlotEndTime(List<SlotData>? slot, DateTime date) {
-    final index = employeeSchedule
-        .indexWhere((element) => element.date.isSameDateWith(date));
-    final branchSlot = getBranchSlotOnDate(slot, date);
-
-    if (branchSlot == null) return DEFAULT_SLOT_INTERVAL_DURATION;
-
-    return index < 0
-        ? branchSlot.endTime.validate()
-        : branchSlot
-            .getEndTimeWithEmployeeEndHour(employeeSchedule[index].endingHour)
-            .validate();
   }
 
   @override
@@ -158,52 +121,28 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
                   ),
                   8.height,
                   ViewAllLabel(label: locale.availableSlots, isShowAll: false),
-                  SnapHelperWidget(
-                    future: future,
-                    loadingWidget: const BookingStep3Shimmer(),
-                    initialData: branchConfigurationCached,
-                    errorBuilder: (error) {
-                      return NoDataWidget(
-                        title: error,
-                        retryText: locale.reload,
-                        imageWidget: const ErrorStateWidget(),
-                        onRetry: () {
-                          appStore.setLoading(true);
-
-                          init();
-                          setState(() {});
-                        },
-                      );
-                    },
-                    onSuccess: (snap) {
-                      if (selectedDate == null) {
-                        return NoDataWidget(
-                          title: locale.pleaseSelectDateFirst,
-                        );
-                      }
-                      if (snap == null) {
-                        return NoDataWidget(
-                          title: locale.noTimeSlots,
-                          retryText: locale.reload,
-                          onRetry: () {
-                            appStore.setLoading(true);
-
-                            init();
-                            setState(() {});
-                          },
-                        );
-                      }
-
-                      return SlotWidget(
-                        key: slotWidgetKey,
-                        selectedHorizontalDate: selectedDate!,
-                        startTime: getSlotStartTime(snap.slot, selectedDate!),
-                        endTime: getSlotEndTime(snap.slot, selectedDate!),
-                        slotDuration: snap.slotDuration
-                            .validate(value: DEFAULT_SLOT_INTERVAL_DURATION),
-                      );
-                    },
-                  ),
+                  employeeSchedule.isEmpty
+                      ? const BookingStep3Shimmer()
+                      : selectedDate == null
+                          ? NoDataWidget(title: locale.pleaseSelectDateFirst)
+                          : employeeScheduleOnSelectedDate == null
+                              ? NoDataWidget(title: locale.noTimeSlots)
+                              : SnapHelperWidget(
+                                  future: future,
+                                  initialData: branchConfigurationCached,
+                                  onSuccess: (snap) {
+                                    return SlotWidget(
+                                      key: slotWidgetKey,
+                                      selectedHorizontalDate: selectedDate!,
+                                      startTime: employeeScheduleOnSelectedDate!
+                                          .startTime,
+                                      endTime: employeeScheduleOnSelectedDate!
+                                          .endTime,
+                                      slotDuration: snap?.slotDuration ??
+                                          DEFAULT_SLOT_INTERVAL_DURATION, //TODO: ask BE about slotDuration
+                                    );
+                                  },
+                                ),
                 ],
               ),
               Observer(
