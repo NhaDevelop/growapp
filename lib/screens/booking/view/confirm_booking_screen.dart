@@ -256,7 +256,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                             children: [
                               Text(
                                 locale.usingXPoints(
-                                    userStore.pointAmount.formatPrice),
+                                    userStore.pointAmount.formatAmount()),
                                 style: boldTextStyle(),
                               ),
                               4.height,

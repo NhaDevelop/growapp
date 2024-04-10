@@ -13,7 +13,7 @@ extension numExt on num {
     return this < 10 ? '0$this' : '$this';
   }
 
-  String formatNumberWithComma({String seperator = ',', int decimal = 2}) {
+  String formatAmount({String seperator = ',', int decimal = 2}) {
     return toStringAsFixed(decimal).replaceAllMapped(
         RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
         (Match m) => '${m[1]}$seperator');
@@ -22,10 +22,10 @@ extension numExt on num {
   String get formatPrice {
     switch (appStore.currencyCode) {
       case 'VND':
-        return '${formatNumberWithComma(decimal: 0)}đ';
+        return '${formatAmount(decimal: 0)}đ';
       default:
         final currencySymbol = appStore.currencySymbol;
-        return '$currencySymbol${formatNumberWithComma()}';
+        return '$currencySymbol${formatAmount()}';
     }
   }
 }

@@ -42,7 +42,7 @@ class PointsCardComponent extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    (points?.amount ?? 0).toString(),
+                    (points?.amount ?? 0).formatAmount(),
                     style: boldTextStyle(size: 24, color: white),
                   ),
                   4.height,

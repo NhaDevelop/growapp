@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:grow_tokyo_app/screens/auth/view/sign_in_screen.dart';
 import 'package:grow_tokyo_app/screens/points/view/points_screen.dart';
 import 'package:grow_tokyo_app/utils/colors.dart';
+import 'package:grow_tokyo_app/utils/extensions/num_extensions.dart';
 import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -93,7 +94,7 @@ class _DashboardAppBarComponentState extends State<DashboardAppBarComponent> {
                                       height: 20, width: 20, color: white),
                                   8.width,
                                   Text(
-                                    userStore.pointAmount.toString(),
+                                    userStore.pointAmount.formatAmount(),
                                     style:
                                         boldTextStyle(color: white, size: 20),
                                   ),

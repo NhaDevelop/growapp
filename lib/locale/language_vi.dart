@@ -1177,7 +1177,7 @@ class LanguageVi extends BaseLanguage {
   String get shippingAddress => 'Địa chỉ giao hàng';
 
   @override
-  String get off => 'giảm giá';
+  String get off => 'Nghỉ';
 
   @override
   String get discountedAmount => 'Số tiền giảm giá';
