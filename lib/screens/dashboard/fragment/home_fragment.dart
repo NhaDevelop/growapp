@@ -133,10 +133,10 @@ class _HomeFragmentState extends State<HomeFragment> {
                         ),
                       ).paddingSymmetric(horizontal: 20),
                       24.height,
-                      const DashboardMenuComponent()
+                      DashboardMenuComponent(key: UniqueKey())
                           .paddingSymmetric(horizontal: 20),
                       16.height,
-                      const HorizontalBlogComponent(),
+                      HorizontalBlogComponent(key: UniqueKey()),
                     ],
                   ),
                 ),

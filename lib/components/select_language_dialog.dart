@@ -51,6 +51,7 @@ class _SelectLanguageDialogState extends State<SelectLanguageDialog> {
             onTap: () {
               appStore.setLanguage(_selected!);
               finish(context, true);
+              setState(() {});
             },
           ),
         ],

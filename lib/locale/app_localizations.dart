@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:grow_tokyo_app/locale/language_km.dart';
+import 'package:grow_tokyo_app/locale/language_vi.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import 'language_en.dart';
@@ -10,6 +12,10 @@ class AppLocalizations extends LocalizationsDelegate<BaseLanguage> {
   @override
   Future<BaseLanguage> load(Locale locale) async {
     switch (locale.languageCode) {
+      case 'vi':
+        return LanguageVi();
+      case 'km':
+        return LanguageKm();
       default:
         return LanguageEn();
     }
