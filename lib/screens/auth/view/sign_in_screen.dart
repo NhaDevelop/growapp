@@ -203,17 +203,18 @@ class _SignInScreenState extends State<SignInScreen> {
                 alignment: Alignment.center,
                 children: [
                   Container(
-                    width: context.width(),
                     color: context.primaryColor,
                     padding: EdgeInsets.only(
                       top: context.statusBarHeight + 16,
                       bottom: 46,
                     ),
                     child: Center(
-                      child: Image.asset(
-                        logo_long,
-                        width: context.width() * 0.4,
-                      ),
+                      child: LayoutBuilder(builder: (context, constraints) {
+                        return Image.asset(
+                          logo_long,
+                          width: constraints.maxWidth * 0.4,
+                        );
+                      }),
                     ),
                   ),
                   Positioned(

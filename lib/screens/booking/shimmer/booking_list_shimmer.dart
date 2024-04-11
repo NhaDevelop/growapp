@@ -45,9 +45,11 @@ class BookingListShimmer extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          ShimmerWidget(height: 16, width: context.width()),
+                          const ShimmerWidget(
+                              height: 16, width: double.infinity),
                           8.height,
-                          ShimmerWidget(height: 12, width: context.width()),
+                          const ShimmerWidget(
+                              height: 16, width: double.infinity),
                           10.height,
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -56,18 +58,14 @@ class BookingListShimmer extends StatelessWidget {
                                 children: [
                                   const ShimmerWidget(height: 14, width: 14),
                                   8.width,
-                                  ShimmerWidget(
-                                      height: 16,
-                                      width: context.width() * 0.15),
+                                  const ShimmerWidget(height: 16, width: 80),
                                 ],
                               ),
                               Row(
                                 children: [
                                   const ShimmerWidget(height: 14, width: 14),
                                   8.width,
-                                  ShimmerWidget(
-                                      height: 16,
-                                      width: context.width() * 0.15),
+                                  const ShimmerWidget(height: 16, width: 80),
                                 ],
                               ),
                             ],
@@ -87,16 +85,14 @@ class BookingListShimmer extends StatelessWidget {
                             children: [
                               const ShimmerWidget(height: 14, width: 14),
                               8.width,
-                              ShimmerWidget(
-                                  height: 16, width: context.width() * 0.15),
+                              const ShimmerWidget(height: 16, width: 80),
                             ],
                           ),
                           Row(
                             children: [
                               const ShimmerWidget(height: 14, width: 14),
                               8.width,
-                              ShimmerWidget(
-                                  height: 16, width: context.width() * 0.15),
+                              const ShimmerWidget(height: 16, width: 50)
                             ],
                           ),
                         ],
