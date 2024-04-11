@@ -187,7 +187,22 @@ void main() async {
 
   if (!kIsWeb) initOneSignal();
 
-  runApp(const MyApp());
+  final runnableApp =
+      _buildRunnableApp(isWeb: kIsWeb, webAppWidth: 428, app: const MyApp());
+
+  runApp(runnableApp);
+}
+
+Widget _buildRunnableApp(
+    {required bool isWeb, required double webAppWidth, required Widget app}) {
+  if (!isWeb) return app;
+
+  return LayoutBuilder(builder: (context, constraints) {
+    if (constraints.maxWidth < webAppWidth) return app;
+    return Center(
+      child: ClipRect(child: SizedBox(width: webAppWidth, child: app)),
+    );
+  });
 }
 
 class MyApp extends StatefulWidget {
