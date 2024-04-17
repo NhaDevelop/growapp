@@ -60,9 +60,9 @@ class _EmployeeListComponentNewState extends State<EmployeeListComponentNew> {
                     widget.expertData.fullName.validate(),
                     style: boldTextStyle(size: 14),
                   ),
-                  if (widget.expertData.expert.validate().isNotEmpty) ...[
+                  if (widget.expertData.description.validate().isNotEmpty) ...[
                     4.height,
-                    Text(widget.expertData.expert.validate(),
+                    Text(widget.expertData.description.validate(),
                         style: secondaryTextStyle()),
                   ],
                   GestureDetector(

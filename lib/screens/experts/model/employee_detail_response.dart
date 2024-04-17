@@ -73,6 +73,7 @@ class EmployeeData {
   String? lastNotificationSeen;
   String? userSetting;
   int? isSubscribe;
+  String? description;
 
   EmployeeData({
     this.profileImage,
@@ -105,6 +106,7 @@ class EmployeeData {
     this.instagramLink,
     this.twitterLink,
     this.dribbbleLink,
+    this.description,
   });
 
   factory EmployeeData.fromJson(Map<String, dynamic> json) {
@@ -128,7 +130,9 @@ class EmployeeData {
       status: json['status'],
       updatedAt: json['updated_at'],
       expert: json['expert'],
-      reviewData: json['review'] != null ? (json['review'] as List).map((i) => ReviewData.fromJson(i)).toList() : null,
+      reviewData: json['review'] != null
+          ? (json['review'] as List).map((i) => ReviewData.fromJson(i)).toList()
+          : null,
       totalReview: json['total_review'],
       branchesCount: json['branches_count'],
       serviceEmployeesCount: json['service_employees_count'],
@@ -139,6 +143,7 @@ class EmployeeData {
       instagramLink: json['instagram_link'],
       twitterLink: json['twitter_link'],
       dribbbleLink: json['dribbble_link'],
+      description: json['description'],
     );
   }
 
