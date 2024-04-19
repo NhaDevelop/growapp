@@ -31,8 +31,6 @@ class _BookingStep1ComponentState extends State<BookingStep1Component> {
   int page = 1;
   late int employeeId = bookingRequestStore.employeeId;
 
-  String serviceIds = '';
-
   bool isLastPage = false;
 
   @override
@@ -42,23 +40,22 @@ class _BookingStep1ComponentState extends State<BookingStep1Component> {
   }
 
   void init() async {
-    if (widget.isReschedule) {
-      serviceIds = bookingRequestStore.selectedServiceList
-          .validate()
-          .map((e) => e.serviceId.validate())
-          .toList()
-          .join(',');
-    } else {
-      serviceIds = bookingRequestStore.selectedServiceList
-          .validate()
-          .map((e) => e.id.validate())
-          .toList()
-          .join(',');
-    }
+    // if (widget.isReschedule) {
+    //   serviceIds = bookingRequestStore.selectedServiceList
+    //       .validate()
+    //       .map((e) => e.serviceId.validate())
+    //       .toList()
+    //       .join(',');
+    // } else {
+    //   serviceIds = bookingRequestStore.selectedServiceList
+    //       .validate()
+    //       .map((e) => e.id.validate())
+    //       .toList()
+    //       .join(',');
+    // }
 
     future = getEmployeeList(
         branchId: appStore.branchId,
-        serviceIds: serviceIds,
         page: page,
         list: expertList,
         lastPageCallBack: (p0) {
