@@ -367,24 +367,24 @@ class _SignInScreenState extends State<SignInScreen> {
                                   ],
                                 ),
                               ),
-                              24.height,
-                              AppButton(
-                                color: const Color(0xFF4267B2),
-                                padding: const EdgeInsets.all(16),
-                                elevation: 0,
-                                width: context.width() -
-                                    context.navigationBarHeight,
-                                onTap: facebookSignIn,
-                                child: Row(
-                                  children: [
-                                    Image.asset(ic_login_facebook, width: 24),
-                                    Text("${locale.signInWith} ${locale.facebook}",
-                                            style: boldTextStyle(color: white),
-                                            textAlign: TextAlign.center)
-                                        .expand(),
-                                  ],
-                                ),
-                              ),
+                              // 24.height,
+                              // AppButton(
+                              //   color: const Color(0xFF4267B2),
+                              //   padding: const EdgeInsets.all(16),
+                              //   elevation: 0,
+                              //   width: context.width() -
+                              //       context.navigationBarHeight,
+                              //   onTap: facebookSignIn,
+                              //   child: Row(
+                              //     children: [
+                              //       Image.asset(ic_login_facebook, width: 24),
+                              //       Text("${locale.signInWith} ${locale.facebook}",
+                              //               style: boldTextStyle(color: white),
+                              //               textAlign: TextAlign.center)
+                              //           .expand(),
+                              //     ],
+                              //   ),
+                              // ),
                               24.height,
                               if (isIOS)
                                 AppButton(

@@ -6,7 +6,7 @@ class BuildConfig {
   static String get domainUrl {
     switch (appFlavor) {
       case AppFlavor.prod:
-        return 'https://grow-cms.xclabs.io';
+        return 'https://cms.hairmake-grow.com';
       default:
         return 'https://grow-cms.xclabs.io';
     }
