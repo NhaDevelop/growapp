@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -588,8 +588,8 @@
 				CURRENT_PROJECT_VERSION = 1.0.0;
 				DEVELOPMENT_TEAM = FQLF23X4CW;
 				ENABLE_BITCODE = NO;
-				FACEBOOK_APP_ID = "";
-				FACEBOOK_CLIENT_TOKEN = "";
+				FACEBOOK_APP_ID = 2062593480793001;
+				FACEBOOK_CLIENT_TOKEN = a7c4156d1d392e4994dacddd8fe5307f;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = growTokyo;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.reference";
@@ -741,8 +741,8 @@
 				CURRENT_PROJECT_VERSION = 1.0.0;
 				DEVELOPMENT_TEAM = FQLF23X4CW;
 				ENABLE_BITCODE = NO;
-				FACEBOOK_APP_ID = "";
-				FACEBOOK_CLIENT_TOKEN = "";
+				FACEBOOK_APP_ID = 2062593480793001;
+				FACEBOOK_CLIENT_TOKEN = a7c4156d1d392e4994dacddd8fe5307f;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = growTokyo;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.reference";
@@ -782,8 +782,8 @@
 				CURRENT_PROJECT_VERSION = 1.0.0;
 				DEVELOPMENT_TEAM = FQLF23X4CW;
 				ENABLE_BITCODE = NO;
-				FACEBOOK_APP_ID = "";
-				FACEBOOK_CLIENT_TOKEN = "";
+				FACEBOOK_APP_ID = 2062593480793001;
+				FACEBOOK_CLIENT_TOKEN = a7c4156d1d392e4994dacddd8fe5307f;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = growTokyo;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.reference";
