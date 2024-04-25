@@ -1,8 +1,10 @@
 /// DO NOT CHANGE THIS PACKAGE NAME
 const appPackageName = 'com.growtokyo';
+const iosAppId = '6479511235';
 
-const ANDROID_DOWNLOAD_URL = '#'; //TODO: Add Android App URL
-const IOS_DOWNLOAD_URL = '#'; //TODO: Add iOS App URL
+const ANDROID_DOWNLOAD_URL =
+    'https://play.google.com/store/apps/details?id=$appPackageName';
+const IOS_DOWNLOAD_URL = 'https://apps.apple.com/app/growtokyo/id$iosAppId';
 
 const PER_PAGE_ITEM = 25;
 const LABEL_TEXT_SIZE = 14;

@@ -139,7 +139,7 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
                                       endTime: employeeScheduleOnSelectedDate!
                                           .endTime,
                                       slotDuration: snap?.slotDuration ??
-                                          DEFAULT_SLOT_INTERVAL_DURATION, //TODO: ask BE about slotDuration
+                                          DEFAULT_SLOT_INTERVAL_DURATION,
                                     );
                                   },
                                 ),
