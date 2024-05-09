@@ -57,7 +57,9 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
   EmployeeWorkingDayModel? get employeeScheduleOnSelectedDate {
     final index = employeeSchedule
         .indexWhere((element) => element.date.isSameDateWith(selectedDate));
-    return index < 0 ? null : employeeSchedule[index];
+    final schedule = index < 0 ? null : employeeSchedule[index];
+
+    return schedule;
   }
 
   @override

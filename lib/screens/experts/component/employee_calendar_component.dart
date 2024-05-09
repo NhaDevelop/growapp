@@ -74,7 +74,8 @@ class _EmployeeCalendarComponentState extends State<EmployeeCalendarComponent> {
   }
 
   void _onSelect(DateTime date) {
-    setState(() => selectedDate = date);
+    setState(() => selectedDate = focusedDay = date);
+
     widget.onSelect?.call(date);
   }
 
@@ -105,7 +106,6 @@ class _EmployeeCalendarComponentState extends State<EmployeeCalendarComponent> {
             if (index < 0) return;
             final firstAvailableDate = workingDays[index].date;
             _onSelect(firstAvailableDate);
-            focusedDay = firstAvailableDate;
           });
         }
         return TableCalendar(

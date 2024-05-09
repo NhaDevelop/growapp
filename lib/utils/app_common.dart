@@ -15,7 +15,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'common_base.dart';
 
 Future<bool> get isIqonicProduct async =>
-    await getPackageName() == appPackageName;
+    await getPackageName() == APP_PACKAGE_NAME;
 
 // Currency position common
 bool get isCurrencyPositionLeft =>

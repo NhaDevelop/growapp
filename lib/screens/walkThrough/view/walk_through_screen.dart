@@ -28,8 +28,10 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
     init();
   }
 
-  void init() async {
-    setStatusBarColor(primaryColor);
+  void init() {
+    afterBuildCreated(() {
+      setStatusBarColor(context.primaryColor);
+    });
     pages.add(WalkThroughModel(
         title: locale.bookAndManageYourBookings,
         subTitle: locale.walkThrough1subTitle,
