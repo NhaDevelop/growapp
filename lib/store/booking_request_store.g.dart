@@ -16,6 +16,20 @@ mixin _$BookingRequestStore on _BookingRequestStore, Store {
           Computed<bool>(() => super.isEmployeeSelected,
               name: '_BookingRequestStore.isEmployeeSelected'))
       .value;
+  Computed<bool>? _$isEmployeeGroupSelectedComputed;
+
+  @override
+  bool get isEmployeeGroupSelected => (_$isEmployeeGroupSelectedComputed ??=
+          Computed<bool>(() => super.isEmployeeGroupSelected,
+              name: '_BookingRequestStore.isEmployeeGroupSelected'))
+      .value;
+  Computed<String>? _$dateTimeComputed;
+
+  @override
+  String get dateTime =>
+      (_$dateTimeComputed ??= Computed<String>(() => super.dateTime,
+              name: '_BookingRequestStore.dateTime'))
+          .value;
   Computed<num>? _$selectedServiceTotalAmountComputed;
 
   @override
@@ -85,19 +99,51 @@ mixin _$BookingRequestStore on _BookingRequestStore, Store {
     });
   }
 
+  late final _$employeeGroupIdAtom =
+      Atom(name: '_BookingRequestStore.employeeGroupId', context: context);
+
+  @override
+  String get employeeGroupId {
+    _$employeeGroupIdAtom.reportRead();
+    return super.employeeGroupId;
+  }
+
+  @override
+  set employeeGroupId(String value) {
+    _$employeeGroupIdAtom.reportWrite(value, super.employeeGroupId, () {
+      super.employeeGroupId = value;
+    });
+  }
+
   late final _$employeeNameAtom =
       Atom(name: '_BookingRequestStore.employeeName', context: context);
 
   @override
-  String get employeeName {
+  String? get employeeName {
     _$employeeNameAtom.reportRead();
     return super.employeeName;
   }
 
   @override
-  set employeeName(String value) {
+  set employeeName(String? value) {
     _$employeeNameAtom.reportWrite(value, super.employeeName, () {
       super.employeeName = value;
+    });
+  }
+
+  late final _$employeeGroupNameAtom =
+      Atom(name: '_BookingRequestStore.employeeGroupName', context: context);
+
+  @override
+  String? get employeeGroupName {
+    _$employeeGroupNameAtom.reportRead();
+    return super.employeeGroupName;
+  }
+
+  @override
+  set employeeGroupName(String? value) {
+    _$employeeGroupNameAtom.reportWrite(value, super.employeeGroupName, () {
+      super.employeeGroupName = value;
     });
   }
 
@@ -360,6 +406,28 @@ mixin _$BookingRequestStore on _BookingRequestStore, Store {
   }
 
   @override
+  void setEmployeeGroupIdInRequest(String val) {
+    final _$actionInfo = _$_BookingRequestStoreActionController.startAction(
+        name: '_BookingRequestStore.setEmployeeGroupIdInRequest');
+    try {
+      return super.setEmployeeGroupIdInRequest(val);
+    } finally {
+      _$_BookingRequestStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setEmployeeGroupNameInRequest(String val) {
+    final _$actionInfo = _$_BookingRequestStoreActionController.startAction(
+        name: '_BookingRequestStore.setEmployeeGroupNameInRequest');
+    try {
+      return super.setEmployeeGroupNameInRequest(val);
+    } finally {
+      _$_BookingRequestStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setTimeInRequest(String val) {
     final _$actionInfo = _$_BookingRequestStoreActionController.startAction(
         name: '_BookingRequestStore.setTimeInRequest');
@@ -512,7 +580,9 @@ mixin _$BookingRequestStore on _BookingRequestStore, Store {
     return '''
 bookingId: ${bookingId},
 employeeId: ${employeeId},
+employeeGroupId: ${employeeGroupId},
 employeeName: ${employeeName},
+employeeGroupName: ${employeeGroupName},
 time: ${time},
 date: ${date},
 note: ${note},
@@ -527,6 +597,8 @@ selectedBookingStatusList: ${selectedBookingStatusList},
 taxPercentage: ${taxPercentage},
 tipAmount: ${tipAmount},
 isEmployeeSelected: ${isEmployeeSelected},
+isEmployeeGroupSelected: ${isEmployeeGroupSelected},
+dateTime: ${dateTime},
 selectedServiceTotalAmount: ${selectedServiceTotalAmount},
 fixedTaxAmount: ${fixedTaxAmount},
 percentTaxAmount: ${percentTaxAmount},

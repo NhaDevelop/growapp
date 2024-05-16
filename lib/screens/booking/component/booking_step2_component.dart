@@ -130,19 +130,12 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
             right: 0,
             child: Observer(
               builder: (_) => CommonBottomPriceWidget(
-                title: bookingRequestStore.employeeName,
-                subtitle: bookingRequestStore.selectedServiceList
-                    .validate()
-                    .map((e) => widget.isReschedule
-                        ? e.serviceName.validate()
-                        : e.name.validate())
-                    .toList()
-                    .join(', '),
+                title: bookingRequestStore.employeeName ??
+                    bookingRequestStore.employeeGroupName,
                 buttonText: locale.next,
                 onTap: () {
                   if (selectedServices.isEmpty) {
-                    toast(locale.pleaseSelectService);
-                    return;
+                    return toast(locale.pleaseSelectService);
                   }
                   bookingRequestStore
                       .setSelectedServiceListInRequest(selectedServices);

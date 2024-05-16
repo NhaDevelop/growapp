@@ -189,12 +189,11 @@ Future<List<ServiceListData>> getBranchServiceList(
   return list;
 }
 
-Future<BranchConfigurationData?> getBranchConfiguration(
-    int branchId, int employeeId) async {
+Future<BranchConfigurationData?> getBranchConfiguration(int branchId) async {
   try {
     var res = BranchConfigurationResponse.fromJson(await handleResponse(
         await buildHttpResponse(
-            '${APIEndPoints.branchConfiguration}?branch_id=$branchId&employee_id=$employeeId',
+            '${APIEndPoints.branchConfiguration}?branch_id=$branchId',
             method: HttpMethodType.GET)));
     appStore.setLoading(false);
 

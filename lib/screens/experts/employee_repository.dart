@@ -73,12 +73,17 @@ Future<EmployeeDetailResponse> getEmployeeDetail(
 
 Future<List<EmployeeWorkingDayModel>> getEmployeeMonthSchedule(
     {required int employeeId,
+    required int branchId,
     Function(List<EmployeeWorkingDayModel>)? callback}) async {
   try {
+    String url = APIEndPoints.employeeSchedule;
+    if (bookingRequestStore.isEmployeeSelected) {
+      url = '$url?employee_id=$employeeId';
+    } else {
+      url = '$url?branch_id=$branchId';
+    }
     var res = EmployeeMonthScheduleResponse.fromJson(await handleResponse(
-        await buildHttpResponse(
-            '${APIEndPoints.employeeSchedule}?employee_id=$employeeId',
-            method: HttpMethodType.GET)));
+        await buildHttpResponse(url, method: HttpMethodType.GET)));
 
     employeeWorkingDayListCached = {
       ...?employeeWorkingDayListCached,
@@ -97,11 +102,12 @@ Future<List<EmployeeWorkingDayModel>> getEmployeeMonthSchedule(
 Future<List<EmployeeServiceListData>> getEmployeeServiceList(
     {required int employeeId,
     required Function(List<EmployeeServiceListData>) onLoaded}) async {
+  String url = APIEndPoints.employeeServiceList;
+  if (bookingRequestStore.isEmployeeSelected) {
+    url = '$url?employee_id=$employeeId';
+  }
   final res = EmployeeServiceListResponse.fromJson(await handleResponse(
-    await buildHttpResponse(
-      '${APIEndPoints.employeeServiceList}?employee_id=$employeeId',
-      method: HttpMethodType.GET,
-    ),
+    await buildHttpResponse(url, method: HttpMethodType.GET),
   ));
   employeeServiceListCached = {
     ...?employeeServiceListCached,

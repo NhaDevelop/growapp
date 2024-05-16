@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grow_tokyo_app/app_theme.dart';
 import 'package:grow_tokyo_app/screens/cart/model/country_list_response.dart';
+import 'package:grow_tokyo_app/screens/experts/model/employee_group_model.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -91,6 +92,29 @@ List<AppCountryModel> countryList() {
   return [
     AppCountryModel('Cambodia', ic_km, 'USD', '\$'),
     AppCountryModel('Vietnam', ic_vi, 'VND', '₫'),
+  ];
+}
+
+List<EmployeeGroupModel> employeeGroups() {
+  return [
+    EmployeeGroupModel(
+      name: 'Any Japanese',
+      description: 'Japanese Stylist',
+      nationality: 'japanese',
+      profileImage: 'assets/flags/ic_jp.png',
+    ),
+    EmployeeGroupModel(
+      name: 'Any Cambodian',
+      description: 'Cambodian Stylist',
+      nationality: 'cambodian',
+      profileImage: 'assets/flags/ic_km.png',
+    ),
+    EmployeeGroupModel(
+      name: 'Any Vietnamese',
+      description: 'Vietnamese Stylist',
+      nationality: 'vietnamese',
+      profileImage: 'assets/flags/ic_vi.png',
+    ),
   ];
 }
 

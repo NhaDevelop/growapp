@@ -23,13 +23,26 @@ abstract class _BookingRequestStore with Store {
   bool get isEmployeeSelected => employeeId != UNSELECTED_EMPLOYEE_ID;
 
   @observable
-  String employeeName = '';
+  String employeeGroupId = UNSELECTED_EMPLOYEE_GROUP_ID;
+
+  @computed
+  bool get isEmployeeGroupSelected =>
+      employeeGroupId != UNSELECTED_EMPLOYEE_GROUP_ID;
+
+  @observable
+  String? employeeName;
+
+  @observable
+  String? employeeGroupName;
 
   @observable
   String time = '';
 
   @observable
   String date = '';
+
+  @computed
+  String get dateTime => '$date $time:00';
 
   @observable
   String note = '';
@@ -134,11 +147,25 @@ abstract class _BookingRequestStore with Store {
   @action
   void setEmployeeIdInRequest(int val) {
     employeeId = val;
+    employeeGroupId = UNSELECTED_EMPLOYEE_GROUP_ID;
   }
 
   @action
   void setEmployeeNameInRequest(String val) {
     employeeName = val;
+    employeeGroupName = null;
+  }
+
+  @action
+  void setEmployeeGroupIdInRequest(String val) {
+    employeeGroupId = val;
+    employeeId = UNSELECTED_EMPLOYEE_ID;
+  }
+
+  @action
+  void setEmployeeGroupNameInRequest(String val) {
+    employeeGroupName = val;
+    employeeName = null;
   }
 
   @action

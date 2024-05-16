@@ -1,5 +1,7 @@
 import 'package:grow_tokyo_app/screens/booking/model/booking_detail_response.dart';
 import 'package:grow_tokyo_app/screens/booking/model/booking_list_response.dart';
+import 'package:grow_tokyo_app/screens/booking/model/verify_any_stylist_response.dart';
+import 'package:grow_tokyo_app/screens/experts/model/employee_detail_response.dart';
 import 'package:grow_tokyo_app/utils/api_end_points.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -62,6 +64,25 @@ Future verifySlot(int employeeId, String startDateTime) async {
   };
   return await handleResponse(await buildHttpResponse(APIEndPoints.verifySlot,
       request: request, method: HttpMethodType.POST));
+}
+
+Future<EmployeeData> verifyAnyStylistSlot({
+  required String nationality,
+  required int branchId,
+  required List<int?> servicesIds,
+  required String startDateTime,
+}) async {
+  Map request = {
+    "nationality": nationality,
+    "branch_id": branchId,
+    "services_ids": servicesIds,
+    "start_date_time": startDateTime,
+  };
+  final res = VerifyAnyStylistResponse.fromJson(await handleResponse(
+      await buildHttpResponse(APIEndPoints.verifyAnyStylist,
+          request: request, method: HttpMethodType.POST)));
+
+  return res.data;
 }
 
 Future<List<BookingListData>> getBookingList({

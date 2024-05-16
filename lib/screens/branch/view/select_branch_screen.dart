@@ -6,7 +6,6 @@ import 'package:grow_tokyo_app/components/loader_widget.dart';
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/screens/booking/view/booking_screen.dart';
 import 'package:grow_tokyo_app/screens/branch/model/branch_response.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../components/empty_error_state_widget.dart';
@@ -36,15 +35,11 @@ class _SelectBranchScreenState extends State<SelectBranchScreen> {
 
   bool isLastPage = false;
 
-  Position? currentLocation;
-
   @override
   void initState() {
     init();
 
     super.initState();
-
-    getLocation();
   }
 
   void init() {
@@ -55,19 +50,6 @@ class _SelectBranchScreenState extends State<SelectBranchScreen> {
         isLastPage = p0;
       },
     );
-  }
-
-  void getLocation() {
-    Geolocator.requestPermission().then((value) {
-      if (value == LocationPermission.whileInUse ||
-          value == LocationPermission.always) {
-        Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
-            .then((value) {
-          currentLocation = value;
-          setState(() {});
-        }).catchError(onError);
-      }
-    });
   }
 
   void onNextClick() async {
@@ -158,7 +140,6 @@ class _SelectBranchScreenState extends State<SelectBranchScreen> {
                       isFormSignIn: true,
                       selectedBranchId: selectedBranchId,
                       currentBranchIndex: branchData.id,
-                      position: currentLocation,
                     ).onTap(() async {
                       if (selectedBranchId == branchData.id) {
                         /// Deselect, If again tap on same branch

@@ -205,23 +205,8 @@ Widget _buildRunnableApp(
   });
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    super.initState();
-    init();
-  }
-
-  void init() async {
-    //
-  }
 
   @override
   Widget build(BuildContext context) {

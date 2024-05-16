@@ -36,13 +36,12 @@ class BranchConfigurationData {
   List<SlotData>? slot;
   String? slotDuration;
   List<TaxPercentage>? tax;
-  List<DateTime> employeeSchedule;
 
-  BranchConfigurationData(
-      {this.slot,
-      this.slotDuration,
-      this.tax,
-      this.employeeSchedule = const []});
+  BranchConfigurationData({
+    this.slot,
+    this.slotDuration,
+    this.tax,
+  });
 
   factory BranchConfigurationData.fromJson(Map<String, dynamic> json) {
     return BranchConfigurationData(
@@ -53,11 +52,6 @@ class BranchConfigurationData {
       tax: json['tax'] != null
           ? (json['tax'] as List).map((i) => TaxPercentage.fromJson(i)).toList()
           : null,
-      employeeSchedule: json['employee_schedule'] != null
-          ? (json['employee_schedule'] as List)
-              .map((i) => DateTime.parse(i))
-              .toList()
-          : [],
     );
   }
 

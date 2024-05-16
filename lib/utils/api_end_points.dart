@@ -19,6 +19,7 @@ class APIEndPoints {
   static const String saveBooking = 'save-booking';
   static const String savePayment = 'save-payment';
   static const String verifySlot = 'verify-slot';
+  static const String verifyAnyStylist = 'verify-any-stylist';
   static const String bookingDetail = 'booking-detail';
   static const String bookingUpdate = 'booking-update';
   static const String bookingList = 'booking-list';

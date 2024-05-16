@@ -93,6 +93,8 @@ class _EmployeeListComponentNewState extends State<EmployeeListComponentNew> {
             child: _expanded
                 ? EmployeeCalendarComponent(
                     employeeId: widget.expertData.id.validate(),
+                    branchId: appStore.branchId,
+                    disableOtherBranchsDate: true,
                   )
                 : const SizedBox.shrink(),
           ),

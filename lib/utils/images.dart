@@ -61,6 +61,7 @@ const ic_fr = 'assets/flags/ic_fr.png';
 const ic_de = 'assets/flags/ic_de.png';
 const ic_km = 'assets/flags/ic_km.png';
 const ic_vi = 'assets/flags/ic_vi.png';
+const ic_jp = 'assets/flags/ic_jp.png';
 const ic_no_photo = "assets/icons/ic_no_photo.png";
 const ic_confetti_ball = "assets/icons/ic_confetti_ball.png";
 const ic_selected_bell = "assets/icons/ic_selected_bell.png";

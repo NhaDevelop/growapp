@@ -12,14 +12,16 @@ import 'package:table_calendar/table_calendar.dart';
 
 class EmployeeCalendarComponent extends StatefulWidget {
   final int employeeId;
-  final int? branchId;
+  final int branchId;
+  final bool disableOtherBranchsDate;
   final Function(DateTime)? onSelect;
   final Function(List<EmployeeWorkingDayModel>)? onEmployeeScheduleLoaded;
 
   const EmployeeCalendarComponent(
       {super.key,
       required this.employeeId,
-      this.branchId,
+      required this.branchId,
+      this.disableOtherBranchsDate = false,
       this.onSelect,
       this.onEmployeeScheduleLoaded});
 
@@ -47,29 +49,27 @@ class _EmployeeCalendarComponentState extends State<EmployeeCalendarComponent> {
   Future<void> init() async {
     future = getEmployeeMonthSchedule(
       employeeId: widget.employeeId,
+      branchId: widget.branchId,
       callback: widget.onEmployeeScheduleLoaded,
     );
   }
 
   String? _getBranchName(DateTime date, List<EmployeeWorkingDayModel> snap) {
-    if (widget.branchId == null) {
-      final index = snap.indexWhere((e) => e.date.isSameDateWith(date));
-      return index < 0 ? null : snap[index].branchName;
-    } else {
-      final index = snap.indexWhere(
-        (e) => e.date.isSameDateWith(date) && e.branchId == widget.branchId,
-      );
-      return index < 0 ? null : snap[index].branchName;
-    }
+    final index = widget.disableOtherBranchsDate
+        ? snap.indexWhere(
+            (e) => e.date.isSameDateWith(date) && e.branchId == widget.branchId,
+          )
+        : snap.indexWhere((e) => e.date.isSameDateWith(date));
+    return index < 0 ? null : snap[index].branchName;
   }
 
   bool _isAvailable(DateTime date, List<EmployeeWorkingDayModel> snap) {
-    if (widget.branchId == null) {
-      return snap.any((e) => e.date.isSameDateWith(date));
-    } else {
+    if (widget.disableOtherBranchsDate) {
       return snap.any(
         (e) => e.date.isSameDateWith(date) && e.branchId == widget.branchId,
       );
+    } else {
+      return snap.any((e) => e.date.isSameDateWith(date));
     }
   }
 

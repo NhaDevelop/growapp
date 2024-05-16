@@ -69,13 +69,56 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
   }
 
   void init() {
-    future = getBranchConfiguration(
-        appStore.branchId, bookingRequestStore.employeeId);
+    future = getBranchConfiguration(appStore.branchId);
   }
 
   @override
   void setState(fn) {
     if (mounted) super.setState(fn);
+  }
+
+  void onNextClicked() async {
+    if (selectedDate == null) {
+      return toast(locale.pleaseSelectDateFirst);
+    }
+    if (bookingRequestStore.time.isEmpty) {
+      return toast(locale.pleaseSelectTimeSlotFirst);
+    }
+
+    bookingRequestStore.setDateInRequest(selectedDate!
+        .setFormattedDate(DateFormatConst.DATE_FORMAT_5)
+        .toString());
+
+    doIfLoggedIn(context, () async {
+      try {
+        appStore.setLoading(true);
+        if (bookingRequestStore.isEmployeeSelected) {
+          await verifySlot(
+            bookingRequestStore.employeeId,
+            bookingRequestStore.dateTime,
+          );
+        } else {
+          final employee = await verifyAnyStylistSlot(
+            nationality: bookingRequestStore.employeeGroupId,
+            branchId: appStore.branchId,
+            servicesIds: bookingRequestStore.selectedServiceList
+                .map((e) => e.id)
+                .toList(),
+            startDateTime: bookingRequestStore.dateTime,
+          );
+
+          bookingRequestStore.setEmployeeIdInRequest(employee.id!);
+          bookingRequestStore.setEmployeeNameInRequest(employee.fullName!);
+        }
+
+        if (!mounted) return;
+        ConfirmBookingScreen(isReschedule: widget.isReschedule).launch(context);
+      } catch (e) {
+        toast(e.toString());
+      } finally {
+        appStore.setLoading(false);
+      }
+    });
   }
 
   @override
@@ -166,34 +209,7 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
                     .toList()
                     .join(', '),
                 buttonText: locale.confirm,
-                onTap: () async {
-                  if (selectedDate == null) {
-                    toast(locale.pleaseSelectDateFirst);
-                    return;
-                  }
-                  if (bookingRequestStore.time.isNotEmpty) {
-                    bookingRequestStore.setDateInRequest(selectedDate!
-                        .setFormattedDate(DateFormatConst.DATE_FORMAT_5)
-                        .toString());
-
-                    /// Slot Verify API Call
-                    doIfLoggedIn(context, () async {
-                      appStore.setLoading(true);
-
-                      await verifySlot(bookingRequestStore.employeeId,
-                              '${bookingRequestStore.date} ${bookingRequestStore.time}:00')
-                          .then((value) {
-                        ConfirmBookingScreen(isReschedule: widget.isReschedule)
-                            .launch(context);
-                      }).catchError((e) {
-                        toast(e.toString());
-                      });
-                      appStore.setLoading(false);
-                    });
-                  } else {
-                    toast(locale.pleaseSelectTimeSlotFirst);
-                  }
-                },
+                onTap: onNextClicked,
               ),
             ),
           ).visible(!widget.isFromBookingInfoDetail),
