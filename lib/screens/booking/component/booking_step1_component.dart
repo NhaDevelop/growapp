@@ -128,7 +128,7 @@ class _BookingStep1ComponentState extends State<BookingStep1Component> {
                   }
                   return AnimatedScrollView(
                     padding: const EdgeInsets.only(
-                        left: 20, right: 20, top: 70, bottom: 16),
+                        left: 20, right: 20, top: 70, bottom: 110),
                     physics: const AlwaysScrollableScrollPhysics(),
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -137,18 +137,7 @@ class _BookingStep1ComponentState extends State<BookingStep1Component> {
                         style: primaryTextStyle(weight: FontWeight.w500),
                       ),
                       16.height,
-                      AnimatedWrap(
-                        runSpacing: 16,
-                        spacing: 16,
-                        columnCount: 1,
-                        itemCount: list.length,
-                        listAnimationType: ListAnimationType.Scale,
-                        scaleConfiguration: ScaleConfiguration(
-                            duration: 300.milliseconds, delay: 50.milliseconds),
-                        itemBuilder: (_, i) {
-                          EmployeeData data = list[i];
-
-                          return GestureDetector(
+                      ...list.map((data) => GestureDetector(
                             onTap: () {
                               employeeId = data.id.validate();
                               groupId = UNSELECTED_EMPLOYEE_GROUP_ID;
@@ -158,9 +147,7 @@ class _BookingStep1ComponentState extends State<BookingStep1Component> {
                               expertData: data,
                               selected: employeeId == data.id,
                             ),
-                          );
-                        },
-                      ),
+                          ).paddingTop(16)),
                       ...employeeGroups().map(
                         (e) => EmployeeGroupComponent(
                           data: e,
