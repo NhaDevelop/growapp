@@ -190,8 +190,7 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     return AppScaffold(
       showAppBar: false,
-      body: Container(
-        color: white,
+      body: SizedBox(
         height: context.height(),
         width: context.width(),
         child: SingleChildScrollView(

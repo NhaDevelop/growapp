@@ -206,7 +206,7 @@ InputDecoration inputDecoration(
     suffixIcon: suffixIcon,
     enabledBorder: OutlineInputBorder(
       borderRadius: radius(borderRadius ?? defaultRadius),
-      borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
+      borderSide: const BorderSide(color: borderColor, width: 0.0),
     ),
     focusedErrorBorder: OutlineInputBorder(
       borderRadius: radius(borderRadius ?? defaultRadius),
@@ -219,11 +219,11 @@ InputDecoration inputDecoration(
     errorMaxLines: 2,
     border: OutlineInputBorder(
       borderRadius: radius(borderRadius ?? defaultRadius),
-      borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
+      borderSide: const BorderSide(color: borderColor, width: 0.0),
     ),
     disabledBorder: OutlineInputBorder(
       borderRadius: radius(borderRadius ?? defaultRadius),
-      borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
+      borderSide: const BorderSide(color: borderColor, width: 0.0),
     ),
     errorStyle: primaryTextStyle(color: Colors.red, size: 12),
     focusedBorder: OutlineInputBorder(
