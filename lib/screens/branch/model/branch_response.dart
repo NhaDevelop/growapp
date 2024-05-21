@@ -45,8 +45,8 @@ class BranchData {
   String? branchImg;
   String? description;
   int? totalReview;
-
   List<WorkingHourList>? workingHourList;
+  List<String>? anyStylistOptions;
 
   ///LOCAL
   WorkingHourList? get todayTime => workingHourList.validate().isNotEmpty
@@ -81,6 +81,7 @@ class BranchData {
     this.totalReview,
     this.description,
     this.workingHourList,
+    this.anyStylistOptions,
   });
 
   factory BranchData.fromJson(Map<String, dynamic> json) {
@@ -113,6 +114,9 @@ class BranchData {
           ? (json['working_days'] as List)
               .map((e) => WorkingHourList.fromJson(e))
               .toList()
+          : null,
+      anyStylistOptions: json['any_stylist_options'] != null
+          ? List<String>.from(json['any_stylist_options'])
           : null,
     );
   }

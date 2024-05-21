@@ -144,6 +144,10 @@ void main() async {
   await appStore.setBranchName(
       getStringAsync(SharedPreferenceConst.BRANCH_NAME),
       isInitializing: true);
+  await appStore.setBranchAnyStylistOptions(
+      getStringListAsync(SharedPreferenceConst.BRANCH_ANY_STYLIST_OPTIONS) ??
+          [],
+      isInitializing: true);
   if (appStore.isLoggedIn) {
     await userStore.setUserId(getIntAsync(SharedPreferenceConst.USER_ID),
         isInitializing: true);

@@ -69,8 +69,7 @@ class BookingListData {
   List<TaxDetail>? taxDetails;
 
   // local
-  DateTime get bookingDateTime =>
-      DateTime.parse(startDateTime.validate()).toLocal();
+  DateTime get bookingDateTime => DateTime.parse(startDateTime.validate());
 
   String get bookingDate => formatDate(bookingDateTime.toString(),
       format: DateFormatConst.BOOK_DATE_FORMAT);

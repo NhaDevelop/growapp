@@ -327,6 +327,23 @@ mixin _$AppStore on _AppStore, Store {
     });
   }
 
+  late final _$branchAnyStylistOptionsAtom =
+      Atom(name: '_AppStore.branchAnyStylistOptions', context: context);
+
+  @override
+  List<String> get branchAnyStylistOptions {
+    _$branchAnyStylistOptionsAtom.reportRead();
+    return super.branchAnyStylistOptions;
+  }
+
+  @override
+  set branchAnyStylistOptions(List<String> value) {
+    _$branchAnyStylistOptionsAtom
+        .reportWrite(value, super.branchAnyStylistOptions, () {
+      super.branchAnyStylistOptions = value;
+    });
+  }
+
   late final _$playerIdAtom =
       Atom(name: '_AppStore.playerId', context: context);
 
@@ -392,6 +409,16 @@ mixin _$AppStore on _AppStore, Store {
   Future<void> setBranchId(int val, {bool isInitializing = false}) {
     return _$setBranchIdAsyncAction
         .run(() => super.setBranchId(val, isInitializing: isInitializing));
+  }
+
+  late final _$setBranchAnyStylistOptionsAsyncAction =
+      AsyncAction('_AppStore.setBranchAnyStylistOptions', context: context);
+
+  @override
+  Future<void> setBranchAnyStylistOptions(List<String> val,
+      {bool isInitializing = false}) {
+    return _$setBranchAnyStylistOptionsAsyncAction.run(() =>
+        super.setBranchAnyStylistOptions(val, isInitializing: isInitializing));
   }
 
   late final _$setHelplineNumberAsyncAction =
@@ -573,6 +600,7 @@ branchId: ${branchId},
 branchAddress: ${branchAddress},
 branchName: ${branchName},
 branchContactNumber: ${branchContactNumber},
+branchAnyStylistOptions: ${branchAnyStylistOptions},
 playerId: ${playerId},
 socialData: ${socialData},
 isCountrySelected: ${isCountrySelected},

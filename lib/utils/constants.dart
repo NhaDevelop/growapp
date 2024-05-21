@@ -219,6 +219,7 @@ class SharedPreferenceConst {
   static const AUTO_SLIDER_STATUS = 'AUTO_SLIDER_STATUS';
   static const BRANCH_ID = 'BRANCH_ID';
   static const BRANCH_NAME = 'BRANCH_NAME';
+  static const BRANCH_ANY_STYLIST_OPTIONS = 'BRANCH_ANY_STYLIST_OPTIONS';
   static const CREDIT = 'CREDIT';
 }
 

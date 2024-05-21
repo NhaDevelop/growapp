@@ -28,7 +28,6 @@ class _SelectBranchScreenState extends State<SelectBranchScreen> {
   Future<List<BranchData>>? future;
 
   List<BranchData> branchList = [];
-  BranchData? selectedBranch;
 
   int page = 1;
   int selectedBranchId = appStore.branchId;
@@ -56,16 +55,23 @@ class _SelectBranchScreenState extends State<SelectBranchScreen> {
     if (appStore.branchId != selectedBranchId) {
       dashboardResponseCached = null;
       bookingDetailCached = [];
-
-      await appStore.setBranchId(
-          selectedBranch!.id.validate(value: UNSELECTED_BRANCH_ID));
-      await appStore.setBranchAddress(selectedBranch!.addressLine1.validate());
-      await appStore.setBranchName(selectedBranch!.name.validate());
-      await appStore
-          .setBranchContactNumber(selectedBranch!.contactNumber.validate());
     }
 
-    if (!context.mounted) return;
+    final index =
+        branchList.indexWhere((element) => element.id == selectedBranchId);
+    if (index < 0) return;
+    final selectedBranch = branchList[index];
+
+    await Future.wait([
+      appStore
+          .setBranchId(selectedBranch.id.validate(value: UNSELECTED_BRANCH_ID)),
+      appStore.setBranchAddress(selectedBranch.addressLine1.validate()),
+      appStore.setBranchName(selectedBranch.name.validate()),
+      appStore.setBranchContactNumber(selectedBranch.contactNumber.validate()),
+      appStore.setBranchAnyStylistOptions(
+          selectedBranch.anyStylistOptions.validate()),
+    ]);
+
     if (!mounted) return;
     finish(context);
     const BookingScreen(services: []).launch(context);
@@ -141,14 +147,9 @@ class _SelectBranchScreenState extends State<SelectBranchScreen> {
                       selectedBranchId: selectedBranchId,
                       currentBranchIndex: branchData.id,
                     ).onTap(() async {
-                      if (selectedBranchId == branchData.id) {
-                        /// Deselect, If again tap on same branch
-                        selectedBranchId = UNSELECTED_BRANCH_ID;
-                        selectedBranch = null;
-                      } else {
-                        selectedBranch = branchData;
-                        selectedBranchId = branchData.id!;
-                      }
+                      selectedBranchId = selectedBranchId == branchData.id
+                          ? UNSELECTED_BRANCH_ID
+                          : branchData.id!;
                       setState(() {});
                     },
                         highlightColor: Colors.transparent,

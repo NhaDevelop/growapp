@@ -81,6 +81,9 @@ abstract class _AppStore with Store {
   String branchContactNumber = '';
 
   @observable
+  List<String> branchAnyStylistOptions = [];
+
+  @observable
   String playerId = '';
 
   @observable
@@ -111,6 +114,16 @@ abstract class _AppStore with Store {
 
     if (!isInitializing) {
       await setValue(SharedPreferenceConst.BRANCH_ID, val);
+    }
+  }
+
+  @action
+  Future<void> setBranchAnyStylistOptions(List<String> val,
+      {bool isInitializing = false}) async {
+    branchAnyStylistOptions = val;
+
+    if (!isInitializing) {
+      await setValue(SharedPreferenceConst.BRANCH_ANY_STYLIST_OPTIONS, val);
     }
   }
 
