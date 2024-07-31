@@ -137,6 +137,9 @@ void main() async {
       getIntAsync(SharedPreferenceConst.COUNTRY_ID,
           defaultValue: UNSELECTED_COUNTRY_ID),
       isInitializing: true);
+  appStore.setCountryCode(
+      getStringAsync(SharedPreferenceConst.COUNTRY_CODE, defaultValue: 'vn'),
+      isInitializing: true);
   await appStore.setBranchId(
       getIntAsync(SharedPreferenceConst.BRANCH_ID,
           defaultValue: UNSELECTED_BRANCH_ID),

@@ -137,6 +137,22 @@ mixin _$AppStore on _AppStore, Store {
     });
   }
 
+  late final _$countryCodeAtom =
+      Atom(name: '_AppStore.countryCode', context: context);
+
+  @override
+  String get countryCode {
+    _$countryCodeAtom.reportRead();
+    return super.countryCode;
+  }
+
+  @override
+  set countryCode(String value) {
+    _$countryCodeAtom.reportWrite(value, super.countryCode, () {
+      super.countryCode = value;
+    });
+  }
+
   late final _$stateIdAtom = Atom(name: '_AppStore.stateId', context: context);
 
   @override
@@ -484,6 +500,15 @@ mixin _$AppStore on _AppStore, Store {
         .run(() => super.setCountryId(val, isInitializing: isInitializing));
   }
 
+  late final _$setCountryCodeAsyncAction =
+      AsyncAction('_AppStore.setCountryCode', context: context);
+
+  @override
+  Future<void> setCountryCode(String val, {bool isInitializing = false}) {
+    return _$setCountryCodeAsyncAction
+        .run(() => super.setCountryCode(val, isInitializing: isInitializing));
+  }
+
   late final _$setStateIdAsyncAction =
       AsyncAction('_AppStore.setStateId', context: context);
 
@@ -588,6 +613,7 @@ isSpeechActivated: ${isSpeechActivated},
 selectedLanguageCode: ${selectedLanguageCode},
 currencyCode: ${currencyCode},
 countryId: ${countryId},
+countryCode: ${countryCode},
 stateId: ${stateId},
 cityId: ${cityId},
 currencyCountryId: ${currencyCountryId},

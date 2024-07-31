@@ -201,6 +201,7 @@ class SharedPreferenceConst {
   static const APPLE_GIVE_NAME = 'APPLE_GIVE_NAME';
   static const APPLE_FAMILY_NAME = 'APPLE_FAMILY_NAME';
   static const COUNTRY_ID = 'COUNTRY_ID';
+  static const COUNTRY_CODE = 'COUNTRY_CODE';
   static const STATE_ID = 'STATE_ID';
   static const CITY_ID = 'CITY_ID';
   static const CURRENCY_POSITION = 'CURRENCY_POSITION';

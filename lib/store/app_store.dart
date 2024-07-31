@@ -38,6 +38,9 @@ abstract class _AppStore with Store {
   @observable
   int countryId = UNSELECTED_COUNTRY_ID;
 
+  @observable
+  String countryCode = 'vn';
+
   @computed
   bool get isCountrySelected => countryId != UNSELECTED_COUNTRY_ID;
 
@@ -185,6 +188,14 @@ abstract class _AppStore with Store {
   Future<void> setCountryId(int val, {bool isInitializing = false}) async {
     countryId = val;
     if (!isInitializing) await setValue(SharedPreferenceConst.COUNTRY_ID, val);
+  }
+
+  @action
+  Future<void> setCountryCode(String val, {bool isInitializing = false}) async {
+    countryCode = val;
+    if (!isInitializing) {
+      await setValue(SharedPreferenceConst.COUNTRY_CODE, val);
+    }
   }
 
   @action

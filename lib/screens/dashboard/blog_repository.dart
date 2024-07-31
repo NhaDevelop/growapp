@@ -7,9 +7,10 @@ import 'package:http/http.dart' as http;
 
 Future<List<BlogPostModel>> getBlogPosts(
     {int page = 1, int perPage = 15, List<BlogPostModel>? list}) async {
+  final countryCode = appStore.countryCode;
   final uri = Uri.https(
     BuildConfig.blogPostHost,
-    'grow-tokyo/wp-json/wp/v2/posts',
+    '$countryCode/wp-json/wp/v2/posts',
     {
       '_embed': '1',
       'page': page.toString(),

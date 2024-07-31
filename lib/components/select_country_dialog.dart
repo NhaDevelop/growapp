@@ -38,6 +38,7 @@ class _SelectCountryDialogState extends State<SelectCountryDialog> {
         countries.indexWhere((element) => element.name == _selected!.name);
     if (index < 0) return;
     appStore.setCountryId(countries[index].id.validate());
+    appStore.setCountryCode(_selected!.countryCode.validate());
     appStore.setCurrencyCode(_selected!.currencyCode.validate());
     appStore.setCurrencySymbol(_selected!.currencySymbol.validate());
     finish(context, true);

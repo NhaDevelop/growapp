@@ -41,6 +41,7 @@ class _AppCountryScreenState extends State<AppCountryScreen> {
 
   void onTap(int countryId, AppCountryModel country) {
     appStore.setCountryId(countryId);
+    appStore.setCountryCode(country.countryCode);
     appStore.setCurrencyCode(country.currencyCode);
     appStore.setCurrencySymbol(country.currencySymbol);
     setState(() {});
