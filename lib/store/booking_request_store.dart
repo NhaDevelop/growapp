@@ -66,6 +66,12 @@ abstract class _BookingRequestStore with Store {
   bool? isReschedule;
 
   @observable
+  String? guestName;
+
+  @observable
+  String? guestPhone;
+
+  @observable
   List<ServiceListData> selectedServiceList = ObservableList();
 
   @observable
@@ -117,6 +123,8 @@ abstract class _BookingRequestStore with Store {
     if (couponCode != null) data['coupon_code'] = couponCode;
     data['use_credit'] = useCredit;
     data['branch_id'] = appStore.branchId;
+    if (guestName != null) data['guest_name'] = guestName;
+    if (guestPhone != null) data['guest_phone'] = guestPhone;
 
     if (selectedServiceList.isNotEmpty) {
       data['services'] = selectedServiceList
@@ -218,6 +226,16 @@ abstract class _BookingRequestStore with Store {
   void removeCouponCodeInRequest() {
     couponCode = null;
     couponRewardPercentage = 0;
+  }
+
+  @action
+  void setGuestName(String val) {
+    guestName = val;
+  }
+
+  @action
+  void setGuestPhone(String val) {
+    guestPhone = val;
   }
 
   @action

@@ -70,6 +70,12 @@ class LanguageVi extends BaseLanguage {
   String get signIn => 'Đăng Nhập';
 
   @override
+  String get guestBookingMessage => 'Đăng nhập để đặt lịch và nhận ưu đãi';
+
+  @override
+  String get continueAsGuest => 'Tiếp tục dưới dạng Khách';
+
+  @override
   String get welcomeBack => 'Chào mừng trở lại!';
 
   @override

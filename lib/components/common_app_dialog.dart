@@ -72,7 +72,9 @@ class _CommonAppDialogState extends State<CommonAppDialog> {
                     textAlign: TextAlign.center)
                 .center(),
             24.height,
-            if (widget.isQuickBooking)
+            if (widget.buttonText == null)
+              const SizedBox.shrink()
+            else if (widget.isQuickBooking)
               Row(
                 children: [
                   AppButton(

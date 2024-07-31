@@ -70,6 +70,13 @@ class LanguageEn extends BaseLanguage {
   String get signIn => 'Sign In';
 
   @override
+  String get guestBookingMessage =>
+      'Please sign in to save your booking or continue as a guest.';
+
+  @override
+  String get continueAsGuest => 'Continue as Guest';
+
+  @override
   String get welcomeBack => 'Welcome Back!';
 
   @override

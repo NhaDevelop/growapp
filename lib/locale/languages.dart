@@ -48,6 +48,10 @@ abstract class BaseLanguage {
 
   String get signIn;
 
+  String get guestBookingMessage;
+
+  String get continueAsGuest;
+
   String get welcomeBack;
 
   String get pleaseLogin;

@@ -293,6 +293,38 @@ mixin _$BookingRequestStore on _BookingRequestStore, Store {
     });
   }
 
+  late final _$guestNameAtom =
+      Atom(name: '_BookingRequestStore.guestName', context: context);
+
+  @override
+  String? get guestName {
+    _$guestNameAtom.reportRead();
+    return super.guestName;
+  }
+
+  @override
+  set guestName(String? value) {
+    _$guestNameAtom.reportWrite(value, super.guestName, () {
+      super.guestName = value;
+    });
+  }
+
+  late final _$guestPhoneAtom =
+      Atom(name: '_BookingRequestStore.guestPhone', context: context);
+
+  @override
+  String? get guestPhone {
+    _$guestPhoneAtom.reportRead();
+    return super.guestPhone;
+  }
+
+  @override
+  set guestPhone(String? value) {
+    _$guestPhoneAtom.reportWrite(value, super.guestPhone, () {
+      super.guestPhone = value;
+    });
+  }
+
   late final _$selectedServiceListAtom =
       Atom(name: '_BookingRequestStore.selectedServiceList', context: context);
 
@@ -538,6 +570,28 @@ mixin _$BookingRequestStore on _BookingRequestStore, Store {
   }
 
   @override
+  void setGuestName(String val) {
+    final _$actionInfo = _$_BookingRequestStoreActionController.startAction(
+        name: '_BookingRequestStore.setGuestName');
+    try {
+      return super.setGuestName(val);
+    } finally {
+      _$_BookingRequestStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setGuestPhone(String val) {
+    final _$actionInfo = _$_BookingRequestStoreActionController.startAction(
+        name: '_BookingRequestStore.setGuestPhone');
+    try {
+      return super.setGuestPhone(val);
+    } finally {
+      _$_BookingRequestStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setSelectedServiceListInRequest(
       List<ServiceListData> selectedServiceListRequest,
       {bool isRescheduleInRequest = false}) {
@@ -592,6 +646,8 @@ referralRewardPercentage: ${referralRewardPercentage},
 couponCode: ${couponCode},
 couponRewardPercentage: ${couponRewardPercentage},
 isReschedule: ${isReschedule},
+guestName: ${guestName},
+guestPhone: ${guestPhone},
 selectedServiceList: ${selectedServiceList},
 selectedBookingStatusList: ${selectedBookingStatusList},
 taxPercentage: ${taxPercentage},

@@ -50,6 +50,13 @@ Future saveBookingAPI(Map request) async {
       request: request, method: HttpMethodType.POST));
 }
 
+Future saveBookingGuestAPI(Map request) async {
+  return await handleResponse(
+    await buildHttpResponse(APIEndPoints.saveBookingGuest,
+        request: request, method: HttpMethodType.POST),
+  );
+}
+
 Future bookingUpdate(Map request) async {
   return await handleResponse(await buildHttpResponse(
       APIEndPoints.bookingUpdate,

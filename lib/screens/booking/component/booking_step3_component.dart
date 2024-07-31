@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:grow_tokyo_app/components/app_scaffold.dart';
 import 'package:grow_tokyo_app/components/slot_widget.dart';
 import 'package:grow_tokyo_app/components/view_all_label_component.dart';
 import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/screens/booking/component/booking_type_selected_dialog.dart';
 import 'package:grow_tokyo_app/screens/booking/shimmer/booking_step3_shimmer.dart';
 import 'package:grow_tokyo_app/screens/booking/view/confirm_booking_screen.dart';
 import 'package:grow_tokyo_app/screens/experts/component/employee_calendar_component.dart';
@@ -89,35 +89,50 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
         .setFormattedDate(DateFormatConst.DATE_FORMAT_5)
         .toString());
 
-    doIfLoggedIn(context, () async {
-      try {
-        appStore.setLoading(true);
-        if (bookingRequestStore.isEmployeeSelected) {
-          await verifySlot(
-            bookingRequestStore.employeeId,
-            bookingRequestStore.dateTime,
-          );
-        } else {
-          final employee = await verifyAnyStylistSlot(
-            nationality: bookingRequestStore.employeeGroupId,
-            branchId: appStore.branchId,
-            servicesIds: bookingRequestStore.selectedServiceList
-                .map((e) => e.id)
-                .toList(),
-            startDateTime: bookingRequestStore.dateTime,
-          );
+    try {
+      appStore.setLoading(true);
+      if (bookingRequestStore.isEmployeeSelected) {
+        await verifySlot(
+          bookingRequestStore.employeeId,
+          bookingRequestStore.dateTime,
+        );
+      } else {
+        final employee = await verifyAnyStylistSlot(
+          nationality: bookingRequestStore.employeeGroupId,
+          branchId: appStore.branchId,
+          servicesIds:
+              bookingRequestStore.selectedServiceList.map((e) => e.id).toList(),
+          startDateTime: bookingRequestStore.dateTime,
+        );
 
-          bookingRequestStore.setEmployeeIdInRequest(employee.id!);
-          bookingRequestStore.setEmployeeNameInRequest(employee.fullName!);
-        }
-
-        if (!mounted) return;
-        ConfirmBookingScreen(isReschedule: widget.isReschedule).launch(context);
-      } catch (e) {
-        toast(e.toString());
-      } finally {
-        appStore.setLoading(false);
+        bookingRequestStore.setEmployeeIdInRequest(employee.id!);
+        bookingRequestStore.setEmployeeNameInRequest(employee.fullName!);
       }
+    } catch (e) {
+      toast(e.toString());
+    } finally {
+      appStore.setLoading(false);
+    }
+
+    if (!appStore.isLoggedIn) {
+      if (!mounted) return;
+      final useGuestBooking = await showDialog<bool>(
+        context: context,
+        builder: (_) => const BookingTypeSelectedDialog(),
+      );
+      if (useGuestBooking == null) return;
+
+      if (useGuestBooking) {
+        if (!mounted) return;
+        return ConfirmBookingScreen(
+                isReschedule: widget.isReschedule, isGuestBooking: true)
+            .launch(context);
+      }
+    }
+
+    if (!mounted) return;
+    doIfLoggedIn(context, () {
+      ConfirmBookingScreen(isReschedule: widget.isReschedule).launch(context);
     });
   }
 

@@ -70,6 +70,12 @@ class LanguageKm extends BaseLanguage {
   String get signIn => 'ចូល';
 
   @override
+  String get guestBookingMessage => 'សូមចូលដើម្បីបន្តជាភ្ញៀវ';
+
+  @override
+  String get continueAsGuest => 'បន្តជាភ្ញៀវ';
+
+  @override
   String get welcomeBack => 'សូមស្វាគមន៍ម្តងទៀត!';
 
   @override

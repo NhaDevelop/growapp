@@ -22,16 +22,28 @@ import 'package:grow_tokyo_app/utils/model_keys.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class ConfirmBookingScreen extends StatefulWidget {
-  const ConfirmBookingScreen({super.key, required this.isReschedule});
+  const ConfirmBookingScreen({
+    super.key,
+    required this.isReschedule,
+    this.isGuestBooking = false,
+  });
 
   final bool isReschedule;
+  final bool isGuestBooking;
 
   @override
   State<ConfirmBookingScreen> createState() => _ConfirmBookingScreenState();
 }
 
 class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   Future<void> saveBookingAndPayment() async {
+    if (widget.isGuestBooking) {
+      final isFormValidate = formKey.currentState?.validate() ?? false;
+      if (!isFormValidate) return;
+    }
+
     try {
       appStore.setLoading(true);
       if (bookingRequestStore.bookingId == null) {
@@ -42,7 +54,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
         finish(context);
         finish(context);
       }
-      showBookingCompleteDialog();
+      showBookingCompleteDialog(isGuestBooking: widget.isGuestBooking);
       if (bookingRequestStore.useCredit) {
         getPointsAPI().then((_) => null).catchError(onError);
       }
@@ -80,14 +92,20 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
       }
     });
 
-    final bookingJson = await saveBookingAPI(bookingRequestStore.toJson(
-        dateTime: formatDate(initialDateTime.toString(),
-            format: DateFormatConst.NEW_FORMAT),
-        isRescheduleBooking: widget.isReschedule));
+    final body = bookingRequestStore.toJson(
+      dateTime: formatDate(initialDateTime.toString(),
+          format: DateFormatConst.NEW_FORMAT),
+      isRescheduleBooking: widget.isReschedule,
+    );
+
+    final bookingJson = widget.isGuestBooking
+        ? await saveBookingGuestAPI(body)
+        : await saveBookingAPI(body);
+
     bookingRequestStore.setBookingIdInRequest(bookingJson[CommonKey.bookingId]);
   }
 
-  void showBookingCompleteDialog() {
+  void showBookingCompleteDialog({bool isGuestBooking = false}) {
     showDialog(
       context: context,
       useSafeArea: false,
@@ -95,11 +113,14 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
         title: locale.bookingSuccessful,
         icon: ic_booking_success,
         subTitle: locale.bookingSuccessMessage,
-        buttonText: locale.goToBookings,
-        onTap: () {
-          finish(context);
-          const DashboardScreen(pageIndex: 1).launch(context, isNewTask: true);
-        },
+        buttonText: isGuestBooking ? null : locale.goToBookings,
+        onTap: isGuestBooking
+            ? () => finish(context)
+            : () {
+                finish(context);
+                const DashboardScreen(pageIndex: 1)
+                    .launch(context, isNewTask: true);
+              },
       ),
     );
   }
@@ -126,16 +147,41 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                   Text(locale.yourInformation, style: secondaryTextStyle()),
                   12.height,
                   DefaultCard(
-                    child: Column(
-                      children: [
-                        _RowData(
-                            title: locale.name, value: userStore.userFullName),
-                        8.height,
-                        _RowData(
-                          title: locale.contactNumber,
-                          value: userStore.userContactNumber,
-                        ),
-                      ],
+                    child: Form(
+                      key: formKey,
+                      child: Column(
+                        children: [
+                          widget.isGuestBooking
+                              ? AppTextField(
+                                  initialValue: bookingRequestStore.guestName,
+                                  errorThisFieldRequired:
+                                      locale.thisFieldIsRequired,
+                                  textFieldType: TextFieldType.NAME,
+                                  decoration: inputDecoration(context,
+                                      hint: locale.name),
+                                  onChanged: bookingRequestStore.setGuestName,
+                                )
+                              : _RowData(
+                                  title: locale.name,
+                                  value: userStore.userFullName,
+                                ),
+                          8.height,
+                          widget.isGuestBooking
+                              ? AppTextField(
+                                  initialValue: bookingRequestStore.guestPhone,
+                                  errorThisFieldRequired:
+                                      locale.thisFieldIsRequired,
+                                  textFieldType: TextFieldType.PHONE,
+                                  decoration: inputDecoration(context,
+                                      hint: locale.contactNumber),
+                                  onChanged: bookingRequestStore.setGuestPhone,
+                                )
+                              : _RowData(
+                                  title: locale.contactNumber,
+                                  value: userStore.userContactNumber,
+                                ),
+                        ],
+                      ),
                     ),
                   ),
                   16.height,
@@ -247,36 +293,36 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                     );
                   }),
                   16.height,
-                  DefaultCard(
-                    child: Observer(builder: (context) {
-                      return Row(
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                locale.usingXPoints(
-                                    userStore.pointAmount.formatAmount()),
-                                style: boldTextStyle(),
-                              ),
-                              4.height,
-                              Text(
-                                locale.youWillSave$X(
-                                    userStore.pointToAmount.formatPrice),
-                                style: secondaryTextStyle(),
-                              ),
-                            ],
-                          ).expand(),
-                          Switch.adaptive(
-                            value: bookingRequestStore.useCredit,
-                            onChanged:
-                                bookingRequestStore.setUseCreditInRequest,
-                          ),
-                        ],
-                      );
-                    }),
-                  ),
-                  16.height,
+                  if (!widget.isGuestBooking)
+                    DefaultCard(
+                      child: Observer(builder: (context) {
+                        return Row(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  locale.usingXPoints(
+                                      userStore.pointAmount.formatAmount()),
+                                  style: boldTextStyle(),
+                                ),
+                                4.height,
+                                Text(
+                                  locale.youWillSave$X(
+                                      userStore.pointToAmount.formatPrice),
+                                  style: secondaryTextStyle(),
+                                ),
+                              ],
+                            ).expand(),
+                            Switch.adaptive(
+                              value: bookingRequestStore.useCredit,
+                              onChanged:
+                                  bookingRequestStore.setUseCreditInRequest,
+                            ),
+                          ],
+                        );
+                      }),
+                    ).paddingBottom(16),
                   Text(locale.paymentDetails, style: secondaryTextStyle()),
                   12.height,
                   DefaultCard(

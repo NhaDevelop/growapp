@@ -121,3 +121,4 @@ const ic_fill_like = 'assets/icons/ic_fill_like.png';
 const ic_like = 'assets/icons/ic_like.png';
 const ic_order = 'assets/icons/ic_order.png';
 const ic_booking_status = 'assets/icons/ic_booking_status.png';
+const ic_login_01 = 'assets/icons/ic_login_01.png';

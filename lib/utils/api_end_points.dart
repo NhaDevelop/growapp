@@ -17,6 +17,7 @@ class APIEndPoints {
   static const String social = 'social';
   static const String creditTransactions = 'credit-transactions';
   static const String saveBooking = 'save-booking';
+  static const String saveBookingGuest = 'save-booking-guest';
   static const String savePayment = 'save-payment';
   static const String verifySlot = 'verify-slot';
   static const String verifyAnyStylist = 'verify-any-stylist';
