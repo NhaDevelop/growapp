@@ -653,6 +653,8 @@ abstract class BaseLanguage {
 
   String get country;
 
+  String get nationality;
+
   String get selectCountry;
 
   String get selectState;

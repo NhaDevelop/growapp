@@ -24,6 +24,7 @@ class UserKeys {
   static String firstName = 'first_name';
   static String lastName = 'last_name';
   static String dob = 'date_of_birth';
+  static String nationality = 'nationality';
   static String email = 'email';
   static String password = 'password';
   static String mobile = 'mobile';

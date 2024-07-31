@@ -9,6 +9,7 @@ class UserData {
   String? firstName;
   String? lastName;
   String? dob;
+  String? nationality;
   String? username;
   int? status;
   String? email;
@@ -32,6 +33,7 @@ class UserData {
     this.apiToken,
     this.mobile,
     this.gender,
+    this.nationality,
     this.email,
     this.firstName,
     this.id,
@@ -62,10 +64,13 @@ class UserData {
       firstName: json['first_name'],
       id: json['id'],
       lastName: json['last_name'],
-      dob: formatDate(
-        json['date_of_birth'],
-        format: DateFormatConst.BOOK_DATE_FORMAT,
-      ),
+      dob: json['date_of_birth'] == null
+          ? null
+          : formatDate(
+              json['date_of_birth'],
+              format: DateFormatConst.BOOK_DATE_FORMAT,
+            ),
+      nationality: json['nationality'],
       playerId: json['player_id'],
       status: json['status'],
       displayName: json['display_name'],

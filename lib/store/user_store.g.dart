@@ -124,6 +124,22 @@ mixin _$UserStore on _UserStore, Store {
     });
   }
 
+  late final _$nationalityAtom =
+      Atom(name: '_UserStore.nationality', context: context);
+
+  @override
+  String get nationality {
+    _$nationalityAtom.reportRead();
+    return super.nationality;
+  }
+
+  @override
+  set nationality(String value) {
+    _$nationalityAtom.reportWrite(value, super.nationality, () {
+      super.nationality = value;
+    });
+  }
+
   late final _$userEmailAtom =
       Atom(name: '_UserStore.userEmail', context: context);
 
@@ -389,6 +405,15 @@ mixin _$UserStore on _UserStore, Store {
         .run(() => super.setDob(val, isInitializing: isInitializing));
   }
 
+  late final _$setNationalityAsyncAction =
+      AsyncAction('_UserStore.setNationality', context: context);
+
+  @override
+  Future<void> setNationality(String val, {bool isInitializing = false}) {
+    return _$setNationalityAsyncAction
+        .run(() => super.setNationality(val, isInitializing: isInitializing));
+  }
+
   late final _$setContactNumberAsyncAction =
       AsyncAction('_UserStore.setContactNumber', context: context);
 
@@ -461,6 +486,7 @@ loginType: ${loginType},
 userFirstName: ${userFirstName},
 userLastName: ${userLastName},
 dob: ${dob},
+nationality: ${nationality},
 userEmail: ${userEmail},
 userProfileImage: ${userProfileImage},
 userContactNumber: ${userContactNumber},

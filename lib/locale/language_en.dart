@@ -1012,6 +1012,9 @@ class LanguageEn extends BaseLanguage {
   String get country => 'Country';
 
   @override
+  String get nationality => 'Nationalily';
+
+  @override
   String get selectCountry => 'Select Country';
 
   @override

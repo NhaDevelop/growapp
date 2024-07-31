@@ -177,6 +177,7 @@ class SharedPreferenceConst {
   static const FIRST_NAME = 'FIRST_NAME';
   static const LAST_NAME = 'LAST_NAME';
   static const DOB = 'DOB';
+  static const NATIONALITY = 'NATIONALITY';
   static const USER_EMAIL = 'USER_EMAIL';
   static const TOKEN = 'TOKEN';
   static const AVTAR = 'AVTAR';

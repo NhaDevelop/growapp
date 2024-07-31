@@ -65,6 +65,7 @@ Future<void> saveUserData(UserData data) async {
   await userStore.setFirstName(data.firstName.validate());
   await userStore.setLastName(data.lastName.validate());
   await userStore.setDob(data.dob.validate());
+  await userStore.setNationality(data.nationality.validate());
   await userStore.setUserEmail(data.email.validate());
   await userStore.setUserName(data.username.validate());
   await userStore.setContactNumber(data.mobile.validate());
@@ -137,6 +138,7 @@ Future<dynamic> updateProfile(
     String mobile = '',
     String gender = '',
     String dob = '',
+    String nationality = '',
     Function(dynamic)? onSuccess}) async {
   if (appStore.isLoggedIn) {
     MultipartRequest multiPartRequest =
@@ -151,6 +153,9 @@ Future<dynamic> updateProfile(
     if (dob.isNotEmpty) multiPartRequest.fields[UserKeys.dob] = dob;
     if (mobile.isNotEmpty) multiPartRequest.fields[UserKeys.mobile] = mobile;
     if (gender.isNotEmpty) multiPartRequest.fields[UserKeys.gender] = gender;
+    if (nationality.isNotEmpty) {
+      multiPartRequest.fields[UserKeys.nationality] = nationality;
+    }
     if (appStore.playerId.isNotEmpty) {
       multiPartRequest.fields[UserKeys.playerId] = appStore.playerId;
     }

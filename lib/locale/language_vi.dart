@@ -1014,6 +1014,9 @@ class LanguageVi extends BaseLanguage {
   String get country => 'Quốc gia';
 
   @override
+  String get nationality => 'Quốc tịch';
+
+  @override
   String get selectCountry => 'Chọn Quốc gia';
 
   @override

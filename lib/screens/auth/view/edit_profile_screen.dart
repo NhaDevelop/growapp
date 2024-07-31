@@ -10,7 +10,6 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../../components/cached_image_widget.dart';
 import '../../../components/default_user_image_placeholder.dart';
 import '../../../components/loader_widget.dart';
-import '../../../configs.dart';
 import '../../../main.dart';
 import '../../../utils/app_common.dart';
 import '../../../utils/colors.dart';
@@ -40,14 +39,16 @@ class EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController mobileCont = TextEditingController();
   TextEditingController genderCont = TextEditingController();
   TextEditingController dobCont = TextEditingController();
+  TextEditingController nationalityCont = TextEditingController();
 
   FocusNode fNameFocus = FocusNode();
   FocusNode lNameFocus = FocusNode();
   FocusNode emailFocus = FocusNode();
   FocusNode mobileFocus = FocusNode();
   FocusNode dobFocus = FocusNode();
+  FocusNode nationalityFocus = FocusNode();
 
-  Country selectedCountry = defaultCountry();
+  Country? selectedCountry;
 
   @override
   void initState() {
@@ -66,14 +67,8 @@ class EditProfileScreenState extends State<EditProfileScreen> {
     mobileCont.text = userStore.userContactNumber.validate();
     genderCont.text = userStore.gender.validate();
     dobCont.text = userStore.dob.validate();
+    nationalityCont.text = userStore.nationality.validate();
     genderKey = UniqueKey();
-
-    /*String countryCode = userStore.userContactNumber.validate().splitBefore('-').replaceAll('+', '');
-    try {
-      selectedCountry = CountryParser.parsePhoneCode(countryCode);
-    } on Exception catch (e) {
-      log(e);
-    }*/
 
     if (!widget.canPop) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -94,6 +89,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
       dob: dob == null
           ? ''
           : formatDate(dob.toString(), format: DateFormatConst.BE_DATE_FORMAT),
+      nationality: selectedCountry?.countryCode.validate() ?? '',
       imageFile: imageFile,
       onSuccess: (data) {
         appStore.setLoading(false);
@@ -176,10 +172,9 @@ class EditProfileScreenState extends State<EditProfileScreen> {
       context: context,
       countryListTheme: CountryListThemeData(
           textStyle: secondaryTextStyle(color: textSecondaryColorGlobal)),
-      showPhoneCode:
-          true, // optional. Shows phone code before the country name.
       onSelect: (Country country) {
         selectedCountry = country;
+        nationalityCont.text = country.name;
         setState(() {});
       },
     );
@@ -295,7 +290,8 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                         ),
                         16.height,
                         AppTextField(
-                          textFieldType: TextFieldType.OTHER,
+                          textFieldType: TextFieldType.NUMBER,
+                          errorThisFieldRequired: locale.thisFieldIsRequired,
                           controller: dobCont,
                           focus: dobFocus,
                           nextFocus: emailFocus,
@@ -345,9 +341,20 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                           textFieldType: TextFieldType.PHONE,
                           controller: mobileCont,
                           focus: mobileFocus,
+                          nextFocus: nationalityFocus,
                           errorThisFieldRequired: locale.thisFieldIsRequired,
                           decoration: inputDecoration(context,
                               label: locale.contactNumber),
+                        ),
+                        16.height,
+                        AppTextField(
+                          textFieldType: TextFieldType.NAME,
+                          controller: nationalityCont,
+                          focus: nationalityFocus,
+                          errorThisFieldRequired: locale.thisFieldIsRequired,
+                          decoration: inputDecoration(context,
+                              label: locale.nationality),
+                          onTap: changeCountry,
                         ),
                         16.height,
                         AppButton(

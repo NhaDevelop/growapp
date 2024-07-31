@@ -32,6 +32,9 @@ abstract class _UserStore with Store {
   String dob = '';
 
   @observable
+  String nationality = '';
+
+  @observable
   String userEmail = '';
 
   @observable
@@ -134,6 +137,12 @@ abstract class _UserStore with Store {
   Future<void> setDob(String val, {bool isInitializing = false}) async {
     dob = val;
     if (!isInitializing) await setValue(SharedPreferenceConst.DOB, val);
+  }
+
+  @action
+  Future<void> setNationality(String val, {bool isInitializing = false}) async {
+    nationality = val;
+    if (!isInitializing) await setValue(SharedPreferenceConst.NATIONALITY, val);
   }
 
   @action

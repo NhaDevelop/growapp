@@ -96,8 +96,11 @@ class _SignInScreenState extends State<SignInScreen> {
     }
   }
 
-  void _editProfileIfPhoneNumberEmpty({required VoidCallback callback}) async {
-    if (userStore.userContactNumber.isEmpty) {
+  void _editProfileIfMissingCriticalInfo(
+      {required VoidCallback callback}) async {
+    if (userStore.userContactNumber.isEmpty ||
+        userStore.dob.isEmpty ||
+        userStore.gender.isEmpty) {
       await const EditProfileScreen(canPop: false)
           .launch(context, pageRouteAnimation: PageRouteAnimation.Fade);
     }
@@ -105,7 +108,7 @@ class _SignInScreenState extends State<SignInScreen> {
     callback();
   }
 
-  void onLoginSuccessRedirection({bool isSocialLogin = false}) {
+  void onLoginSuccessRedirection() {
     TextInput.finishAutofillContext();
     if (widget.isFromServiceBooking.validate() ||
         widget.isFromDashboard.validate() ||
@@ -114,11 +117,11 @@ class _SignInScreenState extends State<SignInScreen> {
         setStatusBarColor(context.primaryColor);
       }
 
-      _editProfileIfPhoneNumberEmpty(
+      _editProfileIfMissingCriticalInfo(
         callback: () => finish(context, true),
       );
     } else {
-      _editProfileIfPhoneNumberEmpty(
+      _editProfileIfMissingCriticalInfo(
         callback: () => const DashboardScreen().launch(context,
             isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade),
       );
@@ -132,7 +135,7 @@ class _SignInScreenState extends State<SignInScreen> {
     await authService.appleSignIn().then((value) async {
       appStore.setLoading(false);
 
-      onLoginSuccessRedirection(isSocialLogin: true);
+      onLoginSuccessRedirection();
     }).catchError((e) {
       appStore.setLoading(false);
       toast(e.toString());
@@ -148,7 +151,7 @@ class _SignInScreenState extends State<SignInScreen> {
           setValue(SharedPreferenceConst.USER_EMAIL, emailCont.text);
           setValue(SharedPreferenceConst.USER_PASSWORD, passwordCont.text);
         }
-        onLoginSuccessRedirection(isSocialLogin: true);
+        onLoginSuccessRedirection();
       }).catchError((e) {
         appStore.setLoading(false);
         toast(e.toString(), print: true);
@@ -169,7 +172,7 @@ class _SignInScreenState extends State<SignInScreen> {
           setValue(SharedPreferenceConst.USER_EMAIL, emailCont.text);
           setValue(SharedPreferenceConst.USER_PASSWORD, passwordCont.text);
         }
-        onLoginSuccessRedirection(isSocialLogin: true);
+        onLoginSuccessRedirection();
       }).catchError((e) {
         appStore.setLoading(false);
         toast(e.toString(), print: true);

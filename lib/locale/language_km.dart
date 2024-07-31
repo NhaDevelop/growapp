@@ -1012,6 +1012,9 @@ class LanguageKm extends BaseLanguage {
   String get country => 'ប្រទេស';
 
   @override
+  String get nationality => 'សញ្ជរភាព';
+
+  @override
   String get selectCountry => 'ជ្រើសរើសប្រទេស';
 
   @override

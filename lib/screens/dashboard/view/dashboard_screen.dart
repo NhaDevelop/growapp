@@ -110,7 +110,7 @@ class _DashboardScreenState extends State<DashboardScreen>
               backgroundColor: context.primaryColor.withOpacity(0.02),
               indicatorColor: context.primaryColor.withOpacity(0.1),
               labelTextStyle:
-                  MaterialStateProperty.all(primaryTextStyle(size: 12)),
+                  WidgetStateProperty.all(primaryTextStyle(size: 12)),
               surfaceTintColor: Colors.transparent,
               shadowColor: Colors.transparent,
             ),

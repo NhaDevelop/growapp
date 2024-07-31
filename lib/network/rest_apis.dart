@@ -12,6 +12,7 @@ Future<void> clearPreferences() async {
   await userStore.setFirstName('');
   await userStore.setLastName('');
   await userStore.setDob('');
+  await userStore.setNationality('');
   await userStore.setUserId(0);
   await userStore.setUserName('');
   await userStore.setContactNumber('');
