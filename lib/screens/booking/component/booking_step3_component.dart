@@ -108,32 +108,32 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
         bookingRequestStore.setEmployeeIdInRequest(employee.id!);
         bookingRequestStore.setEmployeeNameInRequest(employee.fullName!);
       }
+
+      if (!appStore.isLoggedIn) {
+        if (!mounted) return;
+        final useGuestBooking = await showDialog<bool>(
+          context: context,
+          builder: (_) => const BookingTypeSelectedDialog(),
+        );
+        if (useGuestBooking == null) return;
+
+        if (useGuestBooking) {
+          if (!mounted) return;
+          return ConfirmBookingScreen(
+                  isReschedule: widget.isReschedule, isGuestBooking: true)
+              .launch(context);
+        }
+      }
+
+      if (!mounted) return;
+      doIfLoggedIn(context, () {
+        ConfirmBookingScreen(isReschedule: widget.isReschedule).launch(context);
+      });
     } catch (e) {
       toast(e.toString());
     } finally {
       appStore.setLoading(false);
     }
-
-    if (!appStore.isLoggedIn) {
-      if (!mounted) return;
-      final useGuestBooking = await showDialog<bool>(
-        context: context,
-        builder: (_) => const BookingTypeSelectedDialog(),
-      );
-      if (useGuestBooking == null) return;
-
-      if (useGuestBooking) {
-        if (!mounted) return;
-        return ConfirmBookingScreen(
-                isReschedule: widget.isReschedule, isGuestBooking: true)
-            .launch(context);
-      }
-    }
-
-    if (!mounted) return;
-    doIfLoggedIn(context, () {
-      ConfirmBookingScreen(isReschedule: widget.isReschedule).launch(context);
-    });
   }
 
   @override
