@@ -55,7 +55,7 @@ class EmployeeWorkingDayModel {
     return EmployeeWorkingDayModel(
       branchId: json['branch_id'],
       branchName: json['branch_name'],
-      date: DateTime.parse(json['date']),
+      date: DateTime.parse(json['date']).toLocal(),
       startTimeRaw: json['start_time'],
       endTimeRaw: json['end_time'],
     );

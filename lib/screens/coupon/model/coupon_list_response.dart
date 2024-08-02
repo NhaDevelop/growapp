@@ -31,7 +31,7 @@ class CouponData {
       name: json['name'],
       code: json['code'],
       description: json['description'],
-      validUntil: DateTime.parse(json['valid_until']),
+      validUntil: DateTime.parse(json['valid_until']).toLocal(),
       discountPercentage: (json['discount_percentage'] as num).toDouble(),
     );
   }

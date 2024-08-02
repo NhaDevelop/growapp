@@ -59,7 +59,7 @@ class OrderListData {
 
   // local
   DateTime get orderingDateTime =>
-      DateTime.parse(orderDate.validate()).toLocal();
+      DateTime.parse(orderDate.validate()).toLocal().toLocal();
   DateTime? get deliveringDateTime =>
       DateTime.tryParse(expectedDeliveryDate.validate())?.toLocal();
 
