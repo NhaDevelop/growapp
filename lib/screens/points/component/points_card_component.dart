@@ -14,47 +14,51 @@ class PointsCardComponent extends StatelessWidget {
     return Container(
       decoration: boxDecorationWithRoundedCorners(
         borderRadius: BorderRadius.circular(16),
-        decorationImage: const DecorationImage(
-          image: AssetImage(points_banner_bg),
-          fit: BoxFit.cover,
-        ),
       ),
-      padding: const EdgeInsets.all(20),
       margin: const EdgeInsets.all(16),
-      child: Column(
+      child: Stack(
         children: [
-          Row(
-            children: [
-              Text(
-                locale.membershipPoints.toUpperCase(),
-                style: primaryTextStyle(
-                    size: 14, color: white, weight: FontWeight.w500),
-              ).expand(),
-              Image.asset(logo_long, height: 24),
-            ],
+          Positioned.fill(
+            child: Image.asset(points_banner_bg, fit: BoxFit.cover)
+                .cornerRadiusWithClipRRect(16),
           ),
-          16.height,
-          Row(
+          Column(
             children: [
-              Image.asset(ic_crown, height: 24, color: white),
-              8.width,
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Row(
                 children: [
                   Text(
-                    (points?.amount ?? 0).formatAmount(),
-                    style: boldTextStyle(size: 24, color: white),
-                  ),
-                  4.height,
-                  Text(
-                    locale.equivalentToX(userStore.pointToAmount.formatPrice),
-                    style: boldTextStyle(size: 12, color: white),
-                  ),
+                    locale.membershipPoints.toUpperCase(),
+                    style: primaryTextStyle(
+                        size: 14, color: white, weight: FontWeight.w500),
+                  ).expand(),
+                  Image.asset(logo_long, height: 24),
                 ],
-              ).expand(),
+              ),
+              16.height,
+              Row(
+                children: [
+                  Image.asset(ic_crown, height: 24, color: white),
+                  8.width,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        (points?.amount ?? 0).formatAmount(),
+                        style: boldTextStyle(size: 24, color: white),
+                      ),
+                      4.height,
+                      Text(
+                        locale
+                            .equivalentToX(userStore.pointToAmount.formatPrice),
+                        style: boldTextStyle(size: 12, color: white),
+                      ),
+                    ],
+                  ).expand(),
+                ],
+              ),
+              16.height,
             ],
-          ),
-          16.height,
+          ).paddingAll(20),
         ],
       ),
     );

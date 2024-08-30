@@ -13,7 +13,8 @@ class Assets {
   static const String iconsIcAdd = 'assets/icons/ic_add.png';
   static const String iconsIcAppLanguage = 'assets/icons/ic_app_language.png';
   static const String iconsIcArrowRight = 'assets/icons/ic_arrow_right.png';
-  static const String iconsIcBookingStatus = 'assets/icons/ic_booking_status.png';
+  static const String iconsIcBookingStatus =
+      'assets/icons/ic_booking_status.png';
   static const String iconsIcBusiness = 'assets/icons/ic_business.png';
   static const String iconsIcCall = 'assets/icons/ic_call.png';
   static const String iconsIcClock = 'assets/icons/ic_clock.png';
@@ -21,7 +22,8 @@ class Assets {
   static const String iconsIcConfirmCheck = 'assets/icons/ic_confirm_check.png';
   static const String iconsIcDarkMode = 'assets/icons/ic_dark_mode.png';
   static const String iconsIcDelete = 'assets/icons/ic_delete.png';
-  static const String iconsIcDeleteAccount = 'assets/icons/ic_delete_account.png';
+  static const String iconsIcDeleteAccount =
+      'assets/icons/ic_delete_account.png';
   static const String iconsIcDirection = 'assets/icons/ic_direction.png';
   static const String iconsIcDislike = 'assets/icons/ic_dislike.png';
   static const String iconsIcDribble = 'assets/icons/ic_dribble.png';
@@ -44,27 +46,37 @@ class Assets {
   static const String iconsIcMinus = 'assets/icons/ic_minus.png';
   static const String iconsIcNavigate = 'assets/icons/ic_navigate.png';
   static const String iconsIcNoPhoto = 'assets/icons/ic_no_photo.png';
-  static const String iconsIcNotificationUser = 'assets/icons/ic_notification_user.png';
+  static const String iconsIcNotificationUser =
+      'assets/icons/ic_notification_user.png';
   static const String iconsIcOffer = 'assets/icons/ic_offer.png';
   static const String iconsIcOrder = 'assets/icons/ic_order.png';
   static const String iconsIcPayment = 'assets/icons/ic_payment.png';
-  static const String iconsIcPrivacyPolicy = 'assets/icons/ic_privacy_policy.png';
+  static const String iconsIcPrivacyPolicy =
+      'assets/icons/ic_privacy_policy.png';
   static const String iconsIcSelectedBell = 'assets/icons/ic_selected_bell.png';
-  static const String iconsIcSelectedBooking = 'assets/icons/ic_selected_booking.png';
+  static const String iconsIcSelectedBooking =
+      'assets/icons/ic_selected_booking.png';
   static const String iconsIcSelectedHome = 'assets/icons/ic_selected_home.png';
-  static const String iconsIcSelectedProfile = 'assets/icons/ic_selected_profile.png';
+  static const String iconsIcSelectedProfile =
+      'assets/icons/ic_selected_profile.png';
   static const String iconsIcSelectedShop = 'assets/icons/ic_selected_shop.png';
   static const String iconsIcSetting = 'assets/icons/ic_setting.png';
   static const String iconsIcShare = 'assets/icons/ic_share.png';
   static const String iconsIcShow = 'assets/icons/ic_show.png';
   static const String iconsIcStar = 'assets/icons/ic_star.png';
-  static const String iconsIcTermsConditions = 'assets/icons/ic_terms_conditions.png';
+  static const String iconsIcTermsConditions =
+      'assets/icons/ic_terms_conditions.png';
   static const String iconsIcTwitter = 'assets/icons/ic_twitter.png';
-  static const String iconsIcUnselectedBell = 'assets/icons/ic_unselected_bell.png';
-  static const String iconsIcUnselectedBooking = 'assets/icons/ic_unselected_booking.png';
-  static const String iconsIcUnselectedHome = 'assets/icons/ic_unselected_home.png';
-  static const String iconsIcUnselectedProfile = 'assets/icons/ic_unselected_profile.png';
-  static const String iconsIcUnselectedShop = 'assets/icons/ic_unselected_shop.png';
+  static const String iconsIcUnselectedBell =
+      'assets/icons/ic_unselected_bell.png';
+  static const String iconsIcUnselectedBooking =
+      'assets/icons/ic_unselected_booking.png';
+  static const String iconsIcUnselectedHome =
+      'assets/icons/ic_unselected_home.png';
+  static const String iconsIcUnselectedProfile =
+      'assets/icons/ic_unselected_profile.png';
+  static const String iconsIcUnselectedShop =
+      'assets/icons/ic_unselected_shop.png';
   static const String iconsIcVerified = 'assets/icons/ic_verified.png';
   static const String imagesBgPattern = 'assets/images/bg_pattern.png';
   static const String imagesBrand1 = 'assets/images/brand_1.png';
@@ -75,7 +87,8 @@ class Assets {
   static const String imagesBrand6 = 'assets/images/brand_6.png';
   static const String imagesBrand7 = 'assets/images/brand_7.png';
   static const String imagesBrand8 = 'assets/images/brand_8.png';
-  static const String imagesFlutterWaveLogo = 'assets/images/flutter_wave_logo.png';
+  static const String imagesFlutterWaveLogo =
+      'assets/images/flutter_wave_logo.png';
   static const String imagesForceUpdate = 'assets/images/force_update.png';
   static const String imagesImgSlider = 'assets/images/img_slider.png';
   static const String imagesImgSlider2 = 'assets/images/img_slider2.png';
@@ -96,9 +109,7 @@ class Assets {
   static const String imagesWalkImg1 = 'assets/images/walk_img_1.png';
   static const String imagesWalkImg2 = 'assets/images/walk_img_2.png';
   static const String imagesWalkImg3 = 'assets/images/walk_img_3.png';
-  static const String lottieAppLoader = 'assets/lottie/app_loader.json';
-  static const String lottieEmptyLottie = 'assets/lottie/empty_lottie.json';
-  static const String lottieErrorLottie = 'assets/lottie/error_lottie.json';
-  static const String lottieVolume = 'assets/lottie/volume.json';
-
+  static const String emptyGif = 'assets/gifs/empty_lottie.gif';
+  static const String errorGif = 'assets/gifs/error_lottie.gif';
+  static const String volumnGif = 'assets/gifs/volume.gif';
 }

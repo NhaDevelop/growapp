@@ -47,6 +47,7 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
   Future<BranchConfigurationData?>? future;
 
   DateTime? selectedDate;
+  bool employeeScheduleLoaded = false;
   List<EmployeeWorkingDayModel> employeeSchedule = [];
 
   List<String> monthList =
@@ -174,6 +175,7 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
                         setState(() {});
                       },
                       onEmployeeScheduleLoaded: (data) {
+                        employeeScheduleLoaded = true;
                         employeeSchedule = data;
                         setState(() {});
                       },
@@ -181,11 +183,12 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
                   ),
                   8.height,
                   ViewAllLabel(label: locale.availableSlots, isShowAll: false),
-                  employeeSchedule.isEmpty
+                  !employeeScheduleLoaded
                       ? const BookingStep3Shimmer()
                       : selectedDate == null
                           ? NoDataWidget(title: locale.pleaseSelectDateFirst)
-                          : employeeScheduleOnSelectedDate == null
+                          : employeeSchedule.isEmpty ||
+                                  employeeScheduleOnSelectedDate == null
                               ? NoDataWidget(title: locale.noTimeSlots)
                               : SnapHelperWidget(
                                   future: future,

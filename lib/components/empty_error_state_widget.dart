@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
+import 'package:grow_tokyo_app/generated/assets.dart';
 
 class EmptyStateWidget extends StatelessWidget {
   final double? height;
@@ -9,7 +9,11 @@ class EmptyStateWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Lottie.asset('assets/lottie/empty_lottie.json', height: 150, repeat: true);
+    return Image.asset(
+      Assets.emptyGif,
+      height: 150,
+      repeat: ImageRepeat.repeat,
+    );
   }
 }
 
@@ -21,6 +25,10 @@ class ErrorStateWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Lottie.asset('assets/lottie/error_lottie.json', height: 110, repeat: true);
+    return Image.asset(
+      Assets.errorGif,
+      height: 110,
+      repeat: ImageRepeat.repeat,
+    );
   }
 }

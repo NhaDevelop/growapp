@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
+import 'package:grow_tokyo_app/generated/assets.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class VoiceSearchComponent extends StatefulWidget {
@@ -37,7 +37,8 @@ class VoiceSearchComponentState extends State<VoiceSearchComponent> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Lottie.asset('assets/lottie/volume.json', fit: BoxFit.cover, height: 60, width: 120),
+          Image.asset(Assets.volumnGif,
+              fit: BoxFit.cover, height: 60, width: 120),
         ],
       ),
     );
