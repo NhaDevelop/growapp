@@ -185,11 +185,12 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
                   ViewAllLabel(label: locale.availableSlots, isShowAll: false),
                   !employeeScheduleLoaded
                       ? const BookingStep3Shimmer()
-                      : selectedDate == null
-                          ? NoDataWidget(title: locale.pleaseSelectDateFirst)
-                          : employeeSchedule.isEmpty ||
-                                  employeeScheduleOnSelectedDate == null
-                              ? NoDataWidget(title: locale.noTimeSlots)
+                      : employeeSchedule.isEmpty ||
+                              employeeScheduleOnSelectedDate == null
+                          ? NoDataWidget(title: locale.noTimeSlots)
+                          : selectedDate == null
+                              ? NoDataWidget(
+                                  title: locale.pleaseSelectDateFirst)
                               : SnapHelperWidget(
                                   future: future,
                                   initialData: branchConfigurationCached,

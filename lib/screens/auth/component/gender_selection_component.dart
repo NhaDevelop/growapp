@@ -59,58 +59,60 @@ class _GenderSelectionComponentState extends State<GenderSelectionComponent> {
         children: [
           Text(locale.gender, style: secondaryTextStyle()),
           Row(
-            mainAxisAlignment: MainAxisAlignment.start,
             children: List.generate(
               genderList.length,
               (index) {
                 bool isSelected = selectedGender == index;
-                return Container(
-                  width: context.width() / 3 - 32,
-                  padding: EdgeInsets.fromLTRB(index == 2 ? 8 : 0, 16, 8, 16),
-                  decoration: boxDecorationDefault(
-                      borderRadius: radius(defaultRadius),
-                      color: context.cardColor),
-                  child: Row(
-                    children: [
-                      Container(
-                        padding: isSelected
-                            ? const EdgeInsets.all(2)
-                            : const EdgeInsets.all(1),
-                        decoration: boxDecorationDefault(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                              color: isSelected
-                                  ? primaryColor
-                                  : appTextSecondaryColor.withOpacity(0.5)),
-                          color: Colors.transparent,
-                        ),
-                        child: Container(
-                          height: isSelected ? 12 : 12,
-                          width: isSelected ? 12 : 12,
+                return Expanded(
+                  child: Container(
+                    width: context.width() / 3 - 32,
+                    padding: EdgeInsets.fromLTRB(index == 2 ? 8 : 0, 16, 8, 16),
+                    decoration: boxDecorationDefault(
+                        borderRadius: radius(defaultRadius),
+                        color: context.cardColor),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          padding: isSelected
+                              ? const EdgeInsets.all(2)
+                              : const EdgeInsets.all(1),
                           decoration: boxDecorationDefault(
-                              shape: BoxShape.circle,
-                              color: isSelected ? primaryColor : white),
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                                color: isSelected
+                                    ? primaryColor
+                                    : appTextSecondaryColor.withOpacity(0.5)),
+                            color: Colors.transparent,
+                          ),
+                          child: Container(
+                            height: isSelected ? 12 : 12,
+                            width: isSelected ? 12 : 12,
+                            decoration: boxDecorationDefault(
+                                shape: BoxShape.circle,
+                                color: isSelected ? primaryColor : white),
+                          ),
                         ),
-                      ),
-                      8.width,
-                      Marquee(
-                              child: Text(genderList[index].name.validate(),
-                                  style: primaryTextStyle(size: 14),
-                                  textAlign: TextAlign.center))
-                          .flexible(),
-                    ],
-                  ).center(),
-                ).onTap(() {
-                  if (isSelected) {
-                    selectedGender = -1;
-                  } else {
-                    widget.onTap.call(genderList[index].value.validate());
-                    selectedGender = index;
-                  }
-                  setState(() {});
-                },
-                    borderRadius:
-                        BorderRadius.circular(defaultRadius)).paddingRight(16);
+                        8.width,
+                        Marquee(
+                                child: Text(genderList[index].name.validate(),
+                                    style: primaryTextStyle(size: 14),
+                                    textAlign: TextAlign.center))
+                            .flexible(),
+                      ],
+                    ).center(),
+                  ).onTap(() {
+                    if (isSelected) {
+                      selectedGender = -1;
+                    } else {
+                      widget.onTap.call(genderList[index].value.validate());
+                      selectedGender = index;
+                    }
+                    setState(() {});
+                  },
+                      borderRadius: BorderRadius.circular(
+                          defaultRadius)).paddingRight(16),
+                );
               },
             ),
           ),
