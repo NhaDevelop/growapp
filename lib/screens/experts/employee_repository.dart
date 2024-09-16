@@ -76,12 +76,8 @@ Future<List<EmployeeWorkingDayModel>> getEmployeeMonthSchedule(
     required int branchId,
     Function(List<EmployeeWorkingDayModel>)? callback}) async {
   try {
-    String url = APIEndPoints.employeeSchedule;
-    if (bookingRequestStore.isEmployeeSelected) {
-      url = '$url?employee_id=$employeeId';
-    } else {
-      url = '$url?branch_id=$branchId';
-    }
+    String url =
+        '${APIEndPoints.employeeSchedule}?branch_id=$branchId&employee_id=$employeeId';
     var res = EmployeeMonthScheduleResponse.fromJson(await handleResponse(
         await buildHttpResponse(url, method: HttpMethodType.GET)));
 
