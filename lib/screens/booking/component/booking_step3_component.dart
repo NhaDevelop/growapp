@@ -92,12 +92,7 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
 
     try {
       appStore.setLoading(true);
-      if (bookingRequestStore.isEmployeeSelected) {
-        await verifySlot(
-          bookingRequestStore.employeeId,
-          bookingRequestStore.dateTime,
-        );
-      } else {
+      if (bookingRequestStore.isEmployeeGroupSelected) {
         final employee = await verifyAnyStylistSlot(
           nationality: bookingRequestStore.employeeGroupId,
           branchId: appStore.branchId,
@@ -108,6 +103,11 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
 
         bookingRequestStore.setEmployeeIdInRequest(employee.id!);
         bookingRequestStore.setEmployeeNameInRequest(employee.fullName!);
+      } else {
+        await verifySlot(
+          bookingRequestStore.employeeId,
+          bookingRequestStore.dateTime,
+        );
       }
 
       if (!appStore.isLoggedIn) {

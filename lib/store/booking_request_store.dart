@@ -155,25 +155,21 @@ abstract class _BookingRequestStore with Store {
   @action
   void setEmployeeIdInRequest(int val) {
     employeeId = val;
-    employeeGroupId = UNSELECTED_EMPLOYEE_GROUP_ID;
   }
 
   @action
   void setEmployeeNameInRequest(String val) {
     employeeName = val;
-    employeeGroupName = null;
   }
 
   @action
   void setEmployeeGroupIdInRequest(String val) {
     employeeGroupId = val;
-    employeeId = UNSELECTED_EMPLOYEE_ID;
   }
 
   @action
   void setEmployeeGroupNameInRequest(String val) {
     employeeGroupName = val;
-    employeeName = null;
   }
 
   @action
