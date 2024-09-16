@@ -9,7 +9,6 @@ import 'package:grow_tokyo_app/screens/booking/shimmer/booking_step3_shimmer.dar
 import 'package:grow_tokyo_app/screens/booking/view/confirm_booking_screen.dart';
 import 'package:grow_tokyo_app/screens/experts/component/employee_calendar_component.dart';
 import 'package:grow_tokyo_app/screens/experts/model/employee_month_schedule_response.dart';
-import 'package:grow_tokyo_app/utils/common_base.dart';
 import 'package:grow_tokyo_app/utils/constants.dart';
 import 'package:grow_tokyo_app/utils/extensions/date_extensions.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -110,30 +109,38 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
         );
       }
 
-      if (!appStore.isLoggedIn) {
-        if (!mounted) return;
-        final useGuestBooking = await showDialog<bool>(
-          context: context,
-          builder: (_) => const BookingTypeSelectedDialog(),
-        );
-        if (useGuestBooking == null) return;
-
-        if (useGuestBooking) {
-          if (!mounted) return;
-          return ConfirmBookingScreen(
-                  isReschedule: widget.isReschedule, isGuestBooking: true)
-              .launch(context);
-        }
-      }
-
-      if (!mounted) return;
-      doIfLoggedIn(context, () {
-        ConfirmBookingScreen(isReschedule: widget.isReschedule).launch(context);
-      });
+      _confirmBooking();
     } catch (e) {
       toast(e.toString());
     } finally {
       appStore.setLoading(false);
+    }
+  }
+
+  Future<void> _confirmBooking() async {
+    if (appStore.isLoggedIn) {
+      await ConfirmBookingScreen(isReschedule: widget.isReschedule)
+          .launch(context);
+    } else {
+      if (!mounted) return;
+      final useGuestBooking = await showDialog<bool>(
+        context: context,
+        builder: (_) => const BookingTypeSelectedDialog(),
+      );
+      if (useGuestBooking == null) return;
+
+      if (useGuestBooking) {
+        if (!mounted) return;
+        await ConfirmBookingScreen(
+                isReschedule: widget.isReschedule, isGuestBooking: true)
+            .launch(context);
+      }
+    }
+
+    // Reset employee id and name if employee group is selected
+    if (bookingRequestStore.isEmployeeGroupSelected) {
+      bookingRequestStore.setEmployeeIdInRequest(UNSELECTED_EMPLOYEE_ID);
+      bookingRequestStore.setEmployeeNameInRequest('');
     }
   }
 
