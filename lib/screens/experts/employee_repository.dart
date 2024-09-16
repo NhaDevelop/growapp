@@ -76,14 +76,17 @@ Future<List<EmployeeWorkingDayModel>> getEmployeeMonthSchedule(
     required int branchId,
     Function(List<EmployeeWorkingDayModel>)? callback}) async {
   try {
-    String url =
-        '${APIEndPoints.employeeSchedule}?branch_id=$branchId&employee_id=$employeeId';
+    String url = '${APIEndPoints.employeeSchedule}?branch_id=$branchId';
+    if (employeeId != UNSELECTED_EMPLOYEE_ID) {
+      url = '$url&employee_id=$employeeId';
+    }
     var res = EmployeeMonthScheduleResponse.fromJson(await handleResponse(
         await buildHttpResponse(url, method: HttpMethodType.GET)));
 
     employeeWorkingDayListCached = {
       ...?employeeWorkingDayListCached,
-      employeeId: res.employeeWorkingDaysList
+      if (employeeId != UNSELECTED_EMPLOYEE_ID)
+        employeeId: res.employeeWorkingDaysList
     };
     callback?.call(res.employeeWorkingDaysList);
     appStore.setLoading(false);

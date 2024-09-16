@@ -115,6 +115,12 @@ List<EmployeeGroupModel> employeeGroups() {
       nationality: 'vietnamese',
       profileImage: 'assets/flags/ic_vi.png',
     ),
+    EmployeeGroupModel(
+      name: 'Cambodian Top Stylist',
+      description: 'Cambodian Top Stylist',
+      nationality: 'cambodian_top_stylist',
+      profileImage: 'assets/flags/ic_km.png',
+    ),
   ];
 }
 
