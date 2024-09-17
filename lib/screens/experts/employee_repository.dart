@@ -100,9 +100,9 @@ Future<List<EmployeeWorkingDayModel>> getEmployeeMonthSchedule(
 
 Future<List<EmployeeServiceListData>> getEmployeeServiceList(
     {required int employeeId,
-    required int brandId,
+    required int branchId,
     required Function(List<EmployeeServiceListData>) onLoaded}) async {
-  String url = '${APIEndPoints.employeeServiceList}?brand_id=$brandId';
+  String url = '${APIEndPoints.employeeServiceList}?branch_id=$branchId';
   if (bookingRequestStore.isEmployeeSelected) {
     url = '$url&employee_id=$employeeId';
   }
