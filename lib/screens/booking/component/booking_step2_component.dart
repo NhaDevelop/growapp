@@ -37,6 +37,7 @@ class _BookingStep2ComponentState extends State<BookingStep2Component> {
   void init() async {
     future = getEmployeeServiceList(
         employeeId: bookingRequestStore.employeeId,
+        brandId: appStore.branchId,
         onLoaded: removeServicesWhichAreNotProvidedBySelectedStylist);
   }
 
