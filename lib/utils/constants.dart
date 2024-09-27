@@ -35,6 +35,15 @@ const BRANCH_STATUS_CLOSED = 'Closed';
 
 //endregion
 
+// remove webview header and footer script
+// ignore: prefer_interpolation_to_compose_strings
+const WEBVIEW_HEADER_FOOTER_REMOVAL_SCRIPT = "javascript:(function() { " +
+                    "var head = document.getElementsByTagName('header')[0];" +
+                    "head.parentNode.removeChild(head);" +
+                    "var footer = document.getElementsByTagName('footer')[0];" +
+                    "footer.parentNode.removeChild(footer);" +
+                    "})()";
+
 class TaxType {
   static const FIXED = 'fixed';
   static const PERCENT = 'percent';

@@ -4,6 +4,7 @@ import 'package:grow_tokyo_app/components/select_country_dialog.dart';
 import 'package:grow_tokyo_app/components/select_language_dialog.dart';
 import 'package:grow_tokyo_app/screens/auth/view/sign_in_screen.dart';
 import 'package:grow_tokyo_app/screens/dashboard/dashboard_repository.dart';
+import 'package:grow_tokyo_app/screens/dashboard/fragment/product_fragment.dart';
 import 'package:grow_tokyo_app/utils/colors.dart';
 import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
 import 'package:grow_tokyo_app/utils/images.dart';
@@ -31,14 +32,13 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen>
     with WidgetsBindingObserver {
   int currentPosition = 0;
-
   List<Widget> fragmentList = [
     const HomeFragment(),
     Observer(
         builder: (context) => appStore.isLoggedIn
             ? const BookingFragment()
             : const SignInScreen(isFromDashboard: true)),
-    // const ProductScreen(),
+    ProductsFragment(),
     const ProfileFragment(),
   ];
 
@@ -135,13 +135,13 @@ class _DashboardScreenState extends State<DashboardScreen>
                       color: context.primaryColor, size: 18),
                   tabName: locale.myBooking,
                 ),
-                // bottomTab(
-                //   iconData: ic_unselected_shop.iconImage(
-                //       color: appTextSecondaryColor, size: 20),
-                //   activeIconData: ic_selected_shop.iconImage(
-                //       color: context.primaryColor, size: 20),
-                //   tabName: locale.shop,
-                // ),
+                bottomTab(
+                  iconData: ic_unselected_shop.iconImage(
+                      color: appTextSecondaryColor, size: 20),
+                  activeIconData: ic_selected_shop.iconImage(
+                      color: context.primaryColor, size: 20),
+                  tabName: locale.shop,
+                ),
                 Observer(builder: (context) {
                   return bottomTab(
                     iconData: appStore.isLoggedIn
