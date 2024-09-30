@@ -12,9 +12,10 @@ class ProductsFragment extends StatelessWidget {
 
   final InAppWebViewKeepAlive webViewKeepAlive = InAppWebViewKeepAlive();
 
-  String get languageCodePath => appStore.selectedLanguageCode == 'vi'
-      ? "/${appStore.selectedLanguageCode}"
-      : '';
+  String get languageCodePath =>
+      appStore.selectedLanguageCode == 'vi' && appStore.countryCode == 'vn'
+          ? "/${appStore.selectedLanguageCode}"
+          : '';
 
   Uri get productUri => Uri.https(BuildConfig.blogPostHost,
       "${appStore.countryCode}$languageCodePath/product");
