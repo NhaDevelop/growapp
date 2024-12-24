@@ -43,6 +43,7 @@ const ic_send_2 = 'assets/icons/ic_send_2.png';
 const referral_reward = 'assets/icons/referral_reward.png';
 const ic_messenger = 'assets/icons/ic_messenger.png';
 const ic_telegram = 'assets/icons/ic_telegram.png';
+const ic_zalo = 'assets/icons/ic_zalo.png';
 const coupon = 'assets/icons/coupon.png';
 const chevron_down = 'assets/icons/chevron_down.png';
 const chevron_up = 'assets/icons/chevron_up.png';
@@ -52,8 +53,7 @@ const dashboard_menu_referral = 'assets/icons/dashboard_menu_referral.png';
 const dashboard_menu_coupon = 'assets/icons/dashboard_menu_coupon.png';
 const dashboard_menu_fbecsite = 'assets/icons/dashboard_menu_fbecsite.png';
 const dashboard_menu_inquiry = 'assets/icons/dashboard_menu_inquiry.png';
-const dashboard_menu_notifications =
-    'assets/icons/dashboard_menu_notifications.png';
+const dashboard_menu_notifications = 'assets/icons/dashboard_menu_notifications.png';
 const ic_us = 'assets/flags/ic_us.png';
 const ic_india = 'assets/flags/ic_india.png';
 const ic_ar = 'assets/flags/ic_ar.png';

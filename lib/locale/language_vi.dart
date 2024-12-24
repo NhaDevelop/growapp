@@ -273,8 +273,8 @@ class LanguageVi extends BaseLanguage {
   String get yourReferralCode => 'Mã giới thiệu của bạn';
 
   @override
-  String shareReferralCode(code, downloadUrl, discountPercentage) =>
-      'Với ứng dụng tuyệt vời này, việc đặt lịch cắt tóc đã dễ dàng hơn rất nhiều! Tải xuống ứng dụng tại đây $downloadUrl và sử dụng mã $code để nhận $discountPercentage% giảm giá.';
+  String shareReferralCode(code, discountPercentage) =>
+      'Check out this amazing app! It has made booking a haircut much easier. Use my code $code to receive $discountPercentage% discount.';
 
   @override
   String get rewardHistory => 'Lịch sử phần thưởng';
@@ -1349,4 +1349,7 @@ class LanguageVi extends BaseLanguage {
 
   @override
   String get searchOrder => 'Tìm kiếm đơn hàng';
+  
+  @override
+  String get zalo => "Zalo";
 }

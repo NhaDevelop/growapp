@@ -17,15 +17,14 @@ class ProductsFragment extends StatelessWidget {
           ? "/${appStore.selectedLanguageCode}"
           : '';
 
-  Uri get productUri => Uri.https(BuildConfig.blogPostHost,
-      "${appStore.countryCode}$languageCodePath/product");
+  Uri get productUri =>
+      Uri.https(BuildConfig.blogPostHost, "${appStore.countryCode}$languageCodePath/product");
 
   Future<void> _loadPage(InAppWebViewController webViewController) async {
     final url = await webViewController.getUrl();
     if (url?.toString() == productUri.toString()) return;
     if (url == null || url.pathSegments.isEmpty) {
-      return webViewController.loadUrl(
-          urlRequest: URLRequest(url: WebUri.uri(productUri)));
+      return webViewController.loadUrl(urlRequest: URLRequest(url: WebUri.uri(productUri)));
     }
     // case when the user changes the language or country in the app
     final String urlCountryCode = url.pathSegments.first;
@@ -34,13 +33,11 @@ class ProductsFragment extends StatelessWidget {
         appStore.selectedLanguageCode == 'vi') {
       sameLanguage = true;
     }
-    if (!url.pathSegments.contains('vi') &&
-        appStore.selectedLanguageCode != 'vi') {
+    if (!url.pathSegments.contains('vi') && appStore.selectedLanguageCode != 'vi') {
       sameLanguage = true;
     }
     if (urlCountryCode == appStore.countryCode && sameLanguage) return;
-    return webViewController.loadUrl(
-        urlRequest: URLRequest(url: WebUri.uri(productUri)));
+    return webViewController.loadUrl(urlRequest: URLRequest(url: WebUri.uri(productUri)));
   }
 
   @override
@@ -71,8 +68,7 @@ class ProductsFragment extends StatelessWidget {
       keepAlive: webViewKeepAlive,
       onLoadStop: (controller, _) async {
         appStore.setLoading(false);
-        await controller.evaluateJavascript(
-            source: WEBVIEW_HEADER_FOOTER_REMOVAL_SCRIPT);
+        await controller.evaluateJavascript(source: WEBVIEW_HEADER_FOOTER_REMOVAL_SCRIPT);
       },
       onLoadStart: (_, __) {
         appStore.setLoading(true);

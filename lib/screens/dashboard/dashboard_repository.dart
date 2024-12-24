@@ -8,8 +8,8 @@ import 'models/dashboard_model.dart';
 
 Future<DashboardResponse> userDashboard() async {
   try {
-    dashboardResponseCached = DashboardResponse.fromJson(await handleResponse(
-        await buildHttpResponse(APIEndPoints.dashboardDetail)));
+    dashboardResponseCached = DashboardResponse.fromJson(
+        await handleResponse(await buildHttpResponse(APIEndPoints.dashboardDetail)));
 
     appStore.setLoading(false);
 
@@ -21,19 +21,20 @@ Future<DashboardResponse> userDashboard() async {
 }
 
 Future<List<CountryData>> getCountries() async {
-  final json =
-      await handleResponse(await buildHttpResponse(APIEndPoints.country));
-  final list =
-      (json['data'] as List).map((e) => CountryData.fromJson(e)).toList();
+  final json = await handleResponse(await buildHttpResponse(APIEndPoints.country));
+  final list = (json['data'] as List).map((e) => CountryData.fromJson(e)).toList();
 
   return list;
 }
 
 Future<SocialData> getSocialUrls() async {
-  final json =
-      await handleResponse(await buildHttpResponse(APIEndPoints.social));
-  final data = SocialData.fromJson(json);
-  socialDataCached = data;
+  try {
+    final json = await handleResponse(await buildHttpResponse(APIEndPoints.social));
+    final data = SocialData.fromJson(json);
+    socialDataCached = data;
 
-  return data;
+    return data;
+  } catch (_) {
+    return SocialData();
+  }
 }

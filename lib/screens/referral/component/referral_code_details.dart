@@ -1,11 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/screens/referral/component/how_it_work_modal.dart';
 import 'package:grow_tokyo_app/screens/referral/model/referral_data.dart';
-import 'package:grow_tokyo_app/utils/constants.dart';
 import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:share_plus/share_plus.dart';
@@ -22,7 +19,6 @@ class ReferralCodeDetails extends StatelessWidget {
   Future<void> onShare() async {
     final text = locale.shareReferralCode(
       data!.code,
-      Platform.isIOS ? IOS_DOWNLOAD_URL : ANDROID_DOWNLOAD_URL,
       data!.rewardPercentage,
     );
     await Share.share(text);
@@ -81,8 +77,7 @@ class ReferralCodeDetails extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(ic_share,
-                        height: 16, width: 16, color: Colors.white),
+                    Image.asset(ic_share, height: 16, width: 16, color: Colors.white),
                     8.width,
                     Text(locale.share, style: boldTextStyle(color: white)),
                   ],
