@@ -1323,4 +1323,7 @@ class LanguageKm extends BaseLanguage {
 
   @override
   String get zalo => "Zalo";
+
+  @override
+  String get product => "ផលិតផល";
 }

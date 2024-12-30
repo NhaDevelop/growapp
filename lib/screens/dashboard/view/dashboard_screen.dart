@@ -27,6 +27,9 @@ class DashboardScreen extends StatefulWidget {
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
+
+  static _DashboardScreenState? of(BuildContext context) =>
+      context.findAncestorStateOfType<_DashboardScreenState>();
 }
 
 class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingObserver {
@@ -80,6 +83,11 @@ class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingOb
     if (mounted) super.setState(fn);
   }
 
+  void onTabClick(int index) {
+    currentPosition = index;
+    setState(() {});
+  }
+
   @override
   void didChangePlatformBrightness() {
     if (getIntAsync(THEME_MODE_INDEX) == ThemeConst.THEME_MODE_SYSTEM) {
@@ -113,10 +121,7 @@ class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingOb
             ),
             child: NavigationBar(
               selectedIndex: currentPosition,
-              onDestinationSelected: (index) {
-                currentPosition = index;
-                setState(() {});
-              },
+              onDestinationSelected: onTabClick,
               destinations: [
                 bottomTab(
                   iconData: ic_unselected_home.iconImage(color: appTextSecondaryColor, size: 18),

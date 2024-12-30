@@ -1324,4 +1324,7 @@ class LanguageEn extends BaseLanguage {
 
   @override
   String get zalo => "Zalo";
+
+  @override
+  String get product => "Product";
 }

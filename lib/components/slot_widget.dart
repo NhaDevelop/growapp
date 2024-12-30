@@ -1,5 +1,8 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/screens/booking/booking_repository.dart';
+import 'package:grow_tokyo_app/screens/services/models/service_response.dart';
 import 'package:grow_tokyo_app/utils/constants.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -13,14 +16,16 @@ class SlotWidget extends StatefulWidget {
   final String endTime;
   final DateTime selectedHorizontalDate;
   final bool isFromQuickBooking;
+  final List<ServiceListData> serviceList;
 
   const SlotWidget({
+    super.key,
     required this.slotDuration,
     required this.startTime,
     required this.endTime,
     required this.selectedHorizontalDate,
     this.isFromQuickBooking = false,
-    super.key,
+    this.serviceList = const [],
   });
 
   @override
@@ -41,6 +46,12 @@ class _SlotWidgetState extends State<SlotWidget> {
   }
 
   Future<List<SlotData>> init() async {
+    final staffAvailability = await checkAvailability(
+      branchId: appStore.branchId,
+      staffId: bookingRequestStore.employeeId,
+      date: widget.selectedHorizontalDate,
+      serviceList: bookingRequestStore.selectedServiceList,
+    );
     List<SlotData> slots = [];
 
     String startTimeString = widget.startTime.validate();
@@ -63,10 +74,14 @@ class _SlotWidgetState extends State<SlotWidget> {
 
     while (startTime.isBefore(endTime)) {
       SlotData slotData = SlotData();
-      slotData.startTime = formatDate(startTime.toString(),
-          format: DateFormatConst.HOUR_24_FORMAT);
+      final formattedStartTime =
+          formatDate(startTime.toString(), format: DateFormatConst.HOUR_24_FORMAT);
+      if (staffAvailability[formattedStartTime] == 0 ||
+          staffAvailability[formattedStartTime] == null) {
+        continue;
+      }
+      slotData.startTime = formattedStartTime;
       slotData.previousTimeSlot = startTime;
-
       // Determine time slot
       int hour = startTime.hour;
       String timeSlot;
@@ -84,7 +99,6 @@ class _SlotWidgetState extends State<SlotWidget> {
       slots.add(slotData);
       startTime = startTime.add(duration);
     }
-
     return slots;
   }
 
@@ -135,8 +149,8 @@ class _SlotWidgetState extends State<SlotWidget> {
                       listAnimationType: ListAnimationType.None,
                       itemBuilder: (context, index) {
                         SlotData timeSlot = sessionSlots[index];
-                        bool isSelected = selectedIndex == index &&
-                            selectedSession == timeSlot.sessionText;
+                        bool isSelected =
+                            selectedIndex == index && selectedSession == timeSlot.sessionText;
 
                         return SlotItemComponent(
                           timeSlot: timeSlot,
@@ -144,18 +158,15 @@ class _SlotWidgetState extends State<SlotWidget> {
                           selectedHorizontalDate: widget.selectedHorizontalDate,
                           onTap: () {
                             /// check if time slot is available or not
-                            if (timeSlot.slotAvailability(
-                                widget.selectedHorizontalDate)) {
+                            if (timeSlot.slotAvailability(widget.selectedHorizontalDate)) {
                               if (isSelected) {
                                 selectedIndex = -1;
                                 bookingRequestStore.setTimeInRequest('');
                               } else {
-                                bookingRequestStore.setTimeInRequest(
-                                    timeSlot.startTime.validate());
+                                bookingRequestStore.setTimeInRequest(timeSlot.startTime.validate());
 
                                 selectedIndex = index;
-                                selectedSession =
-                                    timeSlot.sessionText.validate();
+                                selectedSession = timeSlot.sessionText.validate();
 
                                 if (widget.isFromQuickBooking) {
                                   finish(context, bookingRequestStore.time);

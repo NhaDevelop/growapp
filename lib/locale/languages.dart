@@ -874,4 +874,6 @@ abstract class BaseLanguage {
   String get searchOrder;
 
   String get zalo;
+
+  String get product;
 }

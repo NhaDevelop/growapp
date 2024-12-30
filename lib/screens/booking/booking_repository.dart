@@ -2,6 +2,7 @@ import 'package:grow_tokyo_app/screens/booking/model/booking_detail_response.dar
 import 'package:grow_tokyo_app/screens/booking/model/booking_list_response.dart';
 import 'package:grow_tokyo_app/screens/booking/model/verify_any_stylist_response.dart';
 import 'package:grow_tokyo_app/screens/experts/model/employee_detail_response.dart';
+import 'package:grow_tokyo_app/screens/services/models/service_response.dart';
 import 'package:grow_tokyo_app/utils/api_end_points.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -13,8 +14,7 @@ import 'model/booking_status_response.dart';
 Future<List<BookingStatusData>> getBookingStatus() async {
   try {
     var res = BookingStatusResponse.fromJson(await handleResponse(
-        await buildHttpResponse(APIEndPoints.bookingStatus,
-            method: HttpMethodType.GET)));
+        await buildHttpResponse(APIEndPoints.bookingStatus, method: HttpMethodType.GET)));
     appStore.setLoading(false);
 
     bookingStatusListCached = res.data;
@@ -28,9 +28,9 @@ Future<List<BookingStatusData>> getBookingStatus() async {
 
 Future<BookingDetailResponse> getBookingDetail({required int bookingId}) async {
   try {
-    var res = BookingDetailResponse.fromJson(await handleResponse(
-        await buildHttpResponse('${APIEndPoints.bookingDetail}?id=$bookingId',
-            method: HttpMethodType.GET)));
+    var res = BookingDetailResponse.fromJson(await handleResponse(await buildHttpResponse(
+        '${APIEndPoints.bookingDetail}?id=$bookingId',
+        method: HttpMethodType.GET)));
     appStore.setLoading(false);
 
     if (bookingDetailCached.any((element) => element.id == res.data!.id)) {
@@ -58,10 +58,8 @@ Future saveBookingGuestAPI(Map request) async {
 }
 
 Future bookingUpdate(Map request) async {
-  return await handleResponse(await buildHttpResponse(
-      APIEndPoints.bookingUpdate,
-      request: request,
-      method: HttpMethodType.POST));
+  return await handleResponse(await buildHttpResponse(APIEndPoints.bookingUpdate,
+      request: request, method: HttpMethodType.POST));
 }
 
 Future verifySlot(int employeeId, String startDateTime) async {
@@ -85,9 +83,10 @@ Future<EmployeeData> verifyAnyStylistSlot({
     "services_ids": servicesIds,
     "start_date_time": startDateTime,
   };
-  final res = VerifyAnyStylistResponse.fromJson(await handleResponse(
-      await buildHttpResponse(APIEndPoints.verifyAnyStylist,
-          request: request, method: HttpMethodType.POST)));
+  final res = VerifyAnyStylistResponse.fromJson(await handleResponse(await buildHttpResponse(
+      APIEndPoints.verifyAnyStylist,
+      request: request,
+      method: HttpMethodType.POST)));
 
   return res.data;
 }
@@ -106,8 +105,8 @@ Future<List<BookingListData>> getBookingList({
 
     String searchBooking = search.isNotEmpty ? '&search=$search' : '';
 
-    BookingListResponse res = BookingListResponse.fromJson(
-        await handleResponse(await buildHttpResponse(
+    BookingListResponse res =
+        BookingListResponse.fromJson(await handleResponse(await buildHttpResponse(
       '${APIEndPoints.bookingList}?branch_id=$branchId$statusData$searchBooking&per_page=$perPage&page=$page',
       method: HttpMethodType.GET,
     )));
@@ -125,4 +124,26 @@ Future<List<BookingListData>> getBookingList({
 
     rethrow;
   }
+}
+
+Future<Map<String, dynamic>> checkAvailability({
+  required int branchId,
+  required int staffId,
+  required DateTime date,
+  List<ServiceListData> serviceList = const [],
+}) async {
+  final String dateToString = date.toIso8601String().split('T').first;
+  final String servicesIds = serviceList.map((e) => e.id).join(',');
+  final Map<String, String> queryParams = {
+    'service_id': servicesIds,
+    'branch_id': branchId.toString(),
+    'staff_id': staffId.toString(),
+    'date': dateToString,
+  };
+  final Uri uri = Uri.parse(APIEndPoints.checkAvailability).replace(queryParameters: queryParams);
+
+  final response =
+      await handleResponse(await buildHttpResponse(uri.toString(), method: HttpMethodType.GET))
+          as Map<String, dynamic>;
+  return response;
 }
