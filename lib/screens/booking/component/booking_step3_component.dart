@@ -4,6 +4,7 @@ import 'package:grow_tokyo_app/components/app_scaffold.dart';
 import 'package:grow_tokyo_app/components/slot_widget.dart';
 import 'package:grow_tokyo_app/components/view_all_label_component.dart';
 import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/screens/auth/view/sign_in_screen.dart';
 import 'package:grow_tokyo_app/screens/booking/component/booking_type_selected_dialog.dart';
 import 'package:grow_tokyo_app/screens/booking/shimmer/booking_step3_shimmer.dart';
 import 'package:grow_tokyo_app/screens/booking/view/confirm_booking_screen.dart';
@@ -129,6 +130,11 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
         if (!mounted) return;
         await ConfirmBookingScreen(isReschedule: widget.isReschedule, isGuestBooking: true)
             .launch(context);
+      } else {
+        if (!mounted) return;
+        await const SignInScreen(
+          returnExpected: true,
+        ).launch(context);
       }
     }
 

@@ -3,6 +3,7 @@ import 'package:grow_tokyo_app/screens/experts/model/employee_month_schedule_res
 import 'package:grow_tokyo_app/screens/experts/model/employee_response.dart';
 import 'package:grow_tokyo_app/screens/experts/model/employee_service_list_response.dart';
 import 'package:grow_tokyo_app/utils/api_end_points.dart';
+import 'package:grow_tokyo_app/utils/extensions/list_extensions.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../main.dart';
@@ -22,15 +23,22 @@ Future<List<EmployeeData>> getEmployeeList({
     String order = orderBy.isNotEmpty ? '&order_by=$orderBy' : '';
     String services = serviceIds.isNotEmpty ? '&service_ids=$serviceIds' : '';
 
-    EmployeeResponse res =
-        EmployeeResponse.fromJson(await handleResponse(await buildHttpResponse(
+    EmployeeResponse res = EmployeeResponse.fromJson(await handleResponse(await buildHttpResponse(
       '${APIEndPoints.employeeList}?branch_id=$branchId$order$services&per_page=$perPage&page=$page',
       method: HttpMethodType.GET,
     )));
 
     if (page == 1) list.clear();
     list.addAll(res.topExperts.validate());
-
+    final anyJapanese = list.firstWhereOrNull(
+      (element) => element.id == 104,
+    );
+    final anyCambodian = list.firstWhereOrNull((element) => element.id == 105);
+    final anyVietnamese = list.firstWhereOrNull((element) => element.id == 106);
+    list.removeWhere((element) => element.id == 104 || element.id == 105 || element.id == 106);
+    if (anyJapanese != null) list.add(anyJapanese);
+    if (anyCambodian != null) list.add(anyCambodian);
+    if (anyVietnamese != null) list.add(anyVietnamese);
     employeeListCached = list;
     if (branchId != null) {
       branchEmployeeListCached = {...?branchEmployeeListCached, branchId: list};
@@ -49,16 +57,14 @@ Future<List<EmployeeData>> getEmployeeList({
 Future<EmployeeDetailResponse> getEmployeeDetail(
     {required int branchId, required int employeeId}) async {
   try {
-    var res = EmployeeDetailResponse.fromJson(await handleResponse(
-        await buildHttpResponse(
-            '${APIEndPoints.employeeDetail}?branch_id=$branchId&employee_id=$employeeId',
-            method: HttpMethodType.GET)));
+    var res = EmployeeDetailResponse.fromJson(await handleResponse(await buildHttpResponse(
+        '${APIEndPoints.employeeDetail}?branch_id=$branchId&employee_id=$employeeId',
+        method: HttpMethodType.GET)));
 
     if (!employeeDetailCachedData.any((element) => element?.$1 == employeeId)) {
       employeeDetailCachedData.add((employeeId, res));
     } else {
-      int index = employeeDetailCachedData
-          .indexWhere((element) => element?.$1 == employeeId);
+      int index = employeeDetailCachedData.indexWhere((element) => element?.$1 == employeeId);
       employeeDetailCachedData[index] = (employeeId, res);
     }
 
@@ -80,13 +86,12 @@ Future<List<EmployeeWorkingDayModel>> getEmployeeMonthSchedule(
     if (employeeId != UNSELECTED_EMPLOYEE_ID) {
       url = '$url&employee_id=$employeeId';
     }
-    var res = EmployeeMonthScheduleResponse.fromJson(await handleResponse(
-        await buildHttpResponse(url, method: HttpMethodType.GET)));
+    var res = EmployeeMonthScheduleResponse.fromJson(
+        await handleResponse(await buildHttpResponse(url, method: HttpMethodType.GET)));
 
     employeeWorkingDayListCached = {
       ...?employeeWorkingDayListCached,
-      if (employeeId != UNSELECTED_EMPLOYEE_ID)
-        employeeId: res.employeeWorkingDaysList
+      if (employeeId != UNSELECTED_EMPLOYEE_ID) employeeId: res.employeeWorkingDaysList
     };
     callback?.call(res.employeeWorkingDaysList);
     appStore.setLoading(false);
@@ -109,10 +114,7 @@ Future<List<EmployeeServiceListData>> getEmployeeServiceList(
   final res = EmployeeServiceListResponse.fromJson(await handleResponse(
     await buildHttpResponse(url, method: HttpMethodType.GET),
   ));
-  employeeServiceListCached = {
-    ...?employeeServiceListCached,
-    employeeId: res.data
-  };
+  employeeServiceListCached = {...?employeeServiceListCached, employeeId: res.data};
   onLoaded(res.data);
 
   return res.data;

@@ -1,6 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -41,6 +39,9 @@ import 'package:nb_utils/nb_utils.dart';
 
 import 'app_theme.dart';
 import 'configs.dart';
+import 'firebase_initializer_stub.dart'
+    if (dart.library.io) 'firebase_initializer_mobile.dart'
+    if (dart.library.html) 'firebase_initializer_web.dart';
 import 'locale/app_localizations.dart';
 import 'locale/languages.dart';
 import 'models/configuration_response.dart';
@@ -91,8 +92,7 @@ List<NotificationData>? notificationListCached;
 List<ProductData>? getWishListCached;
 List<BookingListData> bookingDetailCached = [];
 List<OrderListData> orderDetailCached = [];
-List<(int serviceId, EmployeeDetailResponse list)?> employeeDetailCachedData =
-    [];
+List<(int serviceId, EmployeeDetailResponse list)?> employeeDetailCachedData = [];
 List<BranchDetailResponse> branchDetailCachedData = [];
 BranchConfigurationData? branchConfigurationCached;
 List<CouponData>? couponListCached;
@@ -119,92 +119,66 @@ void main() async {
 
   await initialize(aLocaleLanguageList: languageList());
 
-  await appStore.setLanguage(
-      getStringAsync(SELECTED_LANGUAGE_CODE, defaultValue: DEFAULT_LANGUAGE));
-  locale = await const AppLocalizations()
-      .load(Locale(appStore.selectedLanguageCode));
+  await appStore
+      .setLanguage(getStringAsync(SELECTED_LANGUAGE_CODE, defaultValue: DEFAULT_LANGUAGE));
+  locale = await const AppLocalizations().load(Locale(appStore.selectedLanguageCode));
 
-  if (isMobile) {
-    Firebase.initializeApp().then((value) {
-      FlutterError.onError =
-          FirebaseCrashlytics.instance.recordFlutterFatalError;
-    });
-  }
+  await initializeFirebase();
 
-  appStore.setLoggedIn(getBoolAsync(SharedPreferenceConst.IS_LOGGED_IN),
-      isInitializing: true);
+  appStore.setLoggedIn(getBoolAsync(SharedPreferenceConst.IS_LOGGED_IN), isInitializing: true);
   appStore.setCountryId(
-      getIntAsync(SharedPreferenceConst.COUNTRY_ID,
-          defaultValue: UNSELECTED_COUNTRY_ID),
+      getIntAsync(SharedPreferenceConst.COUNTRY_ID, defaultValue: UNSELECTED_COUNTRY_ID),
       isInitializing: true);
-  appStore.setCountryCode(
-      getStringAsync(SharedPreferenceConst.COUNTRY_CODE, defaultValue: 'vn'),
+  appStore.setCountryCode(getStringAsync(SharedPreferenceConst.COUNTRY_CODE, defaultValue: 'vn'),
       isInitializing: true);
   await appStore.setBranchId(
-      getIntAsync(SharedPreferenceConst.BRANCH_ID,
-          defaultValue: UNSELECTED_BRANCH_ID),
+      getIntAsync(SharedPreferenceConst.BRANCH_ID, defaultValue: UNSELECTED_BRANCH_ID),
       isInitializing: true);
-  await appStore.setBranchName(
-      getStringAsync(SharedPreferenceConst.BRANCH_NAME),
+  await appStore.setBranchName(getStringAsync(SharedPreferenceConst.BRANCH_NAME),
       isInitializing: true);
   await appStore.setBranchAnyStylistOptions(
-      getStringListAsync(SharedPreferenceConst.BRANCH_ANY_STYLIST_OPTIONS) ??
-          [],
+      getStringListAsync(SharedPreferenceConst.BRANCH_ANY_STYLIST_OPTIONS) ?? [],
       isInitializing: true);
   if (appStore.isLoggedIn) {
-    await userStore.setUserId(getIntAsync(SharedPreferenceConst.USER_ID),
-        isInitializing: true);
-    await userStore.setFirstName(
-        getStringAsync(SharedPreferenceConst.FIRST_NAME),
+    await userStore.setUserId(getIntAsync(SharedPreferenceConst.USER_ID), isInitializing: true);
+    await userStore.setFirstName(getStringAsync(SharedPreferenceConst.FIRST_NAME),
         isInitializing: true);
     await userStore.setLastName(getStringAsync(SharedPreferenceConst.LAST_NAME),
         isInitializing: true);
-    await userStore.setDob(getStringAsync(SharedPreferenceConst.DOB),
+    await userStore.setDob(getStringAsync(SharedPreferenceConst.DOB), isInitializing: true);
+    await userStore.setNationality(getStringAsync(SharedPreferenceConst.NATIONALITY),
         isInitializing: true);
-    await userStore.setNationality(
-        getStringAsync(SharedPreferenceConst.NATIONALITY),
+    await userStore.setUserEmail(getStringAsync(SharedPreferenceConst.USER_EMAIL),
         isInitializing: true);
-    await userStore.setUserEmail(
-        getStringAsync(SharedPreferenceConst.USER_EMAIL),
-        isInitializing: true);
-    await userStore.setToken(getStringAsync(SharedPreferenceConst.TOKEN),
-        isInitializing: true);
+    await userStore.setToken(getStringAsync(SharedPreferenceConst.TOKEN), isInitializing: true);
     await userStore.setUserProfile(getStringAsync(SharedPreferenceConst.AVTAR),
         isInitializing: true);
-    await userStore.setLoginType(
-        getStringAsync(SharedPreferenceConst.LOGIN_TYPE),
+    await userStore.setLoginType(getStringAsync(SharedPreferenceConst.LOGIN_TYPE),
         isInitializing: true);
-    await userStore.setContactNumber(
-        getStringAsync(SharedPreferenceConst.CONTACT_NUMBER),
+    await userStore.setContactNumber(getStringAsync(SharedPreferenceConst.CONTACT_NUMBER),
         isInitializing: true);
     await userStore.setPlayerId(getStringAsync(SharedPreferenceConst.PLAYER_ID),
         isInitializing: true);
     await userStore.setPointAmount(getDoubleAsync(SharedPreferenceConst.CREDIT),
         isInitializing: true);
-    await appStore.setHelplineNumber(
-        getStringAsync(SharedPreferenceConst.HELPLINE_NUMBER),
+    await appStore.setHelplineNumber(getStringAsync(SharedPreferenceConst.HELPLINE_NUMBER),
         isInitializing: true);
-    await appStore.setInquiryEmail(
-        getStringAsync(SharedPreferenceConst.INQUIRY_EMAIL),
+    await appStore.setInquiryEmail(getStringAsync(SharedPreferenceConst.INQUIRY_EMAIL),
         isInitializing: true);
-    await appStore.setPrivacyPolicy(
-        getStringAsync(SharedPreferenceConst.PRIVACY_POLICY),
+    await appStore.setPrivacyPolicy(getStringAsync(SharedPreferenceConst.PRIVACY_POLICY),
         isInitializing: true);
-    await appStore.setTermConditions(
-        getStringAsync(SharedPreferenceConst.TERM_CONDITIONS),
+    await appStore.setTermConditions(getStringAsync(SharedPreferenceConst.TERM_CONDITIONS),
         isInitializing: true);
   }
 
   if (!kIsWeb) initOneSignal();
 
-  final runnableApp =
-      _buildRunnableApp(isWeb: kIsWeb, webAppWidth: 428, app: const MyApp());
+  final runnableApp = _buildRunnableApp(isWeb: kIsWeb, webAppWidth: 428, app: const MyApp());
 
   runApp(runnableApp);
 }
 
-Widget _buildRunnableApp(
-    {required bool isWeb, required double webAppWidth, required Widget app}) {
+Widget _buildRunnableApp({required bool isWeb, required double webAppWidth, required Widget app}) {
   if (!isWeb) return app;
 
   return LayoutBuilder(builder: (context, constraints) {

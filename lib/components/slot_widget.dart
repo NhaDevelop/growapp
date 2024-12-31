@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:grow_tokyo_app/components/loader_widget.dart';
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/screens/booking/booking_repository.dart';
 import 'package:grow_tokyo_app/screens/services/models/service_response.dart';
@@ -78,7 +79,7 @@ class _SlotWidgetState extends State<SlotWidget> {
           formatDate(startTime.toString(), format: DateFormatConst.HOUR_24_FORMAT);
       if (staffAvailability[formattedStartTime] == 0 ||
           staffAvailability[formattedStartTime] == null) {
-        continue;
+        slotData.isAvailable = false;
       }
       slotData.startTime = formattedStartTime;
       slotData.previousTimeSlot = startTime;
@@ -188,7 +189,7 @@ class _SlotWidgetState extends State<SlotWidget> {
             ),
           );
         } else {
-          return snapWidgetHelper(snap, loadingWidget: const Offstage());
+          return snapWidgetHelper(snap, loadingWidget: const LoaderWidget().visible(true));
         }
       },
     );

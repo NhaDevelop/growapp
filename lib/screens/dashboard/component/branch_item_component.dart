@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:grow_tokyo_app/components/cached_image_widget.dart';
-import 'package:grow_tokyo_app/components/status_widget.dart';
 import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
 import 'package:grow_tokyo_app/utils/images.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../../main.dart';
 import '../../../utils/app_common.dart';
 import '../../branch/model/branch_response.dart';
 
@@ -45,8 +43,7 @@ class _BranchItemComponentState extends State<BranchItemComponent> {
 
   double get getDistance {
     if (widget.position == null) return 0;
-    if (widget.branchData.latitude == null ||
-        widget.branchData.longitude == null) return 0;
+    if (widget.branchData.latitude == null || widget.branchData.longitude == null) return 0;
 
     return calculateDistance(
       widget.branchData.latitude!.toDouble(),
@@ -73,8 +70,7 @@ class _BranchItemComponentState extends State<BranchItemComponent> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ClipRRect(
-                  borderRadius: radiusOnly(
-                      topRight: defaultRadius, topLeft: defaultRadius),
+                  borderRadius: radiusOnly(topRight: defaultRadius, topLeft: defaultRadius),
                   child: CachedImageWidget(
                       url: widget.branchData.branchImg.validate(),
                       height: 150,
@@ -88,41 +84,39 @@ class _BranchItemComponentState extends State<BranchItemComponent> {
                       children: [
                         Marquee(
                           child: Text(widget.branchData.name.validate(),
-                              style: boldTextStyle(),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis),
+                              style: boldTextStyle(), maxLines: 1, overflow: TextOverflow.ellipsis),
                         ).expand(),
                         16.width,
-                        if (widget.branchData.todayTime != null)
-                          StatusWidget(
-                            text: getBranchIsOpen(
-                                    startTime: widget
-                                        .branchData.todayTime!.startTime
-                                        .validate(),
-                                    endTime: widget
-                                        .branchData.todayTime!.endTime
-                                        .validate(),
-                                    isHoliday: widget
-                                        .branchData.todayTime!.isHoliday
-                                        .validate()
-                                        .getBoolInt())
-                                .$1
-                                .validate(),
-                            color: getBranchIsOpen(
-                                    startTime: widget
-                                        .branchData.todayTime!.startTime
-                                        .validate(),
-                                    endTime: widget
-                                        .branchData.todayTime!.endTime
-                                        .validate(),
-                                    isHoliday: widget
-                                        .branchData.todayTime!.isHoliday
-                                        .validate()
-                                        .getBoolInt())
-                                .$2,
-                          )
-                        else
-                          StatusWidget(text: locale.closed, color: Colors.red),
+                        // if (widget.branchData.todayTime != null)
+                        //   StatusWidget(
+                        //     text: getBranchIsOpen(
+                        //             startTime: widget
+                        //                 .branchData.todayTime!.startTime
+                        //                 .validate(),
+                        //             endTime: widget
+                        //                 .branchData.todayTime!.endTime
+                        //                 .validate(),
+                        //             isHoliday: widget
+                        //                 .branchData.todayTime!.isHoliday
+                        //                 .validate()
+                        //                 .getBoolInt())
+                        //         .$1
+                        //         .validate(),
+                        //     color: getBranchIsOpen(
+                        //             startTime: widget
+                        //                 .branchData.todayTime!.startTime
+                        //                 .validate(),
+                        //             endTime: widget
+                        //                 .branchData.todayTime!.endTime
+                        //                 .validate(),
+                        //             isHoliday: widget
+                        //                 .branchData.todayTime!.isHoliday
+                        //                 .validate()
+                        //                 .getBoolInt())
+                        //         .$2,
+                        //   )
+                        // else
+                        //   StatusWidget(text: locale.closed, color: Colors.red),
                       ],
                     ),
                     12.height,
@@ -136,8 +130,7 @@ class _BranchItemComponentState extends State<BranchItemComponent> {
                         launchMap(widget.branchData.addressLine1.validate());
                       },
                       edgeInsets: const EdgeInsets.only(left: 0),
-                      prefix: ic_location.iconImage(
-                          color: textSecondaryColorGlobal, size: 16),
+                      prefix: ic_location.iconImage(color: textSecondaryColorGlobal, size: 16),
                     ),
                   ],
                 ).paddingAll(16),
@@ -145,15 +138,13 @@ class _BranchItemComponentState extends State<BranchItemComponent> {
             ),
           ),
         ),
-        if (((widget.currentBranchIndex == widget.selectedBranchId) &&
-            widget.isFormSignIn))
+        if (((widget.currentBranchIndex == widget.selectedBranchId) && widget.isFormSignIn))
           Container(
             height: cardSize,
             width: context.width(),
             margin: const EdgeInsets.only(bottom: 16),
             decoration: boxDecorationWithRoundedCorners(
-                backgroundColor: context.primaryColor.withOpacity(0.6),
-                borderRadius: radius()),
+                backgroundColor: context.primaryColor.withOpacity(0.6), borderRadius: radius()),
             child: const Icon(Icons.check_rounded, size: 50, color: white),
           ),
       ],

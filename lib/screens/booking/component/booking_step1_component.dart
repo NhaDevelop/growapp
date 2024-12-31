@@ -4,7 +4,6 @@ import 'package:grow_tokyo_app/components/app_scaffold.dart';
 import 'package:grow_tokyo_app/components/bottom_sheet_button.dart';
 import 'package:grow_tokyo_app/components/custom_stepper.dart';
 import 'package:grow_tokyo_app/screens/experts/component/employee_list_component_new.dart';
-import 'package:grow_tokyo_app/screens/experts/model/employee_group_model.dart';
 import 'package:grow_tokyo_app/utils/common_base.dart';
 import 'package:grow_tokyo_app/utils/constants.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -40,12 +39,6 @@ class _BookingStep1ComponentState extends State<BookingStep1Component> {
   void initState() {
     super.initState();
     init();
-  }
-
-  List<EmployeeGroupModel> get anyStylistOptions {
-    return employeeGroups()
-        .where((e) => appStore.branchAnyStylistOptions.contains(e.nationality))
-        .toList();
   }
 
   void init() async {
@@ -136,7 +129,7 @@ class _BookingStep1ComponentState extends State<BookingStep1Component> {
                         style: primaryTextStyle(weight: FontWeight.w500),
                       ),
                       16.height,
-                      ...list.reversed.map((data) => GestureDetector(
+                      ...list.map((data) => GestureDetector(
                             onTap: () {
                               employeeId = data.id.validate();
                               groupId = UNSELECTED_EMPLOYEE_GROUP_ID;

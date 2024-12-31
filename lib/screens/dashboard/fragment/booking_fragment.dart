@@ -84,52 +84,52 @@ class _BookingFragmentState extends State<BookingFragment> {
                 textSize: APPBAR_TEXT_SIZE,
               ).cornerRadiusWithClipRRectOnly(bottomLeft: 20, bottomRight: 20),
             ),
-            Positioned(
-              bottom: -20,
-              left: 20,
-              right: 20,
-              child: Row(
-                children: [
-                  AppTextField(
-                    controller: searchBookingCont,
-                    textFieldType: TextFieldType.OTHER,
-                    focus: searchFocusNode,
-                    suffix: CloseButton(
-                      onPressed: () {
-                        hideKeyboard(context);
-                        searchBookingCont.clear();
+            // Positioned(
+            //   bottom: -20,
+            //   left: 20,
+            //   right: 20,
+            //   child: Row(
+            //     children: [
+            //       AppTextField(
+            //         controller: searchBookingCont,
+            //         textFieldType: TextFieldType.OTHER,
+            //         focus: searchFocusNode,
+            //         suffix: CloseButton(
+            //           onPressed: () {
+            //             hideKeyboard(context);
+            //             searchBookingCont.clear();
 
-                        appStore.setLoading(true);
-                        onBookingListUpdate.call(searchBookingCont.text);
-                        setState(() {});
-                      },
-                    ).visible(searchBookingCont.text.isNotEmpty),
-                    onFieldSubmitted: (s) {
-                      appStore.setLoading(true);
-                      onBookingListUpdate.call(searchBookingCont.text);
-                      setState(() {});
-                    },
-                    decoration: inputDecoration(context,
-                        hint: locale.searchBooking,
-                        prefixIcon: Icon(Icons.search,
-                            color: textSecondaryColorGlobal)),
-                  ).expand(),
-                  16.width,
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: boxDecorationDefault(color: secondaryColor),
-                    child: const CachedImageWidget(
-                      url: ic_filter,
-                      height: 26,
-                      width: 26,
-                      color: Colors.white,
-                    ),
-                  ).onTap(() {
-                    handleFilterClick(context);
-                  }, borderRadius: radius()),
-                ],
-              ),
-            )
+            //             appStore.setLoading(true);
+            //             onBookingListUpdate.call(searchBookingCont.text);
+            //             setState(() {});
+            //           },
+            //         ).visible(searchBookingCont.text.isNotEmpty),
+            //         onFieldSubmitted: (s) {
+            //           appStore.setLoading(true);
+            //           onBookingListUpdate.call(searchBookingCont.text);
+            //           setState(() {});
+            //         },
+            //         decoration: inputDecoration(context,
+            //             hint: locale.searchBooking,
+            //             prefixIcon: Icon(Icons.search,
+            //                 color: textSecondaryColorGlobal)),
+            //       ).expand(),
+            //       16.width,
+            //       Container(
+            //         padding: const EdgeInsets.all(10),
+            //         decoration: boxDecorationDefault(color: secondaryColor),
+            //         child: const CachedImageWidget(
+            //           url: ic_filter,
+            //           height: 26,
+            //           width: 26,
+            //           color: Colors.white,
+            //         ),
+            //       ).onTap(() {
+            //         handleFilterClick(context);
+            //       }, borderRadius: radius()),
+            //     ],
+            //   ),
+            // )
           ],
         ),
       ),
