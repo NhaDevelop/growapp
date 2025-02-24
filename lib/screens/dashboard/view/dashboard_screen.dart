@@ -27,10 +27,12 @@ class DashboardScreen extends StatefulWidget {
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
+
+  static _DashboardScreenState? of(BuildContext context) =>
+      context.findAncestorStateOfType<_DashboardScreenState>();
 }
 
-class _DashboardScreenState extends State<DashboardScreen>
-    with WidgetsBindingObserver {
+class _DashboardScreenState extends State<DashboardScreen> with WidgetsBindingObserver {
   int currentPosition = 0;
   List<Widget> fragmentList = [
     const HomeFragment(),
@@ -81,11 +83,15 @@ class _DashboardScreenState extends State<DashboardScreen>
     if (mounted) super.setState(fn);
   }
 
+  void onTabClick(int index) {
+    currentPosition = index;
+    setState(() {});
+  }
+
   @override
   void didChangePlatformBrightness() {
     if (getIntAsync(THEME_MODE_INDEX) == ThemeConst.THEME_MODE_SYSTEM) {
-      appStore.setDarkMode(
-          MediaQuery.of(context).platformBrightness == Brightness.light);
+      appStore.setDarkMode(MediaQuery.of(context).platformBrightness == Brightness.light);
     }
     super.didChangePlatformBrightness();
   }
@@ -109,37 +115,28 @@ class _DashboardScreenState extends State<DashboardScreen>
             data: NavigationBarThemeData(
               backgroundColor: context.primaryColor.withOpacity(0.02),
               indicatorColor: context.primaryColor.withOpacity(0.1),
-              labelTextStyle:
-                  WidgetStateProperty.all(primaryTextStyle(size: 12)),
+              labelTextStyle: WidgetStateProperty.all(primaryTextStyle(size: 12)),
               surfaceTintColor: Colors.transparent,
               shadowColor: Colors.transparent,
             ),
             child: NavigationBar(
               selectedIndex: currentPosition,
-              onDestinationSelected: (index) {
-                currentPosition = index;
-                setState(() {});
-              },
+              onDestinationSelected: onTabClick,
               destinations: [
                 bottomTab(
-                  iconData: ic_unselected_home.iconImage(
-                      color: appTextSecondaryColor, size: 18),
-                  activeIconData: ic_selected_home.iconImage(
-                      color: context.primaryColor, size: 18),
+                  iconData: ic_unselected_home.iconImage(color: appTextSecondaryColor, size: 18),
+                  activeIconData: ic_selected_home.iconImage(color: context.primaryColor, size: 18),
                   tabName: locale.home,
                 ),
                 bottomTab(
-                  iconData: ic_unselected_booking.iconImage(
-                      color: appTextSecondaryColor, size: 18),
-                  activeIconData: ic_selected_booking.iconImage(
-                      color: context.primaryColor, size: 18),
+                  iconData: ic_unselected_booking.iconImage(color: appTextSecondaryColor, size: 18),
+                  activeIconData:
+                      ic_selected_booking.iconImage(color: context.primaryColor, size: 18),
                   tabName: locale.myBooking,
                 ),
                 bottomTab(
-                  iconData: ic_unselected_shop.iconImage(
-                      color: appTextSecondaryColor, size: 20),
-                  activeIconData: ic_selected_shop.iconImage(
-                      color: context.primaryColor, size: 20),
+                  iconData: ic_unselected_shop.iconImage(color: appTextSecondaryColor, size: 20),
+                  activeIconData: ic_selected_shop.iconImage(color: context.primaryColor, size: 20),
                   tabName: locale.shop,
                 ),
                 Observer(builder: (context) {
@@ -154,8 +151,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                             child: ic_unselected_profile.iconImage(
                                 color: appTextSecondaryColor, size: 18),
                           )
-                        : ic_unselected_profile.iconImage(
-                            color: appTextSecondaryColor, size: 18),
+                        : ic_unselected_profile.iconImage(color: appTextSecondaryColor, size: 18),
                     activeIconData: appStore.isLoggedIn
                         ? CachedImageWidget(
                             url: userStore.userProfileImage.validate(),
@@ -166,8 +162,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                             child: ic_selected_profile.iconImage(
                                 color: context.primaryColor, size: 18),
                           )
-                        : ic_selected_profile.iconImage(
-                            color: context.primaryColor, size: 18),
+                        : ic_selected_profile.iconImage(color: context.primaryColor, size: 18),
                     tabName: locale.user,
                   );
                 }),
@@ -176,8 +171,7 @@ class _DashboardScreenState extends State<DashboardScreen>
           ),
         ),
         bottomSheet: Observer(builder: (context) {
-          return const VoiceSearchComponent()
-              .visible(appStore.isSpeechActivated);
+          return const VoiceSearchComponent().visible(appStore.isSpeechActivated);
         }),
       ),
     );

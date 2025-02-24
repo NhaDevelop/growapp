@@ -18,11 +18,17 @@ class _InquiryDialogState extends State<InquiryDialog> {
     if (_selected == null) return;
     final socialData = appStore.socialData;
 
-    final url = _selected == InquiryType.telegram
-        ? socialData.telegramChannel
-        : socialData.messengerChannel;
+    final url = switch (_selected) {
+      InquiryType.facebook => socialData.facebookLink,
+      InquiryType.telegram => socialData.telegramChannel,
+      InquiryType.facebookVN => socialData.facebookVnLink,
+      _ => socialData.zaloLink,
+    };
 
-    launchUrlString(url);
+    launchUrlString(
+      url,
+      mode: LaunchMode.externalApplication,
+    );
 
     finish(context);
   }
@@ -47,25 +53,45 @@ class _InquiryDialogState extends State<InquiryDialog> {
         children: [
           Text(locale.inquiryMessage, textAlign: TextAlign.center),
           24.height,
-          Row(
-            children: [
-              _Item(
-                key: const ValueKey(InquiryType.telegram),
-                icon: ic_telegram,
-                title: locale.telegram,
-                selected: _selected == InquiryType.telegram,
-                onTap: () => setState(() => _selected = InquiryType.telegram),
-              ).expand(),
-              16.width,
-              _Item(
-                key: const ValueKey(InquiryType.messenger),
-                icon: ic_messenger,
-                title: locale.messenger,
-                selected: _selected == InquiryType.messenger,
-                onTap: () => setState(() => _selected = InquiryType.messenger),
-              ).expand(),
-            ],
-          ),
+          appStore.countryCode == 'vn'
+              ? Row(
+                  children: [
+                    _Item(
+                      key: const ValueKey(InquiryType.zalo),
+                      icon: ic_zalo,
+                      title: locale.zalo,
+                      selected: _selected == InquiryType.zalo,
+                      onTap: () => setState(() => _selected = InquiryType.zalo),
+                    ).expand(),
+                    16.width,
+                    _Item(
+                      key: const ValueKey(InquiryType.facebookVN),
+                      icon: ic_facebook_colored,
+                      title: locale.facebook,
+                      selected: _selected == InquiryType.facebookVN,
+                      onTap: () => setState(() => _selected = InquiryType.facebookVN),
+                    ).expand(),
+                  ],
+                )
+              : Row(
+                  children: [
+                    _Item(
+                      key: const ValueKey(InquiryType.telegram),
+                      icon: ic_telegram,
+                      title: locale.telegram,
+                      selected: _selected == InquiryType.telegram,
+                      onTap: () => setState(() => _selected = InquiryType.telegram),
+                    ).expand(),
+                    16.width,
+                    _Item(
+                      key: const ValueKey(InquiryType.facebook),
+                      icon: ic_facebook_colored,
+                      title: locale.facebook,
+                      selected: _selected == InquiryType.facebook,
+                      onTap: () => setState(() => _selected = InquiryType.facebook),
+                    ).expand(),
+                  ],
+                ),
           24.height,
           AppButton(
             text: locale.select,
@@ -121,4 +147,4 @@ class _Item extends StatelessWidget {
   }
 }
 
-enum InquiryType { telegram, messenger }
+enum InquiryType { telegram, facebook, zalo, facebookVN }

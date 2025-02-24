@@ -36,8 +36,7 @@ class LanguageVi extends BaseLanguage {
   String get welcomeToGrowTokyo => 'Chào mừng đến với growTokyo!';
 
   @override
-  String get createYourAccountFor =>
-      'Tạo Tài Khoản của Bạn để Trải Nghiệm Tốt Hơn';
+  String get createYourAccountFor => 'Tạo Tài Khoản của Bạn để Trải Nghiệm Tốt Hơn';
 
   @override
   String get firstName => 'Tên';
@@ -100,8 +99,7 @@ class LanguageVi extends BaseLanguage {
   String get otpVerification => 'Xác minh OTP';
 
   @override
-  String get checkYourMailAnd =>
-      'Kiểm tra Email của bạn và nhập mã bạn nhận được';
+  String get checkYourMailAnd => 'Kiểm tra Email của bạn và nhập mã bạn nhận được';
 
   @override
   String get didNotGetTheOtp => 'Không nhận được mã OTP?';
@@ -123,8 +121,7 @@ class LanguageVi extends BaseLanguage {
   String get resetPassword => 'Đặt lại mật khẩu';
 
   @override
-  String get areYouSureWantToPerformThisAction =>
-      'Bạn có chắc muốn thực hiện hành động này không?';
+  String get areYouSureWantToPerformThisAction => 'Bạn có chắc muốn thực hiện hành động này không?';
 
   @override
   String get yes => 'Có';
@@ -148,8 +145,7 @@ class LanguageVi extends BaseLanguage {
   String get changePassword => 'Thay Đổi Mật Khẩu';
 
   @override
-  String get newPasswordsMustBeDifferent =>
-      'Mật khẩu mới phải khác với mật khẩu trước đó';
+  String get newPasswordsMustBeDifferent => 'Mật khẩu mới phải khác với mật khẩu trước đó';
 
   @override
   String get oldPassword => 'Mật Khẩu Cũ';
@@ -191,8 +187,7 @@ class LanguageVi extends BaseLanguage {
   String get signInFailed => 'Đăng nhập thất bại';
 
   @override
-  String get appleSigInIsNotAvailable =>
-      'Apple SignIn không khả dụng cho thiết bị của bạn';
+  String get appleSigInIsNotAvailable => 'Apple SignIn không khả dụng cho thiết bị của bạn';
 
   @override
   String get emailAddressIsRequiredUpdateAppleAccount =>
@@ -206,8 +201,7 @@ class LanguageVi extends BaseLanguage {
       'Tài khoản của bạn đã sẵn sàng để sử dụng. Hãy thưởng thức dịch vụ của và chuyên gia của chúng tôi';
 
   @override
-  String get yourPassWorResetSuccessfully =>
-      'Thiết lập lại mật khẩu thành công';
+  String get yourPassWorResetSuccessfully => 'Thiết lập lại mật khẩu thành công';
 
   @override
   String get done => 'Hoàn tất';
@@ -273,8 +267,8 @@ class LanguageVi extends BaseLanguage {
   String get yourReferralCode => 'Mã giới thiệu của bạn';
 
   @override
-  String shareReferralCode(code, downloadUrl, discountPercentage) =>
-      'Với ứng dụng tuyệt vời này, việc đặt lịch cắt tóc đã dễ dàng hơn rất nhiều! Tải xuống ứng dụng tại đây $downloadUrl và sử dụng mã $code để nhận $discountPercentage% giảm giá.';
+  String shareReferralCode(code, discountPercentage) =>
+      'Check out this amazing app! It has made booking a haircut much easier. Use my code $code to receive $discountPercentage% discount.';
 
   @override
   String get rewardHistory => 'Lịch sử phần thưởng';
@@ -295,16 +289,14 @@ class LanguageVi extends BaseLanguage {
   String get referralStep1 => 'Chia sẻ mã giới thiệu của bạn với bạn bè.';
 
   @override
-  String get referralStep2 =>
-      'Bạn bè của bạn đặt lịch hẹn và áp dụng mã của bạn để nhận giảm giá.';
+  String get referralStep2 => 'Bạn bè của bạn đặt lịch hẹn và áp dụng mã của bạn để nhận giảm giá.';
 
   @override
   String get referralStep3 =>
       'Sau khi đặt lịch của bạn bè hoàn thành, bạn sẽ nhận được điểm thưởng làm phần thưởng.';
 
   @override
-  String get referralStepNote =>
-      'Mỗi mã giới thiệu chỉ có thể sử dụng một lần cho mỗi người.';
+  String get referralStepNote => 'Mỗi mã giới thiệu chỉ có thể sử dụng một lần cho mỗi người.';
 
   @override
   String get addReferralCode => 'Thêm Mã Giới Thiệu';
@@ -328,8 +320,7 @@ class LanguageVi extends BaseLanguage {
   String get inquiry => 'Yêu cầu';
 
   @override
-  String get inquiryMessage =>
-      'Vui lòng chọn ứng dụng bạn muốn trò chuyện với chúng tôi.';
+  String get inquiryMessage => 'Vui lòng chọn ứng dụng bạn muốn trò chuyện với chúng tôi.';
 
   @override
   String get telegram => 'Telegram';
@@ -356,8 +347,7 @@ class LanguageVi extends BaseLanguage {
   String get confirmBooking => 'Xác nhận Đặt lịch';
 
   @override
-  String get doYouWantToConfirmBooking =>
-      'Bạn có muốn xác nhận đặt lịch này không?';
+  String get doYouWantToConfirmBooking => 'Bạn có muốn xác nhận đặt lịch này không?';
 
   @override
   String get yourInformation => 'Thông tin của bạn';
@@ -450,8 +440,7 @@ class LanguageVi extends BaseLanguage {
   String get viewSchedule => 'Xem lịch trình';
 
   @override
-  String get pleaseChooseYourStylist =>
-      'Vui lòng chọn nhà tạo mẫu của bạn trước';
+  String get pleaseChooseYourStylist => 'Vui lòng chọn nhà tạo mẫu của bạn trước';
 
   @override
   String get services => 'Dịch vụ';
@@ -505,8 +494,7 @@ class LanguageVi extends BaseLanguage {
   String get noReviewsFound => 'Không tìm thấy đánh giá';
 
   @override
-  String get yourReviewsWillBeAppearedHere =>
-      'Đánh giá của bạn sẽ xuất hiện ở đây';
+  String get yourReviewsWillBeAppearedHere => 'Đánh giá của bạn sẽ xuất hiện ở đây';
 
   @override
   String get call => 'Gọi';
@@ -527,8 +515,7 @@ class LanguageVi extends BaseLanguage {
   String get noCategoryFound => 'Không tìm thấy danh mục';
 
   @override
-  String get pressBackAgainToExitApp =>
-      'Nhấn back một lần nữa để thoát ứng dụng';
+  String get pressBackAgainToExitApp => 'Nhấn back một lần nữa để thoát ứng dụng';
 
   @override
   String get home => 'Trang chủ';
@@ -594,8 +581,7 @@ class LanguageVi extends BaseLanguage {
   String get noNotifications => 'Không có thông báo';
 
   @override
-  String get weLlNotifyYouOnce =>
-      "Chúng tôi sẽ thông báo cho bạn khi có thông tin mới";
+  String get weLlNotifyYouOnce => "Chúng tôi sẽ thông báo cho bạn khi có thông tin mới";
 
   @override
   String get searchForServices => 'Tìm kiếm dịch vụ';
@@ -726,8 +712,7 @@ class LanguageVi extends BaseLanguage {
   String get ratingIsRequired => 'Đánh giá là bắt buộc';
 
   @override
-  String get timeSlotBookedMessage =>
-      'đã được đặt! Vui lòng chọn một khung giờ khác';
+  String get timeSlotBookedMessage => 'đã được đặt! Vui lòng chọn một khung giờ khác';
 
   @override
   String get branchName => 'Tên Chi Nhánh';
@@ -777,12 +762,10 @@ class LanguageVi extends BaseLanguage {
       ' Đừng bỏ lỡ cơ hội để tiết kiệm lớn cho các dịch vụ yêu thích của bạn';
 
   @override
-  String get earnPointsByCompletingServices =>
-      'Kiếm điểm bằng cách hoàn thành dịch vụ';
+  String get earnPointsByCompletingServices => 'Kiếm điểm bằng cách hoàn thành dịch vụ';
 
   @override
-  String get walkThrough3subTitle =>
-      'Chương trình điểm thưởng cho Ưu đãi Độc quyền!';
+  String get walkThrough3subTitle => 'Chương trình điểm thưởng cho Ưu đãi Độc quyền!';
 
   @override
   String get skip => 'Bỏ qua';
@@ -823,8 +806,7 @@ class LanguageVi extends BaseLanguage {
       'Tôi đã đọc phần miễn trừ trách nhiệm và đồng ý với các điều khoản và điều kiện';
 
   @override
-  String get pleaseAcceptTermsAndConditions =>
-      'Vui lòng chấp nhận các điều khoản và điều kiện';
+  String get pleaseAcceptTermsAndConditions => 'Vui lòng chấp nhận các điều khoản và điều kiện';
 
   @override
   String get description => 'Mô tả';
@@ -902,8 +884,7 @@ class LanguageVi extends BaseLanguage {
   String get somethingWentWrong => 'Đã Xảy Ra Lỗi';
 
   @override
-  String get yourInternetIsNotWorking =>
-      'Kết nối Internet của bạn không hoạt động';
+  String get yourInternetIsNotWorking => 'Kết nối Internet của bạn không hoạt động';
 
   @override
   String get slotUnavailable => 'Khoảng thời gian này không khả dụng';
@@ -938,12 +919,10 @@ class LanguageVi extends BaseLanguage {
   String get profileUpdatedSuccessfully => 'Cập nhật hồ sơ thành công';
 
   @override
-  String get oldPasswordDoesNotMatchMessage =>
-      "Mật khẩu cũ của bạn không đúng!";
+  String get oldPasswordDoesNotMatchMessage => "Mật khẩu cũ của bạn không đúng!";
 
   @override
-  String get bookingSuccessfullyUpdateMessage =>
-      'Đặt chỗ đã được cập nhật thành công';
+  String get bookingSuccessfullyUpdateMessage => 'Đặt chỗ đã được cập nhật thành công';
 
   @override
   String get newUpdate => 'Cập nhật mới';
@@ -1084,15 +1063,13 @@ class LanguageVi extends BaseLanguage {
   String get deliverHere => 'Giao hàng tại đây';
 
   @override
-  String get areYouSureYouWantToDelete =>
-      'Bạn có chắc chắn muốn xóa địa chỉ này không';
+  String get areYouSureYouWantToDelete => 'Bạn có chắc chắn muốn xóa địa chỉ này không';
 
   @override
   String get addressDeleteSuccessfully => 'Xóa địa chỉ thành công';
 
   @override
-  String get weAreNotShipping =>
-      'Chúng tôi hiện không giao hàng đến thành phố của bạn';
+  String get weAreNotShipping => 'Chúng tôi hiện không giao hàng đến thành phố của bạn';
 
   @override
   String get deliveryCharge => 'Phí giao hàng';
@@ -1277,8 +1254,7 @@ class LanguageVi extends BaseLanguage {
   String get choosePaymentMethod => 'Chọn phương thức thanh toán';
 
   @override
-  String get chooseYourConvenientPayment =>
-      'Chọn Phương Thức Thanh Toán Thuận Tiện Của Bạn.';
+  String get chooseYourConvenientPayment => 'Chọn Phương Thức Thanh Toán Thuận Tiện Của Bạn.';
 
   @override
   String get placeOrder => 'Đặt hàng';
@@ -1349,4 +1325,10 @@ class LanguageVi extends BaseLanguage {
 
   @override
   String get searchOrder => 'Tìm kiếm đơn hàng';
+
+  @override
+  String get zalo => "Zalo";
+
+  @override
+  String get product => "Sản phẩm";
 }

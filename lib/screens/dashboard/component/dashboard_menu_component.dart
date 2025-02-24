@@ -4,13 +4,13 @@ import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/screens/coupon/view/coupon_list_screen.dart';
 import 'package:grow_tokyo_app/screens/dashboard/component/inquiry_dialog.dart';
 import 'package:grow_tokyo_app/screens/dashboard/fragment/notification_fragment.dart';
+import 'package:grow_tokyo_app/screens/dashboard/view/dashboard_screen.dart';
 import 'package:grow_tokyo_app/screens/notifications/notification_repository.dart';
 import 'package:grow_tokyo_app/screens/points/view/points_screen.dart';
 import 'package:grow_tokyo_app/screens/referral/view/referral_screen.dart';
 import 'package:grow_tokyo_app/utils/common_base.dart';
 import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 class DashboardMenuComponent extends StatelessWidget {
   const DashboardMenuComponent({super.key});
@@ -53,10 +53,11 @@ class DashboardMenuComponent extends StatelessWidget {
         Row(
           children: [
             _MenuItem(
-              icon: dashboard_menu_fbecsite,
-              title: locale.fbEcSite,
-              onTap: () => launchUrlString(appStore.socialData.facebookLink),
-            ).expand(),
+                icon: dashboard_menu_fbecsite,
+                title: locale.product,
+                onTap: () {
+                  DashboardScreen.of(context)?.onTabClick(2);
+                }).expand(),
             16.width,
             _MenuItem(
               icon: dashboard_menu_inquiry,
@@ -175,9 +176,8 @@ class _NotificationMenuItemState extends State<_NotificationMenuItem> {
                 child: SizedBox(
                   height: 16,
                   width: 16,
-                  child: FittedBox(
-                      child: Text(count.toString(),
-                          style: boldTextStyle(color: white))),
+                  child:
+                      FittedBox(child: Text(count.toString(), style: boldTextStyle(color: white))),
                 ),
               ),
       );

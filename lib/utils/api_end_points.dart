@@ -76,4 +76,5 @@ class APIEndPoints {
   static const String updateReview = 'update-review';
   static const String removeReview = 'remove-review';
   static const String pages = 'pages';
+  static const String checkAvailability = 'check-availability';
 }

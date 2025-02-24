@@ -26,9 +26,9 @@ class BuildConfig {
   static String get blogPostHost {
     switch (appFlavor) {
       case AppFlavor.prod:
-        return 'demo.lectron.vn';
+        return 'hairmake-grow-ec.camboinfo.com';
       default:
-        return 'demo.lectron.vn';
+        return 'hairmake-grow-ec.camboinfo.com';
     }
   }
 }

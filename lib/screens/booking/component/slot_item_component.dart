@@ -21,7 +21,8 @@ class SlotItemComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isSlotAvailable = timeSlot.slotAvailability(selectedHorizontalDate);
+    bool isSlotAvailable =
+        timeSlot.slotAvailability(selectedHorizontalDate) && timeSlot.isAvailable;
     return GestureDetector(
       onTap: () async {
         onTap?.call();

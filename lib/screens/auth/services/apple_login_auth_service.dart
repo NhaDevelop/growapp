@@ -26,7 +26,6 @@ class AppleLoginAuthService {
 
           final authResult = await auth.signInWithCredential(credential);
           final user = authResult.user!;
-
           log('User:- $user');
           log('result :- ${result.credential!.email}');
           if (result.credential!.email != null) {

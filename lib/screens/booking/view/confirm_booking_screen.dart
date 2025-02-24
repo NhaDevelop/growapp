@@ -38,6 +38,11 @@ class ConfirmBookingScreen extends StatefulWidget {
 class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+  bool get _shouldShowPaymentDetails =>
+      bookingRequestStore.referralCode != null ||
+      bookingRequestStore.couponCode != null ||
+      bookingRequestStore.useCredit;
+
   Future<void> saveBookingAndPayment() async {
     if (widget.isGuestBooking) {
       final isFormValidate = formKey.currentState?.validate() ?? false;
@@ -72,37 +77,31 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
     final dateString = "$tempDate $tempTime";
     final initialDateTime = DateTime.parse(dateString);
 
-    bookingRequestStore.selectedServiceList
-        .validate()
-        .forEachIndexed((element, index) {
+    bookingRequestStore.selectedServiceList.validate().forEachIndexed((element, index) {
       if (index == 0) {
-        element.startDateTime = formatDate(initialDateTime.toString(),
-            format: DateFormatConst.NEW_FORMAT);
+        element.startDateTime =
+            formatDate(initialDateTime.toString(), format: DateFormatConst.NEW_FORMAT);
         element.previousTime = initialDateTime;
       } else {
         ServiceListData previousData =
             bookingRequestStore.selectedServiceList.validate()[index - 1];
         element.startDateTime = formatDate(
-            previousData.previousTime!
-                .add(previousData.durationMin.minutes)
-                .toString(),
+            previousData.previousTime!.add(previousData.durationMin.minutes).toString(),
             format: DateFormatConst.NEW_FORMAT);
-        element.previousTime =
-            previousData.previousTime!.add(previousData.durationMin.minutes);
+        element.previousTime = previousData.previousTime!.add(previousData.durationMin.minutes);
       }
     });
 
     final body = bookingRequestStore.toJson(
-      dateTime: formatDate(initialDateTime.toString(),
-          format: DateFormatConst.NEW_FORMAT),
+      dateTime: formatDate(initialDateTime.toString(), format: DateFormatConst.NEW_FORMAT),
       isRescheduleBooking: widget.isReschedule,
     );
 
-    final bookingJson = widget.isGuestBooking
-        ? await saveBookingGuestAPI(body)
-        : await saveBookingAPI(body);
-
+    final bookingJson =
+        widget.isGuestBooking ? await saveBookingGuestAPI(body) : await saveBookingAPI(body);
+  
     bookingRequestStore.setBookingIdInRequest(bookingJson[CommonKey.bookingId]);
+
   }
 
   void showBookingCompleteDialog({bool isGuestBooking = false}) {
@@ -118,8 +117,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
             ? () => finish(context)
             : () {
                 finish(context);
-                const DashboardScreen(pageIndex: 1)
-                    .launch(context, isNewTask: true);
+                const DashboardScreen(pageIndex: 1).launch(context, isNewTask: true);
               },
       ),
     );
@@ -154,11 +152,9 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                           widget.isGuestBooking
                               ? AppTextField(
                                   initialValue: bookingRequestStore.guestName,
-                                  errorThisFieldRequired:
-                                      locale.thisFieldIsRequired,
+                                  errorThisFieldRequired: locale.thisFieldIsRequired,
                                   textFieldType: TextFieldType.NAME,
-                                  decoration: inputDecoration(context,
-                                      hint: locale.name),
+                                  decoration: inputDecoration(context, hint: locale.name),
                                   onChanged: bookingRequestStore.setGuestName,
                                 )
                               : _RowData(
@@ -169,11 +165,9 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                           widget.isGuestBooking
                               ? AppTextField(
                                   initialValue: bookingRequestStore.guestPhone,
-                                  errorThisFieldRequired:
-                                      locale.thisFieldIsRequired,
+                                  errorThisFieldRequired: locale.thisFieldIsRequired,
                                   textFieldType: TextFieldType.PHONE,
-                                  decoration: inputDecoration(context,
-                                      hint: locale.contactNumber),
+                                  decoration: inputDecoration(context, hint: locale.contactNumber),
                                   onChanged: bookingRequestStore.setGuestPhone,
                                 )
                               : _RowData(
@@ -228,8 +222,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                     child: Column(
                       children: bookingRequestStore.selectedServiceList
                           .map(
-                            (e) => ServiceItemComponent(
-                                    key: ValueKey(e.id), service: e)
+                            (e) => ServiceItemComponent(key: ValueKey(e.id), service: e)
                                 .paddingSymmetric(vertical: 4),
                           )
                           .toList(),
@@ -238,8 +231,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                   12.height,
                   AppTextField(
                     textFieldType: TextFieldType.MULTILINE,
-                    decoration:
-                        inputDecoration(context, hint: locale.serviceNote),
+                    decoration: inputDecoration(context, hint: locale.serviceNote),
                     onChanged: bookingRequestStore.setNoteInRequest,
                   ).cornerRadiusWithClipRRect(defaultRadius),
                   16.height,
@@ -249,15 +241,11 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                       child: _CodeItem(
                         onTap: () => bookingRequestStore.couponCode != null
                             ? bookingRequestStore.removeCouponCodeInRequest()
-                            : const AddCouponScreen()
-                                .launch<CouponData>(context)
-                                .then((val) {
+                            : const AddCouponScreen().launch<CouponData>(context).then((val) {
                                 if (val != null) {
+                                  bookingRequestStore.setCouponCodeInRequest(val.code);
                                   bookingRequestStore
-                                      .setCouponCodeInRequest(val.code);
-                                  bookingRequestStore
-                                      .setCouponRewardPercentageInRequest(
-                                          val.discountPercentage);
+                                      .setCouponRewardPercentageInRequest(val.discountPercentage);
                                 }
                               }),
                         title: locale.coupon,
@@ -276,15 +264,12 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                             : showModalBottomSheet<Map<String, dynamic>>(
                                 context: context,
                                 isScrollControlled: true,
-                                builder: (context) =>
-                                    const AddReferralCodeModal(),
+                                builder: (context) => const AddReferralCodeModal(),
                               ).then((map) {
                                 if (map == null) return;
-                                bookingRequestStore.setReferralCodeInRequest(
-                                    map['referralCode']);
+                                bookingRequestStore.setReferralCodeInRequest(map['referralCode']);
                                 bookingRequestStore
-                                    .setReferralRewardPercentageInRequest(
-                                        map['rewardPercentage']);
+                                    .setReferralRewardPercentageInRequest(map['rewardPercentage']);
                               }),
                         title: locale.referralCode,
                         actionText: locale.addCode,
@@ -302,62 +287,59 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  locale.usingXPoints(
-                                      userStore.pointAmount.formatAmount()),
+                                  locale.usingXPoints(userStore.pointAmount.formatAmount()),
                                   style: boldTextStyle(),
                                 ),
                                 4.height,
                                 Text(
-                                  locale.youWillSave$X(
-                                      userStore.pointToAmount.formatPrice),
+                                  locale.youWillSave$X(userStore.pointToAmount.formatPrice),
                                   style: secondaryTextStyle(),
                                 ),
                               ],
                             ).expand(),
                             Switch.adaptive(
                               value: bookingRequestStore.useCredit,
-                              onChanged:
-                                  bookingRequestStore.setUseCreditInRequest,
+                              onChanged: bookingRequestStore.setUseCreditInRequest,
                             ),
                           ],
                         );
                       }),
                     ).paddingBottom(16),
-                  Text(locale.paymentDetails, style: secondaryTextStyle()),
-                  12.height,
-                  DefaultCard(
-                    child: Column(
-                      children: [
-                        if (bookingRequestStore.referralCode != null) ...[
-                          _RowData(
-                            title: locale.referralDiscount,
-                            value:
-                                '-${bookingRequestStore.referralRewardPercentage}%',
-                          ),
-                          8.height,
+                  if (_shouldShowPaymentDetails) ...[
+                    Text(locale.paymentDetails, style: secondaryTextStyle()),
+                    12.height,
+                    DefaultCard(
+                      child: Column(
+                        children: [
+                          if (bookingRequestStore.referralCode != null) ...[
+                            _RowData(
+                              title: locale.referralDiscount,
+                              value: '-${bookingRequestStore.referralRewardPercentage}%',
+                            ),
+                            8.height,
+                          ],
+                          if (bookingRequestStore.couponCode != null) ...[
+                            _RowData(
+                              title: locale.couponDiscount,
+                              value: '-${bookingRequestStore.couponRewardPercentage}%',
+                            ),
+                            8.height,
+                          ],
+                          if (bookingRequestStore.useCredit) ...[
+                            _RowData(
+                              title: locale.points,
+                              value: userStore.pointToAmount.formatPrice,
+                            ),
+                            8.height,
+                          ],
+                          // _RowData(
+                          //   title: locale.paymentMethod,
+                          //   value: locale.payAtSalon,
+                          // ),
                         ],
-                        if (bookingRequestStore.couponCode != null) ...[
-                          _RowData(
-                            title: locale.couponDiscount,
-                            value:
-                                '-${bookingRequestStore.couponRewardPercentage}%',
-                          ),
-                          8.height,
-                        ],
-                        if (bookingRequestStore.useCredit) ...[
-                          _RowData(
-                            title: locale.points,
-                            value: userStore.pointToAmount.formatPrice,
-                          ),
-                          8.height,
-                        ],
-                        _RowData(
-                          title: locale.paymentMethod,
-                          value: locale.payAtSalon,
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                   120.height,
                 ],
               ),
@@ -370,8 +352,7 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                 padding: const EdgeInsets.all(16),
                 decoration: boxDecorationWithRoundedCorners(
                   backgroundColor: primaryColor,
-                  borderRadius: radiusOnly(
-                      topLeft: defaultRadius, topRight: defaultRadius),
+                  borderRadius: radiusOnly(topLeft: defaultRadius, topRight: defaultRadius),
                 ),
                 child: AppButton(
                   text: locale.bookNow,
@@ -413,10 +394,7 @@ class _CodeItem extends StatelessWidget {
   final VoidCallback onTap;
 
   const _CodeItem(
-      {required this.title,
-      required this.actionText,
-      required this.value,
-      required this.onTap});
+      {required this.title, required this.actionText, required this.value, required this.onTap});
 
   @override
   Widget build(BuildContext context) {

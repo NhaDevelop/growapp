@@ -3,6 +3,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:grow_tokyo_app/screens/auth/view/sign_in_screen.dart';
 import 'package:grow_tokyo_app/screens/points/view/points_screen.dart';
 import 'package:grow_tokyo_app/utils/colors.dart';
+import 'package:grow_tokyo_app/utils/common_base.dart';
+import 'package:grow_tokyo_app/utils/extensions/list_extensions.dart';
 import 'package:grow_tokyo_app/utils/extensions/num_extensions.dart';
 import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -25,8 +27,7 @@ class DashboardAppBarComponent extends StatefulWidget {
       this.onTapSearch});
 
   @override
-  State<DashboardAppBarComponent> createState() =>
-      _DashboardAppBarComponentState();
+  State<DashboardAppBarComponent> createState() => _DashboardAppBarComponentState();
 }
 
 class _DashboardAppBarComponentState extends State<DashboardAppBarComponent> {
@@ -61,8 +62,7 @@ class _DashboardAppBarComponentState extends State<DashboardAppBarComponent> {
         else
           Container(
             width: context.width(),
-            padding: EdgeInsets.only(
-                left: 21, right: 6, top: context.statusBarHeight),
+            padding: EdgeInsets.only(left: 21, right: 6, top: context.statusBarHeight),
             decoration: boxDecorationWithRoundedCorners(
                 borderRadius: radiusOnly(bottomLeft: 20, bottomRight: 20),
                 backgroundColor: primaryColor),
@@ -73,39 +73,57 @@ class _DashboardAppBarComponentState extends State<DashboardAppBarComponent> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   children: [
+                    Expanded(
+                        child: Row(
+                      children: [
+                        Flexible(
+                          child: Observer(builder: (context) {
+                            return Text(
+                              appStore.isLoggedIn ? userStore.userFullName : locale.helloGuest,
+                              style: boldTextStyle(size: 18, color: Colors.white),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            );
+                          }),
+                        ),
+                        Image.asset(ic_hi, height: 22, fit: BoxFit.cover),
+                      ],
+                    )),
+                    const SizedBox(
+                      width: 8,
+                    ),
                     Observer(builder: (context) {
+                      final currentCountry = countryList()
+                              .firstWhereOrNull((e) => e.countryCode == appStore.countryCode)
+                              ?.name ??
+                          '';
                       return Text(
-                        appStore.isLoggedIn
-                            ? '${locale.hey}, ${userStore.userFullName}'
-                            : locale.helloGuest,
-                        style: boldTextStyle(size: 18, color: Colors.white),
+                        currentCountry,
+                        style: boldTextStyle(
+                          size: 14,
+                          color: Colors.white,
+                        ),
                       );
                     }),
-                    Image.asset(ic_hi, height: 22, fit: BoxFit.cover),
-                    const Spacer(),
                     Observer(
                       builder: (context) => appStore.isLoggedIn
                           ? TextButton(
-                              onPressed: () =>
-                                  const PointsScreen().launch(context),
+                              onPressed: () => const PointsScreen().launch(context),
                               child: Row(
                                 children: [
-                                  Image.asset(ic_crown,
-                                      height: 20, width: 20, color: white),
+                                  Image.asset(ic_crown, height: 20, width: 20, color: white),
                                   8.width,
                                   Text(
                                     userStore.pointAmount.formatAmount(),
-                                    style:
-                                        boldTextStyle(color: white, size: 20),
+                                    style: boldTextStyle(color: white, size: 20),
                                   ),
                                 ],
                               ),
                             )
                           : TextButton(
-                              onPressed: () =>
-                                  const SignInScreen().launch(context),
-                              child: Text(locale.signIn,
-                                  style: boldTextStyle(size: 14, color: white)),
+                              onPressed: () => const SignInScreen().launch(context),
+                              child:
+                                  Text(locale.signIn, style: boldTextStyle(size: 14, color: white)),
                             ),
                     ),
                   ],
@@ -119,8 +137,7 @@ class _DashboardAppBarComponentState extends State<DashboardAppBarComponent> {
           right: 20,
           child: Container(
             width: context.width(),
-            decoration: boxDecorationWithRoundedCorners(
-                backgroundColor: context.cardColor),
+            decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor),
             child: widget.positionWidget,
           ),
         )

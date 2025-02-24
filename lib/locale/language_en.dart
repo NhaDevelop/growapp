@@ -36,8 +36,7 @@ class LanguageEn extends BaseLanguage {
   String get welcomeToGrowTokyo => 'Welcome to growTokyo!';
 
   @override
-  String get createYourAccountFor =>
-      'Create Your Account for Better Experience';
+  String get createYourAccountFor => 'Create Your Account for Better Experience';
 
   @override
   String get firstName => 'First Name';
@@ -70,8 +69,7 @@ class LanguageEn extends BaseLanguage {
   String get signIn => 'Sign In';
 
   @override
-  String get guestBookingMessage =>
-      'Please sign in to save your booking or continue as a guest.';
+  String get guestBookingMessage => 'Please sign in to save your booking or continue as a guest.';
 
   @override
   String get continueAsGuest => 'Continue as Guest';
@@ -123,8 +121,7 @@ class LanguageEn extends BaseLanguage {
   String get resetPassword => 'Reset Password';
 
   @override
-  String get areYouSureWantToPerformThisAction =>
-      'Are you sure want to perform this action?';
+  String get areYouSureWantToPerformThisAction => 'Are you sure want to perform this action?';
 
   @override
   String get yes => 'Yes';
@@ -148,8 +145,7 @@ class LanguageEn extends BaseLanguage {
   String get changePassword => 'Change Password';
 
   @override
-  String get newPasswordsMustBeDifferent =>
-      'New passwords must be different from previous ones';
+  String get newPasswordsMustBeDifferent => 'New passwords must be different from previous ones';
 
   @override
   String get oldPassword => 'Old Password';
@@ -176,8 +172,7 @@ class LanguageEn extends BaseLanguage {
   String get noUserFound => 'No user found';
 
   @override
-  String get otpInvalidMessage =>
-      'The entered code is invalid, please try again';
+  String get otpInvalidMessage => 'The entered code is invalid, please try again';
 
   @override
   String get pleaseContactWithAdmin => 'Please contact with Admin';
@@ -192,8 +187,7 @@ class LanguageEn extends BaseLanguage {
   String get signInFailed => 'Sign in failed';
 
   @override
-  String get appleSigInIsNotAvailable =>
-      'Apple SignIn is not available for your device';
+  String get appleSigInIsNotAvailable => 'Apple SignIn is not available for your device';
 
   @override
   String get emailAddressIsRequiredUpdateAppleAccount =>
@@ -273,8 +267,8 @@ class LanguageEn extends BaseLanguage {
   String get yourReferralCode => 'Your Referral Code';
 
   @override
-  String shareReferralCode(code, downloadUrl, discountPercentage) =>
-      'Check out this awesome app. It has made booking a haircut so much easier! Download it here $downloadUrl and use my code $code to receive $discountPercentage% discount.';
+  String shareReferralCode(code, discountPercentage) =>
+      'Check out this amazing app! It has made booking a haircut much easier. Use my code $code to receive $discountPercentage% discount.';
 
   @override
   String get rewardHistory => 'Reward History';
@@ -303,8 +297,7 @@ class LanguageEn extends BaseLanguage {
       'After your friend\'s booking is completed, you will receive points as a reward.';
 
   @override
-  String get referralStepNote =>
-      'Each referral code can only be used once per people.';
+  String get referralStepNote => 'Each referral code can only be used once per people.';
 
   @override
   String get addReferralCode => 'Add Referral Code';
@@ -328,8 +321,7 @@ class LanguageEn extends BaseLanguage {
   String get inquiry => 'Inquiry';
 
   @override
-  String get inquiryMessage =>
-      'Please select the app you want to chat with us.';
+  String get inquiryMessage => 'Please select the app you want to chat with us.';
 
   @override
   String get telegram => 'Telegram';
@@ -356,8 +348,7 @@ class LanguageEn extends BaseLanguage {
   String get confirmBooking => 'Confirm Booking';
 
   @override
-  String get doYouWantToConfirmBooking =>
-      'Do you want to confirm this booking?';
+  String get doYouWantToConfirmBooking => 'Do you want to confirm this booking?';
 
   @override
   String get yourInformation => 'Your Information';
@@ -411,8 +402,7 @@ class LanguageEn extends BaseLanguage {
   String get goToBookings => 'Go to Bookings';
 
   @override
-  String get bookingSuccessMessage =>
-      'Your booking has been successfully booked';
+  String get bookingSuccessMessage => 'Your booking has been successfully booked';
 
   @override
   String get bookingSuccessful => 'Booking Successful!';
@@ -505,8 +495,7 @@ class LanguageEn extends BaseLanguage {
   String get noReviewsFound => 'No Reviews Found';
 
   @override
-  String get yourReviewsWillBeAppearedHere =>
-      'Your reviews will be appeared here';
+  String get yourReviewsWillBeAppearedHere => 'Your reviews will be appeared here';
 
   @override
   String get call => 'Call';
@@ -593,8 +582,7 @@ class LanguageEn extends BaseLanguage {
   String get noNotifications => 'No Notifications';
 
   @override
-  String get weLlNotifyYouOnce =>
-      "We'll notify you once we have something for you";
+  String get weLlNotifyYouOnce => "We'll notify you once we have something for you";
 
   @override
   String get searchForServices => 'Search For Services';
@@ -682,8 +670,7 @@ class LanguageEn extends BaseLanguage {
   String get salon => 'Salon';
 
   @override
-  String get weProvideYouBestServiceMessage =>
-      'We Provide You Best services and best';
+  String get weProvideYouBestServiceMessage => 'We Provide You Best services and best';
 
   @override
   String get userExperience => 'user experience';
@@ -725,8 +712,7 @@ class LanguageEn extends BaseLanguage {
   String get ratingIsRequired => 'Rating is required';
 
   @override
-  String get timeSlotBookedMessage =>
-      'is already booked! Please choose another timeslot';
+  String get timeSlotBookedMessage => 'is already booked! Please choose another timeslot';
 
   @override
   String get branchName => 'Branch Name';
@@ -776,12 +762,10 @@ class LanguageEn extends BaseLanguage {
       ' Don\'t miss out on the chance to save big on your favorite services';
 
   @override
-  String get earnPointsByCompletingServices =>
-      'Earn Points by completing services';
+  String get earnPointsByCompletingServices => 'Earn Points by completing services';
 
   @override
-  String get walkThrough3subTitle =>
-      'Loyalty Points Program for Exclusive Discounts!';
+  String get walkThrough3subTitle => 'Loyalty Points Program for Exclusive Discounts!';
 
   @override
   String get skip => 'Skip';
@@ -822,8 +806,7 @@ class LanguageEn extends BaseLanguage {
       'I have read the disclaimer and agree upon the terms and conditions';
 
   @override
-  String get pleaseAcceptTermsAndConditions =>
-      'Please accept terms and conditions';
+  String get pleaseAcceptTermsAndConditions => 'Please accept terms and conditions';
 
   @override
   String get description => 'Description';
@@ -859,8 +842,7 @@ class LanguageEn extends BaseLanguage {
   String get goBack => 'Go Back';
 
   @override
-  String get noStaffAvailableForBranchMessage =>
-      'No staff available for selected service!';
+  String get noStaffAvailableForBranchMessage => 'No staff available for selected service!';
 
   @override
   String get tryToChangeYourService => 'Try to Change Your Service';
@@ -888,8 +870,7 @@ class LanguageEn extends BaseLanguage {
   String get taxIncluded => 'tax included';
 
   @override
-  String get demoUserCannotBeGrantedForThis =>
-      'Demo user cannot be granted for this action';
+  String get demoUserCannotBeGrantedForThis => 'Demo user cannot be granted for this action';
 
   @override
   String get payNow => 'Pay Now';
@@ -913,8 +894,7 @@ class LanguageEn extends BaseLanguage {
   String get goToBookingDetail => 'Go To Booking Detail';
 
   @override
-  String get yourPaymentIsPaidSuccessfullyMessage =>
-      'Your payment is paid successfully with';
+  String get yourPaymentIsPaidSuccessfullyMessage => 'Your payment is paid successfully with';
 
   @override
   String get paymentSuccessful => 'Payment Successful!';
@@ -923,8 +903,7 @@ class LanguageEn extends BaseLanguage {
   String get edit => 'Edit';
 
   @override
-  String get bookingTimeSlotChangeMessage =>
-      'Do you want to change the Time Slot of this booking?';
+  String get bookingTimeSlotChangeMessage => 'Do you want to change the Time Slot of this booking?';
 
   @override
   String get change => 'Change';
@@ -936,12 +915,10 @@ class LanguageEn extends BaseLanguage {
   String get profileUpdatedSuccessfully => 'Profile Updated Successfully';
 
   @override
-  String get oldPasswordDoesNotMatchMessage =>
-      "Your old password doesn't correct!";
+  String get oldPasswordDoesNotMatchMessage => "Your old password doesn't correct!";
 
   @override
-  String get bookingSuccessfullyUpdateMessage =>
-      'The booking has been successfully updated';
+  String get bookingSuccessfullyUpdateMessage => 'The booking has been successfully updated';
 
   @override
   String get newUpdate => 'New Update';
@@ -994,8 +971,7 @@ class LanguageEn extends BaseLanguage {
   String get paytm => 'Paytm';
 
   @override
-  String get areYouSureYouWantToRemove =>
-      'Are you sure you want to remove this item';
+  String get areYouSureYouWantToRemove => 'Are you sure you want to remove this item';
 
   @override
   String get remove => 'Remove';
@@ -1074,8 +1050,7 @@ class LanguageEn extends BaseLanguage {
   String get opps => 'Opps';
 
   @override
-  String get looksLikeYouHave =>
-      'looks like you have not added any address yet.';
+  String get looksLikeYouHave => 'looks like you have not added any address yet.';
 
   @override
   String get primary => 'primary';
@@ -1084,8 +1059,7 @@ class LanguageEn extends BaseLanguage {
   String get deliverHere => 'Deliver Here';
 
   @override
-  String get areYouSureYouWantToDelete =>
-      'Are you sure you want to delete this address';
+  String get areYouSureYouWantToDelete => 'Are you sure you want to delete this address';
 
   @override
   String get addressDeleteSuccessfully => 'Address delete successfully';
@@ -1136,8 +1110,7 @@ class LanguageEn extends BaseLanguage {
   String get doYouWantToCancel => 'Do you want to cancel this order';
 
   @override
-  String get theOrderHasBeenCancelled =>
-      'The order has been cancelled successfully.';
+  String get theOrderHasBeenCancelled => 'The order has been cancelled successfully.';
 
   @override
   String get noOrdersFound => 'No Orders Found';
@@ -1256,8 +1229,7 @@ class LanguageEn extends BaseLanguage {
   String get searchForProduct => 'Search For Product';
 
   @override
-  String get atThisTimeThere =>
-      'At this time, there are no products or categories available';
+  String get atThisTimeThere => 'At this time, there are no products or categories available';
 
   @override
   String get goToCart => 'GO TO CART';
@@ -1278,8 +1250,7 @@ class LanguageEn extends BaseLanguage {
   String get choosePaymentMethod => 'Choose Payment Method';
 
   @override
-  String get chooseYourConvenientPayment =>
-      'Choose Your Convenient Payment Option.';
+  String get chooseYourConvenientPayment => 'Choose Your Convenient Payment Option.';
 
   @override
   String get placeOrder => 'Place Order';
@@ -1350,4 +1321,10 @@ class LanguageEn extends BaseLanguage {
 
   @override
   String get searchOrder => 'Search Order';
+
+  @override
+  String get zalo => "Zalo";
+
+  @override
+  String get product => "Product";
 }

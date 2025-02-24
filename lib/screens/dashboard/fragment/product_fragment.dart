@@ -6,6 +6,7 @@ import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/utils/build_config.dart';
 import 'package:grow_tokyo_app/utils/constants.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProductsFragment extends StatelessWidget {
   ProductsFragment({super.key});
@@ -78,6 +79,21 @@ class ProductsFragment extends StatelessWidget {
         appStore.setLoading(true);
       },
       onWebViewCreated: _loadPage,
+      shouldOverrideUrlLoading: (controller, navigationAction) async {
+        final url = await controller.getUrl();
+        final deepLink = navigationAction.request.url;
+        if (deepLink != null &&
+            url != navigationAction.request.url &&
+            (deepLink.scheme != 'https' && deepLink.scheme != 'http')) {
+          try {
+            await launchUrl(deepLink,
+                mode: LaunchMode.externalNonBrowserApplication);
+          } catch (_) {}
+          return NavigationActionPolicy.CANCEL;
+        }
+
+        return NavigationActionPolicy.ALLOW;
+      },
     );
   }
 

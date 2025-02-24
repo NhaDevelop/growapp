@@ -3,9 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:grow_tokyo_app/components/app_scaffold.dart';
 import 'package:grow_tokyo_app/components/bottom_sheet_button.dart';
 import 'package:grow_tokyo_app/components/custom_stepper.dart';
-import 'package:grow_tokyo_app/screens/experts/component/employee_group_component.dart';
 import 'package:grow_tokyo_app/screens/experts/component/employee_list_component_new.dart';
-import 'package:grow_tokyo_app/screens/experts/model/employee_group_model.dart';
 import 'package:grow_tokyo_app/utils/common_base.dart';
 import 'package:grow_tokyo_app/utils/constants.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -43,12 +41,6 @@ class _BookingStep1ComponentState extends State<BookingStep1Component> {
     init();
   }
 
-  List<EmployeeGroupModel> get anyStylistOptions {
-    return employeeGroups()
-        .where((e) => appStore.branchAnyStylistOptions.contains(e.nationality))
-        .toList();
-  }
-
   void init() async {
     future = getEmployeeList(
         branchId: appStore.branchId,
@@ -64,25 +56,19 @@ class _BookingStep1ComponentState extends State<BookingStep1Component> {
       Fluttertoast.cancel();
       bookingRequestStore.setEmployeeIdInRequest(employeeId.validate());
 
-      final employeeName = expertList
-          .firstWhere((element) => element.id == employeeId)
-          .fullName
-          .validate();
+      final employeeName =
+          expertList.firstWhere((element) => element.id == employeeId).fullName.validate();
       bookingRequestStore.setEmployeeNameInRequest(employeeName);
 
-      customStepperController.nextPage(
-          duration: 200.milliseconds, curve: Curves.easeOut);
+      customStepperController.nextPage(duration: 200.milliseconds, curve: Curves.easeOut);
     } else if (groupId != UNSELECTED_EMPLOYEE_GROUP_ID) {
       Fluttertoast.cancel();
       bookingRequestStore.setEmployeeGroupIdInRequest(groupId);
-      final groupName = employeeGroups()
-          .firstWhere((element) => element.nationality == groupId)
-          .name
-          .validate();
+      final groupName =
+          employeeGroups().firstWhere((element) => element.nationality == groupId).name.validate();
       bookingRequestStore.setEmployeeNameInRequest(groupName);
 
-      customStepperController.nextPage(
-          duration: 200.milliseconds, curve: Curves.easeOut);
+      customStepperController.nextPage(duration: 200.milliseconds, curve: Curves.easeOut);
     } else {
       toast(locale.pleaseChooseYourStylist);
     }
@@ -134,8 +120,7 @@ class _BookingStep1ComponentState extends State<BookingStep1Component> {
                     );
                   }
                   return AnimatedScrollView(
-                    padding: const EdgeInsets.only(
-                        left: 20, right: 20, top: 70, bottom: 110),
+                    padding: const EdgeInsets.only(left: 20, right: 20, top: 70, bottom: 110),
                     physics: const AlwaysScrollableScrollPhysics(),
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -155,17 +140,17 @@ class _BookingStep1ComponentState extends State<BookingStep1Component> {
                               selected: employeeId == data.id,
                             ),
                           ).paddingTop(16)),
-                      ...anyStylistOptions.map(
-                        (e) => EmployeeGroupComponent(
-                          data: e,
-                          selected: e.nationality == groupId,
-                          onTap: () {
-                            groupId = e.nationality;
-                            employeeId = UNSELECTED_EMPLOYEE_ID;
-                            setState(() {});
-                          },
-                        ).paddingTop(16),
-                      ),
+                      // ...anyStylistOptions.map(
+                      //   (e) => EmployeeGroupComponent(
+                      //     data: e,
+                      //     selected: e.nationality == groupId,
+                      //     onTap: () {
+                      //       groupId = e.nationality;
+                      //       employeeId = UNSELECTED_EMPLOYEE_ID;
+                      //       setState(() {});
+                      //     },
+                      //   ).paddingTop(16),
+                      // ),
                     ],
                     onSwipeRefresh: () async {
                       page = 1;
@@ -198,9 +183,7 @@ class _BookingStep1ComponentState extends State<BookingStep1Component> {
               ),
             ],
           ),
-          Observer(
-              builder: (context) =>
-                  const LoaderWidget().visible(appStore.isLoading)),
+          Observer(builder: (context) => const LoaderWidget().visible(appStore.isLoading)),
         ],
       ),
     );

@@ -179,7 +179,7 @@ abstract class BaseLanguage {
   String get yourReferralCode;
 
   String shareReferralCode(
-      String code, String downloadUrl, String discountPercentage);
+      String code, String discountPercentage);
 
   String get rewardHistory;
 
@@ -872,4 +872,8 @@ abstract class BaseLanguage {
   String get apply;
 
   String get searchOrder;
+
+  String get zalo;
+
+  String get product;
 }

@@ -20,8 +20,7 @@ class BookingDetailScreen extends StatefulWidget {
   final int bookingId;
   final String? bookingStatus;
 
-  const BookingDetailScreen(
-      {super.key, required this.bookingId, this.bookingStatus});
+  const BookingDetailScreen({super.key, required this.bookingId, this.bookingStatus});
 
   @override
   State<BookingDetailScreen> createState() => _BookingDetailScreenState();
@@ -49,8 +48,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
   BookingDetailResponse? getInitialData() {
     if (bookingDetailCached.any((element) => element.id == widget.bookingId)) {
       return BookingDetailResponse(
-          data: bookingDetailCached
-              .firstWhere((element) => element.id == widget.bookingId));
+          data: bookingDetailCached.firstWhere((element) => element.id == widget.bookingId));
     } else {
       return null;
     }
@@ -105,6 +103,10 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                 );
               }
 
+              bool shouldShowPaymentDetails() =>
+                  data.referralRewardPercent.validate() > 0 ||
+                  data.couponDiscountPercentage.validate() > 0 ||
+                  data.amountPaidByCredit.validate() > 0;
               return AnimatedScrollView(
                 padding: const EdgeInsets.all(16),
                 physics: const AlwaysScrollableScrollPhysics(),
@@ -184,41 +186,42 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                     child: Text(data.note ?? 'N/A'),
                   ),
                   16.height,
-                  Text(locale.paymentDetails, style: secondaryTextStyle()),
-                  12.height,
-                  DefaultCard(
-                    child: Column(
-                      children: [
-                        if (data.referralRewardPercent.validate() > 0) ...[
-                          _RowData(
-                            title: locale.referralDiscount,
-                            value: '-${data.referralRewardPercent}%',
-                          ),
-                          8.height,
+                  if (shouldShowPaymentDetails()) ...[
+                    Text(locale.paymentDetails, style: secondaryTextStyle()),
+                    12.height,
+                    DefaultCard(
+                      child: Column(
+                        children: [
+                          if (data.referralRewardPercent.validate() > 0) ...[
+                            _RowData(
+                              title: locale.referralDiscount,
+                              value: '-${data.referralRewardPercent}%',
+                            ),
+                            8.height,
+                          ],
+                          if (data.couponDiscountPercentage.validate() > 0) ...[
+                            _RowData(
+                              title: locale.couponDiscount,
+                              value: '-${data.couponDiscountPercentage}%',
+                            ),
+                            8.height,
+                          ],
+                          if (data.amountPaidByCredit.validate() > 0) ...[
+                            _RowData(
+                              title: locale.points,
+                              value: (data.amountPaidByCredit.validate() * userStore.conversionRate)
+                                  .formatPrice,
+                            ),
+                            8.height,
+                          ],
+                          // _RowData(
+                          //   title: locale.paymentMethod,
+                          //   value: locale.payAtSalon,
+                          // ),
                         ],
-                        if (data.couponDiscountPercentage.validate() > 0) ...[
-                          _RowData(
-                            title: locale.couponDiscount,
-                            value: '-${data.couponDiscountPercentage}%',
-                          ),
-                          8.height,
-                        ],
-                        if (data.amountPaidByCredit.validate() > 0) ...[
-                          _RowData(
-                            title: locale.points,
-                            value: (data.amountPaidByCredit.validate() *
-                                    userStore.conversionRate)
-                                .formatPrice,
-                          ),
-                          8.height,
-                        ],
-                        _RowData(
-                          title: locale.paymentMethod,
-                          value: locale.payAtSalon,
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ]
                 ],
                 onSwipeRefresh: () async {
                   init();
@@ -230,8 +233,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
             },
           ),
           Observer(
-            builder: (context) =>
-                const LoaderWidget().visible(appStore.isLoading),
+            builder: (context) => const LoaderWidget().visible(appStore.isLoading),
           ),
         ],
       ),
