@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:grow_tokyo_app/components/cached_image_widget.dart';
-import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
-import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../utils/app_common.dart';
@@ -120,18 +118,18 @@ class _BranchItemComponentState extends State<BranchItemComponent> {
                       ],
                     ),
                     12.height,
-                    TextIcon(
-                      text: widget.branchData.addressLine1.validate(),
-                      expandedText: true,
-                      spacing: 12,
-                      textStyle: primaryTextStyle(),
-                      maxLine: 2,
-                      onTap: () {
-                        launchMap(widget.branchData.addressLine1.validate());
-                      },
-                      edgeInsets: const EdgeInsets.only(left: 0),
-                      prefix: ic_location.iconImage(color: textSecondaryColorGlobal, size: 16),
-                    ),
+                    // TextIcon(
+                    //   text: widget.branchData.addressLine1.validate(),
+                    //   expandedText: true,
+                    //   spacing: 12,
+                    //   textStyle: primaryTextStyle(),
+                    //   maxLine: 2,
+                    //   onTap: () {
+                    //     launchMap(widget.branchData.addressLine1.validate());
+                    //   },
+                    //   edgeInsets: const EdgeInsets.only(left: 0),
+                    //   prefix: ic_location.iconImage(color: textSecondaryColorGlobal, size: 16),
+                    // ),
                   ],
                 ).paddingAll(16),
               ],

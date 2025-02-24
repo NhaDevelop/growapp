@@ -2,8 +2,7 @@
 const APP_PACKAGE_NAME = 'com.growtokyo';
 const IOS_APP_ID = '6479511235';
 
-const ANDROID_DOWNLOAD_URL =
-    'https://play.google.com/store/apps/details?id=$APP_PACKAGE_NAME';
+const ANDROID_DOWNLOAD_URL = 'https://play.google.com/store/apps/details?id=$APP_PACKAGE_NAME';
 const IOS_DOWNLOAD_URL = 'https://apps.apple.com/app/growtokyo/id$IOS_APP_ID';
 
 const PER_PAGE_ITEM = 25;
@@ -37,11 +36,12 @@ const BRANCH_STATUS_CLOSED = 'Closed';
 
 // remove webview header and footer script
 // ignore: prefer_interpolation_to_compose_strings
-const WEBVIEW_HEADER_FOOTER_REMOVAL_SCRIPT = "javascript:(function() { " "var head = document.getElementsByTagName('header')[0];" +
-                    "head.parentNode.removeChild(head);" +
-                    "var footer = document.getElementsByTagName('footer')[0];" +
-                    "footer.parentNode.removeChild(footer);" +
-                    "})()";
+const WEBVIEW_HEADER_FOOTER_REMOVAL_SCRIPT = "javascript:(function() { "
+    "var head = document.getElementsByTagName('header')[0];"
+    "head.parentNode.removeChild(head);"
+    "var footer = document.getElementsByTagName('footer')[0];"
+    "footer.parentNode.removeChild(footer);"
+    "})()";
 
 class TaxType {
   static const FIXED = 'fixed';
@@ -254,3 +254,7 @@ const SLIDER_TYPE_CATEGORY = 'category';
 const SLIDER_TYPE_SERVICE = 'service';
 
 //endregion
+
+// analytics
+const BOOKING = 'booking';
+const SIGN_UP = 'signUp';

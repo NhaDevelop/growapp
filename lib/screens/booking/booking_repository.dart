@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:grow_tokyo_app/screens/booking/model/booking_detail_response.dart';
 import 'package:grow_tokyo_app/screens/booking/model/booking_list_response.dart';
 import 'package:grow_tokyo_app/screens/booking/model/verify_any_stylist_response.dart';
@@ -51,10 +52,11 @@ Future saveBookingAPI(Map request) async {
 }
 
 Future saveBookingGuestAPI(Map request) async {
-  return await handleResponse(
+  await handleResponse(
     await buildHttpResponse(APIEndPoints.saveBookingGuest,
         request: request, method: HttpMethodType.POST),
   );
+  FirebaseAnalytics.instance.logEvent(name: BOOKING);
 }
 
 Future bookingUpdate(Map request) async {

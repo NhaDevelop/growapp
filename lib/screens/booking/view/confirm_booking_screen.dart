@@ -99,8 +99,9 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
 
     final bookingJson =
         widget.isGuestBooking ? await saveBookingGuestAPI(body) : await saveBookingAPI(body);
-
+  
     bookingRequestStore.setBookingIdInRequest(bookingJson[CommonKey.bookingId]);
+
   }
 
   void showBookingCompleteDialog({bool isGuestBooking = false}) {

@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:grow_tokyo_app/main.dart';
@@ -19,11 +20,7 @@ class SignUpScreen extends StatefulWidget {
   final String? uid;
 
   const SignUpScreen(
-      {super.key,
-      this.phoneNumber,
-      this.isOTPLogin = false,
-      this.countryCode,
-      this.uid});
+      {super.key, this.phoneNumber, this.isOTPLogin = false, this.countryCode, this.uid});
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -103,11 +100,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ..mobile = mobileCont.text.trim()
         ..gender = genderValue.validate().toLowerCase();
 
-      await createUser(tempRegisterData.toJson())
-          .then((registerResponse) async {
+      await createUser(tempRegisterData.toJson()).then((registerResponse) async {
         appStore.setLoading(false);
         toast(registerResponse.message.validate());
-
+        FirebaseAnalytics.instance.logEvent(name: SIGN_UP);
         finish(context);
       }).catchError((e) {
         appStore.setLoading(false);
@@ -153,19 +149,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   child: Column(
                     children: [
-                      Text(locale.welcomeToGrowTokyo,
-                          style: boldTextStyle(size: 20)),
+                      Text(locale.welcomeToGrowTokyo, style: boldTextStyle(size: 20)),
                       8.height,
                       Text(locale.createYourAccountFor,
-                          style: secondaryTextStyle(),
-                          textAlign: TextAlign.center),
+                          style: secondaryTextStyle(), textAlign: TextAlign.center),
                       Column(
                         children: [
                           16.height,
                           Form(
                             key: formKey,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -174,11 +167,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   focus: firstNameFocus,
                                   nextFocus: lastNameFocus,
                                   textFieldType: TextFieldType.NAME,
-                                  readOnly: widget.isOTPLogin.validate()
-                                      ? widget.isOTPLogin
-                                      : false,
-                                  decoration: inputDecoration(context,
-                                      label: locale.firstName),
+                                  readOnly:
+                                      widget.isOTPLogin.validate() ? widget.isOTPLogin : false,
+                                  decoration: inputDecoration(context, label: locale.firstName),
                                 ),
                                 16.height,
                                 AppTextField(
@@ -186,11 +177,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   focus: lastNameFocus,
                                   nextFocus: emailFocus,
                                   textFieldType: TextFieldType.NAME,
-                                  readOnly: widget.isOTPLogin.validate()
-                                      ? widget.isOTPLogin
-                                      : false,
-                                  decoration: inputDecoration(context,
-                                      label: locale.lastName),
+                                  readOnly:
+                                      widget.isOTPLogin.validate() ? widget.isOTPLogin : false,
+                                  decoration: inputDecoration(context, label: locale.lastName),
                                 ),
                                 16.height,
                                 AppTextField(
@@ -198,8 +187,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   focus: emailFocus,
                                   nextFocus: passwordFocus,
                                   textFieldType: TextFieldType.EMAIL,
-                                  decoration: inputDecoration(context,
-                                      label: locale.email),
+                                  decoration: inputDecoration(context, label: locale.email),
                                 ),
                                 16.height,
                                 AppTextField(
@@ -207,11 +195,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   textFieldType: TextFieldType.PASSWORD,
                                   focus: passwordFocus,
                                   nextFocus: mobileFocus,
-                                  readOnly: widget.isOTPLogin.validate()
-                                      ? widget.isOTPLogin
-                                      : false,
-                                  decoration: inputDecoration(context,
-                                      label: locale.password),
+                                  readOnly:
+                                      widget.isOTPLogin.validate() ? widget.isOTPLogin : false,
+                                  decoration: inputDecoration(context, label: locale.password),
                                   autoFillHints: const [AutofillHints.password],
                                   onFieldSubmitted: (s) {
                                     if (widget.isOTPLogin) {
@@ -233,10 +219,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   textFieldType: TextFieldType.PHONE,
                                   controller: mobileCont,
                                   focus: mobileFocus,
-                                  errorThisFieldRequired:
-                                      locale.thisFieldIsRequired,
-                                  decoration: inputDecoration(context,
-                                      label: locale.contactNumber),
+                                  errorThisFieldRequired: locale.thisFieldIsRequired,
+                                  decoration: inputDecoration(context, label: locale.contactNumber),
                                   maxLength: 15,
                                 ),
                                 16.height,
@@ -254,15 +238,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 registerUser();
                               }
                             },
-                            child: Text(locale.signUp,
-                                style: boldTextStyle(color: white)),
+                            child: Text(locale.signUp, style: boldTextStyle(color: white)),
                           ),
                           16.height,
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(locale.alreadyHaveAnAccount,
-                                  style: secondaryTextStyle()),
+                              Text(locale.alreadyHaveAnAccount, style: secondaryTextStyle()),
                               TextButton(
                                 onPressed: () {
                                   hideKeyboard(context);
@@ -271,8 +253,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 child: Text(
                                   locale.signIn,
                                   style: boldTextStyle(
-                                      color: primaryColor,
-                                      decoration: TextDecoration.underline),
+                                      color: primaryColor, decoration: TextDecoration.underline),
                                 ),
                               ),
                             ],

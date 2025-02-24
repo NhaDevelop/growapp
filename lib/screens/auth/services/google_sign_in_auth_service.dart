@@ -9,7 +9,7 @@ import '../model/user_data_model.dart';
 class GoogleSignInAuthService {
   final googleSignIn = GoogleSignIn(scopes: [
     'email',
-    'https://www.googleapis.com/auth/contacts.readonly',
+    'https://www.googleapis.com/auth/userinfo.profile',
   ]);
 
   Future<UserData> signIn() async {
@@ -44,7 +44,6 @@ class GoogleSignInAuthService {
   Future<UserData> signInWeb() async {
     try {
       final googleProvider = GoogleAuthProvider()
-        ..addScope('https://www.googleapis.com/auth/contacts.readonly')
         ..addScope('email')
         ..setCustomParameters({'login_hint': 'user@example.com'});
       final UserCredential userCredential =

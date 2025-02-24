@@ -36,8 +36,8 @@ const appStoreAppBaseURL = '';
 const APP_PLAY_STORE_URL = '';
 const APP_APPSTORE_URL = '';
 
-const TERMS_CONDITION_URL = 'https://iqonic.design/terms-of-use';
-const PRIVACY_POLICY_URL = 'https://iqonic.design/privacy-policy';
+const TERMS_CONDITION_URL = 'https://hairmake-grow-ec.camboinfo.com/terms-of-use';
+const PRIVACY_POLICY_URL = 'https://hairmake-grow-ec.camboinfo.com/privacy-policy';
 const INQUIRY_SUPPORT_EMAIL = 'demo@gmail.com';
 const DASHBOARD_AUTO_SLIDER_SECOND = 5;
 

@@ -19,8 +19,9 @@ class _InquiryDialogState extends State<InquiryDialog> {
     final socialData = appStore.socialData;
 
     final url = switch (_selected) {
-      InquiryType.messenger => socialData.messengerChannel,
+      InquiryType.facebook => socialData.facebookLink,
       InquiryType.telegram => socialData.telegramChannel,
+      InquiryType.facebookVN => socialData.facebookVnLink,
       _ => socialData.zaloLink,
     };
 
@@ -62,6 +63,14 @@ class _InquiryDialogState extends State<InquiryDialog> {
                       selected: _selected == InquiryType.zalo,
                       onTap: () => setState(() => _selected = InquiryType.zalo),
                     ).expand(),
+                    16.width,
+                    _Item(
+                      key: const ValueKey(InquiryType.facebookVN),
+                      icon: ic_facebook_colored,
+                      title: locale.facebook,
+                      selected: _selected == InquiryType.facebookVN,
+                      onTap: () => setState(() => _selected = InquiryType.facebookVN),
+                    ).expand(),
                   ],
                 )
               : Row(
@@ -75,11 +84,11 @@ class _InquiryDialogState extends State<InquiryDialog> {
                     ).expand(),
                     16.width,
                     _Item(
-                      key: const ValueKey(InquiryType.messenger),
-                      icon: ic_messenger,
-                      title: locale.messenger,
-                      selected: _selected == InquiryType.messenger,
-                      onTap: () => setState(() => _selected = InquiryType.messenger),
+                      key: const ValueKey(InquiryType.facebook),
+                      icon: ic_facebook_colored,
+                      title: locale.facebook,
+                      selected: _selected == InquiryType.facebook,
+                      onTap: () => setState(() => _selected = InquiryType.facebook),
                     ).expand(),
                   ],
                 ),
@@ -138,4 +147,4 @@ class _Item extends StatelessWidget {
   }
 }
 
-enum InquiryType { telegram, messenger, zalo }
+enum InquiryType { telegram, facebook, zalo, facebookVN }

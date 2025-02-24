@@ -18,12 +18,11 @@ class EmployeeListComponentNew extends StatefulWidget {
   });
 
   @override
-  State<EmployeeListComponentNew> createState() =>
-      _EmployeeListComponentNewState();
+  State<EmployeeListComponentNew> createState() => _EmployeeListComponentNewState();
 }
 
 class _EmployeeListComponentNewState extends State<EmployeeListComponentNew> {
-  bool _expanded = false;
+  final bool _expanded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -62,18 +61,8 @@ class _EmployeeListComponentNewState extends State<EmployeeListComponentNew> {
                   ),
                   if (widget.expertData.description.validate().isNotEmpty) ...[
                     4.height,
-                    Text(widget.expertData.description.validate(),
-                        style: secondaryTextStyle()),
+                    Text(widget.expertData.description.validate(), style: secondaryTextStyle()),
                   ],
-                  GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: () => setState(() => _expanded = !_expanded),
-                    child: Text(
-                      locale.viewSchedule,
-                      style: secondaryTextStyle(
-                          decoration: TextDecoration.underline),
-                    ).paddingOnly(top: 4, bottom: 4, right: 8),
-                  ),
                 ],
               ).expand(),
               16.width,
@@ -81,9 +70,7 @@ class _EmployeeListComponentNewState extends State<EmployeeListComponentNew> {
                 width: 21,
                 height: 21,
                 child: Icon(
-                  widget.selected
-                      ? Icons.radio_button_checked
-                      : Icons.radio_button_unchecked,
+                  widget.selected ? Icons.radio_button_checked : Icons.radio_button_unchecked,
                 ),
               )
             ],
