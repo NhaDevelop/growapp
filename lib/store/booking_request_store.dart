@@ -1,0 +1,257 @@
+// ignore_for_file: library_private_types_in_public_api
+
+import 'package:mobx/mobx.dart';
+import 'package:nb_utils/nb_utils.dart';
+
+import '../main.dart';
+import '../screens/booking/model/booking_detail_response.dart';
+import '../screens/services/models/service_response.dart';
+import '../utils/constants.dart';
+
+part 'booking_request_store.g.dart';
+
+class BookingRequestStore = _BookingRequestStore with _$BookingRequestStore;
+
+abstract class _BookingRequestStore with Store {
+  @observable
+  int? bookingId;
+
+  @observable
+  int employeeId = UNSELECTED_EMPLOYEE_ID;
+
+  @computed
+  bool get isEmployeeSelected => employeeId != UNSELECTED_EMPLOYEE_ID;
+
+  @observable
+  String employeeGroupId = UNSELECTED_EMPLOYEE_GROUP_ID;
+
+  @computed
+  bool get isEmployeeGroupSelected =>
+      employeeGroupId != UNSELECTED_EMPLOYEE_GROUP_ID;
+
+  @observable
+  String? employeeName;
+
+  @observable
+  String? employeeGroupName;
+
+  @observable
+  String time = '';
+
+  @observable
+  String date = '';
+
+  @computed
+  String get dateTime => '$date $time:00';
+
+  @observable
+  String note = '';
+
+  @observable
+  bool useCredit = false;
+
+  @observable
+  String? referralCode;
+
+  @observable
+  double referralRewardPercentage = 0;
+
+  @observable
+  String? couponCode;
+
+  @observable
+  double couponRewardPercentage = 0;
+
+  @observable
+  bool? isReschedule;
+
+  @observable
+  String? guestName;
+
+  @observable
+  String? guestPhone;
+
+  @observable
+  List<ServiceListData> selectedServiceList = ObservableList();
+
+  @observable
+  List<String> selectedBookingStatusList = ObservableList();
+
+  @observable
+  List<TaxPercentage> taxPercentage = ObservableList();
+
+  @observable
+  num tipAmount = 0;
+
+  @computed
+  num get selectedServiceTotalAmount =>
+      selectedServiceList.validate().sumByDouble((p0) => isReschedule.validate()
+          ? p0.servicePrice.validate()
+          : p0.defaultPrice.validate());
+
+  @computed
+  double get fixedTaxAmount => taxPercentage
+      .validate()
+      .where((element) => element.type == TaxType.FIXED)
+      .sumByDouble((p0) => p0.taxAmount.validate());
+
+  @computed
+  double get percentTaxAmount => taxPercentage
+      .validate()
+      .where((element) => element.type == TaxType.PERCENT)
+      .sumByDouble(
+          (p0) => ((selectedServiceTotalAmount * p0.percent.validate()) / 100));
+
+  @computed
+  num get totalTax => fixedTaxAmount + percentTaxAmount;
+
+  @computed
+  num get totalAmount => selectedServiceTotalAmount + totalTax + tipAmount;
+
+  Map<String, dynamic> toJson(
+      {String? dateTime,
+      int? bookingId,
+      String? bookingStatus,
+      bool isUpdate = false,
+      bool isRescheduleBooking = false}) {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (bookingId != null) data['id'] = bookingId;
+    if (bookingStatus != null) data['status'] = bookingStatus;
+    if (dateTime != null) data['start_date_time'] = dateTime;
+    if (note.isNotEmpty) data['note'] = note.validate();
+    if (referralCode != null) data['referral_code'] = referralCode;
+    if (couponCode != null) data['coupon_code'] = couponCode;
+    data['use_credit'] = useCredit;
+    data['branch_id'] = appStore.branchId;
+    if (guestName != null) data['guest_name'] = guestName;
+    if (guestPhone != null) data['guest_phone'] = guestPhone;
+
+    if (selectedServiceList.isNotEmpty) {
+      data['services'] = selectedServiceList
+          .validate()
+          .map((e) => e.toBookingServiceJson(
+              isUpdate: isUpdate, isRescheduleBooking: isRescheduleBooking))
+          .toList();
+    }
+
+    if (taxPercentage.isNotEmpty) {
+      data['tax_percentage'] =
+          taxPercentage.validate().map((e) => e.toJson()).toList();
+    }
+
+    return data;
+  }
+
+  @action
+  void setTip(int val) {
+    tipAmount = val;
+  }
+
+  @action
+  void setBookingIdInRequest(int val) {
+    bookingId = val;
+  }
+
+  @action
+  void setEmployeeIdInRequest(int val) {
+    employeeId = val;
+  }
+
+  @action
+  void setEmployeeNameInRequest(String val) {
+    employeeName = val;
+  }
+
+  @action
+  void setEmployeeGroupIdInRequest(String val) {
+    employeeGroupId = val;
+  }
+
+  @action
+  void setEmployeeGroupNameInRequest(String val) {
+    employeeGroupName = val;
+  }
+
+  @action
+  void setTimeInRequest(String val) {
+    time = val;
+  }
+
+  @action
+  void setDateInRequest(String val) {
+    date = val;
+  }
+
+  @action
+  void setNoteInRequest(String val) {
+    note = val;
+  }
+
+  @action
+  void setUseCreditInRequest(bool val) {
+    useCredit = val;
+  }
+
+  @action
+  void setReferralCodeInRequest(String? val) {
+    referralCode = val;
+  }
+
+  @action
+  void setReferralRewardPercentageInRequest(double val) {
+    referralRewardPercentage = val;
+  }
+
+  @action
+  void removeReferralCodeInRequest() {
+    referralCode = null;
+    referralRewardPercentage = 0;
+  }
+
+  @action
+  void setCouponCodeInRequest(String? val) {
+    couponCode = val;
+  }
+
+  @action
+  void setCouponRewardPercentageInRequest(double val) {
+    couponRewardPercentage = val;
+  }
+
+  @action
+  void removeCouponCodeInRequest() {
+    couponCode = null;
+    couponRewardPercentage = 0;
+  }
+
+  @action
+  void setGuestName(String val) {
+    guestName = val;
+  }
+
+  @action
+  void setGuestPhone(String val) {
+    guestPhone = val;
+  }
+
+  @action
+  void setSelectedServiceListInRequest(
+      List<ServiceListData> selectedServiceListRequest,
+      {bool isRescheduleInRequest = false}) {
+    isReschedule = isRescheduleInRequest;
+
+    selectedServiceList = ObservableList.of(selectedServiceListRequest);
+  }
+
+  @action
+  void setSelectedBookingStatusList(
+      List<String> selectedBookingStatusListRequest) {
+    selectedBookingStatusList =
+        ObservableList.of(selectedBookingStatusListRequest);
+  }
+
+  @action
+  void setTaxPercentageInRequest(List<TaxPercentage> taxPercentageRequest) {
+    taxPercentage = ObservableList.of(taxPercentageRequest);
+  }
+}

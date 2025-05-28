@@ -1,0 +1,151 @@
+import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:grow_tokyo_app/components/cached_image_widget.dart';
+import 'package:nb_utils/nb_utils.dart';
+
+import '../../../utils/app_common.dart';
+import '../../branch/model/branch_response.dart';
+
+class BranchItemComponent extends StatefulWidget {
+  final BranchData branchData;
+  final int? selectedBranchId;
+  final int? currentBranchIndex;
+  final bool isFormSignIn;
+  final Position? position;
+
+  const BranchItemComponent({
+    super.key,
+    required this.branchData,
+    this.selectedBranchId,
+    this.currentBranchIndex,
+    this.isFormSignIn = false,
+    this.position,
+  });
+
+  @override
+  State<BranchItemComponent> createState() => _BranchItemComponentState();
+}
+
+class _BranchItemComponentState extends State<BranchItemComponent> {
+  double? cardSize;
+
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  void init() async {
+    //
+  }
+
+  double get getDistance {
+    if (widget.position == null) return 0;
+    if (widget.branchData.latitude == null || widget.branchData.longitude == null) return 0;
+
+    return calculateDistance(
+      widget.branchData.latitude!.toDouble(),
+      widget.branchData.longitude!.toDouble(),
+      widget.position!.latitude,
+      widget.position!.longitude,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        SizeListener(
+          onSizeChange: (s) {
+            cardSize = s.height - 16;
+            setState(() {});
+          },
+          child: Container(
+            margin: const EdgeInsets.only(bottom: 16),
+            decoration: boxDecorationWithRoundedCorners(
+                backgroundColor: context.cardColor, borderRadius: radius()),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius: radiusOnly(topRight: defaultRadius, topLeft: defaultRadius),
+                  child: CachedImageWidget(
+                      url: widget.branchData.branchImg.validate(),
+                      height: 150,
+                      width: context.width(),
+                      fit: BoxFit.cover),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Marquee(
+                          child: Text(widget.branchData.name.validate(),
+                              style: boldTextStyle(), maxLines: 1, overflow: TextOverflow.ellipsis),
+                        ).expand(),
+                        16.width,
+                        // if (widget.branchData.todayTime != null)
+                        //   StatusWidget(
+                        //     text: getBranchIsOpen(
+                        //             startTime: widget
+                        //                 .branchData.todayTime!.startTime
+                        //                 .validate(),
+                        //             endTime: widget
+                        //                 .branchData.todayTime!.endTime
+                        //                 .validate(),
+                        //             isHoliday: widget
+                        //                 .branchData.todayTime!.isHoliday
+                        //                 .validate()
+                        //                 .getBoolInt())
+                        //         .$1
+                        //         .validate(),
+                        //     color: getBranchIsOpen(
+                        //             startTime: widget
+                        //                 .branchData.todayTime!.startTime
+                        //                 .validate(),
+                        //             endTime: widget
+                        //                 .branchData.todayTime!.endTime
+                        //                 .validate(),
+                        //             isHoliday: widget
+                        //                 .branchData.todayTime!.isHoliday
+                        //                 .validate()
+                        //                 .getBoolInt())
+                        //         .$2,
+                        //   )
+                        // else
+                        //   StatusWidget(text: locale.closed, color: Colors.red),
+                      ],
+                    ),
+                    12.height,
+                    // TextIcon(
+                    //   text: widget.branchData.addressLine1.validate(),
+                    //   expandedText: true,
+                    //   spacing: 12,
+                    //   textStyle: primaryTextStyle(),
+                    //   maxLine: 2,
+                    //   onTap: () {
+                    //     launchMap(widget.branchData.addressLine1.validate());
+                    //   },
+                    //   edgeInsets: const EdgeInsets.only(left: 0),
+                    //   prefix: ic_location.iconImage(color: textSecondaryColorGlobal, size: 16),
+                    // ),
+                  ],
+                ).paddingAll(16),
+              ],
+            ),
+          ),
+        ),
+        if (((widget.currentBranchIndex == widget.selectedBranchId) && widget.isFormSignIn))
+          Container(
+            height: cardSize,
+            width: context.width(),
+            margin: const EdgeInsets.only(bottom: 16),
+            decoration: boxDecorationWithRoundedCorners(
+                backgroundColor: context.primaryColor.withOpacity(0.6), borderRadius: radius()),
+            child: const Icon(Icons.check_rounded, size: 50, color: white),
+          ),
+      ],
+    );
+  }
+}
