@@ -1,0 +1,34 @@
+import 'package:flutter/material.dart';
+import 'package:grow_tokyo_app/components/cached_image_widget.dart';
+import 'package:nb_utils/nb_utils.dart';
+
+import '../screens/zoom_image_screen.dart';
+
+class ImageBorder extends StatelessWidget {
+  final String src;
+  final double height;
+  final double? width;
+
+  const ImageBorder({super.key, required this.src, required this.height, this.width});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: context.dividerColor, width: 1),
+        shape: BoxShape.circle,
+      ),
+      child: CachedImageWidget(
+        url: src,
+        circle: true,
+        height: height,
+        width: width,
+        fit: BoxFit.cover,
+      ).onTap(() {
+        if (src.isNotEmpty) {
+          ZoomImageScreen(galleryImages: [src], index: 0).launch(context);
+        }
+      }),
+    );
+  }
+}

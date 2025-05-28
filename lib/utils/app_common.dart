@@ -1,0 +1,204 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as custom_tabs;
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
+import 'package:grow_tokyo_app/components/back_widget.dart';
+import 'package:grow_tokyo_app/components/html_widget.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/utils/colors.dart';
+import 'package:grow_tokyo_app/utils/constants.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:html/parser.dart';
+import 'package:nb_utils/nb_utils.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'common_base.dart';
+
+Future<bool> get isIqonicProduct async =>
+    await getPackageName() == APP_PACKAGE_NAME;
+
+// Currency position common
+bool get isCurrencyPositionLeft =>
+    getStringAsync(SharedPreferenceConst.CURRENCY_POSITION,
+        defaultValue: CURRENCY_POSITION_LEFT) ==
+    CURRENCY_POSITION_LEFT;
+
+bool get isCurrencyPositionRight =>
+    getStringAsync(SharedPreferenceConst.CURRENCY_POSITION,
+        defaultValue: CURRENCY_POSITION_LEFT) ==
+    CURRENCY_POSITION_RIGHT;
+
+bool get isCurrencyPositionLeftWithSpace =>
+    getStringAsync(SharedPreferenceConst.CURRENCY_POSITION,
+        defaultValue: CURRENCY_POSITION_LEFT) ==
+    CURRENCY_POSITION_LEFT_WITH_SPACE;
+
+bool get isCurrencyPositionRightWithSpace =>
+    getStringAsync(SharedPreferenceConst.CURRENCY_POSITION,
+        defaultValue: CURRENCY_POSITION_LEFT) ==
+    CURRENCY_POSITION_RIGHT_WITH_SPACE;
+//endregion
+
+Future<void> commonLaunchUrl(String address,
+    {LaunchMode launchMode = LaunchMode.inAppWebView}) async {
+  await launchUrl(Uri.parse(address), mode: launchMode)
+      .then((value) => null)
+      .catchError((e) {
+    toast('${locale.invalidUrl}: $address');
+  });
+}
+
+void launchCall(String? url) {
+  if (url.validate().isNotEmpty) {
+    if (isIOS) {
+      commonLaunchUrl('tel://${url!}',
+          launchMode: LaunchMode.externalApplication);
+    } else {
+      commonLaunchUrl('tel:${url!}',
+          launchMode: LaunchMode.externalApplication);
+    }
+  }
+}
+
+void launchMap(String? url) {
+  if (url.validate().isNotEmpty) {
+    commonLaunchUrl(GOOGLE_MAP_PREFIX + url!,
+        launchMode: LaunchMode.externalApplication);
+  }
+}
+
+void launchMail(String url) {
+  if (url.validate().isNotEmpty) {
+    commonLaunchUrl('$MAIL_TO$url', launchMode: LaunchMode.externalApplication);
+  }
+}
+
+void checkIfLink(BuildContext context, String value, {String? title}) {
+  if (value.validate().isEmpty) return;
+
+  String temp = parseHtmlString(value.validate());
+  if (temp.startsWith("https") || temp.startsWith("http")) {
+    launchUrlCustomTab(temp.validate());
+  } else if (temp.validateEmail()) {
+    launchMail(temp);
+  } else if (temp.validatePhone() || temp.startsWith('+')) {
+    launchCall(temp);
+  } else {
+    HtmlWidget(postContent: value, title: title).launch(context);
+  }
+}
+
+void launchUrlCustomTab(String? url) {
+  if (url.validate().isNotEmpty) {
+    custom_tabs.launch(
+      url!,
+      customTabsOption: const custom_tabs.CustomTabsOption(
+        enableDefaultShare: true,
+        enableInstantApps: true,
+        enableUrlBarHiding: true,
+        showPageTitle: true,
+        toolbarColor: primaryColor,
+      ),
+      safariVCOption: const custom_tabs.SafariViewControllerOption(
+        preferredBarTintColor: primaryColor,
+        preferredControlTintColor: Colors.white,
+        barCollapsingEnabled: true,
+        entersReaderIfAvailable: true,
+        dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
+      ),
+    );
+  }
+}
+
+String parseHtmlString(String? htmlString) {
+  return parse(parse(htmlString).body!.text).documentElement!.text;
+}
+
+PreferredSizeWidget commonAppBarWidget(BuildContext context,
+    {String? title,
+    double? appBarHeight,
+    bool showLeadingIcon = true,
+    bool roundCornerShape = true,
+    List<Widget>? actions}) {
+  return PreferredSize(
+    preferredSize: Size.fromHeight(appBarHeight ?? 70),
+    child: AppBar(
+      title: Text(title!,
+          style: boldTextStyle(color: whiteColor, size: APPBAR_TEXT_SIZE)),
+      systemOverlayStyle:
+          const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
+      backgroundColor: primaryColor,
+      centerTitle: true,
+      leading:
+          !showLeadingIcon.validate() ? const Offstage() : const BackWidget(),
+      elevation: 0,
+      actions: actions,
+      shape: roundCornerShape.validate()
+          ? const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
+            )
+          : const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.zero)),
+    ),
+  );
+}
+
+double calculateDistance(
+    double startLat, double startLong, double endLat, double endLong) {
+  double distance = Geolocator.distanceBetween(
+    startLat,
+    startLong,
+    endLat,
+    endLong,
+  );
+
+  double distanceInKiloMeters = distance / 1000;
+  return double.parse((distanceInKiloMeters).toStringAsFixed(2));
+}
+
+(String, Color) getBranchIsOpen(
+    {required String startTime,
+    required String endTime,
+    bool isHoliday = false}) {
+  if (isHoliday) {
+    return (BRANCH_STATUS_CLOSED, Colors.red);
+  }
+
+  final currentTime = TimeOfDay.now();
+  final branchStartTime = TimeOfDay(
+      hour: int.parse(startTime.split(':')[0]),
+      minute: int.parse(startTime.split(':')[1]));
+  final branchEndTime = TimeOfDay(
+      hour: int.parse(endTime.split(':')[0]),
+      minute: int.parse(endTime.split(':')[1]));
+
+  if (isTimeBefore(currentTime, branchStartTime) ||
+      isTimeAfter(currentTime, branchEndTime)) {
+    return (locale.closed, Colors.red);
+  } else {
+    return (locale.open, Colors.green);
+  }
+}
+
+void serviceCommonBottomSheet(BuildContext context, {required Widget child}) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: context.scaffoldBackgroundColor,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(30),
+        topRight: Radius.circular(30),
+      ),
+    ),
+    builder: (context) => child,
+  );
+}
+
+DateTime get lastDayOfTheMonth {
+  return DateTime(DateTime.now().year, DateTime.now().month + 1, 0);
+}
+
+DateTime get firstDayOfTheMonth {
+  return DateTime(DateTime.now().year, DateTime.now().month, 1);
+}

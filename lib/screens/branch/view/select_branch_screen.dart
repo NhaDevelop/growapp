@@ -1,0 +1,193 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:grow_tokyo_app/components/app_scaffold.dart';
+import 'package:grow_tokyo_app/components/bottom_sheet_button.dart';
+import 'package:grow_tokyo_app/components/loader_widget.dart';
+import 'package:grow_tokyo_app/main.dart';
+import 'package:grow_tokyo_app/screens/booking/view/booking_screen.dart';
+import 'package:grow_tokyo_app/screens/branch/model/branch_response.dart';
+import 'package:nb_utils/nb_utils.dart';
+
+import '../../../components/empty_error_state_widget.dart';
+import '../../../utils/app_common.dart';
+import '../../../utils/constants.dart';
+import '../../dashboard/component/branch_item_component.dart';
+import '../branch_repository.dart';
+import '../shimmer/select_branch_shimmer.dart';
+
+class SelectBranchScreen extends StatefulWidget {
+  final bool isFromDashboard;
+
+  const SelectBranchScreen({super.key, this.isFromDashboard = false});
+
+  @override
+  State<SelectBranchScreen> createState() => _SelectBranchScreenState();
+}
+
+class _SelectBranchScreenState extends State<SelectBranchScreen> {
+  Future<List<BranchData>>? future;
+
+  List<BranchData> branchList = [];
+
+  int page = 1;
+  int selectedBranchId = appStore.branchId;
+
+  bool isLastPage = false;
+
+  @override
+  void initState() {
+    init();
+
+    super.initState();
+  }
+
+  void init() {
+    future = getBranchList(
+      page: page,
+      branchList: branchList,
+      lastPageCallBack: (p0) {
+        isLastPage = p0;
+      },
+    );
+  }
+
+  void onNextClick() async {
+    if (appStore.branchId != selectedBranchId) {
+      dashboardResponseCached = null;
+      bookingDetailCached = [];
+    }
+
+    final index =
+        branchList.indexWhere((element) => element.id == selectedBranchId);
+    if (index < 0) return;
+    final selectedBranch = branchList[index];
+
+    await Future.wait([
+      appStore
+          .setBranchId(selectedBranch.id.validate(value: UNSELECTED_BRANCH_ID)),
+      appStore.setBranchAddress(selectedBranch.addressLine1.validate()),
+      appStore.setBranchName(selectedBranch.name.validate()),
+      appStore.setBranchContactNumber(selectedBranch.contactNumber.validate()),
+      appStore.setBranchAnyStylistOptions(
+          selectedBranch.anyStylistOptions.validate()),
+    ]);
+
+    if (!mounted) return;
+    finish(context);
+    const BookingScreen(services: []).launch(context);
+  }
+
+  @override
+  void setState(fn) {
+    if (mounted) super.setState(fn);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return PopScope(
+      canPop: widget.isFromDashboard,
+      child: AppScaffold(
+        appBarWidget: commonAppBarWidget(
+          context,
+          title: locale.chooseBranch,
+          appBarHeight: 70,
+          roundCornerShape: true,
+          showLeadingIcon:
+              widget.isFromDashboard ? Navigator.canPop(context) : false,
+        ),
+        body: Stack(
+          children: [
+            SnapHelperWidget<List<BranchData>>(
+              future: future,
+              initialData: branchListCached,
+              errorBuilder: (error) {
+                return NoDataWidget(
+                  title: error,
+                  retryText: locale.reload,
+                  imageWidget: const ErrorStateWidget(),
+                  onRetry: () {
+                    page = 1;
+                    appStore.setLoading(true);
+
+                    init();
+                    setState(() {});
+                  },
+                );
+              },
+              loadingWidget: const SelectBranchShimmer(),
+              onSuccess: (list) {
+                return AnimatedListView(
+                  padding: EdgeInsets.only(
+                      bottom:
+                          selectedBranchId != UNSELECTED_BRANCH_ID ? 80 : 16,
+                      left: 16,
+                      right: 16,
+                      top: 16),
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  itemCount: list.length,
+                  shrinkWrap: true,
+                  emptyWidget: NoDataWidget(
+                    title: locale.noBranchFound,
+                    imageWidget: const EmptyStateWidget(),
+                    retryText: locale.reload,
+                    onRetry: () {
+                      page = 1;
+                      appStore.setLoading(true);
+
+                      init();
+                      setState(() {});
+                    },
+                  ),
+                  itemBuilder: (context, index) {
+                    BranchData branchData = list[index];
+
+                    return BranchItemComponent(
+                      branchData: branchData,
+                      isFormSignIn: true,
+                      selectedBranchId: selectedBranchId,
+                      currentBranchIndex: branchData.id,
+                    ).onTap(() async {
+                      selectedBranchId = selectedBranchId == branchData.id
+                          ? UNSELECTED_BRANCH_ID
+                          : branchData.id!;
+                      setState(() {});
+                    },
+                        highlightColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        splashColor: Colors.transparent);
+                  },
+                  onNextPage: () {
+                    if (!isLastPage) {
+                      page++;
+                      appStore.setLoading(true);
+
+                      init();
+                      setState(() {});
+                    }
+                  },
+                  onSwipeRefresh: () async {
+                    page = 1;
+
+                    init();
+                    setState(() {});
+
+                    return await 2.seconds.delay;
+                  },
+                );
+              },
+            ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: BottomSheetButton(text: locale.next, onTap: onNextClick),
+            ).visible(selectedBranchId != UNSELECTED_BRANCH_ID),
+            Observer(
+                builder: (context) =>
+                    const LoaderWidget().visible(appStore.isLoading)),
+          ],
+        ),
+      ),
+    );
+  }
+}
