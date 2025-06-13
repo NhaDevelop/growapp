@@ -268,7 +268,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                           controller: fNameCont,
                           focus: fNameFocus,
                           nextFocus: lNameFocus,
-                          enabled: !isSocialLoginType,
+                          enabled: true,
                           textStyle: isSocialLoginType
                               ? secondaryTextStyle()
                               : primaryTextStyle(),
@@ -281,7 +281,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                           controller: lNameCont,
                           focus: lNameFocus,
                           nextFocus: dobFocus,
-                          enabled: !isSocialLoginType,
+                          enabled: true,
                           textStyle: isSocialLoginType
                               ? secondaryTextStyle()
                               : primaryTextStyle(),

@@ -9,8 +9,8 @@ Future<List<BlogPostModel>> getBlogPosts(
     {int page = 1, int perPage = 15, List<BlogPostModel>? list}) async {
   final countryCode = appStore.countryCode;
   final uri = Uri.https(
-    BuildConfig.blogPostHost,
-    '$countryCode/wp-json/wp/v2/posts',
+    "$countryCode.${BuildConfig.blogPostHost}",
+    'wp-json/wp/v2/posts',
     {
       '_embed': '1',
       'page': page.toString(),
