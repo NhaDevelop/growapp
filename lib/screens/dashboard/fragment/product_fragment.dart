@@ -18,8 +18,9 @@ class ProductsFragment extends StatelessWidget {
           ? "/${appStore.selectedLanguageCode}"
           : '';
 
-  Uri get productUri => Uri.https(BuildConfig.blogPostHost,
-      "${appStore.countryCode}$languageCodePath/product");
+  Uri get productUri => Uri.https(
+      "${appStore.countryCode}.${BuildConfig.blogPostHost}",
+      "$languageCodePath/product");
 
   Future<void> _loadPage(InAppWebViewController webViewController) async {
     final url = await webViewController.getUrl();
