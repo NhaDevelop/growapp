@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as custom_tabs;
-import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:grow_tokyo_app/components/back_widget.dart';
 import 'package:grow_tokyo_app/components/html_widget.dart';
 import 'package:grow_tokyo_app/main.dart';
@@ -90,21 +89,23 @@ void checkIfLink(BuildContext context, String value, {String? title}) {
 
 void launchUrlCustomTab(String? url) {
   if (url.validate().isNotEmpty) {
-    custom_tabs.launch(
-      url!,
-      customTabsOption: const custom_tabs.CustomTabsOption(
-        enableDefaultShare: true,
-        enableInstantApps: true,
-        enableUrlBarHiding: true,
-        showPageTitle: true,
-        toolbarColor: primaryColor,
+    custom_tabs.launchUrl(
+      Uri.parse(url!),
+      customTabsOptions: const custom_tabs.CustomTabsOptions(
+        shareState: custom_tabs.CustomTabsShareState.on,
+        instantAppsEnabled: true,
+        urlBarHidingEnabled: true,
+        showTitle: true,
+        colorSchemes: custom_tabs.CustomTabsColorSchemes(
+          colorScheme: custom_tabs.CustomTabsColorScheme.light
+        ),
       ),
-      safariVCOption: const custom_tabs.SafariViewControllerOption(
+      safariVCOptions: const custom_tabs.SafariViewControllerOptions(
         preferredBarTintColor: primaryColor,
         preferredControlTintColor: Colors.white,
         barCollapsingEnabled: true,
         entersReaderIfAvailable: true,
-        dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
+        dismissButtonStyle: custom_tabs.SafariViewControllerDismissButtonStyle.close,
       ),
     );
   }

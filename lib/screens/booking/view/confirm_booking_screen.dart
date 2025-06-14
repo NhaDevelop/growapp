@@ -235,76 +235,76 @@ class _ConfirmBookingScreenState extends State<ConfirmBookingScreen> {
                     onChanged: bookingRequestStore.setNoteInRequest,
                   ).cornerRadiusWithClipRRect(defaultRadius),
                   16.height,
-                  Observer(builder: (context) {
-                    return DefaultCard(
-                      padding: const EdgeInsets.fromLTRB(16, 8, 8, 8),
-                      child: _CodeItem(
-                        onTap: () => bookingRequestStore.couponCode != null
-                            ? bookingRequestStore.removeCouponCodeInRequest()
-                            : const AddCouponScreen().launch<CouponData>(context).then((val) {
-                                if (val != null) {
-                                  bookingRequestStore.setCouponCodeInRequest(val.code);
-                                  bookingRequestStore
-                                      .setCouponRewardPercentageInRequest(val.discountPercentage);
-                                }
-                              }),
-                        title: locale.coupon,
-                        actionText: locale.addCoupon,
-                        value: bookingRequestStore.couponRewardPercentage,
-                      ),
-                    );
-                  }),
-                  16.height,
-                  Observer(builder: (context) {
-                    return DefaultCard(
-                      padding: const EdgeInsets.fromLTRB(16, 8, 8, 8),
-                      child: _CodeItem(
-                        onTap: () => bookingRequestStore.referralCode != null
-                            ? bookingRequestStore.removeReferralCodeInRequest()
-                            : showModalBottomSheet<Map<String, dynamic>>(
-                                context: context,
-                                isScrollControlled: true,
-                                builder: (context) => const AddReferralCodeModal(),
-                              ).then((map) {
-                                if (map == null) return;
-                                bookingRequestStore.setReferralCodeInRequest(map['referralCode']);
-                                bookingRequestStore
-                                    .setReferralRewardPercentageInRequest(map['rewardPercentage']);
-                              }),
-                        title: locale.referralCode,
-                        actionText: locale.addCode,
-                        value: bookingRequestStore.referralRewardPercentage,
-                      ),
-                    );
-                  }),
-                  16.height,
-                  if (!widget.isGuestBooking)
-                    DefaultCard(
-                      child: Observer(builder: (context) {
-                        return Row(
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  locale.usingXPoints(userStore.pointAmount.formatAmount()),
-                                  style: boldTextStyle(),
-                                ),
-                                4.height,
-                                Text(
-                                  locale.youWillSave$X(userStore.pointToAmount.formatPrice),
-                                  style: secondaryTextStyle(),
-                                ),
-                              ],
-                            ).expand(),
-                            Switch.adaptive(
-                              value: bookingRequestStore.useCredit,
-                              onChanged: bookingRequestStore.setUseCreditInRequest,
-                            ),
-                          ],
-                        );
-                      }),
-                    ).paddingBottom(16),
+                  // Observer(builder: (context) {
+                  //   return DefaultCard(
+                  //     padding: const EdgeInsets.fromLTRB(16, 8, 8, 8),
+                  //     child: _CodeItem(
+                  //       onTap: () => bookingRequestStore.couponCode != null
+                  //           ? bookingRequestStore.removeCouponCodeInRequest()
+                  //           : const AddCouponScreen().launch<CouponData>(context).then((val) {
+                  //               if (val != null) {
+                  //                 bookingRequestStore.setCouponCodeInRequest(val.code);
+                  //                 bookingRequestStore
+                  //                     .setCouponRewardPercentageInRequest(val.discountPercentage);
+                  //               }
+                  //             }),
+                  //       title: locale.coupon,
+                  //       actionText: locale.addCoupon,
+                  //       value: bookingRequestStore.couponRewardPercentage,
+                  //     ),
+                  //   );
+                  // }),
+                  // 16.height,
+                  // Observer(builder: (context) {
+                  //   return DefaultCard(
+                  //     padding: const EdgeInsets.fromLTRB(16, 8, 8, 8),
+                  //     child: _CodeItem(
+                  //       onTap: () => bookingRequestStore.referralCode != null
+                  //           ? bookingRequestStore.removeReferralCodeInRequest()
+                  //           : showModalBottomSheet<Map<String, dynamic>>(
+                  //               context: context,
+                  //               isScrollControlled: true,
+                  //               builder: (context) => const AddReferralCodeModal(),
+                  //             ).then((map) {
+                  //               if (map == null) return;
+                  //               bookingRequestStore.setReferralCodeInRequest(map['referralCode']);
+                  //               bookingRequestStore
+                  //                   .setReferralRewardPercentageInRequest(map['rewardPercentage']);
+                  //             }),
+                  //       title: locale.referralCode,
+                  //       actionText: locale.addCode,
+                  //       value: bookingRequestStore.referralRewardPercentage,
+                  //     ),
+                  //   );
+                  // }),
+                  // 16.height,
+                  // if (!widget.isGuestBooking)
+                  //   DefaultCard(
+                  //     child: Observer(builder: (context) {
+                  //       return Row(
+                  //         children: [
+                  //           Column(
+                  //             crossAxisAlignment: CrossAxisAlignment.start,
+                  //             children: [
+                  //               Text(
+                  //                 locale.usingXPoints(userStore.pointAmount.formatAmount()),
+                  //                 style: boldTextStyle(),
+                  //               ),
+                  //               4.height,
+                  //               Text(
+                  //                 locale.youWillSave$X(userStore.pointToAmount.formatPrice),
+                  //                 style: secondaryTextStyle(),
+                  //               ),
+                  //             ],
+                  //           ).expand(),
+                  //           Switch.adaptive(
+                  //             value: bookingRequestStore.useCredit,
+                  //             onChanged: bookingRequestStore.setUseCreditInRequest,
+                  //           ),
+                  //         ],
+                  //       );
+                  //     }),
+                  //   ).paddingBottom(16),
                   if (_shouldShowPaymentDetails) ...[
                     Text(locale.paymentDetails, style: secondaryTextStyle()),
                     12.height,
