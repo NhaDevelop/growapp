@@ -43,13 +43,13 @@ class PointsCardComponent extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        (points?.amount ?? 0).formatAmount(),
+                        userStore.pointToAmount.formatPrice,
                         style: boldTextStyle(size: 24, color: white),
                       ),
                       4.height,
                       Text(
                         locale
-                            .equivalentToX(userStore.pointToAmount.formatPrice),
+                            .equivalentToX((points?.amount ?? 0).formatAmount()),
                         style: boldTextStyle(size: 12, color: white),
                       ),
                     ],
