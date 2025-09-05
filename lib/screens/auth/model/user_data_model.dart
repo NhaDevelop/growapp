@@ -28,6 +28,8 @@ class UserData {
   String? userType;
   String? profileImage;
   double? credit;
+  int? branchId;
+  String? branchName;
 
   UserData({
     this.apiToken,
@@ -53,6 +55,8 @@ class UserData {
     this.userType,
     this.profileImage,
     this.credit,
+    this.branchId,
+    this.branchName,
   });
 
   factory UserData.fromJson(Map<String, dynamic> json) {
@@ -87,6 +91,8 @@ class UserData {
       userType: json['user_type'],
       profileImage: json['profile_image'],
       credit: (json['credit'] as num?)?.toDouble(),
+      branchId: json['branch_id'],
+      branchName: json['branch_name'],
     );
   }
 
@@ -114,6 +120,9 @@ class UserData {
     if (userRole != null) {
       data['user_role'] = userRole;
     }
+    if (credit != null) data['credit'] = credit;
+    if (branchId != null) data['branch_id'] = branchId;
+    if (branchName != null) data['branch_name'] = branchName;
     return data;
   }
 

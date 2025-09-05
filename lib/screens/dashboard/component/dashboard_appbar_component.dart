@@ -79,7 +79,7 @@ class _DashboardAppBarComponentState extends State<DashboardAppBarComponent> {
                         Flexible(
                           child: Observer(builder: (context) {
                             return Text(
-                              appStore.isLoggedIn ? userStore.userFullName : locale.helloGuest,
+                              appStore.isLoggedIn ? userStore.userFullName : 'Hello',
                               style: boldTextStyle(size: 18, color: Colors.white),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,

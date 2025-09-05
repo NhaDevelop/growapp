@@ -105,13 +105,15 @@ class BlogItemComponent extends StatelessWidget {
             CachedImageWidget(
                 url: post.featuredImageUrl,
                 height: 160,
-                width: double.infinity),
+                width: double.infinity,
+                fit: BoxFit.contain,
+            ),
             Text(post.title, style: primaryTextStyle()).paddingAll(16),
           ],
         ),
       ),
     ).onTap(
-      () => HtmlContentScreen(title: post.title, htmlData: post.contentHtml)
+          () => HtmlContentScreen(title: post.title, htmlData: post.contentHtml)
           .launch(context),
     );
   }

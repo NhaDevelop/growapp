@@ -5,9 +5,12 @@ import 'package:grow_tokyo_app/screens/dashboard/models/blog_post_model.dart';
 import 'package:grow_tokyo_app/utils/build_config.dart';
 import 'package:http/http.dart' as http;
 
-Future<List<BlogPostModel>> getBlogPosts(
-    {int page = 1, int perPage = 15, List<BlogPostModel>? list}) async {
-  final countryCode = appStore.countryCode;
+Future<List<BlogPostModel>> getBlogPosts({
+  int page = 1,
+  int perPage = 15,
+  List<BlogPostModel>? list,
+}) async {
+  final countryCode = appStore.countryCode; // e.g., 'vn' or 'kh'
   final uri = Uri.https(
     "$countryCode.${BuildConfig.blogPostHost}",
     'wp-json/wp/v2/posts',
@@ -22,7 +25,13 @@ Future<List<BlogPostModel>> getBlogPosts(
 
   if (response.statusCode == 200) {
     final List<dynamic> data = jsonDecode(response.body);
-    final newItems = data.map((e) => BlogPostModel.fromJson(e)).toList();
+
+    // Map and filter nulls after country-specific filtering inside fromJson
+    final newItems = data
+        .map((e) => BlogPostModel.fromJson(e, countryCode))
+        .whereType<BlogPostModel>()
+        .toList();
+
     if (page == 1) blogPostListCached = newItems;
     if (list == null) return newItems;
 

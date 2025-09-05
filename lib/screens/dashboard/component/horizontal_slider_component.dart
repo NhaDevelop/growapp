@@ -6,6 +6,7 @@ import 'package:grow_tokyo_app/components/cached_image_widget.dart';
 import 'package:grow_tokyo_app/screens/dashboard/models/slider_data.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:grow_tokyo_app/main.dart';
 
 import '../../../configs.dart';
 import '../../../utils/colors.dart';
@@ -31,7 +32,7 @@ class _HorizontalSliderComponentState extends State<HorizontalSliderComponent> {
     super.initState();
 
     if (getBoolAsync(SharedPreferenceConst.AUTO_SLIDER_STATUS,
-            defaultValue: true) &&
+        defaultValue: true) &&
         widget.sliderList.length >= 2) {
       timer = Timer.periodic(
           const Duration(seconds: DASHBOARD_AUTO_SLIDER_SECOND), (Timer timer) {
@@ -68,8 +69,28 @@ class _HorizontalSliderComponentState extends State<HorizontalSliderComponent> {
   }
 
   @override
+
   Widget build(BuildContext context) {
-    if (widget.sliderList.isEmpty) return const Offstage();
+    // Clean reference URL (trim + lowercase to be extra safe)
+    const vietnamSlideUrl = "https://cms.hairmake-grow.com/upload/slider/9/1749536216.jpg";
+
+    List<SliderData> filteredSlides;
+
+    if (appStore.countryId.toString().trim() == "238") {
+      // Show ONLY the Vietnam slide
+      filteredSlides = widget.sliderList.where((data) {
+        final url = data.sliderImage.validate().trim().toLowerCase();
+        return url == vietnamSlideUrl;
+      }).toList();
+    } else {
+      // Show ALL slides EXCEPT the Vietnam slide
+      filteredSlides = widget.sliderList.where((data) {
+        final url = data.sliderImage.validate().trim().toLowerCase();
+        return url != vietnamSlideUrl;
+      }).toList();
+    }
+
+    if (filteredSlides.isEmpty) return const Offstage();
 
     return SizedBox(
       height: 200,
@@ -80,28 +101,18 @@ class _HorizontalSliderComponentState extends State<HorizontalSliderComponent> {
             child: PageView.builder(
               controller: controller,
               reverse: false,
-              itemCount: widget.sliderList.length,
+              itemCount: filteredSlides.length,
               itemBuilder: (_, i) {
-                SliderData data = widget.sliderList[i];
-
+                final data = filteredSlides[i];
                 return CachedImageWidget(
-                        url: data.sliderImage.validate(),
-                        height: 200,
-                        width: context.width(),
-                        fit: BoxFit.cover,
-                        radius: defaultRadius)
-                    .onTap(() {
+                  url: data.sliderImage.validate(),
+                  height: 200,
+                  width: context.width(),
+                  fit: BoxFit.cover,
+                  radius: defaultRadius,
+                ).onTap(() {
                   final link = data.link.validate();
                   if (link.isNotEmpty) launchUrlString(link);
-                  // if (data.type == SLIDER_TYPE_CATEGORY) {
-                  //   ViewAllServiceScreen(
-                  //           serviceTitle: data.name.validate(),
-                  //           categoryId: data.linkId)
-                  //       .launch(context);
-                  // } else if (data.type == SLIDER_TYPE_SERVICE) {
-                  //   ViewAllServiceScreen(serviceTitle: data.name.validate())
-                  //       .launch(context);
-                  // }
                 });
               },
             ),
@@ -112,7 +123,7 @@ class _HorizontalSliderComponentState extends State<HorizontalSliderComponent> {
             left: 0,
             child: DotIndicator(
               pageController: controller,
-              pages: widget.sliderList,
+              pages: filteredSlides,
               indicatorColor: indicatorColor,
               unselectedIndicatorColor: lightGray,
               currentDotSize: 10,
@@ -123,4 +134,6 @@ class _HorizontalSliderComponentState extends State<HorizontalSliderComponent> {
       ),
     );
   }
+
+
 }

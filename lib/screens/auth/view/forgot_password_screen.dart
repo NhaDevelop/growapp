@@ -78,7 +78,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(locale.forgotPassword,
+                  Text(locale.forgotPassword2,
                       style: boldTextStyle(color: Colors.white)),
                   IconButton(
                     onPressed: () {

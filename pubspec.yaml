@@ -2,12 +2,13 @@ name: grow_tokyo_app
 description: A new Flutter project.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-version: 1.0.7+10002223
+version: 1.0.14+10002231
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
+  shimmer: ^3.0.0
   flutter:
     sdk: flutter
 

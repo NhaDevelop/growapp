@@ -28,7 +28,7 @@ Future<BaseResponseModel> createUser(Map request) async {
 Future<LoginResponse> loginUser(Map request,
     {bool isSocialLogin = false, bool isRegenerateToken = false}) async {
   LoginResponse res =
-      LoginResponse.fromJson(await handleResponse(await buildHttpResponse(
+  LoginResponse.fromJson(await handleResponse(await buildHttpResponse(
     isSocialLogin ? APIEndPoints.socialLogin : APIEndPoints.login,
     request: request,
     method: HttpMethodType.POST,
@@ -74,6 +74,21 @@ Future<void> saveUserData(UserData data) async {
       .setLoginType(data.loginType.validate(value: userStore.loginType));
   await userStore.setUserType(data.userType.validate());
   await userStore.setPointAmount(data.credit.validate());
+
+  if (data.branchId != null) {
+    await setValue('selected_branch_id', data.branchId);
+    appStore.setBranchId(data.branchId!);
+  } else {
+    await removeKey('selected_branch_id');
+    appStore.setBranchId(-1);
+  }
+  if (data.branchName != null) {
+    await setValue('selected_branch_name', data.branchName);
+    appStore.setBranchName(data.branchName!);
+  } else {
+    await removeKey('selected_branch_name');
+    appStore.setBranchName('');
+  }
 
   if (data.loginType == LoginTypeConst.LOGIN_TYPE_GOOGLE) {
     await userStore.setUserProfile(data.profileImage.validate());
@@ -133,16 +148,18 @@ Future<void> logoutApi({bool clearBranchData = true}) async {
 
 Future<dynamic> updateProfile(
     {File? imageFile,
-    String firstName = '',
-    String lastName = '',
-    String mobile = '',
-    String gender = '',
-    String dob = '',
-    String nationality = '',
-    Function(dynamic)? onSuccess}) async {
+      String firstName = '',
+      String lastName = '',
+      String email = '', // Added email parameter
+      String mobile = '',
+      String gender = '',
+      String dob = '',
+      String nationality = '',
+      int? branchId, // This parameter exists but wasn't being used
+      Function(dynamic)? onSuccess}) async {
   if (appStore.isLoggedIn) {
     MultipartRequest multiPartRequest =
-        await getMultiPartRequest(APIEndPoints.updateProfile);
+    await getMultiPartRequest(APIEndPoints.updateProfile);
 
     if (firstName.isNotEmpty) {
       multiPartRequest.fields[UserKeys.firstName] = firstName;
@@ -150,11 +167,18 @@ Future<dynamic> updateProfile(
     if (lastName.isNotEmpty) {
       multiPartRequest.fields[UserKeys.lastName] = lastName;
     }
+    if (email.isNotEmpty) { // Added email field
+      multiPartRequest.fields[UserKeys.email] = email;
+    }
     if (dob.isNotEmpty) multiPartRequest.fields[UserKeys.dob] = dob;
     if (mobile.isNotEmpty) multiPartRequest.fields[UserKeys.mobile] = mobile;
     if (gender.isNotEmpty) multiPartRequest.fields[UserKeys.gender] = gender;
     if (nationality.isNotEmpty) {
       multiPartRequest.fields[UserKeys.nationality] = nationality;
+    }
+    // ADD THIS: Include branch ID in the request
+    if (branchId != null) {
+      multiPartRequest.fields['branch_id'] = branchId.toString();
     }
     if (appStore.playerId.isNotEmpty) {
       multiPartRequest.fields[UserKeys.playerId] = appStore.playerId;

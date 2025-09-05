@@ -60,6 +60,8 @@ abstract class BaseLanguage {
 
   String get forgotPassword;
 
+  String get forgotPassword2;
+
   String get registerNow;
 
   String get or;
@@ -876,4 +878,6 @@ abstract class BaseLanguage {
   String get zalo;
 
   String get product;
+
+  String get alreadyBookedNote;
 }

@@ -282,44 +282,71 @@ class _SignInScreenState extends State<SignInScreen> {
                             children: [
                               16.height,
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   RoundedCheckBox(
                                     borderColor: secondaryColor,
                                     checkedColor: secondaryColor,
                                     isChecked: isRemember,
                                     text: locale.rememberMe,
-                                    textStyle: secondaryTextStyle(),
-                                    size: 20,
+                                    textStyle: secondaryTextStyle(size: 11),
+                                    size: 16,
                                     onTap: (value) async {
-                                      await setValue(
-                                          SharedPreferenceConst.IS_REMEMBERED,
-                                          isRemember);
+                                      await setValue(SharedPreferenceConst.IS_REMEMBERED, isRemember);
                                       isRemember = !isRemember;
                                       setState(() {});
                                     },
-                                  ).flexible(),
-                                  TextButton(
-                                    onPressed: () {
-                                      showInDialog(
-                                        context,
-                                        contentPadding: EdgeInsets.zero,
-                                        builder: (_) =>
-                                            const ForgotPasswordScreen(),
-                                      );
-                                    },
-                                    child: Text(
-                                      locale.forgotPassword,
-                                      style: secondaryTextStyle(
-                                          color: appStore.isDarkMode
-                                              ? territoryButtonColor
-                                              : null,
-                                          decoration: TextDecoration.underline),
-                                      textAlign: TextAlign.right,
+                                  ),
+                                  const SizedBox(width: 18), // space between checkbox and link
+                                  Flexible(
+                                    child: TextButton(
+                                      style: TextButton.styleFrom(
+                                        padding: EdgeInsets.zero,
+                                        minimumSize: Size(0, 0),
+                                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                      ),
+                                      onPressed: () {
+                                        showInDialog(
+                                          context,
+                                          contentPadding: EdgeInsets.zero,
+                                          builder: (_) => const ForgotPasswordScreen(),
+                                        );
+                                      },
+                                      child: Text(
+                                        locale.forgotPassword,
+                                        style: secondaryTextStyle(
+                                          size: 11,
+                                          color: appStore.isDarkMode ? territoryButtonColor : null,
+                                          decoration: TextDecoration.underline,
+                                        ),
+                                        softWrap: false,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                      ),
                                     ),
-                                  ).flexible(),
+                                  ),
                                 ],
+                              ),
+                              8.height,
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                decoration: BoxDecoration(
+                                  color: context.cardColor.withOpacity(0.05),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.info_outline, size: 16, color: Colors.grey),
+                                    8.width,
+                                    Expanded(
+                                      child: Text(
+                                        locale.alreadyBookedNote,
+                                        style: secondaryTextStyle(size: 11, color: Colors.grey),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),

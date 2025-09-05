@@ -87,6 +87,9 @@ class LanguageKm extends BaseLanguage {
   String get forgotPassword => 'ភ្លេចពាក្យសម្ងាត់?';
 
   @override
+  String get forgotPassword2 => 'ភ្លេចពាក្យសម្ងាត់?';
+
+  @override
   String get registerNow => 'ចុះឈ្មោះឥឡូវនេះ';
 
   @override
@@ -1326,4 +1329,8 @@ class LanguageKm extends BaseLanguage {
 
   @override
   String get product => "ផលិតផល";
+
+  @override
+  String get alreadyBookedNote => 'ប្រសិនបើអ្នកបានកក់ Grow តាមគេហទំព័ររួចហើយ សូមកំណត់ពាក្យសម្ងាត់ថ្មីដោយប្រើអ៊ីមែលរបស់អ្នក។';
+
 }

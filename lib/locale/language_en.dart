@@ -84,7 +84,10 @@ class LanguageEn extends BaseLanguage {
   String get rememberMe => 'Remember Me';
 
   @override
-  String get forgotPassword => 'Forgot Password?';
+  String get forgotPassword => 'Forgot Password / Set New Password';
+
+  @override
+  String get forgotPassword2 => 'Forgot Password';
 
   @override
   String get registerNow => 'Register Now';
@@ -1327,4 +1330,9 @@ class LanguageEn extends BaseLanguage {
 
   @override
   String get product => "Product";
+
+  @override
+  String get alreadyBookedNote => 'If you already booked Grow by web, please set a new password using your email address.';
+
 }
+

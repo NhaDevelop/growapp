@@ -87,6 +87,9 @@ class LanguageVi extends BaseLanguage {
   String get forgotPassword => 'Quên mật khẩu?';
 
   @override
+  String get forgotPassword2 => 'Quên mật khẩu?';
+
+  @override
   String get registerNow => 'Đăng ký ngay';
 
   @override
@@ -1331,4 +1334,8 @@ class LanguageVi extends BaseLanguage {
 
   @override
   String get product => "Sản phẩm";
+
+  @override
+  String get alreadyBookedNote => 'Nếu bạn đã đặt Grow trên web, vui lòng đặt lại mật khẩu bằng địa chỉ email của bạn.';
+
 }

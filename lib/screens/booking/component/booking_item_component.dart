@@ -181,7 +181,7 @@ class BookingItemComponent extends StatelessWidget {
               //       8.height,
               //     ],
               //   ),
-              if (bookingData.status == BookingStatusConst.PENDING &&
+              if ((bookingData.status == BookingStatusConst.PENDING || bookingData.status == BookingStatusConst.CONFIRMED) &&
                   (bookingData.payment == null ||
                       (bookingData.payment != null &&
                           bookingData.payment!.paymentStatus != 1)))

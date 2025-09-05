@@ -13,7 +13,7 @@ import 'package:grow_tokyo_app/screens/dashboard/component/horizontal_slider_com
 import 'package:grow_tokyo_app/screens/points/point_repository.dart';
 import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:grow_tokyo_app/screens/auth/view/sign_in_screen.dart';
 import '../../../components/empty_error_state_widget.dart';
 import '../../../main.dart';
 import '../../auth/auth_repository.dart';
@@ -116,7 +116,11 @@ class _HomeFragmentState extends State<HomeFragment> {
                         color: context.primaryColor,
                         textColor: white,
                         onTap: () {
-                          const SelectBranchScreen(isFromDashboard: true).launch(context);
+                          if (appStore.isLoggedIn) {
+                            const SelectBranchScreen(isFromDashboard: true).launch(context);
+                          } else {
+                            const SignInScreen().launch(context);
+                          }
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
