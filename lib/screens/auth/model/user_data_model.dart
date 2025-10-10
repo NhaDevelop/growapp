@@ -30,6 +30,7 @@ class UserData {
   double? credit;
   int? branchId;
   String? branchName;
+  String? fcmToken;
 
   UserData({
     this.apiToken,
@@ -57,6 +58,7 @@ class UserData {
     this.credit,
     this.branchId,
     this.branchName,
+    this.fcmToken,
   });
 
   factory UserData.fromJson(Map<String, dynamic> json) {
@@ -93,6 +95,7 @@ class UserData {
       credit: (json['credit'] as num?)?.toDouble(),
       branchId: json['branch_id'],
       branchName: json['branch_name'],
+      fcmToken: json['fcm_token'],
     );
   }
 
@@ -123,6 +126,7 @@ class UserData {
     if (credit != null) data['credit'] = credit;
     if (branchId != null) data['branch_id'] = branchId;
     if (branchName != null) data['branch_name'] = branchName;
+    if (fcmToken != null) data['fcm_token'] = fcmToken;
     return data;
   }
 

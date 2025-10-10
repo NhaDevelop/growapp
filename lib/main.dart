@@ -1,4 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -50,6 +52,7 @@ import 'screens/splash_screen.dart';
 import 'store/app_store.dart';
 import 'store/user_store.dart';
 import 'utils/common_base.dart';
+import 'utils/fcm_startup_utils.dart';
 
 //region APP STORE
 AppStore appStore = AppStore();
@@ -106,6 +109,40 @@ List<BlogPostModel>? blogPostListCached;
 
 //endregion
 
+/// SIMPLE FIREBASE DEBUG FUNCTION
+void simpleFirebaseDebug() async {
+  print('=== FIREBASE DEBUG START ===');
+  
+  try {
+    // Get Firebase project ID
+    String projectId = Firebase.app().options.projectId;
+    print('🔥 Firebase Project ID: $projectId');
+
+    // Check if correct project
+    bool isCorrect = projectId == 'growtokyo-fd8ae';
+    print('✅ Using correct project: $isCorrect');
+
+    // Get FCM token
+    String? token = await FirebaseMessaging.instance.getToken();
+    print('🔑 FCM Token: $token');
+
+    // Show error if wrong project
+    if (!isCorrect) {
+      print('❌ ERROR: App is using project $projectId but server expects growtokyo-fd8ae');
+    }
+    
+    // Show success if everything is correct
+    if (isCorrect && token != null) {
+      print('🎉 SUCCESS! Everything looks good!');
+    }
+    
+  } catch (e) {
+    print('❌ Error: $e');
+  }
+  
+  print('=== FIREBASE DEBUG END ===');
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -124,6 +161,13 @@ void main() async {
   locale = await const AppLocalizations().load(Locale(appStore.selectedLanguageCode));
 
   await initializeFirebase();
+
+  // RUN FIREBASE DEBUG AUTOMATICALLY
+  try {
+    simpleFirebaseDebug();
+  } catch (e) {
+    print('Debug error: $e');
+  }
 
   appStore.setLoggedIn(getBoolAsync(SharedPreferenceConst.IS_LOGGED_IN), isInitializing: true);
   appStore.setCountryId(
@@ -169,6 +213,11 @@ void main() async {
         isInitializing: true);
     await appStore.setTermConditions(getStringAsync(SharedPreferenceConst.TERM_CONDITIONS),
         isInitializing: true);
+    await userStore.setFcmToken(getStringAsync(SharedPreferenceConst.FCM_TOKEN),
+        isInitializing: true);
+    
+    // Initialize FCM for already logged-in users
+    FCMStartupUtils.initializeForLoggedInUser();
   }
 
   if (!kIsWeb) initOneSignal();
@@ -177,6 +226,8 @@ void main() async {
 
   runApp(runnableApp);
 }
+
+
 
 Widget _buildRunnableApp({required bool isWeb, required double webAppWidth, required Widget app}) {
   if (!isWeb) return app;

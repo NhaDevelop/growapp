@@ -37,6 +37,10 @@ dependencies:
   firebase_crashlytics: ^4.3.5
   firebase_core: ^3.7.0
   firebase_auth: ^5.3.2
+  firebase_messaging: ^15.1.6
+
+  # LOCAL NOTIFICATIONS
+  flutter_local_notifications: ^17.2.2
 
   # COUNTRY PICKER
   country_picker: ^2.0.20

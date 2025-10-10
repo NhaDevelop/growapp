@@ -8,13 +8,14 @@ class BuildConfig {
       case AppFlavor.local:
       // If you are using Android Emulator, 10.0.2.2 points back to your computer's localhost
       // If you are using iOS Simulator, you can use "localhost"
-        return 'http://10.0.2.2:8000';
+      // Updated to use your specified base URL
+        return 'http://192.168.0.170:8000';
       case AppFlavor.stag:
-        return 'https://grow-cms.xclabs.io';
+        return 'http://192.168.0.170:8000';
       case AppFlavor.prod:
-        return 'https://cms.hairmake-grow.com';
+        return 'http://192.168.0.170:8000';
       default:
-        return 'https://grow-cms.xclabs.io';
+        return 'http://192.168.0.170:8000';
     }
   }
 

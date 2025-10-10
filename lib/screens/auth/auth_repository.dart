@@ -13,6 +13,7 @@ import 'package:onesignal_flutter/onesignal_flutter.dart';
 import '../../network/rest_apis.dart';
 import '../../utils/api_end_points.dart';
 import '../../utils/model_keys.dart';
+import '../../services/fcm_service.dart';
 import 'model/user_data_model.dart';
 import 'model/user_update_response.dart';
 
@@ -43,8 +44,25 @@ Future<LoginResponse> loginUser(Map request,
 
     if (res.userData != null) {
       appStore.setLoading(false);
-      await saveUserData(res.userData!).then((value) {
-        getAppConfigurations();
+      await saveUserData(res.userData!).then((value) async {
+        await getAppConfigurations();
+        // Initialize FCM after successful login (safe initialization)
+        try {
+          await FCMService.initializeFCM();
+          // Force update FCM token to server after initialization
+          String? currentToken = await FCMService.getCurrentToken();
+          if (currentToken != null && currentToken.isNotEmpty) {
+            log('Updating FCM token to server after login: $currentToken');
+            try {
+              await updateFcmToken(fcmToken: currentToken);
+              log('FCM token successfully sent to server');
+            } catch (e) {
+              log('Failed to send FCM token to server: $e');
+            }
+          }
+        } catch (e) {
+          log('FCM initialization failed: $e');
+        }
       });
     }
   }
@@ -74,6 +92,7 @@ Future<void> saveUserData(UserData data) async {
       .setLoginType(data.loginType.validate(value: userStore.loginType));
   await userStore.setUserType(data.userType.validate());
   await userStore.setPointAmount(data.credit.validate());
+  await userStore.setFcmToken(data.fcmToken.validate());
 
   if (data.branchId != null) {
     await setValue('selected_branch_id', data.branchId);

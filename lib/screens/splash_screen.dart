@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:grow_tokyo_app/screens/dashboard/view/dashboard_screen.dart';
+import 'package:grow_tokyo_app/screens/debug/firebase_debug_screen.dart';
 import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -19,6 +20,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  int _tapCount = 0;
+  
   @override
   void initState() {
     init();
@@ -65,6 +68,22 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
+  void _onLogoTap() {
+    _tapCount++;
+    if (_tapCount >= 5) {
+      // Reset counter
+      _tapCount = 0;
+      // Navigate to Firebase Debug Screen
+      const FirebaseDebugScreen().launch(context);
+      toast('🔍 Firebase Debug Screen opened!');
+    } else {
+      // Show hint after 3 taps
+      if (_tapCount == 3) {
+        toast('Tap ${5 - _tapCount} more times to open Firebase Debug');
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,10 +92,13 @@ class _SplashScreenState extends State<SplashScreen> {
         width: context.width(),
         child: Padding(
           padding: EdgeInsets.all(context.width() * 0.2),
-          child: Image.asset(
-            splash_screen_logo,
-            fit: BoxFit.cover,
-          ).center(),
+          child: GestureDetector(
+            onTap: _onLogoTap,
+            child: Image.asset(
+              splash_screen_logo,
+              fit: BoxFit.cover,
+            ).center(),
+          ),
         ),
       ),
     );

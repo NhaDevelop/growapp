@@ -5,8 +5,10 @@ import 'package:nb_utils/nb_utils.dart';
 import '../main.dart';
 import '../models/configuration_response.dart';
 import '../models/verify_transaction_response.dart';
+import '../models/notification_user_response.dart';
 import '../utils/api_end_points.dart';
 import '../utils/constants.dart';
+import '../utils/build_config.dart';
 
 Future<void> clearPreferences() async {
   await userStore.setFirstName('');
@@ -20,6 +22,7 @@ Future<void> clearPreferences() async {
   await userStore.setUserProfile('');
   await userStore.setUId('');
   await userStore.setToken('');
+  await userStore.setFcmToken('');
 
   await appStore.setHelplineNumber('');
   await appStore.setInquiryEmail('');
@@ -107,6 +110,48 @@ Future<ConfigurationResponse> getAppConfigurations(
     }
 
     return appConfigurationResponseCached!;
+  } catch (e) {
+    log(e);
+    rethrow;
+  }
+}
+//endregion
+
+//region FCM Token APIs
+Future<Map<String, dynamic>> updateFcmToken({required String fcmToken}) async {
+  try {
+    Map<String, dynamic> request = {
+      'fcm_token': fcmToken,
+    };
+
+    log('🔥 UPDATING FCM TOKEN TO SERVER');
+    log('📍 Base URL: ${BuildConfig.baseUrl}');
+    log('🎯 Full URL: ${BuildConfig.baseUrl}${APIEndPoints.updateFcmToken}');
+    log('📦 Request: $request');
+    log('🔧 Method: PUT');
+
+    return await handleResponse(
+      await buildHttpResponse(
+        APIEndPoints.updateFcmToken,
+        request: request,
+        method: HttpMethodType.PUT,
+      ),
+    );
+  } catch (e) {
+    log('❌ FCM TOKEN UPDATE ERROR: $e');
+    rethrow;
+  }
+}
+
+Future<NotificationUserResponse> getNotificationUserGetPoint() async {
+  try {
+    Map<String, dynamic> response = await handleResponse(
+      await buildHttpResponse(
+        APIEndPoints.notificationUserGetPoint,
+        method: HttpMethodType.GET,
+      ),
+    );
+    return NotificationUserResponse.fromJson(response['data'] ?? response);
   } catch (e) {
     log(e);
     rethrow;

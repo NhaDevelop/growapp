@@ -77,4 +77,6 @@ class APIEndPoints {
   static const String removeReview = 'remove-review';
   static const String pages = 'pages';
   static const String checkAvailability = 'check-availability';
+  static const String updateFcmToken = 'update-fcm-token';
+  static const String notificationUserGetPoint = 'notification-user-get-point';
 }

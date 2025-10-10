@@ -77,6 +77,9 @@ abstract class _UserStore with Store {
   @observable
   int unreadNotificationCount = 0;
 
+  @observable
+  String fcmToken = '';
+
   @action
   Future<void> setUId(String val, {bool isInitializing = false}) async {
     uid = val;
@@ -186,5 +189,11 @@ abstract class _UserStore with Store {
   @action
   Future<void> setUnreadNotificationCount(int val) async {
     unreadNotificationCount = val;
+  }
+
+  @action
+  Future<void> setFcmToken(String val, {bool isInitializing = false}) async {
+    fcmToken = val;
+    if (!isInitializing) await setValue(SharedPreferenceConst.FCM_TOKEN, val);
   }
 }

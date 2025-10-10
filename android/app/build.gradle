@@ -75,6 +75,8 @@ android {
     }
 
     compileOptions {
+        // Enable core library desugaring
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -99,4 +101,7 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:32.0.0')
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.google.android.material:material:1.7.0-alpha01'
+    
+    // Core library desugaring for flutter_local_notifications
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
 }

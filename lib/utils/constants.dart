@@ -231,6 +231,7 @@ class SharedPreferenceConst {
   static const BRANCH_NAME = 'BRANCH_NAME';
   static const BRANCH_ANY_STYLIST_OPTIONS = 'BRANCH_ANY_STYLIST_OPTIONS';
   static const CREDIT = 'CREDIT';
+  static const FCM_TOKEN = 'FCM_TOKEN';
 }
 
 //endregion
