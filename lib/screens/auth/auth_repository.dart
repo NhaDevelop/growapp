@@ -14,6 +14,7 @@ import '../../network/rest_apis.dart';
 import '../../utils/api_end_points.dart';
 import '../../utils/model_keys.dart';
 import '../../services/fcm_service.dart';
+import '../../services/local_notification_service.dart';
 import 'model/user_data_model.dart';
 import 'model/user_update_response.dart';
 
@@ -91,8 +92,24 @@ Future<void> saveUserData(UserData data) async {
   await userStore
       .setLoginType(data.loginType.validate(value: userStore.loginType));
   await userStore.setUserType(data.userType.validate());
+  // Capture previous points to determine increase
+  final prevPoints = userStore.pointAmount;
   await userStore.setPointAmount(data.credit.validate());
   await userStore.setFcmToken(data.fcmToken.validate());
+
+  // Notify user if points increased on login/app open
+  try {
+    if (userStore.pointAmount > prevPoints) {
+      final gained = (userStore.pointAmount - prevPoints);
+      await LocalNotificationService.showNotification(
+        title: 'Points updated',
+        body: 'You earned +${gained.toStringAsFixed(0)} points! 🎉',
+        payload: 'points_update',
+      );
+    }
+  } catch (e) {
+    log('⚠️ Failed to show points update notification on login: $e');
+  }
 
   if (data.branchId != null) {
     await setValue('selected_branch_id', data.branchId);

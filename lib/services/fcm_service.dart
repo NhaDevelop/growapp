@@ -4,6 +4,7 @@ import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/network/rest_apis.dart';
 import 'package:grow_tokyo_app/services/fcm_background_handler.dart';
 import 'package:grow_tokyo_app/services/local_notification_service.dart';
+import 'package:grow_tokyo_app/screens/notifications/notification_repository.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 // Firebase Messaging instance
@@ -173,11 +174,31 @@ class FCMService {
         log('📨 Got a message whilst in the foreground!');
         log('📝 Message data: ${message.data}');
 
-        if (message.notification != null) {
-          log('🔔 Message notification: ${message.notification!.title} - ${message.notification!.body}');
-          
-          // Show local notification in notification bar (even when app is open)
-          await LocalNotificationService.showNotificationFromFirebase(message);
+        // Check if the notification type is 'point_added'
+        if (message.data['type'] == 'point_added') {
+          try {
+            // Extract title/body from either notification payload or data payload
+            final String title = message.notification?.title ?? message.data['title'] ?? 'New Notification';
+            final String body = message.notification?.body ?? message.data['body'] ?? 'You have a new message';
+
+            // Always show a local notification in foreground
+            await LocalNotificationService.showNotification(
+              title: title,
+              body: body,
+              payload: message.data.isEmpty ? null : message.data.toString(),
+            );
+          } catch (e) {
+            log('❌ Error showing foreground notification: $e');
+          }
+        }
+
+        // Refresh unread count so badges update immediately
+        try {
+          if (appStore.isLoggedIn) {
+            await getNotification(callBack: (totalCount) => userStore.setUnreadNotificationCount(totalCount));
+          }
+        } catch (e) {
+          log('⚠️ Error refreshing unread notification count: $e');
         }
       });
 

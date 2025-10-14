@@ -37,6 +37,7 @@ class _PointsScreenState extends State<PointsScreen>
   @override
   void initState() {
     super.initState();
+    userStore.setUnreadNotificationCount(0);
     tabController.addListener(() {
       if (tabController.indexIsChanging) {
         tabParam = tabParams[tabController.index];

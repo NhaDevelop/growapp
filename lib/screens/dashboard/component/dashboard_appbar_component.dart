@@ -107,18 +107,38 @@ class _DashboardAppBarComponentState extends State<DashboardAppBarComponent> {
                     }),
                     Observer(
                       builder: (context) => appStore.isLoggedIn
-                          ? TextButton(
-                              onPressed: () => const PointsScreen().launch(context),
-                              child: Row(
-                                children: [
-                                  Image.asset(ic_crown, height: 20, width: 20, color: white),
-                                  8.width,
-                                  Text(
-                                    userStore.pointAmount.formatAmount(),
-                                    style: boldTextStyle(color: white, size: 20),
+                          ? Stack(
+                              children: [
+                                TextButton(
+                                  onPressed: () => const PointsScreen().launch(context),
+                                  child: Row(
+                                    children: [
+                                      Image.asset(ic_crown, height: 20, width: 20, color: white),
+                                      8.width,
+                                      Text(
+                                        userStore.pointAmount.formatAmount(),
+                                        style: boldTextStyle(color: white, size: 20),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
+                                ),
+                                if (userStore.unreadNotificationCount > 0)
+                                  Positioned(
+                                    top: 8,
+                                    right: 8,
+                                    child: Container(
+                                      padding: const EdgeInsets.all(4),
+                                      decoration: boxDecorationWithRoundedCorners(
+                                        boxShape: BoxShape.circle,
+                                        backgroundColor: Colors.red,
+                                      ),
+                                      child: Text(
+                                        userStore.unreadNotificationCount.toString(),
+                                        style: primaryTextStyle(color: white, size: 10),
+                                      ),
+                                    ),
+                                  ),
+                              ],
                             )
                           : TextButton(
                               onPressed: () => const SignInScreen().launch(context),

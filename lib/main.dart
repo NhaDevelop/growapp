@@ -53,6 +53,8 @@ import 'store/app_store.dart';
 import 'store/user_store.dart';
 import 'utils/common_base.dart';
 import 'utils/fcm_startup_utils.dart';
+import 'screens/notifications/notification_repository.dart';
+import 'services/local_notification_service.dart';
 
 //region APP STORE
 AppStore appStore = AppStore();
@@ -218,6 +220,15 @@ void main() async {
     
     // Initialize FCM for already logged-in users
     FCMStartupUtils.initializeForLoggedInUser();
+
+
+
+    // Initialize unread notifications count on app start for accuracy
+    try {
+      await getNotification(callBack: (totalCount) => userStore.setUnreadNotificationCount(totalCount));
+    } catch (e) {
+      log('⚠️ Failed to initialize unread notifications count: $e');
+    }
   }
 
   if (!kIsWeb) initOneSignal();
