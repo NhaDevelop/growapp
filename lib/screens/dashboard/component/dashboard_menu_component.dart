@@ -175,7 +175,7 @@ class _PointsMenuItemState extends State<_PointsMenuItem> {
                 constraints: const BoxConstraints(minWidth: 18, minHeight: 18),
                 child: Center(
                   child: Text(
-                    count > 99 ? '99+' : count.toString(),
+                    count > 99 ? '99+' : count.toStringAsFixed(2),
                     style: boldTextStyle(color: white, size: 10),
                     maxLines: 1,
                   ),
