@@ -21,6 +21,16 @@ import '../fragment/booking_fragment.dart';
 import '../fragment/home_fragment.dart';
 import '../fragment/profile_fragment.dart';
 
+// Badge decoration removed as per requirement
+Widget withBadge({
+  required Widget child,
+  bool show = false,
+  String? text,
+}) {
+  // Always return child without badge
+  return child;
+}
+
 class DashboardScreen extends StatefulWidget {
   final int pageIndex;
 

@@ -5,6 +5,7 @@ import 'package:grow_tokyo_app/network/rest_apis.dart';
 import 'package:grow_tokyo_app/services/fcm_background_handler.dart';
 import 'package:grow_tokyo_app/services/local_notification_service.dart';
 import 'package:grow_tokyo_app/screens/notifications/notification_repository.dart';
+import 'package:grow_tokyo_app/screens/points/point_repository.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 // Firebase Messaging instance
@@ -176,6 +177,7 @@ class FCMService {
 
         // Check if the notification type is 'point_added'
         if (message.data['type'] == 'point_added') {
+          getPointsAPI();
           try {
             // Extract title/body from either notification payload or data payload
             final String title = message.notification?.title ?? message.data['title'] ?? 'New Notification';

@@ -122,22 +122,7 @@ class _DashboardAppBarComponentState extends State<DashboardAppBarComponent> {
                                     ],
                                   ),
                                 ),
-                                if (userStore.unreadNotificationCount > 0)
-                                  Positioned(
-                                    top: 8,
-                                    right: 8,
-                                    child: Container(
-                                      padding: const EdgeInsets.all(4),
-                                      decoration: boxDecorationWithRoundedCorners(
-                                        boxShape: BoxShape.circle,
-                                        backgroundColor: Colors.red,
-                                      ),
-                                      child: Text(
-                                        userStore.unreadNotificationCount.toString(),
-                                        style: primaryTextStyle(color: white, size: 10),
-                                      ),
-                                    ),
-                                  ),
+
                               ],
                             )
                           : TextButton(

@@ -6,6 +6,7 @@ import 'package:grow_tokyo_app/screens/dashboard/component/inquiry_dialog.dart';
 import 'package:grow_tokyo_app/screens/dashboard/fragment/notification_fragment.dart';
 import 'package:grow_tokyo_app/screens/dashboard/view/dashboard_screen.dart';
 import 'package:grow_tokyo_app/screens/notifications/notification_repository.dart';
+import 'package:grow_tokyo_app/screens/points/point_repository.dart';
 import 'package:grow_tokyo_app/screens/points/view/points_screen.dart';
 import 'package:grow_tokyo_app/screens/referral/view/referral_screen.dart';
 import 'package:grow_tokyo_app/utils/common_base.dart';
@@ -21,7 +22,7 @@ class DashboardMenuComponent extends StatelessWidget {
       children: [
         Row(
           children: [
-            _MenuItem(
+            _PointsMenuItem(
               icon: dashboard_menu_points,
               title: locale.points,
               onTap: () => doIfLoggedIn(
@@ -128,6 +129,60 @@ class _MenuItem extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class _PointsMenuItem extends StatefulWidget {
+  final String title;
+  final VoidCallback onTap;
+  final String icon;
+
+  const _PointsMenuItem({
+    required this.icon,
+    required this.title,
+    required this.onTap,
+  });
+
+  @override
+  State<_PointsMenuItem> createState() => _PointsMenuItemState();
+}
+
+class _PointsMenuItemState extends State<_PointsMenuItem> {
+  @override
+  void initState() {
+    super.initState();
+
+    if (!appStore.isLoggedIn) return;
+    getPointsAPI();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Observer(builder: (context) {
+      final count = userStore.pointAmount;
+      return _MenuItem(
+        icon: widget.icon,
+        title: widget.title,
+        onTap: widget.onTap,
+        iconIndicator: !appStore.isLoggedIn || count == 0
+            ? null
+            : Container(
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                constraints: const BoxConstraints(minWidth: 18, minHeight: 18),
+                child: Center(
+                  child: Text(
+                    count > 99 ? '99+' : count.toString(),
+                    style: boldTextStyle(color: white, size: 10),
+                    maxLines: 1,
+                  ),
+                ),
+              ),
+      );
+    });
   }
 }
 

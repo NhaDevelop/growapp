@@ -13,19 +13,35 @@ extension numExt on num {
     return this < 10 ? '0$this' : '$this';
   }
 
-  String formatAmount({String seperator = ',', int decimal = 2}) {
-    return toStringAsFixed(decimal).replaceAllMapped(
-        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-        (Match m) => '${m[1]}$seperator');
+  // Formats number with thousand grouping on integer part and configurable separators.
+  String formatAmount({
+    String thousandSeparator = ',',
+    String decimalSeparator = '.',
+    int decimal = 2,
+  }) {
+    final fixed = toStringAsFixed(decimal);
+    final parts = fixed.split('.');
+    String intPart = parts[0];
+    String decPart = parts.length > 1 ? parts[1] : '';
+
+    final rgx = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
+    intPart = intPart.replaceAllMapped(rgx, (m) => '${m[1]}$thousandSeparator');
+
+    if (decimal == 0) return intPart;
+    return '$intPart$decimalSeparator$decPart';
   }
 
   String get formatPrice {
+    // Default to US-style separators unless overridden elsewhere.
+    const defaultThousand = ',';
+    const defaultDecimal = '.';
+
     switch (appStore.currencyCode) {
       case 'VND':
-        return '${formatAmount(decimal: 0)}đ';
+        return '${formatAmount(thousandSeparator: defaultThousand, decimalSeparator: defaultDecimal, decimal: 0)}đ';
       default:
         final currencySymbol = appStore.currencySymbol;
-        return '$currencySymbol${formatAmount()}';
+        return '$currencySymbol${formatAmount(thousandSeparator: defaultThousand, decimalSeparator: defaultDecimal)}';
     }
   }
 }
