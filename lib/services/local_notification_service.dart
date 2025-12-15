@@ -1,5 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:grow_tokyo_app/screens/dashboard/view/dashboard_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class LocalNotificationService {
@@ -45,8 +46,31 @@ class LocalNotificationService {
   /// Handle notification tap
   static void _onNotificationTapped(NotificationResponse response) {
     log('🔔 Notification tapped: ${response.payload}');
-    // Handle notification tap here
-    // You can navigate to specific screens based on payload
+
+    // Handle notification tap and navigate to appropriate screen
+    if (response.payload != null && response.payload!.isNotEmpty) {
+      try {
+        // Parse the payload string to extract notification data
+        // Payload format: {key: value, key: value, ...}
+        String payload = response.payload!;
+
+        // Simple parsing to check for notification type
+        if (payload.contains('booking') ||
+            payload.contains('new_booking') ||
+            payload.contains('complete_booking')) {
+          log('🚀 Navigating to Booking Screen from foreground tap');
+          // Navigate to Dashboard Booking tab
+
+          DashboardScreen(pageIndex: 1).launch(navigatorKey.currentContext!);
+        }
+        // Add more navigation cases as needed
+        // else if (payload.contains('point_added')) {
+        //   // Navigate to points screen
+        // }
+      } catch (e) {
+        log('❌ Error handling foreground notification tap: $e');
+      }
+    }
   }
 
   /// Show notification in notification bar
@@ -81,8 +105,7 @@ class LocalNotificationService {
       );
 
       // Combined notification details
-      const NotificationDetails platformChannelSpecifics =
-          NotificationDetails(
+      const NotificationDetails platformChannelSpecifics = NotificationDetails(
         android: androidPlatformChannelSpecifics,
         iOS: iOSPlatformChannelSpecifics,
       );
@@ -103,20 +126,21 @@ class LocalNotificationService {
   }
 
   /// Show notification from Firebase message
-  static Future<void> showNotificationFromFirebase(RemoteMessage message) async {
+  static Future<void> showNotificationFromFirebase(
+      RemoteMessage message) async {
     try {
       String title = message.notification?.title ?? 'New Notification';
       String body = message.notification?.body ?? 'You have a new message';
-      
+
       // Create payload with message data
       String payload = message.data.toString();
-      
+
       await showNotification(
         title: title,
         body: body,
         payload: payload,
       );
-      
+
       log('🔔 Firebase notification converted to local notification');
     } catch (e) {
       log('❌ Error converting Firebase notification: $e');
@@ -127,12 +151,12 @@ class LocalNotificationService {
   static Future<bool> requestPermissions() async {
     try {
       log('🔔 Requesting notification permissions...');
-      
+
       final bool? result = await _notificationsPlugin
           .resolvePlatformSpecificImplementation<
               AndroidFlutterLocalNotificationsPlugin>()
           ?.requestNotificationsPermission();
-      
+
       log('✅ Notification permissions result: $result');
       return result ?? false;
     } catch (e) {
@@ -145,7 +169,7 @@ class LocalNotificationService {
   static Future<void> createNotificationChannel() async {
     try {
       log('🔔 Creating notification channel...');
-      
+
       const AndroidNotificationChannel channel = AndroidNotificationChannel(
         'fcm_channel', // Channel ID
         'FCM Notifications', // Channel name
@@ -159,7 +183,7 @@ class LocalNotificationService {
           .resolvePlatformSpecificImplementation<
               AndroidFlutterLocalNotificationsPlugin>()
           ?.createNotificationChannel(channel);
-      
+
       log('✅ Notification channel created successfully');
     } catch (e) {
       log('❌ Error creating notification channel: $e');

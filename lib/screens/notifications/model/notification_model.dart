@@ -60,8 +60,9 @@ class NotificationData {
 class NotificationModel {
   NotificationDetail? notificationDetail;
   String? subject;
+  int? bookingId; // Added to support backend's flat structure
 
-  NotificationModel({this.notificationDetail, this.subject});
+  NotificationModel({this.notificationDetail, this.subject, this.bookingId});
 
   factory NotificationModel.fromJson(Map<String, dynamic> json) {
     return NotificationModel(
@@ -69,6 +70,9 @@ class NotificationModel {
           ? NotificationDetail.fromJson(json['data'])
           : null,
       subject: json['subject'],
+      bookingId: json['booking_id'] != null
+          ? int.tryParse(json['booking_id'].toString())
+          : null,
     );
   }
 }

@@ -1,5 +1,4 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/services/fcm_service.dart';
 import 'package:grow_tokyo_app/network/rest_apis.dart';

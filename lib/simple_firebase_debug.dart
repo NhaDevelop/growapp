@@ -26,7 +26,7 @@ void simpleFirebaseDebug() async {
     }
     
     // Show success if everything is correct
-    if (isCorrect && token != null) {
+    if (isCorrect) {
       print('🎉 SUCCESS! Everything looks good!');
     }
     

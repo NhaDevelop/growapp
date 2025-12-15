@@ -1,6 +1,9 @@
-// This file contains the actual FCM implementation
-// It should be used once firebase_messaging dependency is added
+// [DEPRECATED / UNUSED]
+// This file was restored for reference purposes only.
+// It contains a duplicate implementation of FCMService and should NOT be uncommented
+// without addressing the conflict with fcm_service.dart.
 
+/*
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/network/rest_apis.dart';
@@ -28,11 +31,11 @@ class FCMServiceImpl {
         
         // Get the token
         String? token = await _firebaseMessaging.getToken();
+        log('FCM Token: $token');
         if (token != null) {
-          log('FCM Token: $token');
           await saveFCMToken(token);
         }
-
+      
         // Listen for token refresh
         _firebaseMessaging.onTokenRefresh.listen((String token) {
           log('FCM Token refreshed: $token');
@@ -112,3 +115,4 @@ class FCMServiceImpl {
     log('Handling a background message: ${message.messageId}');
   }
 }
+*/

@@ -32,12 +32,10 @@ void debugFirebaseConfig() async {
     print('📱 App ID: ${Firebase.app().options.appId}');
     print('🗄️ Storage Bucket: ${Firebase.app().options.storageBucket}');
     
-    if (token != null) {
-      print('📏 Token Length: ${token.length} characters');
-      print('🔍 Token Preview: ${token.substring(0, 50)}...');
-      print('✅ Token Type: ${token.startsWith('fake_fcm_token_') ? 'FAKE (❌)' : 'REAL (✅)'}');
-    }
-    
+    print('📏 Token Length: ${token!.length} characters');
+    print('🔍 Token Preview: ${token.substring(0, 50)}...');
+    print('✅ Token Type: ${token.startsWith('fake_fcm_token_') ? 'FAKE (❌)' : 'REAL (✅)'}');
+      
     print('');
     print('=== 🎯 WHAT SHOULD HAPPEN ===');
     print('Expected Output:');
@@ -52,6 +50,8 @@ void debugFirebaseConfig() async {
 
 /// Widget to test Firebase configuration
 class FirebaseDebugWidget extends StatefulWidget {
+  const FirebaseDebugWidget({super.key});
+
   @override
   _FirebaseDebugWidgetState createState() => _FirebaseDebugWidgetState();
 }
@@ -76,7 +76,7 @@ class _FirebaseDebugWidgetState extends State<FirebaseDebugWidget> {
                 });
                 
                 // Capture debug output
-                await debugFirebaseConfig();
+                debugFirebaseConfig();
                 
                 // Get the actual values
                 try {

@@ -1,5 +1,4 @@
-library horizontal_center_date_picker;
-
+library;
 import 'package:grow_tokyo_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';

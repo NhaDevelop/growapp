@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class FirebaseDebugScreen extends StatefulWidget {
-  const FirebaseDebugScreen({Key? key}) : super(key: key);
+  const FirebaseDebugScreen({super.key});
 
   @override
   State<FirebaseDebugScreen> createState() => _FirebaseDebugScreenState();
@@ -164,26 +164,23 @@ class _FirebaseDebugScreenState extends State<FirebaseDebugScreen> {
       output += '📱 App ID: ${Firebase.app().options.appId}\\n';
       output += '🗄️ Storage Bucket: ${Firebase.app().options.storageBucket}\\n';
       
-      if (token != null) {
-        output += '📏 Token Length: ${token.length} characters\\n';
-        output += '🔍 Token Preview: ${token.substring(0, 50)}...\\n';
-        output += '✅ Token Type: ${token.startsWith('fake_fcm_token_') ? 'FAKE (❌)' : 'REAL (✅)'}\\n';
-      }
-      
+      output += '📏 Token Length: ${token!.length} characters\\n';
+      output += '🔍 Token Preview: ${token.substring(0, 50)}...\\n';
+      output += '✅ Token Type: ${token.startsWith('fake_fcm_token_') ? 'FAKE (❌)' : 'REAL (✅)'}\\n';
+          
       output += '\\n=== 🎯 EXPECTED OUTPUT ===\\n';
       output += '🔥 Firebase Project ID: growtokyo-fd8ae\\n';
       output += '✅ Using correct project: true\\n';
       output += '🔑 FCM Token: dB8snsNfSNmV7G9sEHrPOc...\\n';
       
       output += '\\n=== 📊 RESULT ===\\n';
-      if (isCorrect && token != null && !token.startsWith('fake_fcm_token_')) {
+      if (isCorrect && !token.startsWith('fake_fcm_token_')) {
         output += '🎉 SUCCESS! Configuration is correct!\\n';
         output += '✅ Your backend should accept these tokens.\\n';
       } else {
         output += '❌ ISSUES FOUND:\\n';
         if (!isCorrect) output += '   - Wrong Firebase project\\n';
-        if (token == null) output += '   - No FCM token generated\\n';
-        if (token?.startsWith('fake_fcm_token_') == true) output += '   - Fake token instead of real\\n';
+        if (token.startsWith('fake_fcm_token_') == true) output += '   - Fake token instead of real\\n';
       }
       
     } catch (e) {

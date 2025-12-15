@@ -93,28 +93,20 @@ class FirebaseDebugDetailed {
       // Get FCM token
       String? token = await FirebaseMessaging.instance.getToken();
       
-      if (token != null) {
-        log('✅ FCM Token Generated: YES');
-        log('📏 Token Length: ${token.length} characters');
-        log('🔍 Token Preview: ${token.substring(0, 50)}...');
-        log('🔗 Token Type: ${token.startsWith('fake_fcm_token_') ? 'FAKE (❌)' : 'REAL (✅)'}');
-        
-        // Check if token is valid format
-        bool isValidFormat = token.length > 100 && !token.startsWith('fake_fcm_token_');
-        log('✅ Valid Token Format: ${isValidFormat ? 'YES' : 'NO'}');
-        
-        // Store token for comparison
-        String storedToken = userStore.fcmToken;
-        log('💾 Stored Token Matches: ${storedToken == token ? 'YES' : 'NO'}');
-        
-      } else {
-        log('❌ FCM Token Generated: NO');
-        log('🔧 Possible Issues:');
-        log('   - Firebase not properly initialized');
-        log('   - Missing permissions');
-        log('   - Network connectivity issues');
-      }
+      log('✅ FCM Token Generated: YES');
+      log('📏 Token Length: ${token!.length} characters');
+      log('🔍 Token Preview: ${token.substring(0, 50)}...');
+      log('🔗 Token Type: ${token.startsWith('fake_fcm_token_') ? 'FAKE (❌)' : 'REAL (✅)'}');
       
+      // Check if token is valid format
+      bool isValidFormat = token.length > 100 && !token.startsWith('fake_fcm_token_');
+      log('✅ Valid Token Format: ${isValidFormat ? 'YES' : 'NO'}');
+      
+      // Store token for comparison
+      String storedToken = userStore.fcmToken;
+      log('💾 Stored Token Matches: ${storedToken == token ? 'YES' : 'NO'}');
+      
+          
     } catch (e) {
       log('❌ Error getting FCM token: $e');
     }
@@ -166,7 +158,7 @@ class FirebaseDebugDetailed {
         'expectedProjectId': 'growtokyo-fd8ae',
         'isCorrectProject': options.projectId == 'growtokyo-fd8ae',
         'projectNumber': options.messagingSenderId,
-        'apiKey': options.apiKey.substring(0, 20) + '...',
+        'apiKey': '${options.apiKey.substring(0, 20)}...',
         'appId': options.appId,
         'storageBucket': options.storageBucket,
       };
@@ -175,10 +167,10 @@ class FirebaseDebugDetailed {
       String? token = await FirebaseMessaging.instance.getToken();
       report['fcmToken'] = {
         'hasToken': token != null,
-        'tokenLength': token?.length ?? 0,
-        'tokenPreview': token?.substring(0, 50) ?? 'null',
-        'isFakeToken': token?.startsWith('fake_fcm_token_') ?? false,
-        'isValidFormat': token != null && token.length > 100 && !token.startsWith('fake_fcm_token_'),
+        'tokenLength': token!.length,
+        'tokenPreview': token.substring(0, 50),
+        'isFakeToken': token.startsWith('fake_fcm_token_'),
+        'isValidFormat': token.length > 100 && !token.startsWith('fake_fcm_token_'),
       };
       
       // Build configuration

@@ -2,7 +2,7 @@ name: grow_tokyo_app
 description: A new Flutter project.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-version: 1.0.14+10002231
+version: 1.0.15+10002232
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -41,6 +41,9 @@ dependencies:
 
   # LOCAL NOTIFICATIONS
   flutter_local_notifications: ^17.2.2
+  
+  # DEVICE PREVIEW (for testing)
+  device_preview: ^1.1.0
 
   # COUNTRY PICKER
   country_picker: ^2.0.20

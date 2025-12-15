@@ -6,12 +6,9 @@ import 'package:grow_tokyo_app/utils/app_common.dart';
 import 'package:grow_tokyo_app/utils/colors.dart';
 import 'package:grow_tokyo_app/utils/common_base.dart';
 import 'package:nb_utils/nb_utils.dart';
-
-import '../../../components/cached_image_widget.dart';
 import '../../../components/empty_error_state_widget.dart';
 import '../../../main.dart';
 import '../../../utils/constants.dart';
-import '../../../utils/images.dart';
 import '../../booking/booking_repository.dart';
 import '../../booking/model/booking_status_response.dart';
 import '../component/booking_list_component.dart';

@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:grow_tokyo_app/components/app_scaffold.dart';
 import 'package:grow_tokyo_app/components/common_app_dialog.dart';
 import 'package:grow_tokyo_app/components/default_card.dart';
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/screens/booking/booking_repository.dart';
-import 'package:grow_tokyo_app/screens/booking/component/add_referral_code_modal.dart';
 import 'package:grow_tokyo_app/screens/booking/component/service_item_component.dart';
-import 'package:grow_tokyo_app/screens/coupon/model/coupon_list_response.dart';
-import 'package:grow_tokyo_app/screens/coupon/view/add_coupon_screen.dart';
 import 'package:grow_tokyo_app/screens/dashboard/view/dashboard_screen.dart';
 import 'package:grow_tokyo_app/screens/points/point_repository.dart';
 import 'package:grow_tokyo_app/screens/services/models/service_response.dart';

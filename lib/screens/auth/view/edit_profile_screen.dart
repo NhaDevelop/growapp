@@ -395,7 +395,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                     ? Icon(Icons.check, color: primaryColor)
                     : null,
               );
-            }).toList(),
+            }),
             16.height,
           ],
         );

@@ -33,7 +33,7 @@ class CommonRowTextWidget extends StatelessWidget {
         Marquee(
           textDirection: isRTL ? TextDirection.rtl : TextDirection.ltr,
           child: Text(leadingText, style: secondaryTextStyle(), textAlign: isRTL ? TextAlign.end : TextAlign.start),
-        ).expand(flex: leftWidgetFlex),
+        ).expand(flex: leftWidgetFlex.validate(value:1)),
         16.width,
         Align(
           alignment: Alignment.topRight,
@@ -43,7 +43,7 @@ class CommonRowTextWidget extends StatelessWidget {
                 ? PriceWidget(price: trailingText.toDouble(), color: appStore.isDarkMode ? Colors.white : Colors.black, size: 14)
                 : Text(trailingText.validate(), style: boldTextStyle(size: trailingTxtSize.validate(value: 12), color: trailingTextColor)),
           ),
-        ).expand(flex: rightWidgetFlex),
+        ).expand(flex: rightWidgetFlex.validate(value: 2)),
       ],
     );
   }

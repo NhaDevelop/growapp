@@ -5,7 +5,7 @@ import 'package:nb_utils/nb_utils.dart';
 /// Floating Debug Button Widget
 /// Add this to any screen to access Firebase Debug
 class DebugFloatingButton extends StatelessWidget {
-  const DebugFloatingButton({Key? key}) : super(key: key);
+  const DebugFloatingButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class DebugFloatingButton extends StatelessWidget {
 
 /// Debug Button Widget (for adding to any screen)
 class DebugButton extends StatelessWidget {
-  const DebugButton({Key? key}) : super(key: key);
+  const DebugButton({super.key});
 
   @override
   Widget build(BuildContext context) {

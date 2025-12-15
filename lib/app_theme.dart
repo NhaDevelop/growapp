@@ -24,7 +24,6 @@ class AppTheme {
           const BottomNavigationBarThemeData(backgroundColor: Colors.white),
       iconTheme: IconThemeData(color: textPrimaryColorGlobal),
       textTheme: GoogleFonts.lexendDecaTextTheme(),
-      dialogBackgroundColor: Colors.white,
       unselectedWidgetColor: Colors.black,
       dividerColor: borderColor,
       bottomSheetTheme: BottomSheetThemeData(
@@ -43,13 +42,13 @@ class AppTheme {
           ),
         ),
       ),
-      dialogTheme: const DialogTheme(
+      dialogTheme: const DialogThemeData(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
         surfaceTintColor: Colors.transparent,
       ),
-      tabBarTheme: const TabBarTheme(
+      tabBarTheme: const TabBarThemeData(
         labelColor: primaryColor,
         unselectedLabelColor: appTextSecondaryColor,
         indicatorColor: primaryColor,

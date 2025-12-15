@@ -280,11 +280,7 @@ Future<DateTime?> datePicker(BuildContext context) async {
     },
   );
 
-  if (newDate != null) {
-    return newDate;
-  } else {
-    return null;
-  }
+  return newDate;
 }
 
 Future<String?> timePicker(BuildContext context) async {

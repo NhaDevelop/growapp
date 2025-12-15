@@ -11,7 +11,7 @@ import 'package:grow_tokyo_app/utils/api_test_utils.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class NotificationSettingsScreen extends StatefulWidget {
-  const NotificationSettingsScreen({Key? key}) : super(key: key);
+  const NotificationSettingsScreen({super.key});
 
   @override
   State<NotificationSettingsScreen> createState() => _NotificationSettingsScreenState();
@@ -293,7 +293,7 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
       if (isCorrect && hasValidToken) {
         toast('✅ SUCCESS! Configuration is correct - check logs for details');
       } else {
-        String issues = [];
+        List issues = [];
         if (!isCorrect) issues.add('Wrong Firebase project');
         if (!hasValidToken) issues.add('Invalid FCM token');
         toast('❌ Issues found: ${issues.join(', ')} - check logs');
