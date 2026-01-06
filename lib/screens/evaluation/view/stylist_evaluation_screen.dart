@@ -20,7 +20,6 @@ class StylistEvaluationScreen extends StatefulWidget {
     this.bookingId,
     this.submitStatus,
   });
-
   @override
   State<StylistEvaluationScreen> createState() =>
       _StylistEvaluationScreenState();
@@ -42,6 +41,13 @@ class _StylistEvaluationScreenState extends State<StylistEvaluationScreen> {
   @override
   void initState() {
     super.initState();
+
+    // Pre-fill stylist name if available from API
+    if (widget.evaluationData.staffName != null) {
+      stylistNameController.text = widget.evaluationData.staffName!;
+      log('✅ Pre-filled stylist name: ${widget.evaluationData.staffName}');
+    }
+
     _checkEvaluationStatus();
   }
 
@@ -55,12 +61,10 @@ class _StylistEvaluationScreenState extends State<StylistEvaluationScreen> {
       log('📊 Submit status from notification: ${widget.submitStatus}');
       final willShowForm = widget.submitStatus != 1;
       log('🔍 [EVAL STATUS] Will show form: $willShowForm (submitStatus=${widget.submitStatus})');
-
       setState(() {
         isAlreadySubmitted = widget.submitStatus == 1;
         isLoading = false;
       });
-
       if (isAlreadySubmitted) {
         log('✅ Evaluation already submitted (from notification data)');
       } else {
@@ -80,6 +84,8 @@ class _StylistEvaluationScreenState extends State<StylistEvaluationScreen> {
           isAlreadySubmitted = true;
           isLoading = false;
         });
+        // Load the submitted data to show in thank you screen
+        await _loadSubmittedData();
         return;
       }
     }
@@ -94,7 +100,6 @@ class _StylistEvaluationScreenState extends State<StylistEvaluationScreen> {
       isLoading = false;
       isAlreadySubmitted = false; // Always show form
     });
-
     /* DISABLED: Backend API is broken, returns wrong status
     // Fallback: check via API if no submitStatus provided
     if (widget.bookingId == null) {
@@ -148,11 +153,12 @@ class _StylistEvaluationScreenState extends State<StylistEvaluationScreen> {
   }
 
   Future<void> submitEvaluation() async {
-    if (selectedTechnique == null ||
-        selectedCommunication == null ||
-        selectedAttitude == null ||
+    // Validation check removed to allow partial submission
+    if (selectedTechnique == null &&
+        selectedCommunication == null &&
+        selectedAttitude == null &&
         selectedRequestAgain == null) {
-      toast('Please answer all questions');
+      toast('Please answer at least one question');
       return;
     }
 
@@ -162,10 +168,10 @@ class _StylistEvaluationScreenState extends State<StylistEvaluationScreen> {
     try {
       final status = await submitStylistEvaluation(
         bookingId: widget.bookingId ?? 0,
-        technique: selectedTechnique!,
-        communication: selectedCommunication!,
-        friendly: selectedAttitude!,
-        requestSameStylish: selectedRequestAgain!,
+        technique: selectedTechnique,
+        communication: selectedCommunication,
+        friendly: selectedAttitude,
+        requestSameStylish: selectedRequestAgain,
         stylistName: stylistNameController.text.trim(),
         message: messageController.text.trim(),
       );
@@ -318,21 +324,61 @@ class _StylistEvaluationScreenState extends State<StylistEvaluationScreen> {
                       ),
                       32.height,
 
-                      // Decorative stars
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: List.generate(
-                          5,
-                          (index) => Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 3),
-                            child: Icon(
-                              Icons.star,
-                              color: ratingBarColor,
-                              size: 28,
-                            ),
+                      // Rich Rating Summary - 4 Columns
+                      if (selectedTechnique != null ||
+                          selectedCommunication != null ||
+                          selectedAttitude != null ||
+                          selectedRequestAgain != null)
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 16),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade50,
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(color: Colors.grey.shade200),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // 1. Technique
+                              if (selectedTechnique != null)
+                                Expanded(
+                                  child: _buildRatingSummaryRow(
+                                    label: 'Technique',
+                                    value: selectedTechnique!,
+                                  ),
+                                ),
+
+                              // 2. Communication
+                              if (selectedCommunication != null)
+                                Expanded(
+                                  child: _buildRatingSummaryRow(
+                                    label: 'Comm.',
+                                    value: selectedCommunication!,
+                                  ),
+                                ),
+
+                              // 3. Service
+                              if (selectedAttitude != null)
+                                Expanded(
+                                  child: _buildRatingSummaryRow(
+                                    label: 'Service',
+                                    value: selectedAttitude!,
+                                  ),
+                                ),
+
+                              // 4. Re-visit
+                              if (selectedRequestAgain != null)
+                                Expanded(
+                                  child: _buildRatingSummaryRow(
+                                    label: 'Re-visit',
+                                    value: selectedRequestAgain!,
+                                  ),
+                                ),
+                            ],
                           ),
                         ),
-                      ),
                       32.height,
 
                       // Divider
@@ -631,25 +677,104 @@ class _StylistEvaluationScreenState extends State<StylistEvaluationScreen> {
   String _getEmojiForOption(String option) {
     final lowerOption = option.toLowerCase();
 
-    if (lowerOption.contains('excellent')) return '⭐';
-    if (lowerOption.contains('good')) return '😊';
-    if (lowerOption.contains('average') || lowerOption.contains('ok')) {
+    // Technique & Communication
+    if (lowerOption.contains('excellent') || lowerOption.contains('xuất sắc'))
+      return '⭐';
+    if (lowerOption.contains('good') || lowerOption.contains('tốt'))
+      return '😊';
+    if (lowerOption.contains('average') ||
+        lowerOption.contains('ok') ||
+        lowerOption.contains('trung bình')) {
       return '😐';
     }
-    if (lowerOption.contains('poor') || lowerOption.contains('needs work')) {
-      return '⚠️';
+    if (lowerOption.contains('poor') ||
+        lowerOption.contains('needs work') ||
+        lowerOption.contains('kém')) {
+      return '😞';
     }
-    if (lowerOption == 'yes' || lowerOption.contains('definitely')) return '✅';
-    if (lowerOption == 'no') return '🚫';
-    if (lowerOption.contains('maybe') || lowerOption.contains('not sure')) {
+
+    // Request Again (Yes/No)
+    if (lowerOption == 'yes' ||
+        lowerOption.contains('definitely') ||
+        lowerOption.contains('có')) return '✅';
+    if (lowerOption == 'no' || lowerOption.contains('không'))
+      return '🚫'; // Matches "không(no)"
+
+    if (lowerOption.contains('maybe') || lowerOption.contains('có thể')) {
+      return '🤗';
+    }
+    if (lowerOption.contains('not sure') ||
+        lowerOption.contains('không chắc')) {
       return '🤔';
     }
-    if (lowerOption.contains('so kind')) return '❤️';
+
+    // Service / Friendliness
+    if (lowerOption.contains('so kind') || lowerOption.contains('thân thiện'))
+      return '❤️';
     if (lowerOption.contains('kind')) return '😊';
     if (lowerOption.contains('normal')) return '😐';
     if (lowerOption.contains('not friendly')) return '😞';
 
     return '';
+  }
+
+  String _generateRatingSummary() {
+    List<String> summaryParts = [];
+
+    if (selectedTechnique != null && selectedTechnique!.isNotEmpty) {
+      final emoji = _getEmojiForOption(selectedTechnique!);
+      summaryParts.add('$emoji $selectedTechnique');
+    }
+
+    if (selectedCommunication != null && selectedCommunication!.isNotEmpty) {
+      final emoji = _getEmojiForOption(selectedCommunication!);
+      summaryParts.add('$emoji $selectedCommunication');
+    }
+
+    if (selectedAttitude != null && selectedAttitude!.isNotEmpty) {
+      final emoji = _getEmojiForOption(selectedAttitude!);
+      summaryParts.add('$emoji $selectedAttitude');
+    }
+
+    if (selectedRequestAgain != null && selectedRequestAgain!.isNotEmpty) {
+      final emoji = _getEmojiForOption(selectedRequestAgain!);
+      summaryParts.add('$emoji $selectedRequestAgain');
+    }
+
+    return summaryParts.join(" • ");
+  }
+
+  Widget _buildRatingSummaryRow({
+    required String label,
+    required String value,
+  }) {
+    final emoji = _getEmojiForOption(value);
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          label,
+          style: secondaryTextStyle(size: 11, color: Colors.grey.shade600),
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        8.height,
+        Text(
+          emoji,
+          style: const TextStyle(fontSize: 32), // Slightly adjusted for balance
+        ),
+        4.height,
+        Text(
+          value,
+          style: boldTextStyle(size: 11, color: Colors.black87),
+          textAlign: TextAlign.center,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 2,
+        ),
+      ],
+    );
   }
 
   Widget _buildModernTextFieldCard({
@@ -796,5 +921,131 @@ class _StylistEvaluationScreenState extends State<StylistEvaluationScreen> {
 
   String _getCloseButtonText() {
     return appStore.selectedLanguageCode == 'vi' ? 'Đóng' : 'Close';
+  }
+
+  Future<void> _loadSubmittedData() async {
+    if (widget.bookingId == null) return;
+
+    try {
+      log('🔄 Loading submitted data for booking ${widget.bookingId}...');
+      final data = await fetchSubmittedEvaluationData(widget.bookingId!);
+
+      log('📦 Fetched data: $data');
+
+      if (data != null) {
+        log('🔍 Mapping scores to options...');
+        log('   technique: ${data['technique']} -> options: ${widget.evaluationData.question1.options}');
+        log('   communication: ${data['communication']} -> options: ${widget.evaluationData.question2.options}');
+        log('   friendly: ${data['friendly']} -> options: ${widget.evaluationData.question3.options}');
+        log('   request_same_stylish: ${data['request_same_stylish']} -> options: ${widget.evaluationData.question4.options}');
+        setState(() {
+          // Map numeric scores to text options
+          selectedTechnique = _mapScoreToOption(
+              data['technique'], widget.evaluationData.question1.options);
+          selectedCommunication = _mapScoreToOption(
+              data['communication'], widget.evaluationData.question2.options);
+          selectedAttitude = _mapScoreToOption(
+              data['friendly'], widget.evaluationData.question3.options);
+          selectedRequestAgain = _mapScoreToOption(data['request_same_stylish'],
+              widget.evaluationData.question4.options);
+        });
+        log('✅ Mapped values:');
+        log('   selectedTechnique: $selectedTechnique');
+        log('   selectedCommunication: $selectedCommunication');
+        log('   selectedAttitude: $selectedAttitude');
+        log('   selectedRequestAgain: $selectedRequestAgain');
+        log('✅ Loaded submitted data for thank you screen');
+      } else {
+        log('⚠️ No data returned from API');
+      }
+    } catch (e, stackTrace) {
+      log('❌ Error loading submitted data: $e');
+      log('📋 Stack trace: $stackTrace');
+    }
+  }
+
+  String? _mapScoreToOption(String? score, List<String> options) {
+    if (score == null) return null;
+
+    final intScore = int.tryParse(score);
+    if (intScore == null) return null;
+
+    // Handle Yes/No question (Request same stylist)
+    // Options usually: [Yes definitely, Maybe, Not sure, No]
+    // Backend returns 1 (Yes) or 0 (No/Other) or 2 (Maybe - custom added)
+    if (options.any((o) => o.toLowerCase().contains('yes'))) {
+      if (intScore == 1) return options.first; // Yes
+
+      // Handle "Maybe" (mapped to 2)
+      if (intScore == 2) {
+        return options.firstWhere(
+          (o) =>
+              o.toLowerCase().contains('maybe') ||
+              o.toLowerCase().contains('có thể'),
+          orElse: () => options.length > 1 ? options[1] : options.last,
+        );
+      }
+
+      // Handle "Not sure" (mapped to 3)
+      if (intScore == 3) {
+        return options.firstWhere(
+          (o) =>
+              o.toLowerCase().contains('not sure') ||
+              o.toLowerCase().contains('không chắc'),
+          orElse: () => options.length > 2 ? options[2] : options.last,
+        );
+      }
+
+      if (intScore == 0 && options.isNotEmpty)
+        return options.last; // No (default for 0)
+      return null;
+    }
+
+    // Handle Rating questions (5=Excellent/So kind, 1=Poor/Not friendly)
+    // Map: 5->0, 4->1, 3->2, 2->3
+    // We only use this mapping if the score is within valid rating range (2-5)
+    // AND if the score is OUT of bounds for direct index mapping (e.g. score 5 for 4 options)
+    // OR if we suspect it's a star rating.
+
+    // Check if score works as direct index first (legacy) EXCEPT if it's 5 for 4 options
+    bool directIndexWorks = intScore > 0 && intScore <= options.length;
+
+    // If score is 5 and options length is 4, it's definitely a star rating mapping
+    if (intScore == 5 && options.length == 4) {
+      return options[0]; // 5 stars = 1st option (Best)
+    }
+
+    // If score is 4 and options length is 4, it could be "Needs work" (4th opt) OR "Good" (2nd opt, 4 stars)
+    // But logs showed "technique: 4" -> displayed "Needs work".
+    // This implies technique:4 IS treated as index 4.
+    // So for 4, we should prefer direct index?
+    // But friendly: 5.
+
+    // Let's use a hybrid approach based on option content
+    // If options start with "Excellent" or "So kind", it's a best-first list.
+    bool offersBestFirst = options.first.toLowerCase().contains('excellent') ||
+        options.first.toLowerCase().contains('so kind') ||
+        options.first.toLowerCase().contains('tuyệt vời');
+
+    if (offersBestFirst) {
+      // If we have "Excellent" etc, we assume 5-star logic SHOULD apply
+      // 5 -> Index 0
+      // 4 -> Index 1
+      // 3 -> Index 2
+      // 2 -> Index 3
+      if (intScore >= 2 && intScore <= 5) {
+        final index = 5 - intScore;
+        if (index >= 0 && index < options.length) {
+          return options[index];
+        }
+      }
+    }
+
+    // Fallback to direct index mapping
+    if (directIndexWorks) {
+      return options[intScore - 1];
+    }
+
+    return null;
   }
 }

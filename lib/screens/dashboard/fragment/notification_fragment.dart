@@ -10,9 +10,8 @@ import '../../../components/loader_widget.dart';
 import '../../../main.dart';
 import '../../../utils/app_common.dart';
 import '../../booking/view/booking_detail_screen.dart';
-// COMMENTED OUT FOR VERSION 1.0.17 (NO EVALUATION FEATURES)
-// import '../../evaluation/evaluation_repository.dart';
-// import '../../evaluation/view/stylist_evaluation_screen.dart';
+import '../../evaluation/evaluation_repository.dart';
+import '../../evaluation/view/stylist_evaluation_screen.dart';
 import '../../notifications/component/notification_widget.dart';
 import '../../notifications/model/notification_model.dart';
 import '../../notifications/notification_repository.dart';
@@ -146,36 +145,36 @@ class _NotificationFragmentState extends State<NotificationFragment> {
                     );
                   }
 
-                  // COMMENTED OUT FOR VERSION 1.0.17 (NO EVALUATION FEATURES)
                   // Handle evaluation notification
-                  // if (notiGroup == "evaluation") {
-                  //   return GestureDetector(
-                  //     onTap: () async {
-                  //       final bookingId = notificationData
-                  //           .data!.notificationDetail!.id
-                  //           .validate();
-                  //
-                  //       try {
-                  //         log('🌐 Fetching questionnaire content from API...');
-                  //         final evaluationData =
-                  //             await fetchQuestionnaireContent();
-                  //
-                  //         StylistEvaluationScreen(
-                  //           evaluationData: evaluationData,
-                  //           bookingId: bookingId,
-                  //           submitStatus:
-                  //               null, // No submit status in this format
-                  //         ).launch(context);
-                  //       } catch (e) {
-                  //         log('❌ Failed to fetch questionnaire: $e');
-                  //         toast('Failed to load evaluation form');
-                  //       }
-                  //     },
-                  //     child: NotificationWidget(
-                  //         key: ValueKey('notif_${notificationData.id}'),
-                  //         notificationData: notificationData),
-                  //   );
-                  // }
+                  if (notiGroup == "evaluation") {
+                    return GestureDetector(
+                      onTap: () async {
+                        final bookingId = notificationData
+                            .data!.notificationDetail!.id
+                            .validate();
+
+                        try {
+                          log('🌐 Fetching questionnaire content from API...');
+                          final evaluationData =
+                              await fetchQuestionnaireContent(
+                                  bookingId: bookingId);
+
+                          StylistEvaluationScreen(
+                            evaluationData: evaluationData,
+                            bookingId: bookingId,
+                            submitStatus:
+                                null, // No submit status in this format
+                          ).launch(context);
+                        } catch (e) {
+                          log('❌ Failed to fetch questionnaire: $e');
+                          toast('Failed to load evaluation form');
+                        }
+                      },
+                      child: NotificationWidget(
+                          key: ValueKey('notif_${notificationData.id}'),
+                          notificationData: notificationData),
+                    );
+                  }
 
                   return GestureDetector(
                     onTap: () async {
@@ -188,44 +187,45 @@ class _NotificationFragmentState extends State<NotificationFragment> {
                       if (notificationData.data!.notificationDetail == null) {
                         final subject = notificationData.data?.subject ?? '';
 
-                        // COMMENTED OUT FOR VERSION 1.0.17 (NO EVALUATION FEATURES)
                         // Special handling for backend evaluation notifications
-                        // if (subject
-                        //         .toLowerCase()\n                        //         .contains('stylist evaluation') ||
-                        //     subject.toLowerCase().contains('evaluation') ||
-                        //     subject.toLowerCase().contains('questionnair')) {
-                        //   // Backend sends flat structure: {"subject": "...", "booking_id": 123}
-                        //   final bookingId = notificationData.data?.bookingId;
-                        //
-                        //   if (bookingId == null) {
-                        //     log('⚠️ Questionnair notification missing booking ID');
-                        //     return;
-                        //   }
-                        //
-                        //   log('🔧 Opening evaluation for booking ID: $bookingId');
-                        //
-                        //   try {
-                        //     log('🌐 Fetching questionnaire content from API...');
-                        //     final evaluationData =
-                        //         await fetchQuestionnaireContent();
-                        //
-                        //     // IMPORTANT: Pass null for submitStatus to force API check
-                        //     // The notification's submit_status is unreliable
-                        //     await StylistEvaluationScreen(
-                        //       evaluationData: evaluationData,
-                        //       bookingId: bookingId,
-                        //       submitStatus:
-                        //           null, // Always check via API, don't trust notification
-                        //     ).launch(context);
-                        //
-                        //     // Refresh notification list after returning from evaluation screen
-                        //     init(flag: true);
-                        //   } catch (e) {
-                        //     log('❌ Failed to fetch questionnaire: $e');
-                        //     toast('Failed to load evaluation form');
-                        //   }
-                        //   return;
-                        // }
+                        if (subject
+                                .toLowerCase()
+                                .contains('stylist evaluation') ||
+                            subject.toLowerCase().contains('evaluation') ||
+                            subject.toLowerCase().contains('questionnair')) {
+                          // Backend sends flat structure: {"subject": "...", "booking_id": 123}
+                          final bookingId = notificationData.data?.bookingId;
+
+                          if (bookingId == null) {
+                            log('⚠️ Questionnair notification missing booking ID');
+                            return;
+                          }
+
+                          log('🔧 Opening evaluation for booking ID: $bookingId');
+
+                          try {
+                            log('🌐 Fetching questionnaire content from API...');
+                            final evaluationData =
+                                await fetchQuestionnaireContent(
+                                    bookingId: bookingId);
+
+                            // IMPORTANT: Pass null for submitStatus to force API check
+                            // The notification's submit_status is unreliable
+                            await StylistEvaluationScreen(
+                              evaluationData: evaluationData,
+                              bookingId: bookingId,
+                              submitStatus:
+                                  null, // Always check via API, don't trust notification
+                            ).launch(context);
+
+                            // Refresh notification list after returning from evaluation screen
+                            init(flag: true);
+                          } catch (e) {
+                            log('❌ Failed to fetch questionnaire: $e');
+                            toast('Failed to load evaluation form');
+                          }
+                          return;
+                        }
 
                         // For booking/appointment notifications, fetch detail from external API
                         if (subject.toLowerCase().contains('booking') ||

@@ -7,6 +7,7 @@ class StylistEvaluationData {
   final Question4 question4;
   final Question5 question5;
   final Question6 question6;
+  final String? staffName; // Pre-filled staff name from API
 
   StylistEvaluationData({
     required this.title,
@@ -17,6 +18,7 @@ class StylistEvaluationData {
     required this.question4,
     required this.question5,
     required this.question6,
+    this.staffName,
   });
 
   factory StylistEvaluationData.fromJson(Map<String, dynamic> json) {

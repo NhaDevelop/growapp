@@ -46,8 +46,119 @@ Future<void> markEvaluationAsSubmittedLocally(int bookingId) async {
 // API FUNCTIONS
 // ============================================================================
 
+// Fetch questionnaire detail to get staff name and submitted data
+Future<Map<String, dynamic>?> fetchSubmittedEvaluationData(
+    int bookingId) async {
+  try {
+    final userId = userStore.userId;
+    final branchId = appStore.branchId;
+
+    final Map<String, String> queryParams = {
+      'page': 'request',
+      'method': 'default_api',
+      'request_page': 'get',
+      'request_method': 'hair_grow_questionnaire_detail',
+      'short_title': 'd-hair-booking',
+      'user_id': userId.toString(),
+      'booking_id': bookingId.toString(),
+      'branch_id': branchId.toString(),
+    };
+
+    final uri = Uri.parse(APIEndPoints.evaluationBaseUrl)
+        .replace(queryParameters: queryParams);
+
+    log('🔗 Fetching submitted evaluation data for booking $bookingId');
+
+    final response = await http.post(
+      uri,
+      headers: {
+        'Authorization': 'Bearer a6f1e9c8b2d44b9f9a1c3a6e4f8d9c2e',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      if (data['status'] == 1) {
+        log('✅ Submitted evaluation data fetched');
+
+        // Parse the data field which is a JSON string
+        if (data['data'] != null) {
+          final submittedData = jsonDecode(data['data']);
+          return {
+            'staff_name': data['staff_name'],
+            'technique': submittedData['technique'],
+            'communication': submittedData['communication'],
+            'friendly': submittedData['friendly'],
+            'request_same_stylish': submittedData['request_same_stylish'],
+            'stylish_name': submittedData['stylish_name'],
+            'message': submittedData['message'],
+          };
+        }
+      }
+    }
+    return null;
+  } catch (e) {
+    log('❌ Error fetching submitted evaluation data: $e');
+    return null;
+  }
+}
+
+// Fetch questionnaire detail to get staff name only (works for both new and submitted evaluations)
+Future<String?> fetchQuestionnaireStaffName(int bookingId) async {
+  try {
+    final userId = userStore.userId;
+    final branchId = appStore.branchId;
+
+    final Map<String, String> queryParams = {
+      'page': 'request',
+      'method': 'default_api',
+      'request_page': 'get',
+      'request_method': 'hair_grow_questionnaire_detail',
+      'short_title': 'd-hair-booking',
+      'user_id': userId.toString(),
+      'booking_id': bookingId.toString(),
+      'branch_id': branchId.toString(),
+    };
+
+    final uri = Uri.parse(APIEndPoints.evaluationBaseUrl)
+        .replace(queryParameters: queryParams);
+
+    log('🔗 Fetching staff name for booking $bookingId');
+    log('📍 API URL: $uri');
+
+    final response = await http.post(
+      uri,
+      headers: {
+        'Authorization': 'Bearer a6f1e9c8b2d44b9f9a1c3a6e4f8d9c2e',
+      },
+    );
+
+    log('📥 Response status: ${response.statusCode}');
+    log('📥 Response body: ${response.body}');
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      log('📦 Parsed data: $data');
+
+      if (data['status'] == 1 && data['staff_name'] != null) {
+        log('✅ Staff name fetched: ${data['staff_name']}');
+        return data['staff_name'];
+      } else {
+        log('⚠️ Status: ${data['status']}, staff_name: ${data['staff_name']}');
+      }
+    }
+    log('❌ Returning null - no staff name found');
+    return null;
+  } catch (e, stackTrace) {
+    log('❌ Error fetching staff name: $e');
+    log('📋 Stack trace: $stackTrace');
+    return null;
+  }
+}
+
 // Fetch questionnaire content from CMS based on user's app language
-Future<StylistEvaluationData> fetchQuestionnaireContent() async {
+Future<StylistEvaluationData> fetchQuestionnaireContent(
+    {int? bookingId}) async {
   try {
     final currentLanguage = appStore.selectedLanguageCode;
     final currentBranchId = appStore.branchId;
@@ -92,6 +203,25 @@ Future<StylistEvaluationData> fetchQuestionnaireContent() async {
       }
 
       final evaluationData = StylistEvaluationData.fromJson(evaluationJson);
+
+      // Fetch staff name if booking ID is provided
+      if (bookingId != null) {
+        final staffName = await fetchQuestionnaireStaffName(bookingId);
+        if (staffName != null) {
+          // Create a new instance with staff name
+          return StylistEvaluationData(
+            title: evaluationData.title,
+            subTitle: evaluationData.subTitle,
+            question1: evaluationData.question1,
+            question2: evaluationData.question2,
+            question3: evaluationData.question3,
+            question4: evaluationData.question4,
+            question5: evaluationData.question5,
+            question6: evaluationData.question6,
+            staffName: staffName,
+          );
+        }
+      }
 
       log('✅ Questionnaire fetched: ${evaluationData.title}');
 
@@ -141,40 +271,40 @@ Future<String> checkEvaluationStatus(int bookingId) async {
 /// Submit stylist evaluation to the new external API
 Future<String> submitStylistEvaluation({
   required int bookingId,
-  required String technique,
-  required String communication,
-  required String friendly,
-  required String requestSameStylish,
+  String? technique,
+  String? communication,
+  String? friendly,
+  String? requestSameStylish,
   String? stylistName,
   String? message,
 }) async {
   try {
     log('📤 Submitting evaluation for booking: $bookingId');
 
-    // Map ratings to numeric values as per API requirement (if needed)
-    // The previous implementation used the raw strings, but the new API might expect numbers
-    // The user example showed "technique=1". If "technique" is a rating, we should convert.
-    // However, without strict documentation, we will try to pass the values mapped below.
-
-    // Mapping logic (from _calculateAverageRating helpers, but adapted for API if needed)
-    // For now assuming the API accepts the same string values or we map them.
-    // User example: technique=1. This implies 1-5 scale?
-    // Let's use the helper to get numeric scores.
-
-    // NOTE: If the API expects strings (e.g. "Excellent"), we should use those.
-    // But "technique=1" suggests a number.
-    // Let's assume we send the numeric score derived from the selection.
-
-    String techniqueScore = _mapRatingToScore(technique).toInt().toString();
-    String communicationScore =
-        _mapRatingToScore(communication).toInt().toString();
-    String friendlyScore = _mapRatingToScore(friendly).toInt().toString();
-
-    // requestSameStylish: "1" for Yes, "0" for No?
-    String sameStylistVal = requestSameStylish.toLowerCase().contains('yes') ||
-            requestSameStylish.toLowerCase().contains('có')
-        ? '1'
+    // Default to '0' if null
+    String techniqueScore = technique != null
+        ? _mapRatingToScore(technique).toInt().toString()
         : '0';
+    String communicationScore = communication != null
+        ? _mapRatingToScore(communication).toInt().toString()
+        : '0';
+    String friendlyScore =
+        friendly != null ? _mapRatingToScore(friendly).toInt().toString() : '0';
+
+    // requestSameStylish: "1" for Yes, "2" for Maybe, "3" for Not Sure, "0" for No, "-1" for Not Selected
+    String sameStylistVal = '-1';
+    if (requestSameStylish != null) {
+      final lower = requestSameStylish.toLowerCase();
+      if (lower.contains('yes') || lower.contains('có')) {
+        sameStylistVal = '1';
+      } else if (lower.contains('maybe') || lower.contains('có thể')) {
+        sameStylistVal = '2';
+      } else if (lower.contains('not sure') || lower.contains('không chắc')) {
+        sameStylistVal = '3'; // Use 3 for Not Sure
+      } else {
+        sameStylistVal = '0';
+      }
+    }
 
     final userId = userStore.userId;
     final branchId = appStore.branchId;
@@ -263,14 +393,16 @@ Future<String> submitStylistEvaluation({
 }
 
 /// Calculate average rating from answers (1-5 scale)
-double _calculateAverageRating(String technique, String communication,
-    String friendly, String requestAgain) {
-  final scores = [
-    _mapRatingToScore(technique),
-    _mapRatingToScore(communication),
-    _mapRatingToScore(friendly),
-    _mapYesNoToScore(requestAgain),
-  ];
+double _calculateAverageRating(String? technique, String? communication,
+    String? friendly, String? requestAgain) {
+  List<double> scores = [];
+
+  if (technique != null) scores.add(_mapRatingToScore(technique));
+  if (communication != null) scores.add(_mapRatingToScore(communication));
+  if (friendly != null) scores.add(_mapRatingToScore(friendly));
+  if (requestAgain != null) scores.add(_mapYesNoToScore(requestAgain));
+
+  if (scores.isEmpty) return 0.0;
 
   final average = scores.reduce((a, b) => a + b) / scores.length;
   return double.parse(average.toStringAsFixed(1));
