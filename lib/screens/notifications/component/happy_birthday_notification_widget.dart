@@ -28,6 +28,7 @@ class HappyBirthdayNotificationWidget extends StatelessWidget {
       decoration: boxDecorationDefault(
         color: _getBGColor(context),
         borderRadius: radius(0),
+        
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

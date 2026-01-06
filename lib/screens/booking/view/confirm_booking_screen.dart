@@ -383,59 +383,59 @@ class _RowData extends StatelessWidget {
   }
 }
 
-class _CodeItem extends StatelessWidget {
-  final String title;
-  final String actionText;
-  final double value;
-  final VoidCallback onTap;
+// class _CodeItem extends StatelessWidget {
+//   final String title;
+//   final String actionText;
+//   final double value;
+//   final VoidCallback onTap;
 
-  const _CodeItem(
-      {required this.title, required this.actionText, required this.value, required this.onTap});
+//   const _CodeItem(
+//       {required this.title, required this.actionText, required this.value, required this.onTap});
 
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        RichTextWidget(list: [
-          TextSpan(text: title, style: boldTextStyle()),
-          TextSpan(text: ' ', style: secondaryTextStyle()),
-          TextSpan(text: locale.optional, style: secondaryTextStyle()),
-        ]),
-        const Spacer(),
-        TextButton(
-          onPressed: onTap,
-          child: Row(
-            children: [
-              value > 0
-                  ? Text('-$value%', style: boldTextStyle(color: Colors.red))
-                  : Text(
-                      actionText,
-                      style: boldTextStyle(
-                        decoration: TextDecoration.underline,
-                        size: 14,
-                      ),
-                    ),
-              8.width,
-              value == 0
-                  ? const Icon(
-                      Icons.arrow_forward_ios,
-                      size: 12,
-                      color: primaryColor,
-                    )
-                  : const CircleAvatar(
-                      radius: 12,
-                      backgroundColor: primaryColor,
-                      child: Icon(
-                        Icons.close,
-                        size: 12,
-                        color: white,
-                      ),
-                    ),
-            ],
-          ),
-        )
-      ],
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//       children: [
+//         RichTextWidget(list: [
+//           TextSpan(text: title, style: boldTextStyle()),
+//           TextSpan(text: ' ', style: secondaryTextStyle()),
+//           TextSpan(text: locale.optional, style: secondaryTextStyle()),
+//         ]),
+//         const Spacer(),
+//         TextButton(
+//           onPressed: onTap,
+//           child: Row(
+//             children: [
+//               value > 0
+//                   ? Text('-$value%', style: boldTextStyle(color: Colors.red))
+//                   : Text(
+//                       actionText,
+//                       style: boldTextStyle(
+//                         decoration: TextDecoration.underline,
+//                         size: 14,
+//                       ),
+//                     ),
+//               8.width,
+//               value == 0
+//                   ? const Icon(
+//                       Icons.arrow_forward_ios,
+//                       size: 12,
+//                       color: primaryColor,
+//                     )
+//                   : const CircleAvatar(
+//                       radius: 12,
+//                       backgroundColor: primaryColor,
+//                       child: Icon(
+//                         Icons.close,
+//                         size: 12,
+//                         color: white,
+//                       ),
+//                     ),
+//             ],
+//           ),
+//         )
+//       ],
+//     );
+//   }
+// }

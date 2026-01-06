@@ -50,13 +50,14 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
   bool employeeScheduleLoaded = false;
   List<EmployeeWorkingDayModel> employeeSchedule = [];
 
-  List<String> monthList = List.generate(12, (index) => (index + 1).toMonthName());
+  List<String> monthList =
+      List.generate(12, (index) => (index + 1).toMonthName());
   int currentMonthNumber = DateTime.now().month;
   int selectedMonthIndex = DateTime.now().month - 1;
 
   EmployeeWorkingDayModel? get employeeScheduleOnSelectedDate {
-    final index =
-        employeeSchedule.indexWhere((element) => element.date.isSameDateWith(selectedDate));
+    final index = employeeSchedule
+        .indexWhere((element) => element.date.isSameDateWith(selectedDate));
     final schedule = index < 0 ? null : employeeSchedule[index];
 
     return schedule;
@@ -85,8 +86,9 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
       return toast(locale.pleaseSelectTimeSlotFirst);
     }
 
-    bookingRequestStore
-        .setDateInRequest(selectedDate!.setFormattedDate(DateFormatConst.DATE_FORMAT_5).toString());
+    bookingRequestStore.setDateInRequest(selectedDate!
+        .setFormattedDate(DateFormatConst.DATE_FORMAT_5)
+        .toString());
 
     try {
       appStore.setLoading(true);
@@ -94,7 +96,8 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
         final employee = await verifyAnyStylistSlot(
           nationality: bookingRequestStore.employeeGroupId,
           branchId: appStore.branchId,
-          servicesIds: bookingRequestStore.selectedServiceList.map((e) => e.id).toList(),
+          servicesIds:
+              bookingRequestStore.selectedServiceList.map((e) => e.id).toList(),
           startDateTime: bookingRequestStore.dateTime,
         );
 
@@ -117,7 +120,8 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
 
   Future<void> _confirmBooking() async {
     if (appStore.isLoggedIn) {
-      await ConfirmBookingScreen(isReschedule: widget.isReschedule).launch(context);
+      await ConfirmBookingScreen(isReschedule: widget.isReschedule)
+          .launch(context);
     } else {
       if (!mounted) return;
       final useGuestBooking = await showDialog<bool>(
@@ -128,7 +132,8 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
 
       if (useGuestBooking) {
         if (!mounted) return;
-        await ConfirmBookingScreen(isReschedule: widget.isReschedule, isGuestBooking: true)
+        await ConfirmBookingScreen(
+                isReschedule: widget.isReschedule, isGuestBooking: true)
             .launch(context);
       } else {
         if (!mounted) return;
@@ -193,10 +198,12 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
                   ViewAllLabel(label: locale.availableSlots, isShowAll: false),
                   !employeeScheduleLoaded
                       ? const BookingStep3Shimmer()
-                      : employeeSchedule.isEmpty || employeeScheduleOnSelectedDate == null
+                      : employeeSchedule.isEmpty ||
+                              employeeScheduleOnSelectedDate == null
                           ? NoDataWidget(title: locale.noTimeSlots)
                           : selectedDate == null
-                              ? NoDataWidget(title: locale.pleaseSelectDateFirst)
+                              ? NoDataWidget(
+                                  title: locale.pleaseSelectDateFirst)
                               : SnapHelperWidget(
                                   future: future,
                                   initialData: branchConfigurationCached,
@@ -204,35 +211,45 @@ class _BookingStep3ComponentState extends State<BookingStep3Component> {
                                     return SlotWidget(
                                       key: slotWidgetKey,
                                       selectedHorizontalDate: selectedDate!,
-                                      startTime: employeeScheduleOnSelectedDate!.startTime,
-                                      endTime: employeeScheduleOnSelectedDate!.endTime,
-                                      slotDuration:
-                                          snap?.slotDuration ?? DEFAULT_SLOT_INTERVAL_DURATION,
+                                      startTime: employeeScheduleOnSelectedDate!
+                                          .startTime,
+                                      endTime: employeeScheduleOnSelectedDate!
+                                          .endTime,
+                                      slotDuration: snap?.slotDuration ??
+                                          DEFAULT_SLOT_INTERVAL_DURATION,
                                       serviceList: widget.serviceList ?? [],
                                     );
                                   },
                                 ),
                 ],
               ),
-              Observer(builder: (context) => const LoaderWidget().visible(appStore.isLoading)),
+              Observer(
+                builder: (context) => IgnorePointer(
+                  ignoring: !appStore.isLoading,
+                  child: const LoaderWidget().visible(appStore.isLoading),
+                ),
+              ),
             ],
           ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Observer(
-              builder: (_) => CommonBottomPriceWidget(
-                title: bookingRequestStore.employeeName,
-                subtitle: bookingRequestStore.selectedServiceList
-                    .map((e) => widget.isReschedule ? e.serviceName.validate() : e.name.validate())
-                    .toList()
-                    .join(', '),
-                buttonText: locale.confirm,
-                onTap: onNextClicked,
+          if (!widget.isFromBookingInfoDetail)
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Observer(
+                builder: (_) => CommonBottomPriceWidget(
+                  title: bookingRequestStore.employeeName,
+                  subtitle: bookingRequestStore.selectedServiceList
+                      .map((e) => widget.isReschedule
+                          ? e.serviceName.validate()
+                          : e.name.validate())
+                      .toList()
+                      .join(', '),
+                  buttonText: locale.confirm,
+                  onTap: onNextClicked,
+                ),
               ),
             ),
-          ).visible(!widget.isFromBookingInfoDetail),
         ],
       ),
     );

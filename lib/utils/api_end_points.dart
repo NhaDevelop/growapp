@@ -80,4 +80,10 @@ class APIEndPoints {
   static const String updateFcmToken = 'update-fcm-token';
   static const String notificationUserGetPoint = 'notification-user-get-point';
 
+  // Evaluation API Base URL
+  static const String evaluationBaseUrl = 'https://api-project.camboinfo.com/';
+
+  // Questionnaire / Evaluation
+  static const String questionnaireContent = 'questionnaire-api';
+  static const String checkEvaluationStatus = 'check-questionnaire-status';
 }

@@ -1,4 +1,5 @@
 import 'package:country_picker/country_picker.dart';
+import 'package:grow_tokyo_app/utils/build_config.dart';
 
 const APP_NAME = 'growTokyo';
 const DEFAULT_LANGUAGE = 'en';
@@ -36,8 +37,10 @@ const appStoreAppBaseURL = '';
 const APP_PLAY_STORE_URL = '';
 const APP_APPSTORE_URL = '';
 
-const TERMS_CONDITION_URL = 'https://hairmake-grow-ec.camboinfo.com/terms-of-use';
-const PRIVACY_POLICY_URL = 'https://hairmake-grow-ec.camboinfo.com/privacy-policy';
+String get TERMS_CONDITION_URL =>
+    '${BuildConfig.webBookingBaseUrl}/terms-of-use';
+String get PRIVACY_POLICY_URL =>
+    '${BuildConfig.webBookingBaseUrl}/privacy-policy';
 const INQUIRY_SUPPORT_EMAIL = 'demo@gmail.com';
 const DASHBOARD_AUTO_SLIDER_SECOND = 5;
 

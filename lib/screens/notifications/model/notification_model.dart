@@ -61,8 +61,16 @@ class NotificationModel {
   NotificationDetail? notificationDetail;
   String? subject;
   int? bookingId; // Added to support backend's flat structure
+  int? submitStatus; // 0 = not submitted, 1 = already submitted
+  String? date; // Local datetime from backend (for questionnair notifications)
 
-  NotificationModel({this.notificationDetail, this.subject, this.bookingId});
+  NotificationModel({
+    this.notificationDetail,
+    this.subject,
+    this.bookingId,
+    this.submitStatus,
+    this.date,
+  });
 
   factory NotificationModel.fromJson(Map<String, dynamic> json) {
     return NotificationModel(
@@ -73,6 +81,10 @@ class NotificationModel {
       bookingId: json['booking_id'] != null
           ? int.tryParse(json['booking_id'].toString())
           : null,
+      submitStatus: json['submit_status'] != null
+          ? int.tryParse(json['submit_status'].toString())
+          : null,
+      date: json['date'],
     );
   }
 }

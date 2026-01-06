@@ -26,29 +26,63 @@ class _HorizontalSliderComponentState extends State<HorizontalSliderComponent> {
   PageController controller = PageController(keepPage: true, initialPage: 0);
   int currentPage = 0;
   Timer? timer;
+  List<SliderData> filteredSlides = [];
 
   @override
   void initState() {
     super.initState();
 
-    if (getBoolAsync(SharedPreferenceConst.AUTO_SLIDER_STATUS,
-        defaultValue: true) &&
-        widget.sliderList.length >= 2) {
-      timer = Timer.periodic(
-          const Duration(seconds: DASHBOARD_AUTO_SLIDER_SECOND), (Timer timer) {
-        if (currentPage < widget.sliderList.length - 1) {
-          currentPage++;
-        } else {
-          currentPage = 0;
-        }
-        controller.animateToPage(currentPage,
-            duration: const Duration(milliseconds: 950),
-            curve: Curves.easeOutQuart);
-      });
+    // Initialize filtered slides
+    _updateFilteredSlides();
 
-      controller.addListener(() {
-        currentPage = controller.page!.toInt();
-      });
+    // Wait for the first frame to be rendered before starting the timer
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+
+      if (getBoolAsync(SharedPreferenceConst.AUTO_SLIDER_STATUS,
+              defaultValue: true) &&
+          filteredSlides.length >= 2) {
+        timer = Timer.periodic(
+            const Duration(seconds: DASHBOARD_AUTO_SLIDER_SECOND),
+            (Timer timer) {
+          // Check if controller is attached before animating
+          if (!controller.hasClients || !mounted) return;
+
+          if (currentPage < filteredSlides.length - 1) {
+            currentPage++;
+          } else {
+            currentPage = 0;
+          }
+          controller.animateToPage(currentPage,
+              duration: const Duration(milliseconds: 950),
+              curve: Curves.easeOutQuart);
+        });
+
+        controller.addListener(() {
+          if (controller.hasClients) {
+            currentPage = controller.page!.toInt();
+          }
+        });
+      }
+    });
+  }
+
+  void _updateFilteredSlides() {
+    const vietnamSlideUrl =
+        "https://cms.hairmake-grow.com/upload/slider/9/1749536216.jpg";
+
+    if (appStore.countryId.toString().trim() == "238") {
+      // Show ONLY the Vietnam slide
+      filteredSlides = widget.sliderList.where((data) {
+        final url = data.sliderImage.validate().trim().toLowerCase();
+        return url == vietnamSlideUrl;
+      }).toList();
+    } else {
+      // Show ALL slides EXCEPT the Vietnam slide
+      filteredSlides = widget.sliderList.where((data) {
+        final url = data.sliderImage.validate().trim().toLowerCase();
+        return url != vietnamSlideUrl;
+      }).toList();
     }
   }
 
@@ -69,27 +103,7 @@ class _HorizontalSliderComponentState extends State<HorizontalSliderComponent> {
   }
 
   @override
-
   Widget build(BuildContext context) {
-    // Clean reference URL (trim + lowercase to be extra safe)
-    const vietnamSlideUrl = "https://cms.hairmake-grow.com/upload/slider/9/1749536216.jpg";
-
-    List<SliderData> filteredSlides;
-
-    if (appStore.countryId.toString().trim() == "238") {
-      // Show ONLY the Vietnam slide
-      filteredSlides = widget.sliderList.where((data) {
-        final url = data.sliderImage.validate().trim().toLowerCase();
-        return url == vietnamSlideUrl;
-      }).toList();
-    } else {
-      // Show ALL slides EXCEPT the Vietnam slide
-      filteredSlides = widget.sliderList.where((data) {
-        final url = data.sliderImage.validate().trim().toLowerCase();
-        return url != vietnamSlideUrl;
-      }).toList();
-    }
-
     if (filteredSlides.isEmpty) return const Offstage();
 
     return SizedBox(
@@ -118,7 +132,7 @@ class _HorizontalSliderComponentState extends State<HorizontalSliderComponent> {
             ),
           ),
           Positioned(
-            bottom: 8,
+            bottom: 8, 
             right: 0,
             left: 0,
             child: DotIndicator(
@@ -134,6 +148,4 @@ class _HorizontalSliderComponentState extends State<HorizontalSliderComponent> {
       ),
     );
   }
-
-
 }

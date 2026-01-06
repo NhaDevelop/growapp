@@ -22,7 +22,13 @@ class Body extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           child,
-          Observer(builder: (_) => const LoaderWidget().visible(appStore.isLoading)),
+          Observer(
+            builder: (_) => IgnorePointer(
+              ignoring: !appStore.isLoading,
+              child: const LoaderWidget().visible(appStore.isLoading),
+              
+            ),
+          ),
         ],
       ),
     );

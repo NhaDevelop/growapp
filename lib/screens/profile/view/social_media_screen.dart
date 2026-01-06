@@ -59,18 +59,35 @@ class _SocialMediaScreenState extends State<SocialMediaScreen> {
                 splashColor: Colors.transparent,
                 decoration: boxDecorationWithRoundedCorners(
                     backgroundColor: context.cardColor),
-                onTap: () => launchUrl(Uri.parse(snap.facebookLink)),
+                onTap: () {
+                  // Use VN Facebook link if country is Vietnam
+                  String url = appStore.countryCode.toLowerCase() == 'vn'
+                      ? snap.facebookVnLink
+                      : snap.facebookLink;
+                  commonLaunchUrl(url,
+                      launchMode: LaunchMode.externalApplication);
+                },
               ),
-              16.height,
-              SettingItemWidget(
-                leading:
-                    Image.asset(ic_instagram_colored, height: 16, width: 16),
-                title: locale.instagram,
-                splashColor: Colors.transparent,
-                decoration: boxDecorationWithRoundedCorners(
-                    backgroundColor: context.cardColor),
-                onTap: () => launchUrl(Uri.parse(snap.instagramLink)),
-              ),
+              if (snap.instagramLink.validate().isNotEmpty &&
+                  snap.instagramLink != '#') ...[
+                16.height,
+                SettingItemWidget(
+                  leading:
+                      Image.asset(ic_instagram_colored, height: 16, width: 16),
+                  title: locale.instagram,
+                  splashColor: Colors.transparent,
+                  decoration: boxDecorationWithRoundedCorners(
+                      backgroundColor: context.cardColor),
+                  onTap: () {
+                    // Use VN Instagram link if country is Vietnam
+                    String url = appStore.countryCode.toLowerCase() == 'vn'
+                        ? snap.instagramVnLink
+                        : snap.instagramLink;
+                    commonLaunchUrl(url,
+                        launchMode: LaunchMode.externalApplication);
+                  },
+                ),
+              ],
             ],
           );
         },

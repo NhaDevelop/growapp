@@ -6,15 +6,15 @@ class BuildConfig {
   static String get domainUrl {
     switch (appFlavor) {
       case AppFlavor.local:
-      // If you are using Android Emulator, 10.0.2.2 points back to your computer's localhost
-      // If you are using iOS Simulator, you can use "localhost"
+        // If you are using Android Emulator, 10.0.2.2 points back to your computer's localhost
+        // If you are using iOS Simulator, you can use "localhost"
         return 'http://10.0.2.2:8000';
       case AppFlavor.stag:
-        return 'https://grow-cms.xclabs.io';
+        return 'https://demo-cms-hair-grow.camboinfo.com'; // Demo Staging CMS
       case AppFlavor.prod:
-        return 'https://demo-cms-hair-grow.camboinfo.com';
+        return 'https://cms.hairmake-grow.com'; // Production CMS
       default:
-        return 'https://grow-cms.xclabs.io';
+        return 'https://demo-cms-hair-grow.camboinfo.com';
     }
   }
 
@@ -33,7 +33,21 @@ class BuildConfig {
     }
   }
 
-  static String get blogPostHost {
-    return 'hairmake-grow.com';
+  static String get webBookingBaseUrl {
+    switch (appFlavor) {
+      case AppFlavor.prod:
+        return 'https://hairmake-grow.com/web-booking';
+      default:
+        return 'https://demo-hairmake-grow.camboinfo.com/web-booking';
+    }
+  }
+
+  static String getBlogHost(String countryCode) {
+    switch (appFlavor) {
+      case AppFlavor.prod:
+        return '$countryCode.hairmake-grow.com';
+      default:
+        return 'demo-$countryCode-hair-grow.camboinfo.com';
+    }
   }
 }

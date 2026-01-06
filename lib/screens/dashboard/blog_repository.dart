@@ -12,7 +12,7 @@ Future<List<BlogPostModel>> getBlogPosts({
 }) async {
   final countryCode = appStore.countryCode; // e.g., 'vn' or 'kh'
   final uri = Uri.https(
-    "$countryCode.${BuildConfig.blogPostHost}",
+    BuildConfig.getBlogHost(countryCode),
     'wp-json/wp/v2/posts',
     {
       '_embed': '1',

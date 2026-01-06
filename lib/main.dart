@@ -38,7 +38,6 @@ import 'package:grow_tokyo_app/store/product_store.dart';
 import 'package:grow_tokyo_app/utils/constants.dart';
 import 'package:grow_tokyo_app/utils/one_signal_utils.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:device_preview/device_preview.dart';
 
 import 'app_theme.dart';
 import 'configs.dart';
@@ -55,6 +54,7 @@ import 'store/user_store.dart';
 import 'utils/common_base.dart';
 import 'utils/fcm_startup_utils.dart';
 import 'screens/notifications/notification_repository.dart';
+import 'services/fcm_background_handler.dart';
 
 //region APP STORE
 AppStore appStore = AppStore();
@@ -174,6 +174,13 @@ void main() async {
 
   await initializeFirebase();
 
+  // ✅ CRITICAL: Register background message handler BEFORE runApp()
+  // This MUST be done at the top level for Firebase to handle background notifications
+  if (!kIsWeb) {
+    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+    log('✅ Background message handler registered in main()');
+  }
+
   // RUN FIREBASE DEBUG AUTOMATICALLY
   try {
     simpleFirebaseDebug();
@@ -200,6 +207,14 @@ void main() async {
   await appStore.setBranchAnyStylistOptions(
       getStringListAsync(SharedPreferenceConst.BRANCH_ANY_STYLIST_OPTIONS) ??
           [],
+      isInitializing: true);
+
+  // Load Currency from Persistence
+  await appStore.setCurrencySymbol(
+      getStringAsync(ConfigurationKeyConst.CURRENCY_SYMBOL, defaultValue: r'$'),
+      isInitializing: true);
+  await appStore.setCurrencyCode(
+      getStringAsync(ConfigurationKeyConst.CURRENCY_CODE, defaultValue: 'USD'),
       isInitializing: true);
   if (appStore.isLoggedIn) {
     await userStore.setUserId(getIntAsync(SharedPreferenceConst.USER_ID),

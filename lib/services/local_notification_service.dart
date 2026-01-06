@@ -81,6 +81,7 @@ class LocalNotificationService {
   }) async {
     try {
       log('🔔 Showing local notification: $title - $body');
+      log('🔍 [DEBUG] Payload: $payload');
 
       // Android notification details
       const AndroidNotificationDetails androidPlatformChannelSpecifics =
@@ -88,13 +89,18 @@ class LocalNotificationService {
         'fcm_channel', // Channel ID
         'FCM Notifications', // Channel name
         channelDescription: 'Firebase Cloud Messaging notifications',
-        importance: Importance.high,
-        priority: Priority.high,
+        importance: Importance.max, // Changed from high to max
+        priority: Priority.max, // Changed from high to max
         showWhen: true,
         enableVibration: true,
         playSound: true,
         icon: '@mipmap/ic_launcher',
+        fullScreenIntent: true, // Added for heads-up notification
+        visibility: NotificationVisibility.public, // Added for lock screen
       );
+
+      log('🔍 [DEBUG] Android notification details configured');
+      log('🔍 [DEBUG] Importance: max, Priority: max');
 
       // iOS notification details
       const DarwinNotificationDetails iOSPlatformChannelSpecifics =
@@ -102,7 +108,10 @@ class LocalNotificationService {
         presentAlert: true,
         presentBadge: true,
         presentSound: true,
+        sound: 'default',
       );
+
+      log('🔍 [DEBUG] iOS notification details configured');
 
       // Combined notification details
       const NotificationDetails platformChannelSpecifics = NotificationDetails(
@@ -111,8 +120,12 @@ class LocalNotificationService {
       );
 
       // Show the notification
+      int notificationId = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+      log('🔍 [DEBUG] Notification ID: $notificationId');
+      log('🔍 [DEBUG] Calling _notificationsPlugin.show()...');
+
       await _notificationsPlugin.show(
-        DateTime.now().millisecondsSinceEpoch ~/ 1000, // Unique ID
+        notificationId, // Unique ID
         title,
         body,
         platformChannelSpecifics,
@@ -120,8 +133,13 @@ class LocalNotificationService {
       );
 
       log('✅ Local notification shown successfully');
+      log('✅ If you don\'t see a heads-up notification, check:');
+      log('   1. Device notification settings for this app');
+      log('   2. Do Not Disturb mode');
+      log('   3. Battery optimization settings');
     } catch (e) {
       log('❌ Error showing local notification: $e');
+      log('❌ Stack trace: ${StackTrace.current}');
     }
   }
 
@@ -174,9 +192,10 @@ class LocalNotificationService {
         'fcm_channel', // Channel ID
         'FCM Notifications', // Channel name
         description: 'Firebase Cloud Messaging notifications',
-        importance: Importance.high,
+        importance: Importance.max, // Changed from high to max for heads-up
         enableVibration: true,
         playSound: true,
+        showBadge: true,
       );
 
       await _notificationsPlugin
@@ -184,7 +203,7 @@ class LocalNotificationService {
               AndroidFlutterLocalNotificationsPlugin>()
           ?.createNotificationChannel(channel);
 
-      log('✅ Notification channel created successfully');
+      log('✅ Notification channel created successfully with MAX importance');
     } catch (e) {
       log('❌ Error creating notification channel: $e');
     }

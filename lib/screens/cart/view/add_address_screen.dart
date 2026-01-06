@@ -191,7 +191,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                           decoration: inputDecoration(context,
                               label: locale.selectCountry),
                           isExpanded: true,
-                          value: (selectedCountry != null &&
+                          initialValue: (selectedCountry != null &&
                                   selectedCountry!.id.validate() > 0)
                               ? selectedCountry
                               : null,
@@ -223,7 +223,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                 label: locale.selectState),
                             isExpanded: true,
                             dropdownColor: context.cardColor,
-                            value: (selectedState != null &&
+                            initialValue: (selectedState != null &&
                                     selectedState!.id.validate() > 0)
                                 ? selectedState
                                 : null,
@@ -255,7 +255,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                             decoration: inputDecoration(context,
                                 label: locale.selectCity),
                             isExpanded: true,
-                            value: (selectedCity != null &&
+                            initialValue: (selectedCity != null &&
                                     selectedCity!.id.validate() > 0)
                                 ? selectedCity
                                 : null,

@@ -38,7 +38,7 @@ extension numExt on num {
 
     switch (appStore.currencyCode) {
       case 'VND':
-        return '${formatAmount(thousandSeparator: defaultThousand, decimalSeparator: defaultDecimal, decimal: 0)}đ';
+        return '${formatAmount(thousandSeparator: defaultThousand, decimalSeparator: defaultDecimal, decimal: 0)} VND';
       default:
         final currencySymbol = appStore.currencySymbol;
         return '$currencySymbol${formatAmount(thousandSeparator: defaultThousand, decimalSeparator: defaultDecimal)}';

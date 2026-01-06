@@ -37,10 +37,18 @@ class _SelectCountryDialogState extends State<SelectCountryDialog> {
     final index =
         countries.indexWhere((element) => element.name == _selected!.name);
     if (index < 0) return;
+
+    log('💰 Saving country selection:');
+    log('   Country: ${_selected!.name}');
+    log('   Currency Code: ${_selected!.currencyCode}');
+    log('   Currency Symbol: ${_selected!.currencySymbol}');
+
     appStore.setCountryId(countries[index].id.validate());
     appStore.setCountryCode(_selected!.countryCode.validate());
     appStore.setCurrencyCode(_selected!.currencyCode.validate());
     appStore.setCurrencySymbol(_selected!.currencySymbol.validate());
+
+    log('✅ Country settings saved to persistent storage');
     finish(context, true);
   }
 
@@ -51,7 +59,7 @@ class _SelectCountryDialogState extends State<SelectCountryDialog> {
       insetPadding: const EdgeInsets.all(16),
       title: AppBar(
         title: Text(locale.selectCountry),
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: false, 
       ).cornerRadiusWithClipRRect(20),
       titlePadding: EdgeInsets.zero,
       contentPadding: const EdgeInsets.all(16),

@@ -19,7 +19,8 @@ class PriceWidget extends StatelessWidget {
   final int? decimalPoint;
   final String? seperator;
 
-  const PriceWidget({super.key, 
+  const PriceWidget({
+    super.key,
     required this.price,
     this.size = 16.0,
     this.color,
@@ -36,7 +37,8 @@ class PriceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextDecoration? textDecoration() => isLineThroughEnabled ? TextDecoration.lineThrough : null;
+    TextDecoration? textDecoration() =>
+        isLineThroughEnabled ? TextDecoration.lineThrough : null;
 
     TextStyle textStyle({int? aSize}) {
       return isBoldText
@@ -61,7 +63,8 @@ class PriceWidget extends StatelessWidget {
           style: textStyle(),
         ),
         Text(
-        priceText ?? "${leftCurrencyFormat()}${price.validate().toStringAsFixed(decimalPoint ?? getIntAsync(ConfigurationKeyConst.NO_OF_DECIMAL, defaultValue: DECIMAL_POINT)).formatNumberWithComma(seperator: getStringAsync(seperator ?? ConfigurationKeyConst.DECIMAL_SEPARATOR))}${rightCurrencyFormat()}",
+          priceText ??
+              "${leftCurrencyFormat()}${price.validate().toStringAsFixed(decimalPoint ?? getIntAsync(ConfigurationKeyConst.NO_OF_DECIMAL, defaultValue: DECIMAL_POINT)).formatNumberWithComma(seperator: getStringAsync(seperator ?? ConfigurationKeyConst.DECIMAL_SEPARATOR))}${rightCurrencyFormat()}",
           style: textStyle(),
         ),
       ],
@@ -71,14 +74,26 @@ class PriceWidget extends StatelessWidget {
 
 String leftCurrencyFormat() {
   if (isCurrencyPositionLeft || isCurrencyPositionLeftWithSpace) {
-    return isCurrencyPositionLeftWithSpace ? '${appStore.currencySymbol} ' : appStore.currencySymbol;
+    String symbol = appStore.currencySymbol;
+    if ((appStore.selectedLanguageCode == 'vi' ||
+            appStore.currencyCode == 'VND') &&
+        symbol == r'$') {
+      symbol = 'VND';
+    }
+    return isCurrencyPositionLeftWithSpace ? '$symbol ' : symbol;
   }
   return '';
 }
 
 String rightCurrencyFormat() {
   if (isCurrencyPositionRight || isCurrencyPositionRightWithSpace) {
-    return isCurrencyPositionRightWithSpace ? ' ${appStore.currencySymbol}' : appStore.currencySymbol;
+    String symbol = appStore.currencySymbol;
+    if ((appStore.selectedLanguageCode == 'vi' ||
+            appStore.currencyCode == 'VND') &&
+        symbol == r'$') {
+      symbol = 'VND';
+    }
+    return isCurrencyPositionRightWithSpace ? ' $symbol' : symbol;
   }
   return '';
 }

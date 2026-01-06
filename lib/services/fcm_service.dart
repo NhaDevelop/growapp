@@ -1,13 +1,11 @@
-import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:grow_tokyo_app/main.dart';
 import 'package:grow_tokyo_app/network/rest_apis.dart';
 import 'package:grow_tokyo_app/screens/dashboard/view/dashboard_screen.dart';
 import 'package:grow_tokyo_app/screens/booking/view/booking_detail_screen.dart';
-import 'package:grow_tokyo_app/screens/evaluation/model/stylist_evaluation_model.dart';
+import 'package:grow_tokyo_app/screens/evaluation/evaluation_repository.dart';
 import 'package:grow_tokyo_app/screens/evaluation/view/stylist_evaluation_screen.dart';
-import 'package:grow_tokyo_app/services/fcm_background_handler.dart';
 import 'package:grow_tokyo_app/services/local_notification_service.dart';
 import 'package:grow_tokyo_app/screens/notifications/notification_repository.dart';
 import 'package:grow_tokyo_app/screens/points/point_repository.dart';
@@ -110,6 +108,7 @@ class FCMService {
       // Send to server if user is logged in
       if (appStore.isLoggedIn) {
         await updateFcmTokenOnServer(token);
+        
       }
     } catch (e) {
       log('Error saving FCM token: $e');
@@ -186,6 +185,16 @@ class FCMService {
         log('📨 Got a message whilst in the foreground!');
         log('📝 Message data: ${message.data}');
 
+        // 🔍 DEBUG: Check what we received
+        log('🔍 [DEBUG] Has notification payload: ${message.notification != null}');
+        if (message.notification != null) {
+          log('🔍 [DEBUG] Notification title: ${message.notification!.title}');
+          log('🔍 [DEBUG] Notification body: ${message.notification!.body}');
+          log('🔍 [DEBUG] Notification android: ${message.notification!.android}');
+          log('🔍 [DEBUG] Notification apple: ${message.notification!.apple}');
+        }
+        log('🔍 [DEBUG] Data payload: ${message.data}');
+
         // Extract title/body from either notification payload or data payload
         final String title = message.notification?.title ??
             message.data['title'] ??
@@ -193,6 +202,9 @@ class FCMService {
         final String body = message.notification?.body ??
             message.data['body'] ??
             'You have a new message';
+
+        log('🔍 [DEBUG] Final title: $title');
+        log('🔍 [DEBUG] Final body: $body');
 
         // ✅ Show notification based on platform
         try {
@@ -207,6 +219,7 @@ class FCMService {
             log('🔔 [WEB] To test: Switch to another tab, then send notification');
           } else {
             // 📱 MOBILE: Show local notification
+            log('📱 [MOBILE] Attempting to show local notification...');
             await LocalNotificationService.showNotification(
               title: title,
               body: body,
@@ -216,6 +229,7 @@ class FCMService {
           }
         } catch (e) {
           log('❌ Error showing foreground notification: $e');
+          log('❌ Stack trace: ${StackTrace.current}');
         }
 
         // Handle type-specific actions
@@ -248,11 +262,8 @@ class FCMService {
         _handleMessageNavigation(message);
       });
 
-      // Handle background messages (mobile only)
-      if (!kIsWeb) {
-        FirebaseMessaging.onBackgroundMessage(
-            firebaseMessagingBackgroundHandler);
-      }
+      // NOTE: Background message handler is registered in main.dart before runApp()
+      // This is required by Firebase - it must be a top-level function registered early
 
       log('✅ Firebase message handlers setup complete');
     } catch (e) {
@@ -261,7 +272,7 @@ class FCMService {
   }
 
   /// Handle navigation when message is tapped
-  static void _handleMessageNavigation(RemoteMessage message) {
+  static void _handleMessageNavigation(RemoteMessage message) async {
     try {
       // Handle navigation based on message data
       Map<String, dynamic> data = message.data;
@@ -273,32 +284,31 @@ class FCMService {
         // Navigation Logic for Stylist Evaluation
         if (screen == 'stylist_evaluation' || screen == 'evaluation') {
           try {
-            // Parse evaluation data from notification
-            // Get evaluation data from notification
-            Map<String, dynamic> evaluationJson = {};
+            log('🚀 Navigating to Stylist Evaluation Screen');
+            log('📥 Fetching evaluation form in user\'s language: ${appStore.selectedLanguageCode}');
 
-            // Check if data contains the evaluation questions
-            if (data.containsKey('title')) {
-              evaluationJson = data;
-            } else if (data.containsKey('evaluation_data')) {
-              // If evaluation data is in a nested field
-              evaluationJson = jsonDecode(data['evaluation_data']);
-            }
-
-            StylistEvaluationData evaluationData =
-                StylistEvaluationData.fromJson(evaluationJson);
+            // Get booking ID from notification
             int? bookingId = data.containsKey('booking_id')
                 ? int.tryParse(data['booking_id'].toString())
                 : null;
 
-            log('🚀 Navigating to Stylist Evaluation Screen');
+            // Fetch evaluation form content dynamically based on language
+            final evaluationData = await fetchQuestionnaireContent();
+
+            log('✅ Evaluation form fetched successfully');
+            log('   Language: ${appStore.selectedLanguageCode}');
+            log('   Booking ID: $bookingId');
+
+            // Navigate to evaluation screen with fetched data
             StylistEvaluationScreen(
               evaluationData: evaluationData,
               bookingId: bookingId,
             ).launch(navigatorKey.currentContext!);
             return;
           } catch (e) {
-            log('⚠️ Error parsing evaluation data: $e');
+            log('⚠️ Error fetching/navigating to evaluation screen: $e');
+            // Fallback: show error message to user
+            toast('Failed to load evaluation form. Please try again later.');
           }
         }
 

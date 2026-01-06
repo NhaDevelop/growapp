@@ -10,8 +10,9 @@ import '../../../components/loader_widget.dart';
 import '../../../main.dart';
 import '../../../utils/app_common.dart';
 import '../../booking/view/booking_detail_screen.dart';
-import '../../evaluation/model/evaluation_dummy_data.dart';
-import '../../evaluation/view/stylist_evaluation_screen.dart';
+// COMMENTED OUT FOR VERSION 1.0.17 (NO EVALUATION FEATURES)
+// import '../../evaluation/evaluation_repository.dart';
+// import '../../evaluation/view/stylist_evaluation_screen.dart';
 import '../../notifications/component/notification_widget.dart';
 import '../../notifications/model/notification_model.dart';
 import '../../notifications/notification_repository.dart';
@@ -145,49 +146,118 @@ class _NotificationFragmentState extends State<NotificationFragment> {
                     );
                   }
 
+                  // COMMENTED OUT FOR VERSION 1.0.17 (NO EVALUATION FEATURES)
                   // Handle evaluation notification
-                  if (notiGroup == "evaluation") {
-                    return GestureDetector(
-                      onTap: () {
-                        final bookingId = notificationData
-                            .data!.notificationDetail!.id
-                            .validate();
-                        StylistEvaluationScreen(
-                          evaluationData: getDummyEvaluationData(),
-                          bookingId: bookingId,
-                        ).launch(context);
-                      },
-                      child: NotificationWidget(
-                          notificationData: notificationData),
-                    );
-                  }
+                  // if (notiGroup == "evaluation") {
+                  //   return GestureDetector(
+                  //     onTap: () async {
+                  //       final bookingId = notificationData
+                  //           .data!.notificationDetail!.id
+                  //           .validate();
+                  //
+                  //       try {
+                  //         log('🌐 Fetching questionnaire content from API...');
+                  //         final evaluationData =
+                  //             await fetchQuestionnaireContent();
+                  //
+                  //         StylistEvaluationScreen(
+                  //           evaluationData: evaluationData,
+                  //           bookingId: bookingId,
+                  //           submitStatus:
+                  //               null, // No submit status in this format
+                  //         ).launch(context);
+                  //       } catch (e) {
+                  //         log('❌ Failed to fetch questionnaire: $e');
+                  //         toast('Failed to load evaluation form');
+                  //       }
+                  //     },
+                  //     child: NotificationWidget(
+                  //         key: ValueKey('notif_${notificationData.id}'),
+                  //         notificationData: notificationData),
+                  //   );
+                  // }
 
                   return GestureDetector(
                     onTap: () async {
-                      // Add null safety checks
-                      if (notificationData.data == null ||
-                          notificationData.data!.notificationDetail == null) {
-                        log('⚠️ Notification data is incomplete:');
-                        log('  - Notification ID: ${notificationData.id}');
-                        log('  - Subject: ${notificationData.data?.subject ?? "(no subject)"}');
-                        log('  - Has data: ${notificationData.data != null}');
-                        log('  - Has detail: ${notificationData.data?.notificationDetail != null}');
+                      // Skip notifications with completely null data (backend bug)
+                      if (notificationData.data == null) {
+                        return; // Silently skip - this is a backend issue
+                      }
 
-                        // Special handling for backend evaluation notifications
+                      // Check if notification has detail (old structure)
+                      if (notificationData.data!.notificationDetail == null) {
                         final subject = notificationData.data?.subject ?? '';
-                        if (subject
-                                .toLowerCase()
-                                .contains('stylist evaluation') ||
-                            subject.toLowerCase().contains('evaluation')) {
-                          // Backend sends flat structure: {"subject": "...", "booking_id": 123}
-                          final bookingId =
-                              notificationData.data?.bookingId ?? 10556;
-                          log('🔧 Opening evaluation for booking ID: $bookingId');
 
-                          StylistEvaluationScreen(
-                            evaluationData: getDummyEvaluationData(),
-                            bookingId: bookingId,
-                          ).launch(context);
+                        // COMMENTED OUT FOR VERSION 1.0.17 (NO EVALUATION FEATURES)
+                        // Special handling for backend evaluation notifications
+                        // if (subject
+                        //         .toLowerCase()\n                        //         .contains('stylist evaluation') ||
+                        //     subject.toLowerCase().contains('evaluation') ||
+                        //     subject.toLowerCase().contains('questionnair')) {
+                        //   // Backend sends flat structure: {"subject": "...", "booking_id": 123}
+                        //   final bookingId = notificationData.data?.bookingId;
+                        //
+                        //   if (bookingId == null) {
+                        //     log('⚠️ Questionnair notification missing booking ID');
+                        //     return;
+                        //   }
+                        //
+                        //   log('🔧 Opening evaluation for booking ID: $bookingId');
+                        //
+                        //   try {
+                        //     log('🌐 Fetching questionnaire content from API...');
+                        //     final evaluationData =
+                        //         await fetchQuestionnaireContent();
+                        //
+                        //     // IMPORTANT: Pass null for submitStatus to force API check
+                        //     // The notification's submit_status is unreliable
+                        //     await StylistEvaluationScreen(
+                        //       evaluationData: evaluationData,
+                        //       bookingId: bookingId,
+                        //       submitStatus:
+                        //           null, // Always check via API, don't trust notification
+                        //     ).launch(context);
+                        //
+                        //     // Refresh notification list after returning from evaluation screen
+                        //     init(flag: true);
+                        //   } catch (e) {
+                        //     log('❌ Failed to fetch questionnaire: $e');
+                        //     toast('Failed to load evaluation form');
+                        //   }
+                        //   return;
+                        // }
+
+                        // For booking/appointment notifications, fetch detail from external API
+                        if (subject.toLowerCase().contains('booking') ||
+                            subject.toLowerCase().contains('appointment')) {
+                          log('🔧 Fetching notification detail from external API...');
+                          appStore.setLoading(true);
+
+                          try {
+                            final detail = await getNotificationDetail(
+                                notificationData.id.validate());
+
+                            appStore.setLoading(false);
+
+                            if (detail != null && detail.id != null) {
+                              log('✅ Fetched notification detail, opening booking #${detail.id}');
+
+                              // Update the notification data with fetched detail
+                              notificationData.data!.notificationDetail =
+                                  detail;
+
+                              // Navigate to booking detail screen
+                              BookingDetailScreen(bookingId: detail.id!)
+                                  .launch(context);
+                            } else {
+                              log('❌ Failed to fetch notification detail');
+                              toast('Unable to load booking details');
+                            }
+                          } catch (e) {
+                            appStore.setLoading(false);
+                            log('❌ Error fetching notification detail: $e');
+                            toast('Unable to load booking details');
+                          }
                           return;
                         }
 
@@ -212,8 +282,9 @@ class _NotificationFragmentState extends State<NotificationFragment> {
                         BookingDetailScreen(bookingId: id).launch(context);
                       }
                     },
-                    child:
-                        NotificationWidget(notificationData: notificationData),
+                    child: NotificationWidget(
+                        key: ValueKey('notif_${notificationData.id}'),
+                        notificationData: notificationData),
                   );
                 },
               );

@@ -16,7 +16,7 @@ class APITestUtils {
     log('🔑 User ID: ${userStore.userId}');
     log('🎫 User token: ${userStore.token.isNotEmpty ? "Present" : "Missing"}');
     
-    if (!appStore.isLoggedIn) {
+    if (!appStore.isLoggedIn) { 
       log('❌ User not logged in - cannot test API');
       return;
     }

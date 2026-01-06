@@ -5,7 +5,6 @@ import 'package:grow_tokyo_app/components/select_language_dialog.dart';
 import 'package:grow_tokyo_app/screens/auth/view/sign_in_screen.dart';
 import 'package:grow_tokyo_app/screens/dashboard/dashboard_repository.dart';
 import 'package:grow_tokyo_app/screens/dashboard/fragment/product_fragment.dart';
-import 'package:grow_tokyo_app/services/fcm_service.dart';
 
 import 'package:grow_tokyo_app/utils/colors.dart';
 import 'package:grow_tokyo_app/utils/extensions/string_extensions.dart';
@@ -120,34 +119,6 @@ class _DashboardScreenState extends State<DashboardScreen>
     return DoublePressBackWidget(
       message: locale.pressBackAgainToExitApp,
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            // Test Background Debug
-            print("🚀 === BACKGROUND DEBUG START ===");
-            try {
-              // 1. Check Link
-              print(
-                  "✅ Handler 'firebaseMessagingBackgroundHandler' is registered.");
-
-              // 2. Get & Print Token
-              String? token = await FCMService.getCurrentToken();
-              print("🔑 YOUR FCM TOKEN (Copy this):");
-              print("Token Start:    ${token?.substring(0, 10)}...");
-              print(token ?? "Error: Token is null");
-              print(
-                  "Token End:      ...${token?.substring(token.length - 10)}");
-
-              if (token != null) {
-                print("📋 Token Length: ${token.length}");
-              }
-            } catch (e) {
-              print("❌ Error: $e");
-            }
-            print("🚀 === BACKGROUND DEBUG END ===");
-          },
-          backgroundColor: Colors.purple,
-          child: const Icon(Icons.bug_report),
-        ),
         body: fragmentList[currentPosition],
         bottomNavigationBar: Blur(
           blur: 30,

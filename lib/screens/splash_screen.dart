@@ -5,7 +5,6 @@ import 'package:grow_tokyo_app/screens/debug/firebase_debug_screen.dart';
 import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../components/no_branch_error_widget.dart';
 import '../main.dart';
 import '../network/rest_apis.dart';
 import '../utils/constants.dart';
@@ -21,7 +20,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   int _tapCount = 0;
-  
+
   @override
   void initState() {
     init();
@@ -36,17 +35,22 @@ class _SplashScreenState extends State<SplashScreen> {
       ));
     });
 
-    await getBranchList(branchList: []).then((value) {
-      if (value.isNotEmpty) {
-        if (value.length == 1) {
-          setBranchAndRedirectToDashboard(value.first);
+    // Add timeout to prevent infinite loading
+    try {
+      await getBranchList(branchList: []).then((value) {
+        if (value.isNotEmpty) {
+          if (value.length == 1) {
+            setBranchAndRedirectToDashboard(value.first);
+          }
         }
-      }
-    }).catchError((e) {
-      /// When error occure in Branch List API
-      push(NoBranchErrorWidget(errorMessage: e.toString()),
-          isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
-    });
+      }).catchError((e) {
+        /// When error occure in Branch List API
+        log('❌ Branch list error: $e');
+        // Don't block the app, just log the error
+      });
+    } catch (e) {
+      log('❌ Branch list exception: $e');
+    }
 
     int themeModeIndex = getIntAsync(THEME_MODE_INDEX);
     if (themeModeIndex == ThemeConst.THEME_MODE_LIGHT) {
@@ -56,9 +60,11 @@ class _SplashScreenState extends State<SplashScreen> {
     }
 
     ///Set app configurations
-    getAppConfigurations().then((value) {}).catchError((e) {
-      log(e);
-    });
+    try {
+      await getAppConfigurations();
+    } catch (e) {
+      log('❌ App configurations error: $e');
+    }
 
     if (!mounted) return;
     if (getBoolAsync(SharedPreferenceConst.IS_FIRST_TIME, defaultValue: true)) {

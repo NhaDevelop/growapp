@@ -171,7 +171,7 @@ abstract class _AppStore with Store {
       {bool isInitializing = false}) async {
     currencySymbol = val;
     if (!isInitializing) {
-      await setValue(ConfigurationKeyConst.CURRENCY_COUNTRY_SYMBOL, val);
+      await setValue(ConfigurationKeyConst.CURRENCY_SYMBOL, val);
     }
   }
 
@@ -215,7 +215,7 @@ abstract class _AppStore with Store {
       {bool isInitializing = false}) async {
     currencyCode = val;
     if (!isInitializing) {
-      await setValue(ConfigurationKeyConst.CURRENCY_COUNTRY_CODE, val);
+      await setValue(ConfigurationKeyConst.CURRENCY_CODE, val);
     }
   }
 
