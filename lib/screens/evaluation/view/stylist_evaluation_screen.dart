@@ -52,15 +52,10 @@ class _StylistEvaluationScreenState extends State<StylistEvaluationScreen> {
   }
 
   Future<void> _checkEvaluationStatus() async {
-    log('🔍 [EVAL STATUS] Starting status check...');
-    log('🔍 [EVAL STATUS] submitStatus param: ${widget.submitStatus}');
-    log('🔍 [EVAL STATUS] bookingId param: ${widget.bookingId}');
-
     // Check if submitStatus was passed from notification
     if (widget.submitStatus != null) {
       log('📊 Submit status from notification: ${widget.submitStatus}');
-      final willShowForm = widget.submitStatus != 1;
-      log('🔍 [EVAL STATUS] Will show form: $willShowForm (submitStatus=${widget.submitStatus})');
+
       setState(() {
         isAlreadySubmitted = widget.submitStatus == 1;
         isLoading = false;
@@ -90,15 +85,30 @@ class _StylistEvaluationScreenState extends State<StylistEvaluationScreen> {
       }
     }
 
-    // IMPORTANT: The backend API check-questionnaire-status is unreliable
-    // It returns "already submitted" even for new evaluations
-    // Solution: Always show the form and let the submit API handle duplicates
-    log('⚠️ Skipping API status check (unreliable backend API)');
-    log('📝 Always showing form - submit API will handle duplicates');
+    // Check backend for submitted data (for cross-device sync)
+    if (widget.bookingId != null) {
+      try {
+        final data = await fetchSubmittedEvaluationData(widget.bookingId!);
+
+        if (data != null) {
+          log('✅ Evaluation already submitted, loading data for Thank You screen');
+          // Sync local storage so notification icon updates
+          await markEvaluationAsSubmittedLocally(widget.bookingId!);
+          setState(() {
+            isAlreadySubmitted = true;
+            isLoading = false;
+          });
+          await _loadSubmittedData();
+          return;
+        }
+      } catch (e) {
+        log('⚠️ Backend check failed: $e - showing form');
+      }
+    }
 
     setState(() {
       isLoading = false;
-      isAlreadySubmitted = false; // Always show form
+      isAlreadySubmitted = false; // Show form
     });
     /* DISABLED: Backend API is broken, returns wrong status
     // Fallback: check via API if no submitStatus provided
@@ -251,7 +261,7 @@ class _StylistEvaluationScreenState extends State<StylistEvaluationScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            60.height,
+            16.height,
 
             // Success Icon with elevated card design (matching app pattern)
             Stack(
@@ -693,13 +703,7 @@ class _StylistEvaluationScreenState extends State<StylistEvaluationScreen> {
       return '😞';
     }
 
-    // Request Again (Yes/No)
-    if (lowerOption == 'yes' ||
-        lowerOption.contains('definitely') ||
-        lowerOption.contains('có')) return '✅';
-    if (lowerOption == 'no' || lowerOption.contains('không'))
-      return '🚫'; // Matches "không(no)"
-
+    // Request Again (Yes/No/Maybe) - CHECK MORE SPECIFIC FIRST
     if (lowerOption.contains('maybe') || lowerOption.contains('có thể')) {
       return '🤗';
     }
@@ -707,13 +711,28 @@ class _StylistEvaluationScreenState extends State<StylistEvaluationScreen> {
         lowerOption.contains('không chắc')) {
       return '🤔';
     }
+    // "Có" is very common, so check it last
+    if (lowerOption == 'yes' ||
+        lowerOption.contains('definitely') ||
+        lowerOption.contains('có,') || // Check for comma "Có, chắc chắn"
+        lowerOption.trim() == 'có') // Exact match
+      return '✅';
+
+    if (lowerOption == 'no' || lowerOption.contains('không(no)')) return '🚫';
 
     // Service / Friendliness
-    if (lowerOption.contains('so kind') || lowerOption.contains('thân thiện'))
+    if (lowerOption.contains('not friendly') ||
+        lowerOption.contains('không thân thiện')) return '🚫';
+
+    if (lowerOption.contains('so kind') ||
+        lowerOption.contains('rất thân thiện')) // "Rất" first
       return '❤️';
-    if (lowerOption.contains('kind')) return '😊';
+
+    if (lowerOption.contains('kind') ||
+        lowerOption.contains('thân thiện')) // Then just friendly
+      return '😊'; // Using Smile for Kind/Friendly to differentiate from So Kind (Heart)
+
     if (lowerOption.contains('normal')) return '😐';
-    if (lowerOption.contains('not friendly')) return '😞';
 
     return '';
   }
@@ -933,20 +952,21 @@ class _StylistEvaluationScreenState extends State<StylistEvaluationScreen> {
       log('📦 Fetched data: $data');
 
       if (data != null) {
-        log('🔍 Mapping scores to options...');
         log('   technique: ${data['technique']} -> options: ${widget.evaluationData.question1.options}');
         log('   communication: ${data['communication']} -> options: ${widget.evaluationData.question2.options}');
         log('   friendly: ${data['friendly']} -> options: ${widget.evaluationData.question3.options}');
         log('   request_same_stylish: ${data['request_same_stylish']} -> options: ${widget.evaluationData.question4.options}');
         setState(() {
           // Map numeric scores to text options
-          selectedTechnique = _mapScoreToOption(
-              data['technique'], widget.evaluationData.question1.options);
+          selectedTechnique = _mapScoreToOption(data['technique']?.toString(),
+              widget.evaluationData.question1.options);
           selectedCommunication = _mapScoreToOption(
-              data['communication'], widget.evaluationData.question2.options);
-          selectedAttitude = _mapScoreToOption(
-              data['friendly'], widget.evaluationData.question3.options);
-          selectedRequestAgain = _mapScoreToOption(data['request_same_stylish'],
+              data['communication']?.toString(),
+              widget.evaluationData.question2.options);
+          selectedAttitude = _mapScoreToOption(data['friendly']?.toString(),
+              widget.evaluationData.question3.options);
+          selectedRequestAgain = _mapScoreToOption(
+              data['request_same_stylish']?.toString(),
               widget.evaluationData.question4.options);
         });
         log('✅ Mapped values:');

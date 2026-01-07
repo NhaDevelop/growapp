@@ -16,12 +16,21 @@ class ReferralCodeDetails extends StatelessWidget {
     toast(locale.copiedToClipboard);
   }
 
-  Future<void> onShare() async {
+  Future<void> onShare(BuildContext context) async {
     final text = locale.shareReferralCode(
       data!.code,
       data!.rewardPercentage,
     );
-    await Share.share(text);
+
+    // Get the position of the share button for iOS
+    final box = context.findRenderObject() as RenderBox?;
+    final sharePositionOrigin =
+        box == null ? null : box.localToGlobal(Offset.zero) & box.size;
+
+    await Share.share(
+      text,
+      sharePositionOrigin: sharePositionOrigin,
+    );
   }
 
   @override
@@ -73,11 +82,12 @@ class ReferralCodeDetails extends StatelessWidget {
                 enabled: data != null && data!.code.isNotEmpty,
                 disabledColor: Colors.grey,
                 disabledTextColor: Colors.white,
-                onTap: onShare,
+                onTap: () => onShare(context),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(ic_share, height: 16, width: 16, color: Colors.white),
+                    Image.asset(ic_share,
+                        height: 16, width: 16, color: Colors.white),
                     8.width,
                     Text(locale.share, style: boldTextStyle(color: white)),
                   ],

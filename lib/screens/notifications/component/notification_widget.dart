@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:grow_tokyo_app/components/cached_image_widget.dart';
 import 'package:grow_tokyo_app/screens/evaluation/evaluation_repository.dart';
@@ -56,13 +55,9 @@ class _NotificationWidgetState extends State<NotificationWidget> {
       bookingId = widget.notificationData.data?.bookingId;
     }
 
-    log('🔍 [NotificationWidget] Checking status for questionnair notification:');
-    log('   Notification ID: ${widget.notificationData.id}');
-    log('   Booking ID: $bookingId');
-
     if (bookingId != null) {
+      // Use local storage ONLY - backend sync happens in evaluation screen
       final submitted = await isEvaluationSubmittedLocally(bookingId);
-      log('   Status: ${submitted ? "✅ SUBMITTED" : "⏰ PENDING"}');
       if (mounted) {
         setState(() {
           isSubmitted = submitted;
@@ -137,9 +132,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
                       }
 
                       // Try direct bookingId field (new structure - questionnair)
-                      if (bookingId == null) {
-                        bookingId = widget.notificationData.data?.bookingId;
-                      }
+                      bookingId ??= widget.notificationData.data?.bookingId;
 
                       if (bookingId != null) {
                         return Text('#$bookingId',

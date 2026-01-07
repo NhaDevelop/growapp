@@ -1,10 +1,11 @@
 import 'dart:convert';
+import 'package:grow_tokyo_app/utils/build_config.dart';
 import 'package:http/http.dart' as http;
 import 'package:nb_utils/nb_utils.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../network/network_utils.dart';
 import '../../../utils/api_end_points.dart';
+import '../../../utils/build_config.dart';
 import '../../../main.dart';
 import 'model/stylist_evaluation_model.dart';
 
@@ -53,12 +54,16 @@ Future<Map<String, dynamic>?> fetchSubmittedEvaluationData(
     final userId = userStore.userId;
     final branchId = appStore.branchId;
 
+    // Use correct short_title based on flavor
+    final isProduction = BuildConfig.appFlavor == AppFlavor.prod;
+    final shortTitle = isProduction ? 'cms_hg' : 'd-hair-booking';
+
     final Map<String, String> queryParams = {
       'page': 'request',
       'method': 'default_api',
       'request_page': 'get',
       'request_method': 'hair_grow_questionnaire_detail',
-      'short_title': 'd-hair-booking',
+      'short_title': shortTitle,
       'user_id': userId.toString(),
       'booking_id': bookingId.toString(),
       'branch_id': branchId.toString(),
@@ -109,12 +114,16 @@ Future<String?> fetchQuestionnaireStaffName(int bookingId) async {
     final userId = userStore.userId;
     final branchId = appStore.branchId;
 
+    // Use correct short_title based on flavor
+    final isProduction = BuildConfig.appFlavor == AppFlavor.prod;
+    final shortTitle = isProduction ? 'cms_hg' : 'd-hair-booking';
+
     final Map<String, String> queryParams = {
       'page': 'request',
       'method': 'default_api',
       'request_page': 'get',
       'request_method': 'hair_grow_questionnaire_detail',
-      'short_title': 'd-hair-booking',
+      'short_title': shortTitle,
       'user_id': userId.toString(),
       'booking_id': bookingId.toString(),
       'branch_id': branchId.toString(),
@@ -281,6 +290,10 @@ Future<String> submitStylistEvaluation({
   try {
     log('📤 Submitting evaluation for booking: $bookingId');
 
+    // Use correct short_title based on flavor
+    final isProduction = BuildConfig.appFlavor == AppFlavor.prod;
+    final shortTitle = isProduction ? 'cms_hg' : 'd-hair-booking';
+
     // Default to '0' if null
     String techniqueScore = technique != null
         ? _mapRatingToScore(technique).toInt().toString()
@@ -295,12 +308,12 @@ Future<String> submitStylistEvaluation({
     String sameStylistVal = '-1';
     if (requestSameStylish != null) {
       final lower = requestSameStylish.toLowerCase();
-      if (lower.contains('yes') || lower.contains('có')) {
-        sameStylistVal = '1';
-      } else if (lower.contains('maybe') || lower.contains('có thể')) {
+      if (lower.contains('maybe') || lower.contains('có thể')) {
         sameStylistVal = '2';
       } else if (lower.contains('not sure') || lower.contains('không chắc')) {
         sameStylistVal = '3'; // Use 3 for Not Sure
+      } else if (lower.contains('yes') || lower.contains('có')) {
+        sameStylistVal = '1';
       } else {
         sameStylistVal = '0';
       }
@@ -315,7 +328,7 @@ Future<String> submitStylistEvaluation({
       'method': 'default_api',
       'request_page': 'update',
       'request_method': 'hair_grow_questionnaire_submit',
-      'short_title': 'd-hair-booking',
+      'short_title': shortTitle,
       'user_id': userId.toString(),
       'booking_id': bookingId.toString(),
       'branch_id': branchId.toString(),
