@@ -24,7 +24,6 @@ class FCMService {
       // Initialize Firebase Messaging
       _firebaseMessaging = FirebaseMessaging.instance;
       _isFirebaseMessagingAvailable = true;
-
       log('✅ Firebase Messaging instance created successfully');
 
       // Initialize local notifications (mobile only)

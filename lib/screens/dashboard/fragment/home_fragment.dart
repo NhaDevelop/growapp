@@ -20,7 +20,6 @@ import '../../auth/auth_repository.dart';
 import '../dashboard_repository.dart';
 import '../models/dashboard_model.dart';
 import '../shimmer/dashboard_shimmer.dart';
-
 class HomeFragment extends StatefulWidget {
   const HomeFragment({super.key});
 

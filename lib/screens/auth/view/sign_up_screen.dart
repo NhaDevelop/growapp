@@ -20,7 +20,11 @@ class SignUpScreen extends StatefulWidget {
   final String? uid;
 
   const SignUpScreen(
-      {super.key, this.phoneNumber, this.isOTPLogin = false, this.countryCode, this.uid});
+      {super.key,
+      this.phoneNumber,
+      this.isOTPLogin = false,
+      this.countryCode,
+      this.uid});
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -34,14 +38,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController emailCont = TextEditingController();
   TextEditingController passwordCont = TextEditingController();
   TextEditingController mobileCont = TextEditingController();
+  TextEditingController dobCont = TextEditingController();
 
   String? genderValue;
+  DateTime? dob;
 
   FocusNode firstNameFocus = FocusNode();
   FocusNode lastNameFocus = FocusNode();
   FocusNode emailFocus = FocusNode();
   FocusNode mobileFocus = FocusNode();
   FocusNode passwordFocus = FocusNode();
+  FocusNode dobFocus = FocusNode();
 
   @override
   void initState() {
@@ -98,9 +105,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ..email = emailCont.text.trim()
         ..password = passwordCont.text.trim()
         ..mobile = mobileCont.text.trim()
-        ..gender = genderValue.validate().toLowerCase();
+        ..gender = genderValue.validate().toLowerCase()
+        ..dob = dob == null
+            ? null
+            : formatDate(dob.toString(),
+                format: DateFormatConst.BE_DATE_FORMAT);
 
-      await createUser(tempRegisterData.toJson()).then((registerResponse) async {
+      await createUser(tempRegisterData.toJson())
+          .then((registerResponse) async {
         appStore.setLoading(false);
         toast(registerResponse.message.validate());
         FirebaseAnalytics.instance.logEvent(name: SIGN_UP);
@@ -134,11 +146,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   top: context.statusBarHeight + 16,
                   bottom: 46,
                 ),
-                child: Center(
-                  child: Image.asset(
-                    logo_long,
-                    width: context.width() * 0.4,
-                  ),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Positioned(
+                      left: 16,
+                      child: IconButton(
+                        icon: const Icon(Icons.arrow_back, color: Colors.white),
+                        onPressed: () => finish(context),
+                      ),
+                    ),
+                    Image.asset(
+                      logo_long,
+                      width: context.width() * 0.4,
+                    ),
+                  ],
                 ),
               ),
               Transform.translate(
@@ -149,16 +171,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   child: Column(
                     children: [
-                      Text(locale.welcomeToGrowTokyo, style: boldTextStyle(size: 20)),
+                      Text(locale.welcomeToGrowTokyo,
+                          style: boldTextStyle(size: 20)),
                       8.height,
                       Text(locale.createYourAccountFor,
-                          style: secondaryTextStyle(), textAlign: TextAlign.center),
+                          style: secondaryTextStyle(),
+                          textAlign: TextAlign.center),
                       Column(
                         children: [
                           16.height,
                           Form(
                             key: formKey,
-                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -167,9 +192,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   focus: firstNameFocus,
                                   nextFocus: lastNameFocus,
                                   textFieldType: TextFieldType.NAME,
-                                  readOnly:
-                                      widget.isOTPLogin.validate() ? widget.isOTPLogin : false,
-                                  decoration: inputDecoration(context, label: locale.firstName),
+                                  readOnly: widget.isOTPLogin.validate()
+                                      ? widget.isOTPLogin
+                                      : false,
+                                  decoration: inputDecoration(context,
+                                      label: locale.firstName),
                                 ),
                                 16.height,
                                 AppTextField(
@@ -177,9 +204,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   focus: lastNameFocus,
                                   nextFocus: emailFocus,
                                   textFieldType: TextFieldType.NAME,
-                                  readOnly:
-                                      widget.isOTPLogin.validate() ? widget.isOTPLogin : false,
-                                  decoration: inputDecoration(context, label: locale.lastName),
+                                  readOnly: widget.isOTPLogin.validate()
+                                      ? widget.isOTPLogin
+                                      : false,
+                                  decoration: inputDecoration(context,
+                                      label: locale.lastName),
                                 ),
                                 16.height,
                                 AppTextField(
@@ -187,7 +216,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   focus: emailFocus,
                                   nextFocus: passwordFocus,
                                   textFieldType: TextFieldType.EMAIL,
-                                  decoration: inputDecoration(context, label: locale.email),
+                                  decoration: inputDecoration(context,
+                                      label: locale.email),
                                 ),
                                 16.height,
                                 AppTextField(
@@ -195,9 +225,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   textFieldType: TextFieldType.PASSWORD,
                                   focus: passwordFocus,
                                   nextFocus: mobileFocus,
-                                  readOnly:
-                                      widget.isOTPLogin.validate() ? widget.isOTPLogin : false,
-                                  decoration: inputDecoration(context, label: locale.password),
+                                  readOnly: widget.isOTPLogin.validate()
+                                      ? widget.isOTPLogin
+                                      : false,
+                                  decoration: inputDecoration(context,
+                                      label: locale.password),
                                   autoFillHints: const [AutofillHints.password],
                                   onFieldSubmitted: (s) {
                                     if (widget.isOTPLogin) {
@@ -216,11 +248,42 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 ),
                                 16.height,
                                 AppTextField(
+                                  textFieldType: TextFieldType.OTHER,
+                                  controller: dobCont,
+                                  focus: dobFocus,
+                                  nextFocus: mobileFocus,
+                                  readOnly: true,
+                                  onTap: () {
+                                    showDatePicker(
+                                      context: context,
+                                      initialDate: DateTime.now(),
+                                      firstDate: DateTime(1900),
+                                      lastDate: DateTime.now(),
+                                    ).then((value) {
+                                      if (value != null) {
+                                        dob = value;
+                                        dobCont.text = formatDate(
+                                          value.toString(),
+                                          format:
+                                              DateFormatConst.BOOK_DATE_FORMAT,
+                                        );
+                                      }
+                                    });
+                                  },
+                                  decoration: inputDecoration(
+                                    context,
+                                    label: '${locale.dob} (${locale.optional})',
+                                  ),
+                                ),
+                                16.height,
+                                AppTextField(
                                   textFieldType: TextFieldType.PHONE,
                                   controller: mobileCont,
                                   focus: mobileFocus,
-                                  errorThisFieldRequired: locale.thisFieldIsRequired,
-                                  decoration: inputDecoration(context, label: locale.contactNumber),
+                                  errorThisFieldRequired:
+                                      locale.thisFieldIsRequired,
+                                  decoration: inputDecoration(context,
+                                      label: locale.contactNumber),
                                   maxLength: 15,
                                 ),
                                 16.height,
@@ -238,13 +301,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 registerUser();
                               }
                             },
-                            child: Text(locale.signUp, style: boldTextStyle(color: white)),
+                            child: Text(locale.signUp,
+                                style: boldTextStyle(color: white)),
                           ),
                           16.height,
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(locale.alreadyHaveAnAccount, style: secondaryTextStyle()),
+                              Text(locale.alreadyHaveAnAccount,
+                                  style: secondaryTextStyle()),
                               TextButton(
                                 onPressed: () {
                                   hideKeyboard(context);
@@ -253,7 +318,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 child: Text(
                                   locale.signIn,
                                   style: boldTextStyle(
-                                      color: primaryColor, decoration: TextDecoration.underline),
+                                      color: primaryColor,
+                                      decoration: TextDecoration.underline),
                                 ),
                               ),
                             ],

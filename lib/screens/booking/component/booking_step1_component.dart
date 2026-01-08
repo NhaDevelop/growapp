@@ -35,6 +35,7 @@ class _BookingStep1ComponentState extends State<BookingStep1Component> {
 
   bool isLastPage = false;
 
+
   @override
   void initState() {
     super.initState();

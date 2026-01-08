@@ -364,7 +364,7 @@ class _StylistEvaluationScreenState extends State<StylistEvaluationScreen> {
                               if (selectedCommunication != null)
                                 Expanded(
                                   child: _buildRatingSummaryRow(
-                                    label: 'Comm.',
+                                    label: 'Communication',
                                     value: selectedCommunication!,
                                   ),
                                 ),
