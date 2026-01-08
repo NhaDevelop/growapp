@@ -23,7 +23,7 @@
       </BuildActionEntries>
    </BuildAction>
    <TestAction
-      buildConfiguration = "Debug-stag"
+      buildConfiguration = "Release-stag"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       customLLDBInitFile = "$(SRCROOT)/Flutter/ephemeral/flutter_lldbinit"
@@ -73,7 +73,8 @@
       buildConfiguration = "Debug-stag">
    </AnalyzeAction>
    <ArchiveAction
-      buildConfiguration = "Release-stag"
+      buildConfiguration = "Release-prod"
+      customArchiveName = "Testing"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>
