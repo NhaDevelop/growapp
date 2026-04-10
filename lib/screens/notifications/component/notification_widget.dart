@@ -51,9 +51,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
     bookingId = widget.notificationData.data?.notificationDetail?.id;
 
     // Second try: direct bookingId field (new structure)
-    if (bookingId == null) {
-      bookingId = widget.notificationData.data?.bookingId;
-    }
+    bookingId ??= widget.notificationData.data?.bookingId;
 
     if (bookingId != null) {
       // Use local storage ONLY - backend sync happens in evaluation screen

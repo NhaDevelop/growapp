@@ -31,6 +31,7 @@ const brand_6 = 'assets/images/brand_6.png';
 const brand_7 = 'assets/images/brand_7.png';
 const brand_8 = 'assets/images/brand_8.png';
 const points_banner_bg = 'assets/images/points_banner_bg.png';
+const referral_card_bg = 'assets/images/referral_card_bg.png';
 
 const ic_login_google = 'assets/icons/ic_login_google.png';
 const ic_login_facebook = 'assets/icons/ic_login_facebook.png';

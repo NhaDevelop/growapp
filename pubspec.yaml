@@ -2,7 +2,7 @@ name: grow_tokyo_app
 description: A new Flutter project.
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
-version: 1.0.17+10002238
+version: 1.0.17+10002240
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -25,6 +25,7 @@ dependencies:
   flutter_html: ^3.0.0-beta.1
   share_plus: ^7.0.2
   table_calendar: ^3.1.0
+  path_provider: ^2.1.2
 
   # State Management
   mobx: ^2.2.0

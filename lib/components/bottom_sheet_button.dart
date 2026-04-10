@@ -12,13 +12,16 @@ class BottomSheetButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: boxDecorationWithRoundedCorners(
-          backgroundColor: primaryColor,
-          borderRadius:
-              radiusOnly(topLeft: defaultRadius, topRight: defaultRadius)),
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 36),
-      child: AppButton(text: text, onTap: onTap, child: child),
+    return SafeArea(
+      top: false,
+      child: Container(
+        decoration: boxDecorationWithRoundedCorners(
+            backgroundColor: primaryColor,
+            borderRadius:
+                radiusOnly(topLeft: defaultRadius, topRight: defaultRadius)),
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+        child: AppButton(text: text, onTap: onTap, child: child),
+      ),
     );
   }
 }

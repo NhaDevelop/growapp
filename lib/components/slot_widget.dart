@@ -47,60 +47,66 @@ class _SlotWidgetState extends State<SlotWidget> {
   }
 
   Future<List<SlotData>> init() async {
-    final staffAvailability = await checkAvailability(
-      branchId: appStore.branchId,
-      staffId: bookingRequestStore.employeeId,
-      date: widget.selectedHorizontalDate,
-      serviceList: bookingRequestStore.selectedServiceList,
-    );
-    List<SlotData> slots = [];
+    try {
+      final staffAvailability = await checkAvailability(
+        branchId: appStore.branchId,
+        staffId: bookingRequestStore.employeeId,
+        date: widget.selectedHorizontalDate,
+        serviceList: bookingRequestStore.selectedServiceList,
+      );
+      List<SlotData> slots = [];
 
-    String startTimeString = widget.startTime.validate();
-    String endTimeString = widget.endTime.validate();
-    String timeDuration = widget.slotDuration;
+      String startTimeString = widget.startTime.validate();
+      String endTimeString = widget.endTime.validate();
+      String timeDuration = widget.slotDuration;
 
-    DateTime temp = DateTime.now();
+      DateTime temp = DateTime.now();
 
-    startTimeString =
-        '${temp.year}-${temp.month < 10 ? '0${temp.month}' : temp.month}-${temp.day < 10 ? '0${temp.day}' : temp.day} $startTimeString';
-    endTimeString =
-        '${temp.year}-${temp.month < 10 ? '0${temp.month}' : temp.month}-${temp.day < 10 ? '0${temp.day}' : temp.day} $endTimeString';
+      startTimeString =
+          '${temp.year}-${temp.month < 10 ? '0${temp.month}' : temp.month}-${temp.day < 10 ? '0${temp.day}' : temp.day} $startTimeString';
+      endTimeString =
+          '${temp.year}-${temp.month < 10 ? '0${temp.month}' : temp.month}-${temp.day < 10 ? '0${temp.day}' : temp.day} $endTimeString';
 
-    DateTime startTime = DateTime.parse(startTimeString);
-    DateTime endTime = DateTime.parse(endTimeString);
+      DateTime startTime = DateTime.parse(startTimeString);
+      DateTime endTime = DateTime.parse(endTimeString);
 
-    Duration duration = Duration(
-        hours: int.parse(timeDuration.split(':')[0]),
-        minutes: int.parse(timeDuration.split(':')[1]));
+      Duration duration = Duration(
+          hours: int.parse(timeDuration.split(':')[0]),
+          minutes: int.parse(timeDuration.split(':')[1]));
 
-    while (startTime.isBefore(endTime)) {
-      SlotData slotData = SlotData();
-      final formattedStartTime =
-          formatDate(startTime.toString(), format: DateFormatConst.HOUR_24_FORMAT);
-      if (staffAvailability[formattedStartTime] == 0 ||
-          staffAvailability[formattedStartTime] == null) {
-        slotData.isAvailable = false;
+      while (startTime.isBefore(endTime)) {
+        SlotData slotData = SlotData();
+        final formattedStartTime = formatDate(startTime.toString(),
+            format: DateFormatConst.HOUR_24_FORMAT);
+        if (staffAvailability[formattedStartTime] == 0 ||
+            staffAvailability[formattedStartTime] == null) {
+          slotData.isAvailable = false;
+        }
+        slotData.startTime = formattedStartTime;
+        slotData.previousTimeSlot = startTime;
+        // Determine time slot
+        int hour = startTime.hour;
+        String timeSlot;
+        if (hour >= 20 && hour < 24) {
+          timeSlot = "Night";
+        } else if (hour >= 6 && hour < 12) {
+          timeSlot = "Morning";
+        } else if (hour >= 12 && hour < 17) {
+          timeSlot = "Afternoon";
+        } else {
+          timeSlot = "Evening";
+        }
+        slotData.sessionText = timeSlot;
+
+        slots.add(slotData);
+        startTime = startTime.add(duration);
       }
-      slotData.startTime = formattedStartTime;
-      slotData.previousTimeSlot = startTime;
-      // Determine time slot
-      int hour = startTime.hour;
-      String timeSlot;
-      if (hour >= 20 && hour < 24) {
-        timeSlot = "Night";
-      } else if (hour >= 6 && hour < 12) {
-        timeSlot = "Morning";
-      } else if (hour >= 12 && hour < 17) {
-        timeSlot = "Afternoon";
-      } else {
-        timeSlot = "Evening";
-      }
-      slotData.sessionText = timeSlot;
-
-      slots.add(slotData);
-      startTime = startTime.add(duration);
+      return slots;
+    } catch (e) {
+      log('❌ Error loading time slots: $e');
+      // Return empty list to show "No Time Slots" message
+      return [];
     }
-    return slots;
   }
 
   @override
@@ -150,8 +156,8 @@ class _SlotWidgetState extends State<SlotWidget> {
                       listAnimationType: ListAnimationType.None,
                       itemBuilder: (context, index) {
                         SlotData timeSlot = sessionSlots[index];
-                        bool isSelected =
-                            selectedIndex == index && selectedSession == timeSlot.sessionText;
+                        bool isSelected = selectedIndex == index &&
+                            selectedSession == timeSlot.sessionText;
 
                         return SlotItemComponent(
                           timeSlot: timeSlot,
@@ -159,15 +165,18 @@ class _SlotWidgetState extends State<SlotWidget> {
                           selectedHorizontalDate: widget.selectedHorizontalDate,
                           onTap: () {
                             /// check if time slot is available or not
-                            if (timeSlot.slotAvailability(widget.selectedHorizontalDate)) {
+                            if (timeSlot.slotAvailability(
+                                widget.selectedHorizontalDate)) {
                               if (isSelected) {
                                 selectedIndex = -1;
                                 bookingRequestStore.setTimeInRequest('');
                               } else {
-                                bookingRequestStore.setTimeInRequest(timeSlot.startTime.validate());
+                                bookingRequestStore.setTimeInRequest(
+                                    timeSlot.startTime.validate());
 
                                 selectedIndex = index;
-                                selectedSession = timeSlot.sessionText.validate();
+                                selectedSession =
+                                    timeSlot.sessionText.validate();
 
                                 if (widget.isFromQuickBooking) {
                                   finish(context, bookingRequestStore.time);
@@ -189,7 +198,8 @@ class _SlotWidgetState extends State<SlotWidget> {
             ),
           );
         } else {
-          return snapWidgetHelper(snap, loadingWidget: const LoaderWidget().visible(true));
+          return snapWidgetHelper(snap,
+              loadingWidget: const LoaderWidget().visible(true));
         }
       },
     );

@@ -28,6 +28,7 @@ class CachedImageWidget extends StatelessWidget {
     this.radius,
     this.usePlaceholderIfUrlEmpty = true,
     this.circle = false,
+    
   });
 
   @override

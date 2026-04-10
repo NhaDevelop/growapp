@@ -5,7 +5,6 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../../network/network_utils.dart';
 import '../../../utils/api_end_points.dart';
-import '../../../utils/build_config.dart';
 import '../../../main.dart';
 import 'model/stylist_evaluation_model.dart';
 

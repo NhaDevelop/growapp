@@ -688,10 +688,12 @@ class _StylistEvaluationScreenState extends State<StylistEvaluationScreen> {
     final lowerOption = option.toLowerCase();
 
     // Technique & Communication
-    if (lowerOption.contains('excellent') || lowerOption.contains('xuất sắc'))
+    if (lowerOption.contains('excellent') || lowerOption.contains('xuất sắc')) {
       return '⭐';
-    if (lowerOption.contains('good') || lowerOption.contains('tốt'))
+    }
+    if (lowerOption.contains('good') || lowerOption.contains('tốt')) {
       return '😊';
+    }
     if (lowerOption.contains('average') ||
         lowerOption.contains('ok') ||
         lowerOption.contains('trung bình')) {
@@ -715,22 +717,30 @@ class _StylistEvaluationScreenState extends State<StylistEvaluationScreen> {
     if (lowerOption == 'yes' ||
         lowerOption.contains('definitely') ||
         lowerOption.contains('có,') || // Check for comma "Có, chắc chắn"
-        lowerOption.trim() == 'có') // Exact match
+        lowerOption.trim() == 'có') {
+      // Exact match
       return '✅';
+    }
 
     if (lowerOption == 'no' || lowerOption.contains('không(no)')) return '🚫';
 
     // Service / Friendliness
     if (lowerOption.contains('not friendly') ||
-        lowerOption.contains('không thân thiện')) return '🚫';
+        lowerOption.contains('không thân thiện')) {
+      return '🚫';
+    }
 
     if (lowerOption.contains('so kind') ||
-        lowerOption.contains('rất thân thiện')) // "Rất" first
+        lowerOption.contains('rất thân thiện')) {
+      // "Rất" first
       return '❤️';
+    }
 
     if (lowerOption.contains('kind') ||
-        lowerOption.contains('thân thiện')) // Then just friendly
+        lowerOption.contains('thân thiện')) {
+      // Then just friendly
       return '😊'; // Using Smile for Kind/Friendly to differentiate from So Kind (Heart)
+    }
 
     if (lowerOption.contains('normal')) return '😐';
 
@@ -1016,8 +1026,9 @@ class _StylistEvaluationScreenState extends State<StylistEvaluationScreen> {
         );
       }
 
-      if (intScore == 0 && options.isNotEmpty)
+      if (intScore == 0 && options.isNotEmpty) {
         return options.last; // No (default for 0)
+      }
       return null;
     }
 
