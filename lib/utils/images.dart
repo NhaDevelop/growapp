@@ -32,6 +32,9 @@ const brand_7 = 'assets/images/brand_7.png';
 const brand_8 = 'assets/images/brand_8.png';
 const points_banner_bg = 'assets/images/points_banner_bg.png';
 const referral_card_bg = 'assets/images/referral_card_bg.png';
+const referral_card_bg_silk = 'assets/images/referral_card_bg_silk.png';
+const referral_silk_clean = 'assets/images/referral_silk_clean.png';
+const grow_tokyo_logo = 'assets/images/grow_tokyo_logo.png';
 
 const ic_login_google = 'assets/icons/ic_login_google.png';
 const ic_login_facebook = 'assets/icons/ic_login_facebook.png';
@@ -54,7 +57,8 @@ const dashboard_menu_referral = 'assets/icons/dashboard_menu_referral.png';
 const dashboard_menu_coupon = 'assets/icons/dashboard_menu_coupon.png';
 const dashboard_menu_fbecsite = 'assets/icons/dashboard_menu_fbecsite.png';
 const dashboard_menu_inquiry = 'assets/icons/dashboard_menu_inquiry.png';
-const dashboard_menu_notifications = 'assets/icons/dashboard_menu_notifications.png';
+const dashboard_menu_notifications =
+    'assets/icons/dashboard_menu_notifications.png';
 const ic_us = 'assets/flags/ic_us.png';
 const ic_india = 'assets/flags/ic_india.png';
 const ic_ar = 'assets/flags/ic_ar.png';

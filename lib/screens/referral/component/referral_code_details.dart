@@ -84,123 +84,127 @@ class _ReferralCodeDetailsState extends State<ReferralCodeDetails> {
         RepaintBoundary(
           key: boundaryKey,
           child: Container(
-            height: 240,
-            width: context.width(),
             margin: const EdgeInsets.symmetric(horizontal: 16),
-            decoration: boxDecorationWithRoundedCorners(
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Stack(
-              children: [
-                Positioned.fill(
-                  child: Image.asset(referral_card_bg, fit: BoxFit.cover)
-                      .cornerRadiusWithClipRRect(16),
-                ),
-                // Decorative Gradient Overlay for better text readability
-                Positioned.fill(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          Colors.black.withOpacity(0.3),
-                          Colors.transparent,
-                          Colors.black.withOpacity(0.2),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 50, vertical: 40),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      // Top Row: Logo and Crown Icon
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Image.asset(app_logo, height: 35),
-                          Image.asset(ic_crown,
-                              height: 20, color: Colors.white.withOpacity(0.8)),
-                        ],
-                      ),
-                      // Middle Row: Referral Information & QR Code
-                      Row(
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                locale.yourReferralCode.toUpperCase(),
-                                style: secondaryTextStyle(
-                                    size: 10,
-                                    color: Colors.white70,
-                                    letterSpacing: 2),
-                              ),
-                              2.height,
-                              Text(
-                                widget.data == null || widget.data!.code.isEmpty
-                                    ? 'N/A'
-                                    : widget.data!.code,
-                                style: boldTextStyle(size: 26, color: white),
-                              ),
-                              2.height,
-                              Text(
-                                "SHARE & GET POINTS",
-                                style: boldTextStyle(
-                                    size: 10,
-                                    color: const Color(0xFFFFD700)), // Gold
-                              ),
-                            ],
-                          ).expand(),
-                          12.width,
-                          // QR Code Container
-                          Container(
-                            padding: const EdgeInsets.all(4),
-                            decoration: boxDecorationWithRoundedCorners(
-                              backgroundColor: Colors.white,
-                              borderRadius: BorderRadius.circular(8),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.black26,
-                                    blurRadius: 8,
-                                    spreadRadius: 1),
-                              ],
-                            ),
-                            child: SizedBox(
-                              height: 60,
-                              width: 60,
-                              child: SfBarcodeGenerator(
-                                value: widget.data?.code ?? 'N/A',
-                                symbology: QRCode(),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      // Bottom Section: Salon Invitation Text
-                      Column(
-                        children: [
-                          Text(
-                            "INVITE FRIENDS. GET REWARDED.",
-                            style: boldTextStyle(
-                                size: 12, color: white, letterSpacing: 0.5),
-                          ),
-                          Text(
-                            "Beautiful hair for everyone. Points for you.",
-                            style: secondaryTextStyle(
-                                size: 8, color: Colors.white70),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.12),
+                  blurRadius: 16,
+                  offset: const Offset(0, 4),
                 ),
               ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Stack(
+                children: [
+                  // Clean silk background (no fake QR or text)
+                  Positioned.fill(
+                    child: Image.asset(
+                      referral_silk_clean,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  // Full card content built entirely in Flutter
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 28),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // --- Header: Hair & Make label + Grow Tokyo Logo ---
+                        Text(
+                          "Hair & Make",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black87,
+                            letterSpacing: 1.5,
+                            fontFamily: 'serif',
+                          ),
+                        ),
+                        6.height,
+                        Image.asset(
+                          grow_tokyo_logo,
+                          height: 60,
+                        ),
+                        28.height,
+
+                        // --- 15% OFF double border box ---
+                        Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            border:
+                                Border.all(color: Colors.black87, width: 1.5),
+                          ),
+                          padding: const EdgeInsets.all(5),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border:
+                                  Border.all(color: Colors.black87, width: 0.8),
+                            ),
+                            padding: const EdgeInsets.symmetric(vertical: 18),
+                            child: Center(
+                              child: Text(
+                                "15 % OFF",
+                                style: TextStyle(
+                                  fontSize: 44,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87,
+                                  letterSpacing: 3,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        20.height,
+
+                        // --- Subtitle ---
+                        Text(
+                          "New Customers only",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black87,
+                          ),
+                        ),
+                        24.height,
+
+                        // --- QR Code with clean white background ---
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(color: Colors.black26, width: 1),
+                          ),
+                          child: SizedBox(
+                            height: 120,
+                            width: 120,
+                            child: SfBarcodeGenerator(
+                              value: widget.data?.code ?? 'N/A',
+                              symbology: QRCode(),
+                            ),
+                          ),
+                        ),
+                        16.height,
+
+                        // --- Referral Code Text ---
+                        Text(
+                          "Referral Code: ${widget.data?.code ?? 'N/A'}",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black87,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
+                        8.height,
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
