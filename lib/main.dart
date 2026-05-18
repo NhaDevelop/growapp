@@ -74,6 +74,7 @@ GoogleSignInAuthService googleSignInAuthService = GoogleSignInAuthService();
 AppleLoginAuthService appleLoginAuthService = AppleLoginAuthService();
 FacebookLoginAuthService facebookLoginAuthService = FacebookLoginAuthService();
 //endregion
+//flutter run --flavor stag
 
 //region LANGUAGE
 BaseLanguage locale = LanguageEn();

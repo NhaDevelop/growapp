@@ -294,25 +294,28 @@ Future<String> submitStylistEvaluation({
     final shortTitle = isProduction ? 'cms_hg' : 'd-hair-booking';
 
     // Default to '0' if null
-    String techniqueScore = technique != null
-        ? _mapRatingToScore(technique).toInt().toString()
-        : '0';
-    String communicationScore = communication != null
-        ? _mapRatingToScore(communication).toInt().toString()
-        : '0';
+    String techniqueScore =
+        technique != null ? _mapRatingToApiIndex(technique) : '0';
+    String communicationScore =
+        communication != null ? _mapRatingToApiIndex(communication) : '0';
     String friendlyScore =
-        friendly != null ? _mapRatingToScore(friendly).toInt().toString() : '0';
+        friendly != null ? _mapRatingToApiIndex(friendly) : '0';
 
-    // requestSameStylish: "1" for Yes, "2" for Maybe, "3" for Not Sure, "0" for No, "-1" for Not Selected
-    String sameStylistVal = '-1';
+    // requestSameStylish: "1" for Yes, "2" for Maybe, "3" for Not Sure, "4" for No, "0" for Not Selected
+    String sameStylistVal = '0';
     if (requestSameStylish != null) {
       final lower = requestSameStylish.toLowerCase();
       if (lower.contains('maybe') || lower.contains('có thể')) {
         sameStylistVal = '2';
       } else if (lower.contains('not sure') || lower.contains('không chắc')) {
         sameStylistVal = '3'; // Use 3 for Not Sure
-      } else if (lower.contains('yes') || lower.contains('có')) {
+      } else if (lower.contains('yes') ||
+          lower.contains('có,') ||
+          lower.contains('có') ||
+          lower.trim() == 'có') {
         sameStylistVal = '1';
+      } else if (lower.contains('no') || lower.contains('không')) {
+        sameStylistVal = '4';
       } else {
         sameStylistVal = '0';
       }
@@ -418,6 +421,43 @@ double _calculateAverageRating(String? technique, String? communication,
 
   final average = scores.reduce((a, b) => a + b) / scores.length;
   return double.parse(average.toStringAsFixed(1));
+}
+
+/// Map rating text to API index (1-4 scale, 1=Best, 4=Worst) for CMS
+String _mapRatingToApiIndex(String rating) {
+  final lowerRating = rating.toLowerCase();
+
+  // Option 1 (Excellent / So kind) -> 1
+  if (lowerRating.contains('excellent') ||
+      lowerRating == 'tuyệt vời' ||
+      lowerRating.contains('so kind') ||
+      lowerRating.contains('rất thân thiện')) {
+    return '1';
+  }
+  // Option 2 (Good / Kind) -> 2
+  if (lowerRating.contains('good') ||
+      lowerRating == 'tốt' ||
+      lowerRating.contains('kind') ||
+      lowerRating.contains('thân thiện')) {
+    return '2';
+  }
+  // Option 3 (Average / Normal) -> 3
+  if (lowerRating.contains('average') ||
+      lowerRating.contains('ok') ||
+      lowerRating.contains('normal') ||
+      lowerRating == 'trung bình') {
+    return '3';
+  }
+  // Option 4 (Poor / Needs work / Not friendly) -> 4
+  if (lowerRating.contains('poor') ||
+      lowerRating.contains('needs work') ||
+      lowerRating.contains('not friendly') ||
+      lowerRating == 'kém' ||
+      lowerRating.contains('không thân thiện')) {
+    return '4';
+  }
+
+  return '0'; // Default unselected
 }
 
 /// Map rating text to score (1-5 scale for display)
