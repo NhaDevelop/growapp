@@ -15,8 +15,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
     
     <!-- Media Permissions (Android 13+) -->
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <!-- Removed READ_MEDIA_IMAGES and READ_MEDIA_VIDEO to comply with Google Play Policy -->
     
     <!-- Bluetooth Permissions (Legacy - Android 11 and below) -->
     <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />

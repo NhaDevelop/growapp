@@ -271,7 +271,7 @@ class LanguageKm extends BaseLanguage {
 
   @override
   String shareReferralCode(code, discountPercentage) =>
-      'Check out this amazing app! It has made booking a haircut much easier. Use my code $code to receive $discountPercentage% discount.';
+      'Thank you for choosing our salon.\nFirst-time customers will receive $discountPercentage% off all services.\nPlease show this code when you visit.\nWe look forward to seeing you!\n\nUse my code $code to receive $discountPercentage% discount.';
 
   @override
   String get rewardHistory => 'ប្រវត្តិរង្វាន់';

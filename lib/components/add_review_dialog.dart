@@ -55,10 +55,12 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
 
     await updateReview(req).then((value) {
       onBookingDetailUpdate.call();
-      finish(context, true);
       toast(value.message);
+      if (!mounted) return;
+      finish(context, true);
     }).catchError((e) {
       toast(e.toString());
+      if (!mounted) return;
       finish(context, false);
     });
 

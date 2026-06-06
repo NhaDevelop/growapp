@@ -160,16 +160,7 @@ class _ReferralCodeDetailsState extends State<ReferralCodeDetails> {
                         ),
                         20.height,
 
-                        // --- Subtitle ---
-                        Text(
-                          "New Customers only",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black87,
-                          ),
-                        ),
-                        24.height,
+                        // --- Description Text removed per request ---
 
                         // --- QR Code with clean white background ---
                         Container(
