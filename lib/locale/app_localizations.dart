@@ -20,7 +20,6 @@ class AppLocalizations extends LocalizationsDelegate<BaseLanguage> {
         return LanguageEn();
     }
   }
-
   @override
   bool isSupported(Locale locale) =>
       LanguageDataModel.languages().contains(locale.languageCode);

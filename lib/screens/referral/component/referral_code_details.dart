@@ -117,17 +117,17 @@ class _ReferralCodeDetailsState extends State<ReferralCodeDetails> {
                         Text(
                           "Hair & Make",
                           style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black87,
-                            letterSpacing: 1.5,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            letterSpacing: 0.5,
                             fontFamily: 'serif',
                           ),
                         ),
-                        6.height,
+                        4.height,
                         Image.asset(
                           grow_tokyo_logo,
-                          height: 60,
+                          height: 54,
                         ),
                         28.height,
 
@@ -135,39 +135,50 @@ class _ReferralCodeDetailsState extends State<ReferralCodeDetails> {
                         Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            border:
-                                Border.all(color: Colors.black87, width: 1.5),
+                            border: Border.all(color: Colors.black, width: 1.5),
                           ),
-                          padding: const EdgeInsets.all(5),
+                          padding: const EdgeInsets.all(4),
                           child: Container(
                             decoration: BoxDecoration(
                               border:
-                                  Border.all(color: Colors.black87, width: 0.8),
+                                  Border.all(color: Colors.black, width: 0.8),
                             ),
-                            padding: const EdgeInsets.symmetric(vertical: 18),
+                            padding: const EdgeInsets.symmetric(vertical: 16),
                             child: Center(
                               child: Text(
                                 "15 % OFF",
                                 style: TextStyle(
-                                  fontSize: 44,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black87,
-                                  letterSpacing: 3,
+                                  fontSize: 54,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                  fontFamily: 'serif',
+                                  letterSpacing: 1.5,
                                 ),
                               ),
                             ),
                           ),
                         ),
-                        20.height,
+                        16.height,
 
-                        // --- Description Text removed per request ---
+                        // --- New Customers only ---
+                        Text(
+                          "New Customers only",
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            fontFamily: 'serif',
+                            letterSpacing: 0.5,
+                          ),
+                        ),
+                        16.height,
 
                         // --- QR Code with clean white background ---
                         Container(
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             color: Colors.white,
-                            border: Border.all(color: Colors.black26, width: 1),
+                            border: Border.all(color: Colors.black54, width: 1),
                           ),
                           child: SizedBox(
                             height: 120,
@@ -176,18 +187,6 @@ class _ReferralCodeDetailsState extends State<ReferralCodeDetails> {
                               value: widget.data?.code ?? 'N/A',
                               symbology: QRCode(),
                             ),
-                          ),
-                        ),
-                        16.height,
-
-                        // --- Referral Code Text ---
-                        Text(
-                          "Referral Code: ${widget.data?.code ?? 'N/A'}",
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black87,
-                            letterSpacing: 0.5,
                           ),
                         ),
                         8.height,
