@@ -11,7 +11,6 @@ import 'package:grow_tokyo_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:syncfusion_flutter_barcodes/barcodes.dart';
 
 class ReferralCodeDetails extends StatefulWidget {
   final ReferralData? data;
@@ -23,6 +22,9 @@ class ReferralCodeDetails extends StatefulWidget {
 
 class _ReferralCodeDetailsState extends State<ReferralCodeDetails> {
   final GlobalKey boundaryKey = GlobalKey();
+
+  // Warm near-black to match the ink tone in the reference card
+  static const Color inkColor = Color(0xFF1A140E);
 
   Future<void> onCopyCode(String code) async {
     await Clipboard.setData(ClipboardData(text: code));
@@ -97,103 +99,54 @@ class _ReferralCodeDetailsState extends State<ReferralCodeDetails> {
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: Stack(
-                children: [
-                  // Clean silk background (no fake QR or text)
-                  Positioned.fill(
-                    child: Image.asset(
-                      referral_silk_clean,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  // Full card content built entirely in Flutter
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 24, vertical: 28),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  // Use full width; image is portrait ~4:5 ratio
+                  final cardWidth = constraints.maxWidth;
+                  final cardHeight = cardWidth * 1.25;
+                  return SizedBox(
+                    width: cardWidth,
+                    height: cardHeight,
+                    child: Stack(
                       children: [
-                        // --- Header: Hair & Make label + Grow Tokyo Logo ---
-                        Text(
-                          "Hair & Make",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            letterSpacing: 0.5,
-                            fontFamily: 'serif',
+                        // Full reference image (no QR) as background
+                        Positioned.fill(
+                          child: Image.asset(
+                            referral_card_no_qr,
+                            fit: BoxFit.cover,
                           ),
                         ),
-                        4.height,
-                        Image.asset(
-                          grow_tokyo_logo,
-                          height: 54,
-                        ),
-                        28.height,
-
-                        // --- 15% OFF double border box ---
-                        Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black, width: 1.5),
-                          ),
-                          padding: const EdgeInsets.all(4),
+                        // Overlay referral code on bottom clean area
+                        Positioned(
+                          bottom: cardHeight * 0.22,
+                          left: 0,
+                          right: 0,
                           child: Container(
-                            decoration: BoxDecoration(
-                              border:
-                                  Border.all(color: Colors.black, width: 0.8),
-                            ),
-                            padding: const EdgeInsets.symmetric(vertical: 16),
-                            child: Center(
-                              child: Text(
-                                "15 % OFF",
+                            alignment: Alignment.center,
+                            padding: const EdgeInsets.symmetric(horizontal: 24),
+                            child: RichText(
+                              textAlign: TextAlign.center,
+                              text: TextSpan(
                                 style: TextStyle(
-                                  fontSize: 54,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black,
-                                  fontFamily: 'serif',
-                                  letterSpacing: 1.5,
+                                  fontSize: cardWidth * 0.065,
+                                  fontWeight: FontWeight.w700,
+                                  fontStyle: FontStyle.normal,
+                                  color: inkColor,
+                                  letterSpacing: 3.0,
+                                  fontFamily: 'PlayfairDisplay',
                                 ),
+                                children: [
+                                  const TextSpan(text: "Code : "),
+                                  TextSpan(text: widget.data?.code ?? 'N/A'),
+                                ],
                               ),
                             ),
                           ),
                         ),
-                        16.height,
-
-                        // --- New Customers only ---
-                        Text(
-                          "New Customers only",
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontFamily: 'serif',
-                            letterSpacing: 0.5,
-                          ),
-                        ),
-                        16.height,
-
-                        // --- QR Code with clean white background ---
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(color: Colors.black54, width: 1),
-                          ),
-                          child: SizedBox(
-                            height: 120,
-                            width: 120,
-                            child: SfBarcodeGenerator(
-                              value: widget.data?.code ?? 'N/A',
-                              symbology: QRCode(),
-                            ),
-                          ),
-                        ),
-                        8.height,
                       ],
                     ),
-                  ),
-                ],
+                  );
+                },
               ),
             ),
           ),

@@ -34,6 +34,7 @@ const points_banner_bg = 'assets/images/points_banner_bg.png';
 const referral_card_bg = 'assets/images/referral_card_bg.png';
 const referral_card_bg_silk = 'assets/images/referral_card_bg_silk.png';
 const referral_silk_clean = 'assets/images/referral_silk_clean.png';
+const referral_card_no_qr = 'assets/images/referral_card_no_qr.jpg';
 const grow_tokyo_logo = 'assets/images/grow_tokyo_logo.png';
 
 const ic_login_google = 'assets/icons/ic_login_google.png';

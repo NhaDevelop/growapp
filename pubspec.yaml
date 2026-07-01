@@ -2,7 +2,7 @@ name: grow_tokyo_app
 description: A new Flutter project.
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
-version: 1.0.19+10002247
+version: 1.0.20+10002248
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -102,3 +102,16 @@ flutter:
     - assets/icons/
     - assets/lottie/
     - assets/gifs/
+    - assets/fonts/
+
+  fonts:
+    - family: PlayfairDisplay
+      fonts:
+        - asset: assets/fonts/PlayfairDisplay-Regular.ttf
+        - asset: assets/fonts/PlayfairDisplay-Italic.ttf
+          style: italic
+        - asset: assets/fonts/PlayfairDisplay-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/PlayfairDisplay-BoldItalic.ttf
+          weight: 700
+          style: italic
