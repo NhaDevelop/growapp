@@ -10,7 +10,7 @@ environment:
 dependencies:
   shimmer: ^3.0.0
   flutter:
-    sdk: flutter
+    sdk: flutter  
 
   # COMMON
   nb_utils: ^7.0.2

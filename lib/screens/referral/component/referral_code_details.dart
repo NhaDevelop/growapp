@@ -87,67 +87,107 @@ class _ReferralCodeDetailsState extends State<ReferralCodeDetails> {
           key: boundaryKey,
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 16),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.12),
-                  blurRadius: 16,
-                  offset: const Offset(0, 4),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // The referral card image
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.vertical(
+                        top: Radius.circular(8)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.12),
+                        blurRadius: 16,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius:
+                        const BorderRadius.vertical(top: Radius.circular(8)),
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        final cardWidth = constraints.maxWidth;
+                        final cardHeight = cardWidth * 1.25;
+                        return SizedBox(
+                          width: cardWidth,
+                          height: cardHeight,
+                          child: Stack(
+                            children: [
+                              Positioned.fill(
+                                child: Image.asset(
+                                  referral_card_no_qr,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              Positioned(
+                                bottom: cardHeight * 0.22,
+                                left: 0,
+                                right: 0,
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 24),
+                                  child: RichText(
+                                    textAlign: TextAlign.center,
+                                    text: TextSpan(
+                                      style: TextStyle(
+                                        fontSize: cardWidth * 0.065,
+                                        fontWeight: FontWeight.w700,
+                                        fontStyle: FontStyle.normal,
+                                        color: inkColor,
+                                        letterSpacing: 3.0,
+                                        fontFamily: 'PlayfairDisplay',
+                                      ),
+                                      children: [
+                                        const TextSpan(text: "Code : "),
+                                        TextSpan(
+                                            text: widget.data?.code ?? 'N/A'),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                // Text banner baked into the image so Messenger shows it
+                Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF12213A),
+                    borderRadius: const BorderRadius.vertical(
+                        bottom: Radius.circular(8)),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16, vertical: 12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '🎁 Get ${widget.data?.rewardPercentage ?? 0}% off your first booking!',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        'Use my code: ${widget.data?.code ?? ''} on grow Tokyo app',
+                        style: TextStyle(
+                          color: Colors.white.withOpacity(0.85),
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  // Use full width; image is portrait ~4:5 ratio
-                  final cardWidth = constraints.maxWidth;
-                  final cardHeight = cardWidth * 1.25;
-                  return SizedBox(
-                    width: cardWidth,
-                    height: cardHeight,
-                    child: Stack(
-                      children: [
-                        // Full reference image (no QR) as background
-                        Positioned.fill(
-                          child: Image.asset(
-                            referral_card_no_qr,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        // Overlay referral code on bottom clean area
-                        Positioned(
-                          bottom: cardHeight * 0.22,
-                          left: 0,
-                          right: 0,
-                          child: Container(
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.symmetric(horizontal: 24),
-                            child: RichText(
-                              textAlign: TextAlign.center,
-                              text: TextSpan(
-                                style: TextStyle(
-                                  fontSize: cardWidth * 0.065,
-                                  fontWeight: FontWeight.w700,
-                                  fontStyle: FontStyle.normal,
-                                  color: inkColor,
-                                  letterSpacing: 3.0,
-                                  fontFamily: 'PlayfairDisplay',
-                                ),
-                                children: [
-                                  const TextSpan(text: "Code : "),
-                                  TextSpan(text: widget.data?.code ?? 'N/A'),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
             ),
           ),
         ),

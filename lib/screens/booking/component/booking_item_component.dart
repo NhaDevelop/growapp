@@ -23,6 +23,8 @@ class BookingItemComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final bookingStatusColor =
         getBookingStatusColor(status: bookingData.status.validate());
+    
+    print('Booking ${bookingData.id} employeeImage: ${bookingData.employeeImage}');
 
     return Container(
       width: context.width(),
@@ -93,14 +95,34 @@ class BookingItemComponent extends StatelessWidget {
                       10.height,
                       Row(
                         children: [
-                          CachedImageWidget(
-                            url: bookingData.employeeImage!,
-                            height: 20,
-                            width: 20,
-                            fit: BoxFit.cover,
-                            circle: true,
-                            child: const DefaultUserImagePlaceholder(size: 12),
-                          ).paddingRight(4),
+                          Builder(
+                            builder: (context) {
+                              String imgUrl = bookingData.employeeImage ?? '';
+                              // Fix broken S3 URLs or missing base URLs by mapping to the working CMS URL
+                              if (imgUrl.isNotEmpty) {
+                                if (imgUrl.contains('s3.ap-southeast-1.amazonaws.com')) {
+                                  final uri = Uri.tryParse(imgUrl);
+                                  if (uri != null && uri.pathSegments.isNotEmpty) {
+                                    final filename = uri.pathSegments.last;
+                                    if (bookingData.employeeId != null) {
+                                      imgUrl = 'https://cms.hairmake-grow.com/upload/users/${bookingData.employeeId}/$filename';
+                                    }
+                                  }
+                                } else if (!imgUrl.startsWith('http') && bookingData.employeeId != null) {
+                                  imgUrl = 'https://cms.hairmake-grow.com/upload/users/${bookingData.employeeId}/$imgUrl';
+                                }
+                              }
+                              
+                              return CachedImageWidget(
+                                url: imgUrl,
+                                height: 20,
+                                width: 20,
+                                fit: BoxFit.cover,
+                                circle: true,
+                                child: const DefaultUserImagePlaceholder(size: 12),
+                              ).paddingRight(4);
+                            }
+                          ),
                           if (bookingData.employeeName.validate().isNotEmpty)
                             Marquee(
                               child: Text(
