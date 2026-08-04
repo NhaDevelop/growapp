@@ -15,12 +15,26 @@ class ServiceItemComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        CachedImageWidget(
-          url: service.serviceImage.validate(),
-          height: 40,
-          width: 40,
-          fit: BoxFit.cover,
-        ).cornerRadiusWithClipRRect(8),
+        Builder(
+          builder: (context) {
+            String imgUrl = service.serviceImage.validate();
+            final svcId = service.serviceId ?? service.id;
+            // Fix broken S3 URLs by extracting filename and mapping to CMS
+            if (imgUrl.isNotEmpty && imgUrl.contains('s3.ap-southeast-1.amazonaws.com')) {
+              final uri = Uri.tryParse(imgUrl);
+              if (uri != null && uri.pathSegments.isNotEmpty) {
+                final filename = uri.pathSegments.last;
+                imgUrl = 'https://cms.hairmake-grow.com/upload/services/$svcId/$filename';
+              }
+            }
+            return CachedImageWidget(
+              url: imgUrl,
+              height: 40,
+              width: 40,
+              fit: BoxFit.cover,
+            ).cornerRadiusWithClipRRect(8);
+          },
+        ),
         12.width,
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,

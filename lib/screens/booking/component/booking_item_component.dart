@@ -59,14 +59,30 @@ class BookingItemComponent extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CachedImageWidget(
-                    url: bookingData.serviceList.validate().isNotEmpty
-                        ? bookingData.serviceList!.first.serviceImage.validate()
-                        : '',
-                    height: 75,
-                    width: 75,
-                    fit: BoxFit.cover,
-                    radius: defaultRadius,
+                  Builder(
+                    builder: (context) {
+                      String serviceImgUrl = '';
+                      if (bookingData.serviceList.validate().isNotEmpty) {
+                        final firstService = bookingData.serviceList!.first;
+                        serviceImgUrl = firstService.serviceImage.validate();
+                        final svcId = firstService.serviceId ?? firstService.id;
+                        // Fix broken S3 URLs by extracting filename and mapping to CMS
+                        if (serviceImgUrl.isNotEmpty && serviceImgUrl.contains('s3.ap-southeast-1.amazonaws.com')) {
+                          final uri = Uri.tryParse(serviceImgUrl);
+                          if (uri != null && uri.pathSegments.isNotEmpty) {
+                            final filename = uri.pathSegments.last;
+                            serviceImgUrl = 'https://cms.hairmake-grow.com/upload/services/$svcId/$filename';
+                          }
+                        }
+                      }
+                      return CachedImageWidget(
+                        url: serviceImgUrl,
+                        height: 75,
+                        width: 75,
+                        fit: BoxFit.cover,
+                        radius: defaultRadius,
+                      );
+                    },
                   ),
                   12.width,
                   Column(
