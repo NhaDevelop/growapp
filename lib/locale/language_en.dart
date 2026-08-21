@@ -1332,7 +1332,32 @@ class LanguageEn extends BaseLanguage {
   String get product => "Product";
 
   @override
-  String get alreadyBookedNote => 'If you already booked Grow by web, please set a new password using your email address.';
+  String get alreadyBookedNote => 'Note: This slot is already booked, but you can still proceed if needed.';
 
+  @override
+  String get expiringAlerts => 'Expiring Alerts';
+
+  @override
+  String get expiringEndOfMonth => 'Expiring End of Month';
+
+  @override
+  String get expiringNextMonth => 'Expiring Next Month';
+
+  @override
+  String get earnedPointsHistory => 'Earned Points History (Current Month & Past 5 Months)';
+
+  @override
+  String get currentMonthSummary => 'Current Month Summary';
+
+  @override
+  String get history => 'History';
+
+  @override
+  String get earned => 'Earned';
+
+  @override
+  String get used => 'Used';
+
+  @override
+  String get recentTransactions => 'Recent Transactions';
 }
-

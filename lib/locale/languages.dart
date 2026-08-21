@@ -880,4 +880,22 @@ abstract class BaseLanguage {
   String get product;
 
   String get alreadyBookedNote;
+
+  String get expiringAlerts;
+
+  String get expiringEndOfMonth;
+
+  String get expiringNextMonth;
+
+  String get earnedPointsHistory;
+
+  String get currentMonthSummary;
+
+  String get history;
+
+  String get earned;
+
+  String get used;
+
+  String get recentTransactions;
 }
