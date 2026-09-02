@@ -1,17 +1,20 @@
 enum AppFlavor { stag, prod, local }
 
 class BuildConfig {
-  // static AppFlavor appFlavor = AppFlavor.prod; // Real Production API (uncomment for production release)
-  static AppFlavor appFlavor = AppFlavor.stag; // Demo Staging API (Active)
+  static AppFlavor appFlavor = AppFlavor.prod;
 
   static String get domainUrl {
     switch (appFlavor) {
       case AppFlavor.local:
+        // If you are using Android Emulator, 10.0.2.2 points back to your computer's localhost
+        // If you are using iOS Simulator, you can use "localhost"
         return 'http://10.0.2.2:8000';
       case AppFlavor.stag:
         return 'https://demo-cms-hair-grow.camboinfo.com'; // Demo Staging CMS
       case AppFlavor.prod:
-        return 'https://cms.hairmake-grow.com'; // Real Production CMS
+        return 'https://cms.hairmake-grow.com'; // Production CMS
+      default:
+        return 'https://demo-cms-hair-grow.camboinfo.com';
     }
   }
 
@@ -25,6 +28,8 @@ class BuildConfig {
         return '12f26bc1-9c4d-41cb-80c0-ccce6660bc96';
       case AppFlavor.local:
         return 'your-onesignal-app-id-for-local';
+      default:
+        return '';
     }
   }
 
@@ -32,8 +37,7 @@ class BuildConfig {
     switch (appFlavor) {
       case AppFlavor.prod:
         return 'https://hairmake-grow.com/web-booking';
-      case AppFlavor.stag:
-      case AppFlavor.local:
+      default:
         return 'https://demo-hairmake-grow.camboinfo.com/web-booking';
     }
   }
@@ -42,8 +46,7 @@ class BuildConfig {
     switch (appFlavor) {
       case AppFlavor.prod:
         return '$countryCode.hairmake-grow.com';
-      case AppFlavor.stag:
-      case AppFlavor.local:
+      default:
         return 'demo-$countryCode-hair-grow.camboinfo.com';
     }
   }

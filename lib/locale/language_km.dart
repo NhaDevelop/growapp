@@ -1333,30 +1333,4 @@ class LanguageKm extends BaseLanguage {
   @override
   String get alreadyBookedNote => 'ប្រសិនបើអ្នកបានកក់ Grow តាមគេហទំព័ររួចហើយ សូមកំណត់ពាក្យសម្ងាត់ថ្មីដោយប្រើអ៊ីមែលរបស់អ្នក។';
 
-  @override
-  String get expiringAlerts => 'ការដាស់តឿនផុតកំណត់';
-
-  @override
-  String get expiringEndOfMonth => 'ផុតកំណត់ចុងខែ';
-
-  @override
-  String get expiringNextMonth => 'ផុតកំណត់ខែក្រោយ';
-
-  @override
-  String get earnedPointsHistory => 'ប្រវត្តិនៃការទទួលបានពិន្ទុ (ខែបច្ចុប្បន្ន និង ៥ខែកន្លងមក)';
-
-  @override
-  String get currentMonthSummary => 'សេចក្តីសង្ខេបខែបច្ចុប្បន្ន';
-
-  @override
-  String get history => 'ប្រវត្តិ';
-
-  @override
-  String get earned => 'ទទួលបាន';
-
-  @override
-  String get used => 'បានប្រើ';
-
-  @override
-  String get recentTransactions => 'ប្រតិបត្តិការថ្មីៗ';
 }

@@ -1338,30 +1338,4 @@ class LanguageVi extends BaseLanguage {
   @override
   String get alreadyBookedNote => 'Nếu bạn đã đặt Grow trên web, vui lòng đặt lại mật khẩu bằng địa chỉ email của bạn.';
 
-  @override
-  String get expiringAlerts => 'Cảnh báo hết hạn';
-
-  @override
-  String get expiringEndOfMonth => 'Hết hạn cuối tháng';
-
-  @override
-  String get expiringNextMonth => 'Hết hạn tháng sau';
-
-  @override
-  String get earnedPointsHistory => 'Lịch sử điểm thưởng (Tháng hiện tại & 5 tháng trước)';
-
-  @override
-  String get currentMonthSummary => 'Tóm tắt tháng hiện tại';
-
-  @override
-  String get history => 'Lịch sử';
-
-  @override
-  String get earned => 'Đã nhận';
-
-  @override
-  String get used => 'Đã dùng';
-
-  @override
-  String get recentTransactions => 'Giao dịch gần đây';
 }
