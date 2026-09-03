@@ -46,121 +46,49 @@ Future<void> markEvaluationAsSubmittedLocally(int bookingId) async {
 // API FUNCTIONS
 // ============================================================================
 
-// Fetch questionnaire detail to get staff name and submitted data
+// Fetch submitted evaluation data for a booking (not needed for new API — always returns null gracefully)
 Future<Map<String, dynamic>?> fetchSubmittedEvaluationData(
     int bookingId) async {
-  try {
-    final userId = userStore.userId;
-    final branchId = appStore.branchId;
-
-    // Use correct short_title based on flavor
-    final isProduction = BuildConfig.appFlavor == AppFlavor.prod;
-    final shortTitle = isProduction ? 'cms_hg' : 'd-hair-booking';
-
-    final Map<String, String> queryParams = {
-      'page': 'request',
-      'method': 'default_api',
-      'request_page': 'get',
-      'request_method': 'hair_grow_questionnaire_detail',
-      'short_title': shortTitle,
-      'user_id': userId.toString(),
-      'booking_id': bookingId.toString(),
-      'branch_id': branchId.toString(),
-    };
-
-    final uri = Uri.parse(APIEndPoints.evaluationBaseUrl)
-        .replace(queryParameters: queryParams);
-
-    log('🔗 Fetching submitted evaluation data for booking $bookingId');
-
-    final response = await http.post(
-      uri,
-      headers: {
-        'Authorization': 'Bearer a6f1e9c8b2d44b9f9a1c3a6e4f8d9c2e',
-      },
-    );
-
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      if (data['status'] == 1) {
-        log('✅ Submitted evaluation data fetched');
-
-        // Parse the data field which is a JSON string
-        if (data['data'] != null) {
-          final submittedData = jsonDecode(data['data']);
-          return {
-            'staff_name': data['staff_name'],
-            'technique': submittedData['technique'],
-            'communication': submittedData['communication'],
-            'friendly': submittedData['friendly'],
-            'request_same_stylish': submittedData['request_same_stylish'],
-            'stylish_name': submittedData['stylish_name'],
-            'message': submittedData['message'],
-          };
-        }
-      }
-    }
-    return null;
-  } catch (e) {
-    log('❌ Error fetching submitted evaluation data: $e');
-    return null;
-  }
+  // The new feedback API (web-booking) does not expose submitted answers
+  // We return null so the caller falls back to showing the form
+  log('ℹ️ fetchSubmittedEvaluationData: new API does not support read-back, returning null');
+  return null;
 }
 
-// Fetch questionnaire detail to get staff name only (works for both new and submitted evaluations)
+// Fetch staff name from CMS booking-detail API
 Future<String?> fetchQuestionnaireStaffName(int bookingId) async {
   try {
-    final userId = userStore.userId;
-    final branchId = appStore.branchId;
+    // Use CMS booking-detail to get the employee (staff) name
+    final uri = Uri.parse('${BuildConfig.baseUrl}booking-detail?id=$bookingId');
 
-    // Use correct short_title based on flavor
-    final isProduction = BuildConfig.appFlavor == AppFlavor.prod;
-    final shortTitle = isProduction ? 'cms_hg' : 'd-hair-booking';
-
-    final Map<String, String> queryParams = {
-      'page': 'request',
-      'method': 'default_api',
-      'request_page': 'get',
-      'request_method': 'hair_grow_questionnaire_detail',
-      'short_title': shortTitle,
-      'user_id': userId.toString(),
-      'booking_id': bookingId.toString(),
-      'branch_id': branchId.toString(),
-    };
-
-    final uri = Uri.parse(APIEndPoints.evaluationBaseUrl)
-        .replace(queryParameters: queryParams);
-
-    log('🔗 Fetching staff name for booking $bookingId');
+    log('🔗 Fetching staff name from CMS for booking $bookingId');
     log('📍 API URL: $uri');
 
-    final response = await http.post(
+    final response = await http.get(
       uri,
-      headers: {
-        'Authorization': 'Bearer a6f1e9c8b2d44b9f9a1c3a6e4f8d9c2e',
-      },
+      headers: buildHeaderTokens(),
     );
 
     log('📥 Response status: ${response.statusCode}');
-    log('📥 Response body: ${response.body}');
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      log('📦 Parsed data: $data');
 
-      if (data['status'] == 1 && data['staff_name'] != null) {
-        log('✅ Staff name fetched: ${data['staff_name']}');
-        return data['staff_name'];
-      } else {
-        log('⚠️ Status: ${data['status']}, staff_name: ${data['staff_name']}');
+      // CMS returns employee_name at top level of booking data
+      final bookingData = data['data'];
+      if (bookingData != null) {
+        final staffName = bookingData['employee_name']?.toString();
+        if (staffName != null && staffName.isNotEmpty) {
+          log('✅ Staff name fetched: $staffName');
+          return staffName;
+        }
       }
     }
-    log('❌ Returning null - no staff name found');
+    log('⚠️ No staff name found for booking $bookingId');
     return null;
-  } catch (e, stackTrace) {
+  } catch (e) {
     log('❌ Error fetching staff name: $e');
-    log('📋 Stack trace: $stackTrace');
-    return null;
+    return null; // Non-fatal — form will show without staff name pre-filled
   }
 }
 
@@ -175,15 +103,12 @@ Future<StylistEvaluationData> fetchQuestionnaireContent(
     // If language is Vietnamese (vn), fetch Branch 6 questionnaire
     // Otherwise, use the current branch ID
     String endpoint;
-    int branchIdToFetch;
 
     if (currentLanguage == 'vi') {
-      branchIdToFetch = 6; // Always use Branch 6 for Vietnamese language
       endpoint = '${APIEndPoints.questionnaireContent}?branchId=6';
       log('📋 App language is VI → Fetching Vietnamese questionnaire (Branch 6)');
       log('   Current branch: $currentBranchId, Fetching from: Branch 6');
     } else {
-      branchIdToFetch = currentBranchId;
       endpoint =
           '${APIEndPoints.questionnaireContent}?branchId=$currentBranchId';
       log('📋 App language is $currentLanguage → Fetching questionnaire for branch $currentBranchId');
@@ -276,86 +201,59 @@ Future<String> checkEvaluationStatus(int bookingId) async {
   }
 }
 
-/// Submit stylist evaluation to the new external API
+/// Submit stylist evaluation using the new feedback API
+/// POST /web-booking/?page=feed_back&method=submit_stylist_feed_back_api
+/// &booking_id={id}&user_id={id}
+/// Body (form data): question_1..5
+/// question_1..4: 1-based index of selected option (position in CMS options list)
+/// question_5: free text
 Future<String> submitStylistEvaluation({
   required int bookingId,
+  int? q1Index,   // 1-based position of selected option for question 1
+  int? q2Index,   // 1-based position of selected option for question 2
+  int? q3Index,   // 1-based position of selected option for question 3
+  int? q4Index,   // 1-based position of selected option for question 4
+  String? message, // question_5: free-text comment
+  // Legacy params kept for callers not yet updated (ignored)
   String? technique,
   String? communication,
   String? friendly,
   String? requestSameStylish,
   String? stylistName,
-  String? message,
 }) async {
   try {
-    log('📤 Submitting evaluation for booking: $bookingId');
-
-    // Use correct short_title based on flavor
-    final isProduction = BuildConfig.appFlavor == AppFlavor.prod;
-    final shortTitle = isProduction ? 'cms_hg' : 'd-hair-booking';
-
-    // Default to '0' if null
-    String techniqueScore =
-        technique != null ? _mapRatingToApiIndex(technique) : '0';
-    String communicationScore =
-        communication != null ? _mapRatingToApiIndex(communication) : '0';
-    String friendlyScore =
-        friendly != null ? _mapRatingToApiIndex(friendly) : '0';
-
-    // requestSameStylish: "1" for Yes, "2" for Maybe, "3" for Not Sure, "4" for No, "0" for Not Selected
-    String sameStylistVal = '0';
-    if (requestSameStylish != null) {
-      final lower = requestSameStylish.toLowerCase();
-      if (lower.contains('maybe') || lower.contains('có thể')) {
-        sameStylistVal = '2';
-      } else if (lower.contains('not sure') || lower.contains('không chắc')) {
-        sameStylistVal = '3'; // Use 3 for Not Sure
-      } else if (lower.contains('yes') ||
-          lower.contains('có,') ||
-          lower.contains('có') ||
-          lower.trim() == 'có') {
-        sameStylistVal = '1';
-      } else if (lower.contains('no') || lower.contains('không')) {
-        sameStylistVal = '4';
-      } else {
-        sameStylistVal = '0';
-      }
-    }
+    log('📤 Submitting feedback for booking: $bookingId (new API)');
 
     final userId = userStore.userId;
-    final branchId = appStore.branchId;
 
-    // Construct the query parameters
-    final Map<String, String> queryParams = {
-      'page': 'request',
-      'method': 'default_api',
-      'request_page': 'update',
-      'request_method': 'hair_grow_questionnaire_submit',
-      'short_title': shortTitle,
-      'user_id': userId.toString(),
+    // Use position indices directly — no text mapping needed
+    final q1 = (q1Index ?? 0).toString();
+    final q2 = (q2Index ?? 0).toString();
+    final q3 = (q3Index ?? 0).toString();
+    final q4 = (q4Index ?? 0).toString();
+    final q5 = message?.trim() ?? '';
+
+    final uri = Uri.parse(BuildConfig.webBookingBaseUrl).replace(queryParameters: {
+      'page': 'feed_back',
+      'method': 'submit_stylist_feed_back_api',
       'booking_id': bookingId.toString(),
-      'branch_id': branchId.toString(),
-      'technique': techniqueScore,
-      'communication': communicationScore,
-      'friendly': friendlyScore,
-      'request_same_stylish': sameStylistVal,
-      'stylish_name': stylistName ?? '',
-      'message': message ?? '',
-      'rating': _calculateAverageRating(
-              technique, communication, friendly, requestSameStylish)
-          .toString(),
-      'review_msg': message ?? '',
-    };
-
-    final uri = Uri.parse(APIEndPoints.evaluationBaseUrl)
-        .replace(queryParameters: queryParams);
+      'user_id': userId.toString(),
+    });
 
     log('🔗 Requesting: $uri');
+    log('📝 Form data: q1=$q1, q2=$q2, q3=$q3, q4=$q4, q5=$q5');
 
-    // Using POST request with Bearer token authorization
     final response = await http.post(
       uri,
       headers: {
-        'Authorization': 'Bearer a6f1e9c8b2d44b9f9a1c3a6e4f8d9c2e',
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: {
+        'question_1': q1,
+        'question_2': q2,
+        'question_3': q3,
+        'question_4': q4,
+        'question_5': q5,
       },
     );
 
@@ -363,146 +261,36 @@ Future<String> submitStylistEvaluation({
     log('📥 Response Body: ${response.body}');
 
     if (response.statusCode == 200) {
-      // Parse JSON response
       try {
         final data = jsonDecode(response.body);
-
         if (data is Map) {
-          // Check the status field from API response
           final status = data['status'];
-          final message = data['message']?.toString() ?? '';
+          final msg = data['message']?.toString() ?? '';
+          log('📊 API Response - status: $status, message: $msg');
 
-          log('📊 API Response - status: $status, message: $message');
-
-          // status = 1 means success, status = 0 means failure
           if (status == 1) {
-            log('✅ Evaluation submitted successfully');
+            log('✅ Feedback submitted successfully');
             return 'Success';
+          } else if (msg.toLowerCase().contains('already') ||
+              msg.toLowerCase().contains('submitted')) {
+            log('⚠️ Already submitted');
+            return 'Submitted';
           } else {
-            log('❌ Submission failed: $message');
-
-            // Check for specific error messages
-            if (message.toLowerCase().contains('payment')) {
-              return 'Payment Not Yet Paid';
-            } else if (message.toLowerCase().contains('already') ||
-                message.toLowerCase().contains('submitted')) {
-              return 'Submitted';
-            }
-
+            log('❌ Submission failed: $msg');
             return 'Failed';
           }
         }
-
         return 'Failed';
       } catch (e) {
-        log('❌ Error parsing JSON response: $e');
+        log('❌ Error parsing response: $e');
         return 'Failed';
       }
     } else {
+      log('❌ HTTP ${response.statusCode}');
       return 'Failed';
     }
   } catch (e) {
-    log('❌ Error submitting evaluation: $e');
+    log('❌ Error submitting feedback: $e');
     return 'Failed';
   }
-}
-
-/// Calculate average rating from answers (1-5 scale)
-double _calculateAverageRating(String? technique, String? communication,
-    String? friendly, String? requestAgain) {
-  List<double> scores = [];
-
-  if (technique != null) scores.add(_mapRatingToScore(technique));
-  if (communication != null) scores.add(_mapRatingToScore(communication));
-  if (friendly != null) scores.add(_mapRatingToScore(friendly));
-  if (requestAgain != null) scores.add(_mapYesNoToScore(requestAgain));
-
-  if (scores.isEmpty) return 0.0;
-
-  final average = scores.reduce((a, b) => a + b) / scores.length;
-  return double.parse(average.toStringAsFixed(1));
-}
-
-/// Map rating text to API index (1-4 scale, 1=Best, 4=Worst) for CMS
-String _mapRatingToApiIndex(String rating) {
-  final lowerRating = rating.toLowerCase();
-
-  // Option 1 (Excellent / So kind) -> 1
-  if (lowerRating.contains('excellent') ||
-      lowerRating == 'tuyệt vời' ||
-      lowerRating.contains('so kind') ||
-      lowerRating.contains('rất thân thiện')) {
-    return '1';
-  }
-  // Option 2 (Good / Kind) -> 2
-  if (lowerRating.contains('good') ||
-      lowerRating == 'tốt' ||
-      lowerRating.contains('kind') ||
-      lowerRating.contains('thân thiện')) {
-    return '2';
-  }
-  // Option 3 (Average / Normal) -> 3
-  if (lowerRating.contains('average') ||
-      lowerRating.contains('ok') ||
-      lowerRating.contains('normal') ||
-      lowerRating == 'trung bình') {
-    return '3';
-  }
-  // Option 4 (Poor / Needs work / Not friendly) -> 4
-  if (lowerRating.contains('poor') ||
-      lowerRating.contains('needs work') ||
-      lowerRating.contains('not friendly') ||
-      lowerRating == 'kém' ||
-      lowerRating.contains('không thân thiện')) {
-    return '4';
-  }
-
-  return '0'; // Default unselected
-}
-
-/// Map rating text to score (1-5 scale for display)
-double _mapRatingToScore(String rating) {
-  final lowerRating = rating.toLowerCase();
-
-  if (lowerRating.contains('excellent') ||
-      lowerRating == 'tuyệt vời' ||
-      lowerRating.contains('so kind')) {
-    return 5.0;
-  }
-  if (lowerRating.contains('good') ||
-      lowerRating == 'tốt' ||
-      lowerRating.contains('kind')) {
-    return 4.0;
-  }
-  if (lowerRating.contains('average') ||
-      lowerRating.contains('ok') ||
-      lowerRating.contains('normal') ||
-      lowerRating == 'trung bình') {
-    return 3.0;
-  }
-  if (lowerRating.contains('poor') ||
-      lowerRating.contains('needs work') ||
-      lowerRating.contains('not friendly') ||
-      lowerRating == 'kém') {
-    return 2.0;
-  }
-
-  return 3.0; // Default to average
-}
-
-/// Map Yes/No/Maybe to score (1-5 scale)
-double _mapYesNoToScore(String value) {
-  final lowerValue = value.toLowerCase();
-
-  if (lowerValue.contains('yes') ||
-      lowerValue.contains('definitely') ||
-      lowerValue == 'có' ||
-      lowerValue == 'chắc chắn') {
-    return 5.0;
-  }
-  if (lowerValue.contains('maybe') || lowerValue == 'có thể') return 3.5;
-  if (lowerValue.contains('not sure') || lowerValue == 'không chắc') return 2.5;
-  if (lowerValue == 'no' || lowerValue == 'không') return 1.0;
-
-  return 3.0; // Default
 }

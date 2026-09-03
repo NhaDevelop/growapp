@@ -26,12 +26,21 @@ class StylistEvaluationScreen extends StatefulWidget {
 }
 
 class _StylistEvaluationScreenState extends State<StylistEvaluationScreen> {
+  // Selected option text (for UI display)
   String? selectedTechnique;
   String? selectedCommunication;
   String? selectedAttitude;
   String? selectedRequestAgain;
+
+  // Selected option 1-based index (sent to API as question_1..4)
+  int? selectedQ1Index;
+  int? selectedQ2Index;
+  int? selectedQ3Index;
+  int? selectedQ4Index;
+
   final TextEditingController stylistNameController = TextEditingController();
   final TextEditingController messageController = TextEditingController();
+
 
   // New state variables
   bool isLoading = true;
@@ -178,11 +187,10 @@ class _StylistEvaluationScreenState extends State<StylistEvaluationScreen> {
     try {
       final status = await submitStylistEvaluation(
         bookingId: widget.bookingId ?? 0,
-        technique: selectedTechnique,
-        communication: selectedCommunication,
-        friendly: selectedAttitude,
-        requestSameStylish: selectedRequestAgain,
-        stylistName: stylistNameController.text.trim(),
+        q1Index: selectedQ1Index,
+        q2Index: selectedQ2Index,
+        q3Index: selectedQ3Index,
+        q4Index: selectedQ4Index,
         message: messageController.text.trim(),
       );
 
@@ -212,10 +220,15 @@ class _StylistEvaluationScreenState extends State<StylistEvaluationScreen> {
           ),
         );
       } else if (status.toLowerCase().contains('submitted')) {
-        toast('You have already submitted this evaluation');
+        // Save to local storage so next open goes straight to Thank You
+        if (widget.bookingId != null) {
+          await markEvaluationAsSubmittedLocally(widget.bookingId!);
+          log('💾 Marked booking ${widget.bookingId} as submitted in local storage (already submitted response)');
+        }
         setState(() {
           isAlreadySubmitted = true;
         });
+
       } else if (status.toLowerCase().contains('payment')) {
         toast('Payment has not been confirmed yet');
       } else {
@@ -498,47 +511,64 @@ class _StylistEvaluationScreenState extends State<StylistEvaluationScreen> {
             questionNumber: 1,
             title: widget.evaluationData.question1.title,
             options: widget.evaluationData.question1.options,
+            optionIcons: widget.evaluationData.question1.optionIcons,
             selectedValue: selectedTechnique,
-            onChanged: (value) => setState(() => selectedTechnique = value),
+            onChanged: (value) => setState(() {
+              selectedTechnique = value;
+              selectedQ1Index = value != null
+                  ? widget.evaluationData.question1.options.indexOf(value) + 1
+                  : null;
+            }),
           ),
           20.height,
           _buildModernQuestionCard(
             questionNumber: 2,
             title: widget.evaluationData.question2.title,
             options: widget.evaluationData.question2.options,
+            optionIcons: widget.evaluationData.question2.optionIcons,
             selectedValue: selectedCommunication,
-            onChanged: (value) => setState(() => selectedCommunication = value),
+            onChanged: (value) => setState(() {
+              selectedCommunication = value;
+              selectedQ2Index = value != null
+                  ? widget.evaluationData.question2.options.indexOf(value) + 1
+                  : null;
+            }),
           ),
           20.height,
           _buildModernQuestionCard(
             questionNumber: 3,
             title: widget.evaluationData.question3.title,
             options: widget.evaluationData.question3.options,
+            optionIcons: widget.evaluationData.question3.optionIcons,
             selectedValue: selectedAttitude,
-            onChanged: (value) => setState(() => selectedAttitude = value),
+            onChanged: (value) => setState(() {
+              selectedAttitude = value;
+              selectedQ3Index = value != null
+                  ? widget.evaluationData.question3.options.indexOf(value) + 1
+                  : null;
+            }),
           ),
           20.height,
           _buildModernQuestionCard(
             questionNumber: 4,
             title: widget.evaluationData.question4.title,
             options: widget.evaluationData.question4.options,
+            optionIcons: widget.evaluationData.question4.optionIcons,
             selectedValue: selectedRequestAgain,
-            onChanged: (value) => setState(() => selectedRequestAgain = value),
+            onChanged: (value) => setState(() {
+              selectedRequestAgain = value;
+              selectedQ4Index = value != null
+                  ? widget.evaluationData.question4.options.indexOf(value) + 1
+                  : null;
+            }),
           ),
+
           20.height,
           _buildModernTextFieldCard(
             questionNumber: 5,
             title: widget.evaluationData.question5.title,
             hint: widget.evaluationData.question5.value,
-            controller: stylistNameController,
-            icon: Icons.person_outline,
-          ),
-          20.height,
-          _buildModernTextFieldCard(
-            questionNumber: 6,
-            title: widget.evaluationData.question6.title,
-            hint: widget.evaluationData.question6.value,
-            controller: messageController,
+            controller: messageController, // question_5: free-text comment
             maxLines: 4,
             icon: Icons.message_outlined,
           ),
@@ -561,6 +591,7 @@ class _StylistEvaluationScreenState extends State<StylistEvaluationScreen> {
     required List<String> options,
     required String? selectedValue,
     required Function(String?) onChanged,
+    List<String> optionIcons = const [], // emoji icons from CMS API
   }) {
     return Container(
       padding: const EdgeInsets.all(0),
@@ -624,9 +655,14 @@ class _StylistEvaluationScreenState extends State<StylistEvaluationScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: options.map((option) {
+              children: options.asMap().entries.map((entry) {
+                final idx = entry.key;
+                final option = entry.value;
                 final isSelected = selectedValue == option;
-                final emoji = _getEmojiForOption(option);
+                // Use API emoji if available for this index, else fall back to material icon
+                final apiEmoji = (idx < optionIcons.length)
+                    ? optionIcons[idx]
+                    : '';
 
                 return Expanded(
                   child: GestureDetector(
@@ -635,7 +671,7 @@ class _StylistEvaluationScreenState extends State<StylistEvaluationScreen> {
                       margin: const EdgeInsets.symmetric(horizontal: 4),
                       child: Column(
                         children: [
-                          // Emoji container
+                          // Icon container
                           Container(
                             width: 56,
                             height: 56,
@@ -652,10 +688,17 @@ class _StylistEvaluationScreenState extends State<StylistEvaluationScreen> {
                               ),
                             ),
                             alignment: Alignment.center,
-                            child: Text(
-                              emoji,
-                              style: const TextStyle(fontSize: 28),
-                            ),
+                            child: apiEmoji.isNotEmpty
+                                // Use emoji from CMS API
+                                ? Text(
+                                    apiEmoji,
+                                    style: TextStyle(
+                                      fontSize: isSelected ? 28 : 24,
+                                    ),
+                                  )
+                                // Fall back to material icon (when API provides no icon)
+                                : _getOptionIconWidget(option, isSelected,
+                                    size: 34),
                           ),
                           8.height,
                           // Option text
@@ -684,101 +727,86 @@ class _StylistEvaluationScreenState extends State<StylistEvaluationScreen> {
     );
   }
 
-  String _getEmojiForOption(String option) {
-    final lowerOption = option.toLowerCase();
+  Widget _getOptionIconWidget(String option, bool isSelected,
+      {double size = 34}) {
+    final lower = option.toLowerCase().trim();
 
-    // Technique & Communication
-    if (lowerOption.contains('excellent') || lowerOption.contains('xuất sắc')) {
-      return '⭐';
-    }
-    if (lowerOption.contains('good') || lowerOption.contains('tốt')) {
-      return '😊';
-    }
-    if (lowerOption.contains('average') ||
-        lowerOption.contains('ok') ||
-        lowerOption.contains('trung bình')) {
-      return '😐';
-    }
-    if (lowerOption.contains('poor') ||
-        lowerOption.contains('needs work') ||
-        lowerOption.contains('kém')) {
-      return '😞';
-    }
+    IconData iconData;
+    Color iconColor;
 
-    // Request Again (Yes/No/Maybe) - CHECK MORE SPECIFIC FIRST
-    if (lowerOption.contains('maybe') || lowerOption.contains('có thể')) {
-      return '🤗';
+    // 1. Very Good / Excellent / 5 Star / So Kind
+    if (lower.contains('very good') ||
+        lower.contains('excellent') ||
+        lower.contains('xuất sắc') ||
+        lower.contains('rất tốt') ||
+        lower.contains('so kind') ||
+        lower.contains('rất thân thiện')) {
+      iconData = Icons.sentiment_very_satisfied_rounded;
+      iconColor = const Color(0xFF2E7D32); // Dark Green
     }
-    if (lowerOption.contains('not sure') ||
-        lowerOption.contains('không chắc')) {
-      return '🤔';
+    // 2. Good / Kind
+    else if (lower == 'good' ||
+        lower.contains('tốt') ||
+        lower.contains('khá') ||
+        lower.contains('kind') ||
+        lower.contains('thân thiện')) {
+      iconData = Icons.sentiment_satisfied_alt_rounded;
+      iconColor = const Color(0xFF66BB6A); // Light Green
     }
-    // "Có" is very common, so check it last
-    if (lowerOption == 'yes' ||
-        lowerOption.contains('definitely') ||
-        lowerOption.contains('có,') || // Check for comma "Có, chắc chắn"
-        lowerOption.trim() == 'có') {
-      // Exact match
-      return '✅';
+    // 3. Not Bad / Average / Normal / Maybe
+    else if (lower.contains('not bad') ||
+        lower.contains('average') ||
+        lower.contains('normal') ||
+        lower.contains('ok') ||
+        lower.contains('trung bình') ||
+        lower.contains('bình thường') ||
+        lower.contains('maybe') ||
+        lower.contains('có thể')) {
+      iconData = Icons.sentiment_neutral_rounded;
+      iconColor = const Color(0xFFFFA726); // Amber / Orange
     }
-
-    if (lowerOption == 'no' || lowerOption.contains('không(no)')) return '🚫';
-
-    // Service / Friendliness
-    if (lowerOption.contains('not friendly') ||
-        lowerOption.contains('không thân thiện')) {
-      return '🚫';
+    // 4. Very Bad / Bad / Poor / Not Friendly
+    else if (lower.contains('very bad') ||
+        lower.contains('bad') ||
+        lower.contains('poor') ||
+        lower.contains('kém') ||
+        lower.contains('tệ') ||
+        lower.contains('rất tệ') ||
+        lower.contains('not friendly') ||
+        lower.contains('không thân thiện')) {
+      iconData = Icons.sentiment_very_dissatisfied_rounded;
+      iconColor = const Color(0xFFEF5350); // Red
     }
-
-    if (lowerOption.contains('so kind') ||
-        lowerOption.contains('rất thân thiện')) {
-      // "Rất" first
-      return '❤️';
+    // 5. Yes / Definitely / Thumbs Up
+    else if (lower == 'yes' ||
+        lower.contains('definitely') ||
+        lower.contains('chắc chắn') ||
+        lower.trim() == 'có') {
+      iconData = Icons.thumb_up_alt_rounded;
+      iconColor = const Color(0xFF4CAF50);
     }
-
-    if (lowerOption.contains('kind') ||
-        lowerOption.contains('thân thiện')) {
-      // Then just friendly
-      return '😊'; // Using Smile for Kind/Friendly to differentiate from So Kind (Heart)
+    // 6. No
+    else if (lower == 'no' || lower.contains('không')) {
+      iconData = Icons.thumb_down_alt_rounded;
+      iconColor = const Color(0xFFEF5350);
     }
-
-    if (lowerOption.contains('normal')) return '😐';
-
-    return '';
-  }
-
-  String _generateRatingSummary() {
-    List<String> summaryParts = [];
-
-    if (selectedTechnique != null && selectedTechnique!.isNotEmpty) {
-      final emoji = _getEmojiForOption(selectedTechnique!);
-      summaryParts.add('$emoji $selectedTechnique');
+    // Default fallback
+    else {
+      iconData = Icons.star_rounded;
+      iconColor = const Color(0xFFFFB300);
     }
 
-    if (selectedCommunication != null && selectedCommunication!.isNotEmpty) {
-      final emoji = _getEmojiForOption(selectedCommunication!);
-      summaryParts.add('$emoji $selectedCommunication');
-    }
-
-    if (selectedAttitude != null && selectedAttitude!.isNotEmpty) {
-      final emoji = _getEmojiForOption(selectedAttitude!);
-      summaryParts.add('$emoji $selectedAttitude');
-    }
-
-    if (selectedRequestAgain != null && selectedRequestAgain!.isNotEmpty) {
-      final emoji = _getEmojiForOption(selectedRequestAgain!);
-      summaryParts.add('$emoji $selectedRequestAgain');
-    }
-
-    return summaryParts.join(" • ");
+    return Icon(
+      iconData,
+      size: size,
+      color: isSelected ? iconColor : iconColor.withOpacity(0.7),
+    );
   }
 
   Widget _buildRatingSummaryRow({
     required String label,
     required String value,
   }) {
-    final emoji = _getEmojiForOption(value);
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -790,10 +818,7 @@ class _StylistEvaluationScreenState extends State<StylistEvaluationScreen> {
           overflow: TextOverflow.ellipsis,
         ),
         8.height,
-        Text(
-          emoji,
-          style: const TextStyle(fontSize: 32), // Slightly adjusted for balance
-        ),
+        _getOptionIconWidget(value, true, size: 32),
         4.height,
         Text(
           value,

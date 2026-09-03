@@ -1338,4 +1338,12 @@ class LanguageVi extends BaseLanguage {
   @override
   String get alreadyBookedNote => 'Nếu bạn đã đặt Grow trên web, vui lòng đặt lại mật khẩu bằng địa chỉ email của bạn.';
 
+  @override
+  String get history => 'Lịch sử';
+
+  @override
+  String get earned => 'Đã nhận';
+
+  @override
+  String get used => 'Đã dùng';
 }

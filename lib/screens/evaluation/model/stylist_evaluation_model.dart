@@ -35,16 +35,30 @@ class StylistEvaluationData {
   }
 }
 
+/// Parse option_icons map {"1":"✅","2":"🚫",...} into ordered list aligned with options
+List<String> _parseOptionIcons(Map<String, dynamic>? iconsMap, int count) {
+  if (iconsMap == null || iconsMap.isEmpty) return [];
+  final result = <String>[];
+  for (int i = 1; i <= count; i++) {
+    result.add(iconsMap[i.toString()]?.toString() ?? '');
+  }
+  return result;
+}
+
 class Question1 {
   final String title;
   final List<String> options;
+  final List<String> optionIcons; // emoji icons from API per option
 
-  Question1({required this.title, required this.options});
+  Question1({required this.title, required this.options, required this.optionIcons});
 
   factory Question1.fromJson(Map<String, dynamic> json) {
+    final opts = List<String>.from(json['option'] ?? []);
     return Question1(
       title: json['title'] ?? '',
-      options: List<String>.from(json['option'] ?? []),
+      options: opts,
+      optionIcons: _parseOptionIcons(
+          json['option_icons'] as Map<String, dynamic>?, opts.length),
     );
   }
 }
@@ -52,13 +66,17 @@ class Question1 {
 class Question2 {
   final String title;
   final List<String> options;
+  final List<String> optionIcons;
 
-  Question2({required this.title, required this.options});
+  Question2({required this.title, required this.options, required this.optionIcons});
 
   factory Question2.fromJson(Map<String, dynamic> json) {
+    final opts = List<String>.from(json['option'] ?? []);
     return Question2(
       title: json['title'] ?? '',
-      options: List<String>.from(json['option'] ?? []),
+      options: opts,
+      optionIcons: _parseOptionIcons(
+          json['option_icons'] as Map<String, dynamic>?, opts.length),
     );
   }
 }
@@ -66,13 +84,17 @@ class Question2 {
 class Question3 {
   final String title;
   final List<String> options;
+  final List<String> optionIcons;
 
-  Question3({required this.title, required this.options});
+  Question3({required this.title, required this.options, required this.optionIcons});
 
   factory Question3.fromJson(Map<String, dynamic> json) {
+    final opts = List<String>.from(json['option'] ?? []);
     return Question3(
       title: json['title'] ?? '',
-      options: List<String>.from(json['option'] ?? []),
+      options: opts,
+      optionIcons: _parseOptionIcons(
+          json['option_icons'] as Map<String, dynamic>?, opts.length),
     );
   }
 }
@@ -80,14 +102,17 @@ class Question3 {
 class Question4 {
   final String title;
   final List<String> options;
+  final List<String> optionIcons;
 
-  Question4({required this.title, required this.options});
+  Question4({required this.title, required this.options, required this.optionIcons});
 
   factory Question4.fromJson(Map<String, dynamic> json) {
+    final opts = List<String>.from(json['option'] ?? []);
     return Question4(
       title: json['title'] ?? '',
-      options: List<String>.from(json['option'] ?? []),
-     
+      options: opts,
+      optionIcons: _parseOptionIcons(
+          json['option_icons'] as Map<String, dynamic>?, opts.length),
     );
   }
 }

@@ -1334,5 +1334,13 @@ class LanguageEn extends BaseLanguage {
   @override
   String get alreadyBookedNote => 'If you already booked Grow by web, please set a new password using your email address.';
 
+  @override
+  String get history => 'History';
+
+  @override
+  String get earned => 'Earned';
+
+  @override
+  String get used => 'Used';
 }
 

@@ -36,7 +36,8 @@ class LanguageKm extends BaseLanguage {
   String get welcomeToGrowTokyo => 'សូមស្វាគមន៍មកកាន់ growTokyo!';
 
   @override
-  String get createYourAccountFor => 'បង្កើតគណនីរបស់អ្នកសម្រាប់បទពិសោធន៍ល្អប្រចាំថ្ងៃ';
+  String get createYourAccountFor =>
+      'បង្កើតគណនីរបស់អ្នកសម្រាប់បទពិសោធន៍ល្អប្រចាំថ្ងៃ';
 
   @override
   String get firstName => 'គោត្ដនាម';
@@ -102,7 +103,8 @@ class LanguageKm extends BaseLanguage {
   String get otpVerification => 'ការផ្ទៀងផ្ទាត់ OTP';
 
   @override
-  String get checkYourMailAnd => 'ពិនិត្យមើលសំបុត្ររបស់អ្នកហើយបញ្ចូលលេខកូដដែលអ្នកបានទទួលបាន';
+  String get checkYourMailAnd =>
+      'ពិនិត្យមើលសំបុត្ររបស់អ្នកហើយបញ្ចូលលេខកូដដែលអ្នកបានទទួលបាន';
 
   @override
   String get didNotGetTheOtp => 'មិនទាន់បានទទួល OTP?';
@@ -124,7 +126,8 @@ class LanguageKm extends BaseLanguage {
   String get resetPassword => 'កំណត់ពាក្យសម្ងាត់ឡើងវិញ';
 
   @override
-  String get areYouSureWantToPerformThisAction => 'តើអ្នកប្រាកដថាចង់អនុវត្តសកម្មភាពនេះទេ?';
+  String get areYouSureWantToPerformThisAction =>
+      'តើអ្នកប្រាកដថាចង់អនុវត្តសកម្មភាពនេះទេ?';
 
   @override
   String get yes => 'បាទ/ចាស';
@@ -148,7 +151,8 @@ class LanguageKm extends BaseLanguage {
   String get changePassword => 'ប្តូរពាក្យសម្ងាត់';
 
   @override
-  String get newPasswordsMustBeDifferent => 'ពាក្យសម្ងាត់ថ្មីត្រូវតែខុសពីលេខសម្ងាត់ពីមុន';
+  String get newPasswordsMustBeDifferent =>
+      'ពាក្យសម្ងាត់ថ្មីត្រូវតែខុសពីលេខសម្ងាត់ពីមុន';
 
   @override
   String get oldPassword => 'ពាក្យសម្ងាត់ចាស់';
@@ -175,7 +179,8 @@ class LanguageKm extends BaseLanguage {
   String get noUserFound => 'រកមិនឃើញអ្នកប្រើប្រាស់ទេ';
 
   @override
-  String get otpInvalidMessage => 'លេខកូដដែលបានបញ្ចូលគឺមិនត្រឹមត្រូវទេ, សូមព្យាយាមម្តងទៀត';
+  String get otpInvalidMessage =>
+      'លេខកូដដែលបានបញ្ចូលគឺមិនត្រឹមត្រូវទេ, សូមព្យាយាមម្តងទៀត';
 
   @override
   String get pleaseContactWithAdmin => 'សូមទាក់ទងជាមួយអ្នកគ្រប់គ្រង';
@@ -190,7 +195,8 @@ class LanguageKm extends BaseLanguage {
   String get signInFailed => 'ចូលបានបរាជ័យ';
 
   @override
-  String get appleSigInIsNotAvailable => 'Apple SignIn មិនមានសម្រាប់ឧបកររបស់អ្នកទេ';
+  String get appleSigInIsNotAvailable =>
+      'Apple SignIn មិនមានសម្រាប់ឧបកររបស់អ្នកទេ';
 
   @override
   String get emailAddressIsRequiredUpdateAppleAccount =>
@@ -204,7 +210,8 @@ class LanguageKm extends BaseLanguage {
       'គណនីរបស់អ្នករួចរាល់ក្នុងការប្រើប្រាស់។ សូមរីករាយជាមួយអ្នកឯកទេស និងសេវាកម្មរបស់យើង។';
 
   @override
-  String get yourPassWorResetSuccessfully => 'កំណត់ពាក្យសម្ងាត់របស់អ្នកឡើងវិញដោយជោគជ័យ';
+  String get yourPassWorResetSuccessfully =>
+      'កំណត់ពាក្យសម្ងាត់របស់អ្នកឡើងវិញដោយជោគជ័យ';
 
   @override
   String get done => 'បានរួចរាល់';
@@ -300,7 +307,8 @@ class LanguageKm extends BaseLanguage {
       'បន្ទាប់ពីការកក់របស់មិត្តរបស់អ្នកត្រូវបានបញ្ចប់ អ្នកនឹងទទួលបានពិន្ទុជារង្វាន់។';
 
   @override
-  String get referralStepNote => 'លេខកូដយោងអាចប្រើបានតែម្តងប៉ុណ្ណោះក្នុងមនុស្សម្នាក់';
+  String get referralStepNote =>
+      'លេខកូដយោងអាចប្រើបានតែម្តងប៉ុណ្ណោះក្នុងមនុស្សម្នាក់';
 
   @override
   String get addReferralCode => 'បន្ថែមលេខកូដយោង';
@@ -498,7 +506,8 @@ class LanguageKm extends BaseLanguage {
   String get noReviewsFound => 'រកមិនឃើញការពិនិត្យទេ';
 
   @override
-  String get yourReviewsWillBeAppearedHere => 'ការពិនិត្យរបស់អ្នកនឹងត្រូវបានបង្ហាញនៅទីនេះ';
+  String get yourReviewsWillBeAppearedHere =>
+      'ការពិនិត្យរបស់អ្នកនឹងត្រូវបានបង្ហាញនៅទីនេះ';
 
   @override
   String get call => 'ហៅ';
@@ -585,7 +594,8 @@ class LanguageKm extends BaseLanguage {
   String get noNotifications => 'គ្មានការជូនដំណឹង';
 
   @override
-  String get weLlNotifyYouOnce => "យើងនឹងជូនដំណឹងដល់អ្នកនៅពេលដែលយើងមានអ្វីមួយសម្រាប់អ្នក";
+  String get weLlNotifyYouOnce =>
+      "យើងនឹងជូនដំណឹងដល់អ្នកនៅពេលដែលយើងមានអ្វីមួយសម្រាប់អ្នក";
 
   @override
   String get searchForServices => 'ស្វែងរកសេវាកម្ម';
@@ -674,7 +684,8 @@ class LanguageKm extends BaseLanguage {
   String get salon => 'សាលណេត';
 
   @override
-  String get weProvideYouBestServiceMessage => 'យើងផ្ដល់សេវាកម្មល្អបំផុតសម្រាប់អ្នក';
+  String get weProvideYouBestServiceMessage =>
+      'យើងផ្ដល់សេវាកម្មល្អបំផុតសម្រាប់អ្នក';
 
   @override
   String get userExperience => 'បទពិសោធន៍អ្នកប្រើប្រាស់';
@@ -716,7 +727,8 @@ class LanguageKm extends BaseLanguage {
   String get ratingIsRequired => 'ការវាយតម្លៃត្រូវបានទាមទារ';
 
   @override
-  String get timeSlotBookedMessage => 'តើបានកក់រួចហើយ! សូមជ្រើសរើសពេលផ្សាយមួយផ្សេងទៀត';
+  String get timeSlotBookedMessage =>
+      'តើបានកក់រួចហើយ! សូមជ្រើសរើសពេលផ្សាយមួយផ្សេងទៀត';
 
   @override
   String get branchName => 'ឈ្មោះសាខា';
@@ -755,7 +767,8 @@ class LanguageKm extends BaseLanguage {
   String get bookAndManageYourBookings => 'កក់និងគ្រប់គ្រងការកក់របស់អ្នក';
 
   @override
-  String get walkThrough1subTitle => 'បើកការជូនដំណឹងហើយ យើងនឹងជូនដំណឹងអ្នកពេលដែលការកក់របស់អ្នកមក';
+  String get walkThrough1subTitle =>
+      'បើកការជូនដំណឹងហើយ យើងនឹងជូនដំណឹងអ្នកពេលដែលការកក់របស់អ្នកមក';
 
   @override
   String get getCouponForDiscount => 'ទទួលបានកូដប័ណ្ណសម្រាប់ការបញ្ចុះតម្លៃ';
@@ -806,7 +819,8 @@ class LanguageKm extends BaseLanguage {
   String get apple => 'Apple';
 
   @override
-  String get termsConditionsMessage => 'ខ្ញុំបានអានលក្ខខណ្ឌលការណ៍និងយល់ព្រមលក្ខខណ្ឌ';
+  String get termsConditionsMessage =>
+      'ខ្ញុំបានអានលក្ខខណ្ឌលការណ៍និងយល់ព្រមលក្ខខណ្ឌ';
 
   @override
   String get pleaseAcceptTermsAndConditions => 'សូមទទួលយកលក្ខខណ្ឌនិងលក្ខណៈ';
@@ -845,7 +859,8 @@ class LanguageKm extends BaseLanguage {
   String get goBack => 'ត្រឡប់ទៅក្រោយ';
 
   @override
-  String get noStaffAvailableForBranchMessage => 'មិនមានបុគ្គលិកសម្រាប់សេវាកម្មដែលបានជ្រើសរើសទេ!';
+  String get noStaffAvailableForBranchMessage =>
+      'មិនមានបុគ្គលិកសម្រាប់សេវាកម្មដែលបានជ្រើសរើសទេ!';
 
   @override
   String get tryToChangeYourService => 'ព្យាយាមផ្លាស់ប្តូរសេវាកម្មរបស់អ្នក';
@@ -863,7 +878,8 @@ class LanguageKm extends BaseLanguage {
   String get selectEmployeeFirst => 'ជ្រើសរើសបុគ្គលិកជាមុន';
 
   @override
-  String get yourBookingForHairBookingMessage => 'ការកក់របស់អ្នកសម្រាប់ការកាត់សក់បានកក់ដោយជោគជ័យ';
+  String get yourBookingForHairBookingMessage =>
+      'ការកក់របស់អ្នកសម្រាប់ការកាត់សក់បានកក់ដោយជោគជ័យ';
 
   @override
   String get back => 'ត្រឡប់ទៅក្រោយ';
@@ -872,7 +888,8 @@ class LanguageKm extends BaseLanguage {
   String get taxIncluded => 'បន្ថែមពន្ធនៅ';
 
   @override
-  String get demoUserCannotBeGrantedForThis => 'មិនអាចអនុញ្ញាតឱ្យអ្នកប្រើប្រាស់ប្រព័ន្ធនេះបានទេ';
+  String get demoUserCannotBeGrantedForThis =>
+      'មិនអាចអនុញ្ញាតឱ្យអ្នកប្រើប្រាស់ប្រព័ន្ធនេះបានទេ';
 
   @override
   String get payNow => 'បង់ប្រាក់ឥឡូវនេះ';
@@ -890,13 +907,15 @@ class LanguageKm extends BaseLanguage {
   String get slotUnavailable => 'ចូលទៅកាន់ព័ត៌មានលម្អិតនៃការកក់';
 
   @override
-  String get galleryWillBeAppearedHere => 'សញ្ញា​ស​រៃ​រូបថត​នឹង​បង្ហាញ​នៅ​ទីនេះ';
+  String get galleryWillBeAppearedHere =>
+      'សញ្ញា​ស​រៃ​រូបថត​នឹង​បង្ហាញ​នៅ​ទីនេះ';
 
   @override
   String get goToBookingDetail => 'ចូលទៅកាន់ព័ត៌មានការកក់';
 
   @override
-  String get yourPaymentIsPaidSuccessfullyMessage => 'ការបង់ប្រាក់របស់អ្នកបានបង់ដោយជោគជ័យដោយ';
+  String get yourPaymentIsPaidSuccessfullyMessage =>
+      'ការបង់ប្រាក់របស់អ្នកបានបង់ដោយជោគជ័យដោយ';
 
   @override
   String get paymentSuccessful => 'ការបង់ប្រាក់បានជោគជ័យ!';
@@ -912,16 +931,20 @@ class LanguageKm extends BaseLanguage {
   String get change => 'ផ្លាស់ប្តូរ';
 
   @override
-  String get pleaseUpdateYourProfile => 'សូមធ្វើបច្ចុប្បន្នភាពប្រវត្តិរូបរបស់អ្នក';
+  String get pleaseUpdateYourProfile =>
+      'សូមធ្វើបច្ចុប្បន្នភាពប្រវត្តិរូបរបស់អ្នក';
 
   @override
-  String get profileUpdatedSuccessfully => 'ប្រវត្តិរូបបានធ្វើបច្ចុប្បន្នភាពដោយជោគជ័យ';
+  String get profileUpdatedSuccessfully =>
+      'ប្រវត្តិរូបបានធ្វើបច្ចុប្បន្នភាពដោយជោគជ័យ';
 
   @override
-  String get oldPasswordDoesNotMatchMessage => "លេខសម្ងាត់ចាស់របស់អ្នកមិនត្រូវគ្នាទេ!";
+  String get oldPasswordDoesNotMatchMessage =>
+      "លេខសម្ងាត់ចាស់របស់អ្នកមិនត្រូវគ្នាទេ!";
 
   @override
-  String get bookingSuccessfullyUpdateMessage => 'ការកក់បានធ្វើបច្ចុប្បន្នភាពដោយជោគជ័យ';
+  String get bookingSuccessfullyUpdateMessage =>
+      'ការកក់បានធ្វើបច្ចុប្បន្នភាពដោយជោគជ័យ';
 
   @override
   String get newUpdate => 'ធាតុថ្មី';
@@ -1053,7 +1076,8 @@ class LanguageKm extends BaseLanguage {
   String get opps => 'អីវិប្បា';
 
   @override
-  String get looksLikeYouHave => 'ទាញយកដំណើរការទេនៅពេលបច្ចុប្បន្នអ្នកមានអាសយដ្ឋានទេ.';
+  String get looksLikeYouHave =>
+      'ទាញយកដំណើរការទេនៅពេលបច្ចុប្បន្នអ្នកមានអាសយដ្ឋានទេ.';
 
   @override
   String get primary => 'ប្រទេសគីឡូ';
@@ -1062,13 +1086,15 @@ class LanguageKm extends BaseLanguage {
   String get deliverHere => 'បញ្ជូនទីនេះ';
 
   @override
-  String get areYouSureYouWantToDelete => 'តើអ្នកប្រាកដថាអ្នកចង់លុបអាសយដ្ឋាននេះឬ';
+  String get areYouSureYouWantToDelete =>
+      'តើអ្នកប្រាកដថាអ្នកចង់លុបអាសយដ្ឋាននេះឬ';
 
   @override
   String get addressDeleteSuccessfully => 'អាសយដ្ឋានត្រូវបានលុបដោយជោគជ័យ';
 
   @override
-  String get weAreNotShipping => 'យើងមិនផ្ញើផ្ទះទេទេនៅក្នុងទីកន្លែងរបស់អ្នកនេះទេ';
+  String get weAreNotShipping =>
+      'យើងមិនផ្ញើផ្ទះទេទេនៅក្នុងទីកន្លែងរបស់អ្នកនេះទេ';
 
   @override
   String get deliveryCharge => 'ថ្លៃបញ្ជូនទៅផ្ទះ';
@@ -1225,7 +1251,8 @@ class LanguageKm extends BaseLanguage {
   String get allCategories => 'ប្រភេទទាំងអស់';
 
   @override
-  String get thereAreNoCategories => 'ឥឡូវនេះមិនមានប្រភេទទេ។ តាមដានប្រភេទរបស់អ្នកនៅទីនេះ។';
+  String get thereAreNoCategories =>
+      'ឥឡូវនេះមិនមានប្រភេទទេ។ តាមដានប្រភេទរបស់អ្នកនៅទីនេះ។';
 
   @override
   String get searchForProduct => 'ស្វែងរកផលិតផល';
@@ -1252,7 +1279,8 @@ class LanguageKm extends BaseLanguage {
   String get choosePaymentMethod => 'ជ្រើសរើសវិធីសាស្រ្តទូទាត់ប្រាក់';
 
   @override
-  String get chooseYourConvenientPayment => 'ជ្រើសរើសជម្រើសបង់ប្រាក់ងាយស្រួលរបស់អ្នក។';
+  String get chooseYourConvenientPayment =>
+      'ជ្រើសរើសជម្រើសបង់ប្រាក់ងាយស្រួលរបស់អ្នក។';
 
   @override
   String get placeOrder => 'ដាក់បញ្ជាទិញ';
@@ -1331,6 +1359,15 @@ class LanguageKm extends BaseLanguage {
   String get product => "ផលិតផល";
 
   @override
-  String get alreadyBookedNote => 'ប្រសិនបើអ្នកបានកក់ Grow តាមគេហទំព័ររួចហើយ សូមកំណត់ពាក្យសម្ងាត់ថ្មីដោយប្រើអ៊ីមែលរបស់អ្នក។';
+  String get alreadyBookedNote =>
+      'ប្រសិនបើអ្នកបានកក់ Grow តាមគេហទំព័ររួចហើយ សូមកំណត់ពាក្យសម្ងាត់ថ្មីដោយប្រើអ៊ីមែលរបស់អ្នក។';
 
+  @override
+  String get history => 'ប្រវត្តិ';
+
+  @override
+  String get earned => 'ទទួលបាន';
+
+  @override
+  String get used => 'បានប្រើ';
 }

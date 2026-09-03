@@ -58,6 +58,13 @@ const dashboard_menu_referral = 'assets/icons/dashboard_menu_referral.png';
 const dashboard_menu_coupon = 'assets/icons/dashboard_menu_coupon.png';
 const dashboard_menu_fbecsite = 'assets/icons/dashboard_menu_fbecsite.png';
 const dashboard_menu_inquiry = 'assets/icons/dashboard_menu_inquiry.png';
+
+const ic_rating_excellent = 'assets/icons/rating_excellent.png';
+const ic_rating_good = 'assets/icons/rating_good.png';
+const ic_rating_neutral = 'assets/icons/rating_neutral.png';
+const ic_rating_poor = 'assets/icons/rating_poor.png';
+const ic_rating_yes = 'assets/icons/rating_yes.png';
+const ic_rating_maybe = 'assets/icons/rating_maybe.png';
 const dashboard_menu_notifications =
     'assets/icons/dashboard_menu_notifications.png';
 const ic_us = 'assets/flags/ic_us.png';

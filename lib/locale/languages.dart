@@ -880,4 +880,10 @@ abstract class BaseLanguage {
   String get product;
 
   String get alreadyBookedNote;
+
+  String get history;
+
+  String get earned;
+
+  String get used;
 }

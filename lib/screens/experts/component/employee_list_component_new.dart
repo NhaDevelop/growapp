@@ -38,14 +38,14 @@ class _EmployeeListComponentNewState extends State<EmployeeListComponentNew> {
   Future<void> _loadViewScheduleStatus() async {
     final employeeId = widget.expertData.id;
     if (employeeId == null) {
-      setState(() {
-        _viewScheduleStatus = 0;
-      });
+      if (mounted) setState(() => _viewScheduleStatus = 0);
       return;
     }
 
     try {
       final response = await http.get(Uri.parse('https://cms.hairmake-grow.com/api/view-schedule-status'));
+
+      if (!mounted) return; // Widget disposed while awaiting — bail out
 
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
@@ -53,30 +53,23 @@ class _EmployeeListComponentNewState extends State<EmployeeListComponentNew> {
         // Find this employee's status
         for (var item in data) {
           if (item['id'] == employeeId && item['view_schedule_status'] != null) {
-            setState(() {
-              _viewScheduleStatus = item['view_schedule_status'];
-            });
+            if (mounted) setState(() => _viewScheduleStatus = item['view_schedule_status']);
             return;
           }
         }
 
         // Employee not found in response
-        setState(() {
-          _viewScheduleStatus = 0;
-        });
+        if (mounted) setState(() => _viewScheduleStatus = 0);
       } else {
-        print('Failed to load schedule status: ${response.statusCode}');
-        setState(() {
-          _viewScheduleStatus = 0;
-        });
+        log('Failed to load schedule status: ${response.statusCode}');
+        if (mounted) setState(() => _viewScheduleStatus = 0);
       }
     } catch (e) {
-      print('Error loading schedule status: $e');
-      setState(() {
-        _viewScheduleStatus = 0;
-      });
+      log('Error loading schedule status: $e');
+      if (mounted) setState(() => _viewScheduleStatus = 0);
     }
   }
+
 
   @override
   Widget build(BuildContext context) {

@@ -9,18 +9,22 @@ StylistEvaluationData getDummyEvaluationData() {
     question1: Question1(
       title: 'How was the technique?',
       options: ['Excellent', 'Good', 'Average', 'Poor'],
+      optionIcons: const [],
     ),
     question2: Question2(
       title: 'How was the communication?',
       options: ['Excellent', 'Good', 'Average', 'Poor'],
+      optionIcons: const [],
     ),
     question3: Question3(
       title: 'How was the attitude?',
       options: ['Excellent', 'Good', 'Average', 'Poor'],
+      optionIcons: const [],
     ),
     question4: Question4(
       title: 'Would you request this stylist again?',
       options: ['Yes', 'No', 'Maybe', 'Not sure'],
+      optionIcons: const [],
     ),
     question5: Question5(
       title: 'Stylist name (optional)',

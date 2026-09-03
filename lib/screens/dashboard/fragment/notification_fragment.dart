@@ -153,6 +153,10 @@ class _NotificationFragmentState extends State<NotificationFragment> {
                             .data!.notificationDetail!.id
                             .validate();
 
+                        // Check local storage first — skip form if already submitted
+                        final alreadyDone =
+                            await isEvaluationSubmittedLocally(bookingId);
+
                         try {
                           log('🌐 Fetching questionnaire content from API...');
                           final evaluationData =
@@ -162,8 +166,7 @@ class _NotificationFragmentState extends State<NotificationFragment> {
                           StylistEvaluationScreen(
                             evaluationData: evaluationData,
                             bookingId: bookingId,
-                            submitStatus:
-                                null, // No submit status in this format
+                            submitStatus: alreadyDone ? 1 : null,
                           ).launch(context);
                         } catch (e) {
                           log('❌ Failed to fetch questionnaire: $e');
@@ -204,18 +207,20 @@ class _NotificationFragmentState extends State<NotificationFragment> {
                           log('🔧 Opening evaluation for booking ID: $bookingId');
 
                           try {
+                            // Check local storage first — skip form if already submitted
+                            final alreadyDone =
+                                await isEvaluationSubmittedLocally(bookingId);
+
                             log('🌐 Fetching questionnaire content from API...');
                             final evaluationData =
                                 await fetchQuestionnaireContent(
                                     bookingId: bookingId);
 
-                            // IMPORTANT: Pass null for submitStatus to force API check
-                            // The notification's submit_status is unreliable
                             await StylistEvaluationScreen(
                               evaluationData: evaluationData,
                               bookingId: bookingId,
-                              submitStatus:
-                                  null, // Always check via API, don't trust notification
+                              // If locally submitted, pass 1 so it opens on Thank You
+                              submitStatus: alreadyDone ? 1 : null,
                             ).launch(context);
 
                             // Refresh notification list after returning from evaluation screen

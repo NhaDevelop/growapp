@@ -1,7 +1,8 @@
 enum AppFlavor { stag, prod, local }
 
 class BuildConfig {
-  static AppFlavor appFlavor = AppFlavor.prod;
+  // static AppFlavor appFlavor = AppFlavor.prod;
+  static AppFlavor appFlavor = AppFlavor.stag;
 
   static String get domainUrl {
     switch (appFlavor) {
@@ -36,9 +37,9 @@ class BuildConfig {
   static String get webBookingBaseUrl {
     switch (appFlavor) {
       case AppFlavor.prod:
-        return 'https://hairmake-grow.com/web-booking';
+        return 'https://hairmake-grow.com/web-booking/';
       default:
-        return 'https://demo-hairmake-grow.camboinfo.com/web-booking';
+        return 'https://demo-hairmake-grow.camboinfo.com/web-booking/';
     }
   }
 
